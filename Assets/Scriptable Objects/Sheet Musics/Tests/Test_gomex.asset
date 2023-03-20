@@ -1,0 +1,392 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
+  m_Name: Test_gomex
+  m_EditorClassIdentifier: 
+  tempoChanges:
+  - time: 0
+    secondsPerQuarterNote: 0.428571
+    quarterNotePerBeat: 1
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+  - time: 80.570435
+    secondsPerQuarterNote: 0.428571
+    quarterNotePerBeat: 1
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+  - time: 89.142685
+    secondsPerQuarterNote: 0.428571
+    quarterNotePerBeat: 1
+    timeSignatureNumerator: 2
+    timeSignatureDenominator: 4
+  - time: 89.999825
+    secondsPerQuarterNote: 0.428571
+    quarterNotePerBeat: 1
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+  - time: 143.14258
+    secondsPerQuarterNote: 0.394737
+    quarterNotePerBeat: 1
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+  - time: 144.72153
+    secondsPerQuarterNote: 0.375
+    quarterNotePerBeat: 1
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+  - time: 147.34653
+    secondsPerQuarterNote: 0.348837
+    quarterNotePerBeat: 1
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+  - time: 160.25307
+    secondsPerQuarterNote: 0.348837
+    quarterNotePerBeat: 1
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+  parts:
+  - instrumentName: Sax Alto
+    notes:
+    - tone: 69
+      velocity: 0.75
+      startTime: 0
+      duration: 0.10624989
+    - tone: 65
+      velocity: 0.75
+      startTime: 0.10714275
+      duration: 0.106249884
+    - tone: 69
+      velocity: 0.75
+      startTime: 0.2142855
+      duration: 0.1062499
+    - tone: 65
+      velocity: 0.75
+      startTime: 0.32142824
+      duration: 0.1062499
+    - tone: 71
+      velocity: 0.75
+      startTime: 0.428571
+      duration: 0.10624987
+    - tone: 67
+      velocity: 0.75
+      startTime: 0.53571373
+      duration: 0.10624987
+    - tone: 71
+      velocity: 0.75
+      startTime: 0.6428565
+      duration: 0.10624987
+    - tone: 67
+      velocity: 0.75
+      startTime: 0.7499992
+      duration: 0.10624987
+    - tone: 72
+      velocity: 0.75
+      startTime: 0.857142
+      duration: 0.10624987
+    - tone: 69
+      velocity: 0.75
+      startTime: 0.9642847
+      duration: 0.10624987
+  - instrumentName: Sax Tenor
+    notes:
+    - tone: 72
+      velocity: 0.625
+      startTime: 1.714284
+      duration: 0.10624993
+    - tone: 71
+      velocity: 0.625
+      startTime: 1.9285694
+      duration: 0.10624993
+    - tone: 69
+      velocity: 0.625
+      startTime: 2.142855
+      duration: 0.10624981
+    - tone: 67
+      velocity: 0.625
+      startTime: 2.3571403
+      duration: 0.10624981
+    - tone: 72
+      velocity: 0.625
+      startTime: 2.5714257
+      duration: 0.10624981
+    - tone: 71
+      velocity: 0.625
+      startTime: 2.785711
+      duration: 0.10624981
+    - tone: 69
+      velocity: 0.625
+      startTime: 2.9999964
+      duration: 0.10624981
+    - tone: 67
+      velocity: 0.625
+      startTime: 3.2142818
+      duration: 0.10624981
+    - tone: 72
+      velocity: 0.625
+      startTime: 3.4285672
+      duration: 0.10624981
+    - tone: 71
+      velocity: 0.625
+      startTime: 3.6428525
+      duration: 0.10624981
+  - instrumentName: Sax Baryton
+    notes:
+    - tone: 45
+      velocity: 0.75
+      startTime: 0.2142855
+      duration: 0.21339265
+    - tone: 57
+      velocity: 0.75
+      startTime: 0.428571
+      duration: 0.21339262
+    - tone: 45
+      velocity: 0.75
+      startTime: 0.6428565
+      duration: 0.21339262
+    - tone: 46
+      velocity: 0.75
+      startTime: 0.857142
+      duration: 0.21339262
+    - tone: 58
+      velocity: 0.75
+      startTime: 1.0714275
+      duration: 0.21339262
+    - tone: 47
+      velocity: 0.75
+      startTime: 1.285713
+      duration: 0.21339262
+    - tone: 59
+      velocity: 0.75
+      startTime: 1.4999985
+      duration: 0.21339262
+    - tone: 64
+      velocity: 0.625
+      startTime: 15.4285555
+      duration: 0.4276781
+    - tone: 60
+      velocity: 0.625
+      startTime: 15.857126
+      duration: 0.42767906
+    - tone: 57
+      velocity: 0.625
+      startTime: 16.285698
+      duration: 0.42767906
+  - instrumentName: Trompette
+    notes:
+    - tone: 71
+      velocity: 0.75
+      startTime: 1.714284
+      duration: 0.4276781
+    - tone: 69
+      velocity: 0.75
+      startTime: 2.3571403
+      duration: 0.4276781
+    - tone: 71
+      velocity: 0.75
+      startTime: 2.9999967
+      duration: 0.4276781
+    - tone: 69
+      velocity: 0.75
+      startTime: 3.642853
+      duration: 0.42767835
+    - tone: 71
+      velocity: 0.75
+      startTime: 4.28571
+      duration: 0.4276781
+    - tone: 69
+      velocity: 0.75
+      startTime: 4.7142806
+      duration: 0.4276781
+    - tone: 72
+      velocity: 0.75
+      startTime: 5.1428514
+      duration: 0.4276781
+    - tone: 71
+      velocity: 0.75
+      startTime: 5.785708
+      duration: 0.4276781
+    - tone: 69
+      velocity: 0.75
+      startTime: 6.4285645
+      duration: 1.7133918
+    - tone: 69
+      velocity: 0.75
+      startTime: 8.57142
+      duration: 0.4276781
+  - instrumentName: Basse
+    notes:
+    - tone: 55
+      velocity: 0.625
+      startTime: 1.714284
+      duration: 0.4276781
+    - tone: 59
+      velocity: 0.625
+      startTime: 1.714284
+      duration: 0.4276781
+    - tone: 53
+      velocity: 0.625
+      startTime: 2.3571403
+      duration: 0.4276781
+    - tone: 57
+      velocity: 0.625
+      startTime: 2.3571403
+      duration: 0.4276781
+    - tone: 55
+      velocity: 0.625
+      startTime: 2.9999967
+      duration: 0.4276781
+    - tone: 59
+      velocity: 0.625
+      startTime: 2.9999967
+      duration: 0.4276781
+    - tone: 53
+      velocity: 0.625
+      startTime: 3.642853
+      duration: 0.42767835
+    - tone: 57
+      velocity: 0.625
+      startTime: 3.642853
+      duration: 0.42767835
+    - tone: 55
+      velocity: 0.625
+      startTime: 4.28571
+      duration: 0.4276781
+    - tone: 59
+      velocity: 0.625
+      startTime: 4.28571
+      duration: 0.4276781
+  - instrumentName: Trombone
+    notes:
+    - tone: 52
+      velocity: 0.625
+      startTime: 1.714284
+      duration: 0.4276781
+    - tone: 50
+      velocity: 0.625
+      startTime: 2.3571403
+      duration: 0.4276781
+    - tone: 52
+      velocity: 0.625
+      startTime: 2.9999967
+      duration: 0.4276781
+    - tone: 50
+      velocity: 0.625
+      startTime: 3.642853
+      duration: 0.42767835
+    - tone: 52
+      velocity: 0.625
+      startTime: 4.28571
+      duration: 0.4276781
+    - tone: 50
+      velocity: 0.625
+      startTime: 4.7142806
+      duration: 0.4276781
+    - tone: 53
+      velocity: 0.625
+      startTime: 5.1428514
+      duration: 0.4276781
+    - tone: 52
+      velocity: 0.625
+      startTime: 5.785708
+      duration: 0.4276781
+    - tone: 50
+      velocity: 0.625
+      startTime: 6.4285645
+      duration: 1.7133918
+    - tone: 50
+      velocity: 0.625
+      startTime: 8.57142
+      duration: 0.4276781
+  - instrumentName: Souba
+    notes:
+    - tone: 48
+      velocity: 0.75
+      startTime: 1.714284
+      duration: 0.10624993
+    - tone: 48
+      velocity: 0.75
+      startTime: 1.9285694
+      duration: 0.10624993
+    - tone: 48
+      velocity: 0.75
+      startTime: 2.3571405
+      duration: 0.10624981
+    - tone: 48
+      velocity: 0.75
+      startTime: 2.571426
+      duration: 0.10624981
+    - tone: 48
+      velocity: 0.75
+      startTime: 2.7857113
+      duration: 0.10624981
+    - tone: 48
+      velocity: 0.75
+      startTime: 3.2142823
+      duration: 0.10624981
+    - tone: 48
+      velocity: 0.75
+      startTime: 3.4285676
+      duration: 0.10624981
+    - tone: 48
+      velocity: 0.75
+      startTime: 3.642853
+      duration: 0.10624981
+    - tone: 48
+      velocity: 0.75
+      startTime: 4.071424
+      duration: 0.10624981
+    - tone: 48
+      velocity: 0.75
+      startTime: 4.2857094
+      duration: 0.10624981
+  - instrumentName: Batterie
+    notes:
+    - tone: 36
+      velocity: 0.75
+      startTime: 0.2142855
+      duration: 0.21339265
+    - tone: 38
+      velocity: 0.75
+      startTime: 0.428571
+      duration: 0.21339262
+    - tone: 36
+      velocity: 0.75
+      startTime: 0.6428565
+      duration: 0.21339262
+    - tone: 36
+      velocity: 0.75
+      startTime: 0.857142
+      duration: 0.21339262
+    - tone: 38
+      velocity: 0.75
+      startTime: 1.0714275
+      duration: 0.21339262
+    - tone: 38
+      velocity: 0.75
+      startTime: 1.285713
+      duration: 0.21339262
+    - tone: 38
+      velocity: 0.75
+      startTime: 1.4999985
+      duration: 0.21339262
+    - tone: 36
+      velocity: 0.75
+      startTime: 1.714284
+      duration: 0.21339262
+    - tone: 42
+      velocity: 0.75
+      startTime: 1.714284
+      duration: 0.21339262
+    - tone: 42
+      velocity: 0.75
+      startTime: 1.9285694
+      duration: 0.21339262

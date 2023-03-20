@@ -1,0 +1,244 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a42b3216ddef64792be86dd723b919, type: 3}
+  m_Name: Sousaphone
+  m_EditorClassIdentifier: 
+  showDebug: 0
+  instrumentName: Sousaphone
+  drumkit: 0
+  fullAudio: {fileID: 8300000, guid: 48f4b567b98ab484e8251176c47ecc37, type: 3}
+  audioWithoutAttacks: {fileID: 0}
+  tones:
+  - name: F1
+    tone: 29
+    audioStartSamples: 0
+    audioDurationSamples: 480000
+    attackSamples: 2021
+    letRing: 0
+  - name: F#1
+    tone: 30
+    audioStartSamples: 480000
+    audioDurationSamples: 480000
+    attackSamples: 2397
+    letRing: 0
+  - name: G1
+    tone: 31
+    audioStartSamples: 960000
+    audioDurationSamples: 480000
+    attackSamples: 2894
+    letRing: 0
+  - name: G#1
+    tone: 32
+    audioStartSamples: 1440000
+    audioDurationSamples: 480000
+    attackSamples: 2238
+    letRing: 0
+  - name: A1
+    tone: 33
+    audioStartSamples: 1920000
+    audioDurationSamples: 480000
+    attackSamples: 2415
+    letRing: 0
+  - name: A#1
+    tone: 34
+    audioStartSamples: 2400000
+    audioDurationSamples: 480000
+    attackSamples: 2939
+    letRing: 0
+  - name: B1  Kick
+    tone: 35
+    audioStartSamples: 2880000
+    audioDurationSamples: 480000
+    attackSamples: 2079
+    letRing: 0
+  - name: C2  Kick
+    tone: 36
+    audioStartSamples: 3360000
+    audioDurationSamples: 480000
+    attackSamples: 2141
+    letRing: 0
+  - name: C#2  Rimshot
+    tone: 37
+    audioStartSamples: 3840000
+    audioDurationSamples: 480000
+    attackSamples: 2786
+    letRing: 0
+  - name: D2  Snare
+    tone: 38
+    audioStartSamples: 4320000
+    audioDurationSamples: 480000
+    attackSamples: 2387
+    letRing: 0
+  - name: D#2  Handclap
+    tone: 39
+    audioStartSamples: 4800000
+    audioDurationSamples: 480000
+    attackSamples: 2378
+    letRing: 0
+  - name: E2  Snare
+    tone: 40
+    audioStartSamples: 5280000
+    audioDurationSamples: 480000
+    attackSamples: 2625
+    letRing: 0
+  - name: F2
+    tone: 41
+    audioStartSamples: 5760000
+    audioDurationSamples: 480000
+    attackSamples: 2316
+    letRing: 0
+  - name: F#2  ClosedHiHat
+    tone: 42
+    audioStartSamples: 6240000
+    audioDurationSamples: 480000
+    attackSamples: 2455
+    letRing: 0
+  - name: G2
+    tone: 43
+    audioStartSamples: 6720000
+    audioDurationSamples: 480000
+    attackSamples: 2465
+    letRing: 0
+  - name: G#2  ClosedHiHat
+    tone: 44
+    audioStartSamples: 7200000
+    audioDurationSamples: 480000
+    attackSamples: 1750
+    letRing: 0
+  - name: A2
+    tone: 45
+    audioStartSamples: 7680000
+    audioDurationSamples: 480000
+    attackSamples: 1661
+    letRing: 0
+  - name: A#2  OpenHiHat
+    tone: 46
+    audioStartSamples: 8160000
+    audioDurationSamples: 480000
+    attackSamples: 1984
+    letRing: 0
+  - name: B2  MidTom
+    tone: 47
+    audioStartSamples: 8640000
+    audioDurationSamples: 480000
+    attackSamples: 2502
+    letRing: 0
+  - name: C3  MidTom
+    tone: 48
+    audioStartSamples: 9120000
+    audioDurationSamples: 480000
+    attackSamples: 2320
+    letRing: 0
+  - name: C#3  Crash
+    tone: 49
+    audioStartSamples: 9600000
+    audioDurationSamples: 480000
+    attackSamples: 2230
+    letRing: 0
+  - name: D3  HiTom
+    tone: 50
+    audioStartSamples: 10080000
+    audioDurationSamples: 480000
+    attackSamples: 1955
+    letRing: 0
+  - name: D#3  Ride
+    tone: 51
+    audioStartSamples: 10560000
+    audioDurationSamples: 480000
+    attackSamples: 2172
+    letRing: 0
+  - name: E3  Splash
+    tone: 52
+    audioStartSamples: 11040000
+    audioDurationSamples: 480000
+    attackSamples: 2017
+    letRing: 0
+  - name: F3  Ride
+    tone: 53
+    audioStartSamples: 11520000
+    audioDurationSamples: 480000
+    attackSamples: 1795
+    letRing: 0
+  - name: F#3
+    tone: 54
+    audioStartSamples: 12000000
+    audioDurationSamples: 480000
+    attackSamples: 1956
+    letRing: 0
+  - name: G3  Splash
+    tone: 55
+    audioStartSamples: 12480000
+    audioDurationSamples: 480000
+    attackSamples: 1876
+    letRing: 0
+  - name: G#3  Bell
+    tone: 56
+    audioStartSamples: 12960000
+    audioDurationSamples: 480000
+    attackSamples: 1221
+    letRing: 0
+  - name: A3  Splash
+    tone: 57
+    audioStartSamples: 13440000
+    audioDurationSamples: 480000
+    attackSamples: 1825
+    letRing: 0
+  - name: A#3
+    tone: 58
+    audioStartSamples: 13920000
+    audioDurationSamples: 480000
+    attackSamples: 2636
+    letRing: 0
+  - name: B3
+    tone: 59
+    audioStartSamples: 14400000
+    audioDurationSamples: 480000
+    attackSamples: 2916
+    letRing: 0
+  - name: C4
+    tone: 60
+    audioStartSamples: 14880000
+    audioDurationSamples: 480000
+    attackSamples: 1825
+    letRing: 0
+  - name: C#4
+    tone: 61
+    audioStartSamples: 15360000
+    audioDurationSamples: 480000
+    attackSamples: 2301
+    letRing: 0
+  - name: D4
+    tone: 62
+    audioStartSamples: 15840000
+    audioDurationSamples: 480000
+    attackSamples: 2839
+    letRing: 0
+  - name: D#4
+    tone: 63
+    audioStartSamples: 16320000
+    audioDurationSamples: 480000
+    attackSamples: 7421
+    letRing: 0
+  - name: E4
+    tone: 64
+    audioStartSamples: 16800000
+    audioDurationSamples: 480000
+    attackSamples: 2221
+    letRing: 0
+  - name: F4
+    tone: 65
+    audioStartSamples: 17280000
+    audioDurationSamples: 480000
+    attackSamples: 1825
+    letRing: 0
+  allowPitching: 1
+  style: {fileID: 11400000, guid: 820d39334e222714ca0b5a8be7137be7, type: 2}

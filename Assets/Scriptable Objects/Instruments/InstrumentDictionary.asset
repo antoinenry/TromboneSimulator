@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa0591405d44b2d43844ab1ca260acf7, type: 3}
+  m_Name: InstrumentDictionary
+  m_EditorClassIdentifier: 
+  isCurrent: 1
+  instruments:
+  - officialName: AltoSax
+    alternativeNames:
+    - alto
+    isDrums: 0
+    lowestTone: 49
+    highestTone: 80
+  - officialName: TenorSax
+    alternativeNames:
+    - tenor
+    - t??nor
+    isDrums: 0
+    lowestTone: 44
+    highestTone: 75
+  - officialName: BarytonSax
+    alternativeNames:
+    - baryton
+    - bar
+    isDrums: 0
+    lowestTone: 36
+    highestTone: 69
+  - officialName: Trumpet
+    alternativeNames:
+    - trompette
+    - trp
+    isDrums: 0
+    lowestTone: 53
+    highestTone: 82
+  - officialName: Tuba
+    alternativeNames:
+    - basse
+    - euphonium
+    - bss
+    isDrums: 0
+    lowestTone: 41
+    highestTone: 70
+  - officialName: Trombone
+    alternativeNames:
+    - trb
+    isDrums: 0
+    lowestTone: 39
+    highestTone: 70
+  - officialName: Sousaphone
+    alternativeNames:
+    - souba
+    - sousa
+    - sba
+    isDrums: 0
+    lowestTone: 27
+    highestTone: 58
+  - officialName: Drumkit
+    alternativeNames:
+    - drum
+    - bat
+    - grosse
+    - claire
+    - caisse
+    - cymbal
+    - perc
+    - gc
+    - cc
+    isDrums: 1
+    lowestTone: 35
+    highestTone: 80
+  drumHits:
+  - name: Kick
+    tones:
+    - 35
+    - 36
+  - name: Snare
+    tones:
+    - 38
+    - 40
+  - name: ClosedHiHat
+    tones:
+    - 42
+    - 44
+  - name: OpenHiHat
+    tones:
+    - 46
+  - name: LowTom
+    tones:
+    - 41
+    - 45
+    - 69
+  - name: MidTom
+    tones:
+    - 43
+    - 47
+  - name: HiTom
+    tones:
+    - 48
+    - 50
+  - name: Crash
+    tones:
+    - 49
+  - name: Ride
+    tones:
+    - 51
+    - 53
+  - name: Splash
+    tones:
+    - 52
+    - 55
+    - 57
+  - name: Bell
+    tones:
+    - 56
+    - 54
+    - 80
+  - name: Rimshot
+    tones:
+    - 37
+  - name: Woodblock
+    tones:
+    - 75
+    - 76
+    - 77
+  - name: Handclap
+    tones:
+    - 39

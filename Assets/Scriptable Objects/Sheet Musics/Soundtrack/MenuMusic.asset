@@ -1,0 +1,1309 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
+  m_Name: MenuMusic
+  m_EditorClassIdentifier: 
+  tempoChanges:
+  - time: 0
+    secondsPerQuarterNote: 0.652174
+    quarterNotePerBeat: 1
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+  parts:
+  - instrumentName: 1st Trombone
+    notes:
+    - tone: 48
+      velocity: 0.625
+      startTime: 0
+      duration: 0.1616848
+    - tone: 48
+      velocity: 0.625
+      startTime: 0.326087
+      duration: 0.16168481
+    - tone: 48
+      velocity: 0.625
+      startTime: 0.652174
+      duration: 0.16168481
+    - tone: 48
+      velocity: 0.625
+      startTime: 1.304348
+      duration: 0.107337
+    - tone: 48
+      velocity: 0.625
+      startTime: 1.5217394
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 1.6304351
+      duration: 0.16168475
+    - tone: 48
+      velocity: 0.625
+      startTime: 1.9565221
+      duration: 0.16168487
+    - tone: 48
+      velocity: 0.625
+      startTime: 2.6086962
+      duration: 0.16168475
+    - tone: 48
+      velocity: 0.625
+      startTime: 2.9347832
+      duration: 0.107337
+    - tone: 48
+      velocity: 0.625
+      startTime: 3.1521745
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 3.2608702
+      duration: 0.16168475
+    - tone: 48
+      velocity: 0.625
+      startTime: 3.5869572
+      duration: 0.16168475
+    - tone: 48
+      velocity: 0.625
+      startTime: 3.9130442
+      duration: 0.10733676
+    - tone: 48
+      velocity: 0.625
+      startTime: 4.1304355
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 4.239131
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 4.565218
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 5.217392
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 5.869566
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 6.52174
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 6.847827
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 7.173914
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 7.826088
+      duration: 0.107337
+    - tone: 48
+      velocity: 0.625
+      startTime: 8.043479
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 8.152175
+      duration: 0.107337
+    - tone: 48
+      velocity: 0.625
+      startTime: 8.369566
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 8.478262
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 8.804349
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 9.456523
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 9.78261
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 10.434784
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 11.086958
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 11.630437
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 11.739133
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 12.06522
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 12.391307
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 13.043481
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 13.695655
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 14.239134
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 14.34783
+      duration: 0.107337
+    - tone: 48
+      velocity: 0.625
+      startTime: 14.565221
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 14.673917
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 15.000004
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 15.652178
+      duration: 0.16168499
+    - tone: 48
+      velocity: 0.625
+      startTime: 15.978265
+      duration: 0.107337
+    - tone: 48
+      velocity: 0.625
+      startTime: 16.195656
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 16.30435
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 16.630436
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 16.847826
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 16.95652
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 17.282606
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 17.608692
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 18.586952
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 18.913038
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 19.239124
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 19.56521
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 19.891296
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 20.108686
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 20.21738
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 20.869555
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 21.19564
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 21.41303
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 21.521725
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 22.173899
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 22.499985
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 22.717375
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 22.826069
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 23.478243
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 23.804329
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 24.130415
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 24.456501
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 24.782587
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 25.108673
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 25.326063
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 25.434757
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 26.086931
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 26.304321
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 26.413015
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 26.630405
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 26.7391
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 26.95649
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 27.391272
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 27.608662
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 27.717356
+      duration: 0.107336044
+    - tone: 48
+      velocity: 0.625
+      startTime: 27.934746
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 28.04344
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 29.0217
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 29.347786
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 29.673872
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 29.999958
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 30.652132
+      duration: 0.60217476
+    - tone: 48
+      velocity: 0.625
+      startTime: 31.304306
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 31.630392
+      duration: 0.16168404
+    - tone: 48
+      velocity: 0.625
+      startTime: 31.956478
+      duration: 0.16168594
+    - tone: 48
+      velocity: 0.625
+      startTime: 32.608654
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 32.826046
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 32.934742
+      duration: 0.16168594
+    - tone: 48
+      velocity: 0.625
+      startTime: 33.26083
+      duration: 0.16168594
+    - tone: 48
+      velocity: 0.625
+      startTime: 33.913006
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 34.130398
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 34.239094
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 34.456486
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 34.56518
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 34.782574
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 35.217358
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 35.43475
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 35.543446
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 35.760838
+      duration: 0.075
+    - tone: 48
+      velocity: 0.625
+      startTime: 35.869534
+      duration: 0.16168594
+    - tone: 48
+      velocity: 0.625
+      startTime: 36.52171
+      duration: 0.16168594
+    - tone: 48
+      velocity: 0.625
+      startTime: 37.173885
+      duration: 0.16168594
+    - tone: 48
+      velocity: 0.625
+      startTime: 37.82606
+      duration: 0.16168594
+    - tone: 48
+      velocity: 0.625
+      startTime: 38.478237
+      duration: 0.16168594
+    - tone: 48
+      velocity: 0.625
+      startTime: 39.130413
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 39.347805
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 39.565197
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 39.78259
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 39.99998
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 40.217373
+      duration: 0.10733795
+    - tone: 48
+      velocity: 0.625
+      startTime: 40.434765
+      duration: 0.16168594
+  - instrumentName: Batterie
+    notes:
+    - tone: 42
+      velocity: 0.625
+      startTime: 0
+      duration: 0.3247283
+    - tone: 35
+      velocity: 0.625
+      startTime: 0
+      duration: 0.3247283
+    - tone: 42
+      velocity: 0.625
+      startTime: 0.326087
+      duration: 0.3247283
+    - tone: 38
+      velocity: 0.625
+      startTime: 0.652174
+      duration: 0.3247283
+    - tone: 42
+      velocity: 0.625
+      startTime: 0.652174
+      duration: 0.3247283
+    - tone: 42
+      velocity: 0.625
+      startTime: 0.978261
+      duration: 0.32472837
+    - tone: 35
+      velocity: 0.625
+      startTime: 1.1956524
+      duration: 0.107337
+    - tone: 42
+      velocity: 0.625
+      startTime: 1.3043481
+      duration: 0.32472825
+    - tone: 35
+      velocity: 0.625
+      startTime: 1.3043481
+      duration: 0.32472825
+    - tone: 42
+      velocity: 0.625
+      startTime: 1.6304351
+      duration: 0.32472825
+    - tone: 35
+      velocity: 0.625
+      startTime: 1.6304351
+      duration: 0.32472825
+    - tone: 38
+      velocity: 0.625
+      startTime: 1.9565221
+      duration: 0.32472837
+    - tone: 42
+      velocity: 0.625
+      startTime: 1.9565221
+      duration: 0.32472837
+    - tone: 42
+      velocity: 0.625
+      startTime: 2.2826092
+      duration: 0.32472825
+    - tone: 42
+      velocity: 0.625
+      startTime: 2.6086962
+      duration: 0.32472825
+    - tone: 35
+      velocity: 0.625
+      startTime: 2.6086962
+      duration: 0.32472825
+    - tone: 42
+      velocity: 0.625
+      startTime: 2.9347832
+      duration: 0.32472825
+    - tone: 35
+      velocity: 0.625
+      startTime: 2.9347832
+      duration: 0.32472825
+    - tone: 38
+      velocity: 0.625
+      startTime: 3.2608702
+      duration: 0.32472825
+    - tone: 42
+      velocity: 0.625
+      startTime: 3.2608702
+      duration: 0.32472825
+    - tone: 35
+      velocity: 0.625
+      startTime: 3.4782615
+      duration: 0.107337
+    - tone: 42
+      velocity: 0.625
+      startTime: 3.5869572
+      duration: 0.32472825
+    - tone: 35
+      velocity: 0.625
+      startTime: 3.8043485
+      duration: 0.107337
+    - tone: 42
+      velocity: 0.625
+      startTime: 3.9130442
+      duration: 0.32472825
+    - tone: 35
+      velocity: 0.625
+      startTime: 3.9130442
+      duration: 0.32472825
+    - tone: 42
+      velocity: 0.625
+      startTime: 4.239131
+      duration: 0.3247285
+    - tone: 38
+      velocity: 0.625
+      startTime: 4.565218
+      duration: 0.3247285
+    - tone: 42
+      velocity: 0.625
+      startTime: 4.565218
+      duration: 0.3247285
+    - tone: 46
+      velocity: 0.625
+      startTime: 4.891305
+      duration: 0.3247285
+    - tone: 42
+      velocity: 0.625
+      startTime: 5.217392
+      duration: 0.3247285
+    - tone: 35
+      velocity: 0.625
+      startTime: 5.217392
+      duration: 0.3247285
+    - tone: 42
+      velocity: 0.625
+      startTime: 5.543479
+      duration: 0.3247285
+    - tone: 38
+      velocity: 0.625
+      startTime: 5.869566
+      duration: 0.3247285
+    - tone: 42
+      velocity: 0.625
+      startTime: 5.869566
+      duration: 0.3247285
+    - tone: 42
+      velocity: 0.625
+      startTime: 6.195653
+      duration: 0.3247285
+    - tone: 35
+      velocity: 0.625
+      startTime: 6.4130445
+      duration: 0.107337
+    - tone: 42
+      velocity: 0.625
+      startTime: 6.52174
+      duration: 0.3247285
+    - tone: 35
+      velocity: 0.625
+      startTime: 6.52174
+      duration: 0.3247285
+    - tone: 42
+      velocity: 0.625
+      startTime: 6.847827
+      duration: 0.3247285
+    - tone: 35
+      velocity: 0.625
+      startTime: 6.847827
+      duration: 0.3247285
+    - tone: 38
+      velocity: 0.625
+      startTime: 7.173914
+      duration: 0.3247285
+    - tone: 42
+      velocity: 0.625
+      startTime: 7.173914
+      duration: 0.3247285
+    - tone: 42
+      velocity: 0.625
+      startTime: 7.500001
+      duration: 0.3247285
+    - tone: 42
+      velocity: 0.625
+      startTime: 7.826088
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 7.826088
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 8.152175
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 8.152175
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 8.478262
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 8.804349
+      duration: 0.324728
+    - tone: 36
+      velocity: 0.625
+      startTime: 8.804349
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 9.130436
+      duration: 0.324728
+    - tone: 36
+      velocity: 0.625
+      startTime: 9.130436
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 10.434784
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 10.434784
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 10.760871
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 11.086958
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 11.086958
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 11.413045
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 11.630436
+      duration: 0.107337
+    - tone: 42
+      velocity: 0.625
+      startTime: 11.739132
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 11.739132
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 12.065219
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 12.065219
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 12.391306
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 12.391306
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 12.717393
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 13.04348
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 13.04348
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 13.369567
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 13.369567
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 13.695654
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 13.695654
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 13.913045
+      duration: 0.107337
+    - tone: 42
+      velocity: 0.625
+      startTime: 14.021741
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 14.239132
+      duration: 0.107337
+    - tone: 42
+      velocity: 0.625
+      startTime: 14.347828
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 14.347828
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 14.673915
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 15.000002
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 15.000002
+      duration: 0.324728
+    - tone: 46
+      velocity: 0.625
+      startTime: 15.326089
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 15.652176
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 15.652176
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 15.978263
+      duration: 0.32472897
+    - tone: 38
+      velocity: 0.625
+      startTime: 16.30435
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 16.30435
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 16.630436
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 16.847828
+      duration: 0.107336044
+    - tone: 42
+      velocity: 0.625
+      startTime: 16.956522
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 16.956522
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 17.282608
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 17.282608
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 17.608694
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 17.608694
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 17.93478
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 18.260866
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 18.260866
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 18.586952
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 18.586952
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 18.913038
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 19.076082
+      duration: 0.16168404
+    - tone: 42
+      velocity: 0.625
+      startTime: 19.239124
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 19.56521
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 19.56521
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 20.54347
+      duration: 0.107336044
+    - tone: 38
+      velocity: 0.625
+      startTime: 20.76086
+      duration: 0.107336044
+    - tone: 46
+      velocity: 0.625
+      startTime: 20.869555
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 20.869555
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 21.19564
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 21.521727
+      duration: 0.324728
+    - tone: 46
+      velocity: 0.625
+      startTime: 21.521727
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 21.847813
+      duration: 0.324728
+    - tone: 46
+      velocity: 0.625
+      startTime: 22.173899
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 22.173899
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 22.499985
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 22.82607
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 22.82607
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 23.152157
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 23.478243
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 23.478243
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 23.804329
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 23.804329
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 24.130415
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 24.130415
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 24.347807
+      duration: 0.107336044
+    - tone: 42
+      velocity: 0.625
+      startTime: 24.456501
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 24.673893
+      duration: 0.107336044
+    - tone: 42
+      velocity: 0.625
+      startTime: 24.782587
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 24.782587
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 25.108673
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 25.43476
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 25.43476
+      duration: 0.324728
+    - tone: 46
+      velocity: 0.625
+      startTime: 25.760845
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 26.086931
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 26.086931
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 26.413017
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 26.739103
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 26.739103
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 27.06519
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 27.282581
+      duration: 0.107336044
+    - tone: 42
+      velocity: 0.625
+      startTime: 27.391275
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 27.391275
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 27.717361
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 27.717361
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 28.043447
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 28.043447
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 28.369534
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 28.69562
+      duration: 0.65081596
+    - tone: 52
+      velocity: 0.625
+      startTime: 30.652142
+      duration: 0.65081596
+    - tone: 42
+      velocity: 0.625
+      startTime: 31.304316
+      duration: 0.324728
+    - tone: 35
+      velocity: 0.625
+      startTime: 31.304316
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 31.630402
+      duration: 0.324728
+    - tone: 38
+      velocity: 0.625
+      startTime: 31.956488
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 31.956488
+      duration: 0.324728
+    - tone: 42
+      velocity: 0.625
+      startTime: 32.282574
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 32.499966
+      duration: 0.10733795
+    - tone: 42
+      velocity: 0.625
+      startTime: 32.60866
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 32.60866
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 32.93475
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 32.93475
+      duration: 0.32472992
+    - tone: 38
+      velocity: 0.625
+      startTime: 33.260838
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 33.260838
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 33.586926
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 33.913013
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 33.913013
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 34.2391
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 34.2391
+      duration: 0.32472992
+    - tone: 38
+      velocity: 0.625
+      startTime: 34.56519
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 34.56519
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 34.78258
+      duration: 0.10733795
+    - tone: 42
+      velocity: 0.625
+      startTime: 34.891277
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 35.10867
+      duration: 0.10733795
+    - tone: 42
+      velocity: 0.625
+      startTime: 35.217365
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 35.217365
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 35.543453
+      duration: 0.32472992
+    - tone: 38
+      velocity: 0.625
+      startTime: 35.86954
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 35.86954
+      duration: 0.32472992
+    - tone: 38
+      velocity: 0.625
+      startTime: 36.19563
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 36.521717
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 36.521717
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 36.847805
+      duration: 0.32472992
+    - tone: 38
+      velocity: 0.625
+      startTime: 37.173893
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 37.173893
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 37.49998
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 37.717373
+      duration: 0.10733795
+    - tone: 42
+      velocity: 0.625
+      startTime: 37.82607
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 37.82607
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 38.152157
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 38.152157
+      duration: 0.32472992
+    - tone: 38
+      velocity: 0.625
+      startTime: 38.478245
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 38.478245
+      duration: 0.32472992
+    - tone: 42
+      velocity: 0.625
+      startTime: 38.804333
+      duration: 0.32472992
+    - tone: 35
+      velocity: 0.625
+      startTime: 39.13042
+      duration: 0.21603394
+    - tone: 42
+      velocity: 0.625
+      startTime: 39.13042
+      duration: 0.21603394
+    - tone: 35
+      velocity: 0.625
+      startTime: 39.347813
+      duration: 0.21603394
+    - tone: 35
+      velocity: 0.625
+      startTime: 39.565205
+      duration: 0.21603394
+    - tone: 38
+      velocity: 0.625
+      startTime: 39.782597
+      duration: 0.21603394
+    - tone: 42
+      velocity: 0.625
+      startTime: 39.782597
+      duration: 0.21603394
+    - tone: 35
+      velocity: 0.625
+      startTime: 39.99999
+      duration: 0.21603394
+    - tone: 35
+      velocity: 0.625
+      startTime: 40.21738
+      duration: 0.21603394
+    - tone: 35
+      velocity: 0.625
+      startTime: 40.434772
+      duration: 0.65081406
+    - tone: 42
+      velocity: 0.625
+      startTime: 40.434772
+      duration: 0.65081406
