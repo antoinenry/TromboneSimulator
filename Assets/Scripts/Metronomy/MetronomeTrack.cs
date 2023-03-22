@@ -1,162 +1,200 @@
-﻿//using System;
-//using System.Linq;
-//using System.Collections.Generic;
-//using UnityEngine;
+﻿using UnityEngine;
+using System;
+using System.Collections.Generic;
 
-//[Serializable]
-//public struct MetronomeTrack
-//{   
-//    //private MetronomeTrackSection[] tempoSections;
-//    private List<float> beatTimes;
-//    private List<float> barTimes;
+[Serializable]
+public struct MetronomeTrack
+{
+    public float[] beatTimesSeconds;
+    public float[] barTimesSeconds;
 
-//    //public int Sections => tempoSections != null ? tempoSections.Length : 0;
-//    //public float FirstSectionStart => Sections > 0 ? tempoSections[0].tempo.time : 0f;
-//    //public float FirstSectionEnd
-//    //{
-//    //    get
-//    //    {
-//    //        switch(Sections)
-//    //        {
-//    //            case 0: return 0f;
-//    //            case 1: return tempoSections[0].tempo.SecondsPerBar;
-//    //            default: return tempoSections[1].tempo.time;
-//    //        }
-//    //    }
-//    //}
-//    //public float LastSectionStart => Sections > 0 ? tempoSections[Sections - 1].tempo.time : 0f;
-//    //public float LastSectionEnd => Sections > 0 ? tempoSections[Sections - 1].tempo.SecondsPerBar : 0f;
-//    //public float[] Bars => barTimes != null ? barTimes.ToArray() : null;
-//    //public float[] Beats => beatTimes != null ? beatTimes.ToArray() : null;
+    public void SetRythm(TempoInfo[] tempoChanges, MeasureInfo[] measureChanges)
+    {
+        // Generate beat and bar times from tempo and measure changes
+        List<float> beatTimes = new List<float>();
+        List<float> barTimes = new List<float>();
+        int tempoChangesCount = tempoChanges != null ? tempoChanges.Length : 0;
+        int measureChangesCount = measureChanges != null ? measureChanges.Length : 0;
+        // Initialize tempo and measure (default values at time and bar = 0)
+        TempoInfo tempoInfo = new TempoInfo(0f);
+        MeasureInfo measureInfo = new MeasureInfo(0);
+        // Units to navigate through time, tempos and measures
+        int tempoChangeIndex = 0;
+        int measureChangeIndex = 0;
+        float timeInSeconds = 0f;
+        float timeInBeats = 0f;
+        float timeInBars = 0f;
+        // Unfold beats and bars
+        bool noMoreTempoChanges = false;
+        bool noMoreMeasureChanges = false;
+        bool lastMeasure = false;
+        while (noMoreTempoChanges == false || noMoreMeasureChanges == false || lastMeasure == false)
+        {
+            // Get tempo and measure
+            if (tempoChangeIndex < tempoChangesCount) tempoInfo = tempoChanges[tempoChangeIndex];
+            if (measureChangeIndex < measureChangesCount) measureInfo = measureChanges[measureChangeIndex];
+            // Durations of beats and bars
+            float beatDuration = tempoInfo.secondsPerQuarterNote * measureInfo.quarterNotesPerBeat;
+            int beatsPerBar = measureInfo.BeatsPerBar;
+            // Abort when those parameters are incorrect
+            if (beatDuration <= 0f || beatsPerBar <= 0)
+            {
+                beatTimesSeconds = null;
+                barTimesSeconds = null;
+                return;
+            }
+            // Scope for next tempo change
+            float nextTempoChangeSeconds;
+            if (tempoChangeIndex < tempoChangesCount - 1)
+                nextTempoChangeSeconds = tempoChanges[tempoChangeIndex + 1].time;
+            else
+            {
+                // No more tempo changes ahead: keep current tempo until the end
+                nextTempoChangeSeconds = float.PositiveInfinity;
+                noMoreTempoChanges = true;
+            }
+            // Scope for next measure change
+            int nextMeasureChangeBars;
+            if (measureChangeIndex < measureChangesCount - 1)
+                nextMeasureChangeBars = measureChanges[measureChangeIndex + 1].bar;
+            else
+            {
+                // No more measure change: ensure we end with a complete measure at constant tempo
+                if (noMoreTempoChanges)
+                {
+                    nextMeasureChangeBars = Mathf.CeilToInt(timeInBars) + 1;
+                    lastMeasure = true;
+                }
+                else
+                {
+                    nextMeasureChangeBars = int.MaxValue;
+                }
+                noMoreMeasureChanges = true;
+            }
+            // Navigate through time to next change
+            while (timeInSeconds < nextTempoChangeSeconds && timeInBars < nextMeasureChangeBars)
+            {
+                // When a beat starts, add beat time
+                if (timeInBeats % 1f == 0f)
+                {
+                    beatTimes.Add(timeInSeconds);
+                    // When a bar starts, add bar time
+                    if (timeInBars % 1f == 0f) barTimes.Add(timeInSeconds);
+                }
+                // Time incrementation: next beat
+                float timeStepBeats = 1f - (timeInBeats % 1f);
+                float timeStepSeconds = timeStepBeats * beatDuration;
+                // If next beat is at the same tempo, move to next beat
+                if (timeInSeconds + timeStepSeconds < nextTempoChangeSeconds)
+                {
+                    timeInSeconds += timeStepSeconds;
+                    timeInBeats = Mathf.Floor(timeInBeats + 1f);
+                    timeInBars = (Mathf.Floor(beatsPerBar * timeInBars) + 1f) / beatsPerBar;
+                }
+                // If tempo changes between last and next beat, move to next tempo instead
+                else
+                {
+                    float secondsLeftBeforeNewTempo = nextTempoChangeSeconds - timeInSeconds;
+                    timeInSeconds = nextTempoChangeSeconds;
+                    timeInBeats += secondsLeftBeforeNewTempo / beatDuration;
+                    timeInBars += secondsLeftBeforeNewTempo / (beatDuration * (float)beatsPerBar);
+                }
+            }
+            // Move change indices
+            if (timeInSeconds >= nextTempoChangeSeconds) tempoChangeIndex++;
+            if (timeInBars >= nextMeasureChangeBars) measureChangeIndex++;
+        }
+        // End
+        beatTimesSeconds = beatTimes.ToArray();
+        barTimesSeconds = barTimes.ToArray();
+    }
 
-//    //public void SetTempo(params TempoInfo[] tempoInfos)
-//    //{
-//    //    // Default values
-//    //    tempoSections = new MetronomeTrackSection[0];
-//    //    beatTimes = new List<float>();
-//    //    barTimes = new List<float>();
-//    //    // Read tempos
-//    //    if (tempoInfos != null && tempoInfos.Length > 0)
-//    //    {
-//    //        // Ensure tempo infos are sorted by time
-//    //        TempoInfo[] orderedTempos =  tempoInfos.OrderBy(t => t.time).ToArray();
-//    //        // For each tempo change, create a tempo section
-//    //        int sectionCount = tempoInfos.Length;
-//    //        tempoSections = new MetronomeTrackSection[sectionCount];
-//    //        // First section is an exception (initializes offset values)
-//    //        tempoSections[0] = new MetronomeTrackSection()
-//    //        {
-//    //            // A tempo section contains the same infos as Tempo info
-//    //            tempo = new(orderedTempos[0]),
-//    //            // Plus time offsets for bar placements
-//    //            barOffset = 0f
-//    //        };
-//    //        // Other sections rely on previous sections to set offset values
-//    //        for (int i = 1; i < sectionCount; i++)
-//    //        {
-//    //            MetronomeTrackSection previousSection = tempoSections[i - 1];
-//    //            TempoInfo sectionTempo = orderedTempos[i];
-//    //            tempoSections[i] = new MetronomeTrackSection()
-//    //            {
-//    //                tempo = new(sectionTempo),
-//    //                barOffset = -previousSection.SecondsSinceLastBar(sectionTempo.time) / sectionTempo.SecondsPerBar
-//    //            };
-//    //        }
-//    //        // Locate beats and bars for more efficient reading
-//    //        float[] beats, bars;
-//    //        for (int i = 0; i < sectionCount - 1; i++)
-//    //        {
-//    //            tempoSections[i].GetTimes(tempoSections[i].tempo.time, tempoSections[i + 1].tempo.time, out beats, out bars);
-//    //            barTimes.AddRange(bars);
-//    //            beatTimes.AddRange(beats);
-//    //        }
-//    //        // Exception for last section: since it has virtually no end time, we set duration, bars and beats for the duration of one bar only
-//    //        MetronomeTrackSection lastSection = tempoSections[sectionCount - 1];
-//    //        float barDuration = lastSection.tempo.SecondsPerBar;
-//    //        lastSection.GetTimes(lastSection.tempo.time, lastSection.tempo.time + lastSection.tempo.SecondsPerBar, out beats, out bars);
-//    //        barTimes.AddRange(bars);
-//    //        beatTimes.AddRange(beats);
-//    //    }
-//    //}
+    public void GetBeat(float atTime, out int beatIndex, out float beatTime, out float nextBeatTime)
+    {
+        // Default out values
+        beatIndex = -1;
+        beatTime = float.NaN;
+        nextBeatTime = float.NaN;
+        // Search for beat info in beat track
+        int beatTrackLength = beatTimesSeconds != null ? beatTimesSeconds.Length : 0;
+        // A beat track needs at least two beats
+        if (beatTrackLength > 1)
+        {
+            // Find beat just before time
+            beatIndex = Array.FindLastIndex(beatTimesSeconds, t => t <= atTime);
+            if (beatIndex != -1)
+            {
+                // Beat was found
+                beatTime = beatTimesSeconds[beatIndex];
+                // Get next beat
+                if (beatIndex + 1 < beatTrackLength)
+                {
+                    // Next beat is withing track range
+                    nextBeatTime = beatTimesSeconds[beatIndex + 1];
+                }
+                else
+                {
+                    // Next beat is out of range: extrapolate
+                    if (beatIndex > 0)
+                    {
+                        float beatDuration = beatTime - beatTimesSeconds[beatIndex - 1];
+                        nextBeatTime = beatTime + beatDuration;
+                    }
+                    else Debug.LogWarning("Couldn't guess beat duration.");
+                }
+            }
+            else
+            {
+                // No beat found (time is before first beat): extrapolate
+                float beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
+                float floatingBeatIndex = (atTime - beatTimesSeconds[0]) / beatDuration;
+                beatIndex = Mathf.FloorToInt(floatingBeatIndex);
+                beatTime = beatTimesSeconds[0] + beatIndex * beatDuration;
+                nextBeatTime = beatTime + beatDuration;
+            }
+        }
+    }
 
-//    //public int CountBars(float fromTime, float toTime)
-//    //{
-//    //    int barCount = 0;
-//    //    // Ensure parameters are in the right order
-//    //    if (fromTime > toTime)
-//    //    {
-//    //        float switchValue = toTime;
-//    //        toTime = fromTime;
-//    //        fromTime = switchValue;
-//    //    }
-//    //    // Start at 'fromTime' tempo section
-//    //    int sectionIndex = GetTempoSectionIndex(fromTime);
-//    //    // Ponctual time exception
-//    //    if (fromTime == toTime)
-//    //        return barTimes.Contains(fromTime) ? 1 : 0;
-//    //    // Navigate from sections to sections
-//    //    float countFromTime = fromTime;
-//    //    float countToTime;
-//    //    while (sectionIndex != -1 && sectionIndex < Sections)
-//    //    {
-//    //        // Get section end time
-//    //        float sectionEnd;
-//    //        if (sectionIndex != Sections - 1) sectionEnd = tempoSections[sectionIndex + 1].tempo.time;
-//    //        // Consider last section to last forever
-//    //        else sectionEnd = toTime;
-//    //        // Count bars in this laps of time
-//    //        countToTime = Mathf.Min(sectionEnd, toTime);
-//    //        MetronomeTrackSection section = tempoSections[sectionIndex];
-//    //        barCount += Mathf.FloorToInt((countToTime - countFromTime - section.BarOffsetSeconds) / section.tempo.SecondsPerBar);
-//    //        // Move to next section
-//    //        if (countToTime < toTime)
-//    //        {
-//    //            countFromTime = countToTime;
-//    //            sectionIndex++;
-//    //        }
-//    //        // Or end counting
-//    //        else break;
-//    //    }
-//    //    return barCount;
-//    //}
+    public void GetBeat(int beatIndex, out float beatTime, out float nextBeatTime)
+    {
+        // Default out values
+        beatTime = float.NaN;
+        nextBeatTime = float.NaN;
+        // Search for beat info in beat track
+        int beatTrackLength = beatTimesSeconds != null ? beatTimesSeconds.Length : 0;
+        if (beatIndex >= 0 && beatIndex < beatTrackLength)
+        {
+            beatTime = beatTimesSeconds[beatIndex];
+            if (beatIndex + 1 < beatTrackLength)
+                nextBeatTime = beatTimesSeconds[beatIndex + 1];
+            else if (beatIndex > 0)
+            {
+                // Extrapolate for next beat time
+                float beatDuration = beatTime - beatTimesSeconds[beatIndex - 1];
+                nextBeatTime = beatTime + beatDuration;
+            }
+            else Debug.LogWarning("Couldn't guess beat duration.");
+        }
+        else
+        {
+            // Extrapolate for beat time
+            if (beatTrackLength > 1)
+            {
+                if (beatIndex < 0)
+                {
+                    float beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
+                    beatTime = beatTimesSeconds[0] + beatIndex * beatDuration;
+                    nextBeatTime = beatTime + beatDuration;
+                }
+                else if (beatIndex >= beatTrackLength)
+                {
+                    float beatDuration = beatTimesSeconds[beatTrackLength - 1] - beatTimesSeconds[beatTrackLength - 2];
+                    beatTime = beatTimesSeconds[beatTrackLength - 1] + (beatIndex - beatTrackLength) * beatDuration;
+                    nextBeatTime = beatTime + beatDuration;
+                }
+            }
+            else Debug.LogWarning("Couldn't guess beat duration.");
+        }
+    }
 
-//    //public int GetTempoSectionIndex(float atTime)
-//    //{
-//    //    int sectionCount = tempoSections != null ? tempoSections.Length : 0;
-//    //    if (sectionCount == 0) return -1;
-//    //    // Exception: atTime is before first tempo section
-//    //    if (tempoSections[0].tempo.time > atTime) return 0;
-//    //    // Move to next section until atTime is in section range
-//    //    for (int i = 0; i < sectionCount - 1; i++)
-//    //        if (tempoSections[i + 1].tempo.time > atTime) return i;
-//    //    // Exception: atTime is after last tempo section
-//    //    return sectionCount - 1;
-//    //}
-
-//    //public float GetBarProgress(float atTime)
-//    //{
-//    //    int sectionIndex = GetTempoSectionIndex(atTime);
-//    //    return GetBarProgress(atTime, sectionIndex);
-//    //}
-
-//    //public float GetBarProgress(float atTime, int sectionIndex)
-//    //{
-//    //    if (sectionIndex >= 0 && sectionIndex < Sections)
-//    //    {
-//    //        MetronomeTrackSection section = tempoSections[sectionIndex];
-//    //        float progressSeconds = section.SecondsSinceLastBar(atTime);
-//    //        float secondsPerBar = section.tempo.SecondsPerBar;
-//    //        if (secondsPerBar != 0f) return Mathf.Repeat(progressSeconds / secondsPerBar, 1f);
-//    //        else return 0f;
-//    //    }
-//    //    else return 0f;
-//    //}
-
-//    //public TempoInfo GetTempo(int sectionIndex)
-//    //{
-//    //    if (sectionIndex >= 0 && sectionIndex < Sections) return tempoSections[sectionIndex].tempo;
-//    //    else return new TempoInfo();
-//    //}
-
-//    //public TempoInfo GetTempo(float atTime) =>  GetTempo(GetTempoSectionIndex(atTime));
-//}
+}
