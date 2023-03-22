@@ -3,8 +3,6 @@ using Melanchall.DryWetMidi.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
-using Melanchall.DryWetMidi.Interaction;
 
 public class MIDIExtractor
 {
@@ -37,7 +35,7 @@ public class MIDIExtractor
             // Get meter changes
             TrackChunk[] timeSignatureChunks = FindChunksWithEventType(midi, MidiEventType.TimeSignature);
             if (timeSignatureChunks.Length == 1)
-                extracted.measure = GetMeasureChanges(timeSignatureChunks[0].Events, extracted.tempo);
+                extracted.measure = GetMeasureChanges(timeSignatureChunks[0].Events);
             else
             {
                 Debug.LogWarning("Incorrect signature chunks count (" + timeSignatureChunks.Length + ")");
@@ -135,7 +133,7 @@ public class MIDIExtractor
         return readTempo.ToArray();
     }
 
-    private MeasureInfo[] GetMeasureChanges(EventsCollection events, TempoInfo[] tempoChanges)
+    private MeasureInfo[] GetMeasureChanges(EventsCollection events)
     {
         List<MeasureInfo> readMeasure = new List<MeasureInfo>();
         // Initialize measure infos

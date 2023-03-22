@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public struct MeasureInfo
@@ -9,7 +10,16 @@ public struct MeasureInfo
     public float quarterNotesPerBeat;
 
     public float QuarterNotesPerBar => timeSignatureDenominator != 0 ? 4f * timeSignatureNumerator / timeSignatureDenominator : 0f;
-    public float BeatsPerBar => QuarterNotesPerBar != 0f ? quarterNotesPerBeat / QuarterNotesPerBar : 0f;
+    public int BeatsPerBar
+    {
+        get
+        {
+            float beatsPerBar = QuarterNotesPerBar != 0f ? QuarterNotesPerBar / quarterNotesPerBeat : 0;
+            if (beatsPerBar != Mathf.Floor(beatsPerBar))
+                Debug.LogWarning("QuarterNotePerBar (" + QuarterNotesPerBar + ") i no multiple of quarterNotesPerBeat (" + quarterNotesPerBeat + "). This will cause approximations and time errors.");
+            return (int)beatsPerBar;
+        }
+    }
 
     public MeasureInfo(int atBar)
     {
