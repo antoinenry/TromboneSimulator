@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using System;
 
 [ExecuteAlways]
 public class Metronome : MonoBehaviour
@@ -34,9 +35,11 @@ public class Metronome : MonoBehaviour
 
     public TempoInfo Tempo { get; private set; }
     public MeasureInfo Measure { get; private set; }
+    public float Beat { get; private set; }
+
+
     public float BarProgress { get; private set; }
     public float BeatProgress { get; private set; }
-    //public float BPM => 60f / Tempo.SecondsPerBeat;
 
     private AudioClip ClickTrack
     {
@@ -47,6 +50,12 @@ public class Metronome : MonoBehaviour
     private void Awake()
     {
         clickSource = GetComponent<AudioSource>();
+    }
+
+    private void OnEnable()
+    {
+        GetBeat(playTime, out int beatIndex, out float beatTime, out float nextBeatTime);
+        Beat = beatIndex + (playTime - beatTime) / (nextBeatTime - beatTime);
     }
 
     private void OnValidate()
@@ -188,27 +197,110 @@ public class Metronome : MonoBehaviour
         barTimesSeconds = barTimes.ToArray();
     }
 
-    private void MoveTime(float toTime) => MoveTime(playTime, toTime);
+    public void GetBeat(float atTime, out int beatIndex, out float beatTime, out float nextBeatTime)
+    {
+        // Default out values
+        beatIndex = -1;
+        beatTime = float.NaN;
+        nextBeatTime = float.NaN;
+        // Search for beat info in beat track
+        int beatTrackLength = beatTimesSeconds != null ? beatTimesSeconds.Length : 0;
+        // A beat track needs at least two beats
+        if (beatTrackLength > 1)
+        {
+            // Find beat just before time
+            beatIndex = Array.FindLastIndex(beatTimesSeconds, t => t <= atTime);
+            if (beatIndex != -1)
+            {
+                // Beat was found
+                beatTime = beatTimesSeconds[beatIndex];
+                // Get next beat
+                if (beatIndex + 1 < beatTrackLength)
+                {
+                    // Next beat is withing track range
+                    nextBeatTime = beatTimesSeconds[beatIndex + 1];
+                }
+                else
+                {
+                    // Next beat is out of range: extrapolate
+                    if (beatIndex > 0)
+                    {
+                        float beatDuration = beatTime - beatTimesSeconds[beatIndex - 1];
+                        nextBeatTime = beatTime + beatDuration;
+                    }
+                    else Debug.LogWarning("Couldn't guess beat duration.");
+                }
+            }
+            else
+            {
+                // No beat found (time is before first beat): extrapolate
+                float beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
+                float floatingBeatIndex = (atTime - beatTimesSeconds[0]) / beatDuration;
+                beatIndex = Mathf.FloorToInt(floatingBeatIndex);
+                beatTime = beatTimesSeconds[0] + beatIndex * beatDuration;
+                nextBeatTime = beatTime + beatDuration;
+            }
+        }
+    }
+
+    public void GetBeat(int beatIndex, out float beatTime, out float nextBeatTime)
+    {
+        // Default out values
+        beatTime = float.NaN;
+        nextBeatTime = float.NaN;
+        // Search for beat info in beat track
+        int beatTrackLength = beatTimesSeconds != null ? beatTimesSeconds.Length : 0;
+        if (beatIndex >= 0 && beatIndex < beatTrackLength)
+        {
+            beatTime = beatTimesSeconds[beatIndex];
+            if (beatIndex + 1 < beatTrackLength) 
+                nextBeatTime = beatTimesSeconds[beatIndex + 1];
+            else if (beatIndex > 0)
+            {
+                // Extrapolate for next beat time
+                float beatDuration = beatTime - beatTimesSeconds[beatIndex - 1];
+                nextBeatTime = beatTime + beatDuration;
+            }
+            else Debug.LogWarning("Couldn't guess beat duration.");
+        }
+        else
+        {
+            // Extrapolate for beat time
+            if (beatTrackLength > 1)
+            {
+                if (beatIndex < 0)
+                {
+                    float beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
+                    beatTime = beatTimesSeconds[0] + beatIndex * beatDuration;
+                    nextBeatTime = beatTime + beatDuration;
+                }
+                else if (beatIndex >= beatTrackLength)
+                {
+                    float beatDuration = beatTimesSeconds[beatTrackLength - 1] - beatTimesSeconds[beatTrackLength - 2];
+                    beatTime = beatTimesSeconds[beatTrackLength - 1] + (beatIndex - beatTrackLength) * beatDuration;
+                    nextBeatTime = beatTime + beatDuration;
+                }
+            }
+            else Debug.LogWarning("Couldn't guess beat duration.");
+        }
+    }
+
+    public void MoveTime(float toTime) => MoveTime(playTime, toTime);
 
     private void MoveTime(float fromTime, float toTime)
     {
-        //// Read tempo infos
-        //int tempoSectionIndex = tempoTrack.GetTempoSectionIndex(toTime);
-        //Tempo = tempoTrack.GetTempo(tempoSectionIndex);
-        //// Get bar and beat progress
-        //BarProgress = tempoTrack.GetBarProgress(toTime, tempoSectionIndex);
-        //BeatProgress = (BarProgress * Tempo.BeatsPerBar) % 1f;
-        //// Get bars passed during this lap of time
-        //int barCount = tempoTrack.CountBars(fromTime, toTime);
-        //float oldBarProgress = BarProgress;
-        //// Trigger events
-        //if (fromTime != toTime)
-        //{
-        //    onBarProgress.Invoke(oldBarProgress, BarProgress);
-        //    for (int i = 0; i < barCount; i++) onBar.Invoke();
-        //}
-        // Update playTime
+        // Update playTime in seconds
         playTime = toTime;
+        // Update beat
+        int beatIndex = Mathf.FloorToInt(Beat);
+        GetBeat(beatIndex, out float beatTime, out float nextBeatTime);
+        if (playTime < beatTime || playTime > nextBeatTime)
+        {
+            // Beat has changed
+            GetBeat(playTime, out beatIndex, out beatTime, out nextBeatTime);
+        }
+        // Update beat progress
+        Beat = beatIndex + (playTime - beatTime) / (nextBeatTime - beatTime);
     }
 
     private void GenerateClickTrack()
