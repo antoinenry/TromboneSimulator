@@ -32,11 +32,9 @@ public class Metronome : MonoBehaviour
     private Playhead activePlayhead;
     private AudioSource clickSource;
 
+    public MetronomeTimeInfo TimeInfo { get; private set; }
     public TempoInfo Tempo { get; private set; }
     public MeasureInfo Measure { get; private set; }
-    public float Beat { get; private set; }
-
-
     public float BarProgress { get; private set; }
     public float BeatProgress { get; private set; }
 
@@ -53,13 +51,11 @@ public class Metronome : MonoBehaviour
 
     private void OnEnable()
     {
-        rythmTrack.GetBeat(playTime, out int beatIndex, out float beatTime, out float nextBeatTime);
-        Beat = beatIndex + (playTime - beatTime) / (nextBeatTime - beatTime);
+        TimeInfo = rythmTrack.GetInfo(playTime);
     }
 
     private void OnValidate()
     {
-        Debug.Log("OnValidate");
         rythmTrack.SetRythm(tempos, measures);
     }
 
@@ -102,15 +98,7 @@ public class Metronome : MonoBehaviour
         // Update playTime in seconds
         playTime = toTime;
         // Update beat
-        int beatIndex = Mathf.FloorToInt(Beat);
-        rythmTrack.GetBeat(beatIndex, out float beatTime, out float nextBeatTime);
-        if (playTime < beatTime || playTime > nextBeatTime)
-        {
-            // Beat has changed
-            rythmTrack.GetBeat(playTime, out beatIndex, out beatTime, out nextBeatTime);
-        }
-        // Update beat progress
-        Beat = beatIndex + (playTime - beatTime) / (nextBeatTime - beatTime);
+        TimeInfo = rythmTrack.GetInfo(playTime);
     }
 
     private void GenerateClickTrack()

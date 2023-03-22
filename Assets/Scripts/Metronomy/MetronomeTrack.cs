@@ -109,69 +109,87 @@ public struct MetronomeTrack
         barTimesSeconds = barTimes.ToArray();
     }
 
-    public void GetBeat(float atTime, out int beatIndex, out float beatTime, out float nextBeatTime)
+    public MetronomeTimeInfo GetInfo(float atTime)
     {
         // Default out values
-        beatIndex = -1;
-        beatTime = float.NaN;
-        nextBeatTime = float.NaN;
+        MetronomeTimeInfo info = new MetronomeTimeInfo()
+        {
+            beatIndex = -1,
+            beatTime = float.NaN,
+            beatDuration = float.NaN,
+            barIndex = -1,
+            barTime = float.NaN,
+            nextBarTime = float.NaN
+        };
         // Search for beat info in beat track
         int beatTrackLength = beatTimesSeconds != null ? beatTimesSeconds.Length : 0;
         // A beat track needs at least two beats
         if (beatTrackLength > 1)
         {
             // Find beat just before time
-            beatIndex = Array.FindLastIndex(beatTimesSeconds, t => t <= atTime);
-            if (beatIndex != -1)
+            int getBeatIndex = Array.FindLastIndex(beatTimesSeconds, t => t <= atTime);
+            if (getBeatIndex != -1)
             {
-                // Beat was found
-                beatTime = beatTimesSeconds[beatIndex];
-                // Get next beat
-                if (beatIndex + 1 < beatTrackLength)
+                // A beat was found before time
+                if (getBeatIndex < beatTrackLength - 1)
                 {
-                    // Next beat is withing track range
-                    nextBeatTime = beatTimesSeconds[beatIndex + 1];
+                    // Beat is withing track range: set beat time and index from track
+                    info.beatIndex = getBeatIndex;
+                    info.beatTime = beatTimesSeconds[getBeatIndex];
+                    // Get next beat
+                    if (info.beatIndex + 1 < beatTrackLength)
+                        // Next beat is withing track range
+                        info.beatDuration = beatTimesSeconds[info.beatIndex + 1] - info.beatTime;
+                    else
+                    {
+                        // Next beat is out of range: extrapolate
+                        if (info.beatIndex > 0) info.beatDuration = info.beatTime - beatTimesSeconds[info.beatIndex - 1];
+                        else Debug.LogWarning("Couldn't guess beat duration.");
+                    }
                 }
                 else
                 {
-                    // Next beat is out of range: extrapolate
-                    if (beatIndex > 0)
-                    {
-                        float beatDuration = beatTime - beatTimesSeconds[beatIndex - 1];
-                        nextBeatTime = beatTime + beatDuration;
-                    }
-                    else Debug.LogWarning("Couldn't guess beat duration.");
+                    // Found beat is last beat of track: we need to extrapolate time and index
+                    info.beatDuration = beatTimesSeconds[beatTrackLength - 1] - beatTimesSeconds[beatTrackLength - 2];
+                    info.beatIndex = beatTrackLength + Mathf.FloorToInt((atTime - beatTimesSeconds[beatTrackLength - 1]) / info.beatDuration);
+                    info.beatTime = beatTimesSeconds[beatTrackLength - 1] + (info.beatIndex - beatTrackLength) * info.beatDuration;
                 }
             }
             else
             {
                 // No beat found (time is before first beat): extrapolate
-                float beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
-                float floatingBeatIndex = (atTime - beatTimesSeconds[0]) / beatDuration;
-                beatIndex = Mathf.FloorToInt(floatingBeatIndex);
-                beatTime = beatTimesSeconds[0] + beatIndex * beatDuration;
-                nextBeatTime = beatTime + beatDuration;
+                info.beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
+                float floatingBeatIndex = (atTime - beatTimesSeconds[0]) / info.beatDuration;
+                info.beatIndex = Mathf.FloorToInt(floatingBeatIndex);
+                info.beatTime = beatTimesSeconds[0] + info.beatIndex * info.beatDuration;
             }
         }
+        return info;
     }
 
-    public void GetBeat(int beatIndex, out float beatTime, out float nextBeatTime)
+    public MetronomeTimeInfo GetInfo(int atBeat)
     {
         // Default out values
-        beatTime = float.NaN;
-        nextBeatTime = float.NaN;
+        MetronomeTimeInfo info = new MetronomeTimeInfo()
+        {
+            beatIndex = atBeat,
+            beatTime = float.NaN,
+            beatDuration = float.NaN,
+            barIndex = -1,
+            barTime = float.NaN,
+            nextBarTime = float.NaN
+        };
         // Search for beat info in beat track
         int beatTrackLength = beatTimesSeconds != null ? beatTimesSeconds.Length : 0;
-        if (beatIndex >= 0 && beatIndex < beatTrackLength)
+        if (atBeat >= 0 && atBeat < beatTrackLength)
         {
-            beatTime = beatTimesSeconds[beatIndex];
-            if (beatIndex + 1 < beatTrackLength)
-                nextBeatTime = beatTimesSeconds[beatIndex + 1];
-            else if (beatIndex > 0)
+            info.beatTime = beatTimesSeconds[atBeat];
+            if (atBeat + 1 < beatTrackLength)
+                info.beatDuration = beatTimesSeconds[atBeat + 1] - info.beatTime;
+            else if (atBeat > 0)
             {
                 // Extrapolate for next beat time
-                float beatDuration = beatTime - beatTimesSeconds[beatIndex - 1];
-                nextBeatTime = beatTime + beatDuration;
+                info.beatDuration = info.beatTime - beatTimesSeconds[atBeat - 1];
             }
             else Debug.LogWarning("Couldn't guess beat duration.");
         }
@@ -180,21 +198,19 @@ public struct MetronomeTrack
             // Extrapolate for beat time
             if (beatTrackLength > 1)
             {
-                if (beatIndex < 0)
+                if (atBeat < 0)
                 {
-                    float beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
-                    beatTime = beatTimesSeconds[0] + beatIndex * beatDuration;
-                    nextBeatTime = beatTime + beatDuration;
+                    info.beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
+                    info.beatTime = beatTimesSeconds[0] + atBeat * info.beatDuration;
                 }
-                else if (beatIndex >= beatTrackLength)
+                else if (atBeat >= beatTrackLength)
                 {
-                    float beatDuration = beatTimesSeconds[beatTrackLength - 1] - beatTimesSeconds[beatTrackLength - 2];
-                    beatTime = beatTimesSeconds[beatTrackLength - 1] + (beatIndex - beatTrackLength) * beatDuration;
-                    nextBeatTime = beatTime + beatDuration;
+                    info.beatDuration = beatTimesSeconds[beatTrackLength - 1] - beatTimesSeconds[beatTrackLength - 2];
+                    info.beatTime = beatTimesSeconds[beatTrackLength - 1] + (atBeat - beatTrackLength) * info.beatDuration;
                 }
             }
             else Debug.LogWarning("Couldn't guess beat duration.");
         }
+        return info;
     }
-
 }
