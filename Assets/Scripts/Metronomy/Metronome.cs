@@ -49,11 +49,7 @@ public class Metronome : MonoBehaviour
     private void OnEnable()
     {
         CurrentBeat = rythmTrack.GetBeat(playTime);
-        if (Application.isPlaying && clickSource != null)
-        {
-            GenerateClickTrack();
-            clickSource.Play();
-        }
+        CurrentBar = rythmTrack.GetBar(playTime);
     }
 
     private void OnValidate()
@@ -153,42 +149,43 @@ public class Metronome : MonoBehaviour
 
     private void AudioClickPlayback()
     {
-        //// Turn audio click off
-        //if (click == false)
-        //{
-        //    clickSource.Stop();
-        //    return;
-        //}
-        //// Check audio track
-        //if (ClickTrack == null)
-        //{
-        //    Debug.LogWarning("Click track was not generated. Stopping audio click.");
-        //    click = false;
-        //    return;
-        //}
-        //// Loop audio so metronome doesn't stop on its own
-        //clickSource.Play();
-        //clickSource.loop = true;
-        //// Loop click track before first tempo section and after last tempo section
-        //if (playTime < tempoTrack.FirstSectionStart)
-        //{
-        //    int audioTimeSamples = clickSource.timeSamples;
-        //    int firstSectionDurationSamples = (int)(tempoTrack.FirstSectionEnd - tempoTrack.FirstSectionStart) * sampleFrequency;
-        //    if (audioTimeSamples >= firstSectionDurationSamples)
-        //    {
-        //        clickSource.timeSamples = (int)Mathf.Repeat(audioTimeSamples, firstSectionDurationSamples);
-        //    }
-        //}
-        //else if (playTime > tempoTrack.LastSectionStart)
-        //{
-        //    int audioTimeSamples = clickSource.timeSamples;
-        //    int lastSectionStartSamples = (int)(tempoTrack.LastSectionStart - tempoTrack.FirstSectionStart) * sampleFrequency;
-        //    int lastSectionEndSamples = (int)(tempoTrack.LastSectionEnd - tempoTrack.FirstSectionStart) * sampleFrequency;
-        //    if (audioTimeSamples < lastSectionStartSamples || audioTimeSamples >= lastSectionEndSamples)
-        //    {
-        //        int lastSectionDurationSamples = (int)(tempoTrack.LastSectionEnd - tempoTrack.LastSectionStart) * sampleFrequency;
-        //        clickSource.timeSamples = (int)(lastSectionStartSamples + Mathf.Repeat(audioTimeSamples, lastSectionDurationSamples));
-        //    }
-        //}
+        if (ClickTrack == null) return;
+        // Turn audio click off
+        if (click == false)
+        {
+            clickSource.Stop();
+            return;
+        }
+        // Check audio track
+        if (ClickTrack == null)
+        {
+            Debug.LogWarning("Click track was not generated. Stopping audio click.");
+            click = false;
+            return;
+        }
+        // Sync audio on playTime
+        if (timeMode != TimeMode.FollowAudio)
+        {
+            //float audioTime;
+            //// Pre-track loop
+            //if (playTime < 0f)
+            //{
+
+            //}
+            //// In track
+            //else if (playTime < ClickTrack.length)
+            //{
+            //    audioTime = playTime;
+            //}
+            //// Post-track loop
+            //else
+            //{
+
+            //}
+            //// Sync (with tolerance)
+            //if (Mathf.Abs(clickSource.time - audioTime) > clickSyncTolerance) clickSource.time = audioTime;
+        }
+        // Play audio
+        if (clickSource.isPlaying == false) clickSource.Play();
     }
 }
