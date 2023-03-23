@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -48,6 +49,11 @@ public class Metronome : MonoBehaviour
     private void OnEnable()
     {
         CurrentBeat = rythmTrack.GetBeat(playTime);
+        if (Application.isPlaying && clickSource != null)
+        {
+            GenerateClickTrack();
+            clickSource.Play();
+        }
     }
 
     private void OnValidate()
@@ -86,7 +92,7 @@ public class Metronome : MonoBehaviour
             if (p != null) p.onMove.AddListener(MoveTime);
             activePlayhead = p;
         }
-    }   
+    }
     
     public void MoveTime(float toTime) => MoveTime(playTime, toTime);
 
@@ -108,31 +114,41 @@ public class Metronome : MonoBehaviour
 
     private void GenerateClickTrack()
     {
-        //float trackDurationSeconds = tempoTrack.LastSectionEnd - tempoTrack.FirstSectionStart;
-        //if (trackDurationSeconds <= 0f)
-        //{
-        //    ClickTrack = null;
-        //    return;
-        //}
-        //// Create empty click track
-        //int trackDurationSamples = Mathf.CeilToInt(trackDurationSeconds * sampleFrequency);
-        //float[] clickTrackSamples = new float[trackDurationSamples];
-        //// Add bar sounds
-        //float[] barTimes = tempoTrack.Bars;
-        //if (barTimes != null && barClickSound != null)
-        //{
-        //    if (barClickSound.frequency != sampleFrequency) Debug.LogWarning("Bar click sample rate mismatch (" + barClickSound.frequency + "Hz).");
-        //    // Sample bar sound
-        //    float[] barClickSamples = new float[barClickSound.samples];
-        //    barClickSound.GetData(barClickSamples, 0);
-        //    // Add samples at bar times
-        //    foreach (float t in barTimes) AudioSampling.AddTo(ref clickTrackSamples, barClickSamples, Mathf.CeilToInt(t * sampleFrequency));
-        //}
-        //// Add beat sounds
-
-        //// Set audio clip
-        //ClickTrack = AudioClip.Create("ClickTrack", trackDurationSamples, 1, sampleFrequency, false);
-        //ClickTrack.SetData(clickTrackSamples, 0);
+        float trackDurationSeconds = rythmTrack.TrackDuration;
+        // Create empty click track
+        int trackDurationSamples = Mathf.CeilToInt(trackDurationSeconds * sampleFrequency);
+        float[] clickTrackSamples = new float[trackDurationSamples];
+        // Add bar sounds
+        if (barClickSound != null)
+        {
+            float[] barClickSamples = new float[barClickSound.samples];
+            barClickSound.GetData(barClickSamples, 0);
+            barClickSamples = AudioSampling.StereoToMono(barClickSamples);
+            foreach (float barTime in rythmTrack.barTimes)
+            {
+                int timeSamples = Mathf.FloorToInt(barTime * sampleFrequency);
+                AudioSampling.AddTo(ref clickTrackSamples, barClickSamples, timeSamples);
+            }
+        }
+        // Add beat sounds
+        if (beatClickSound != null)
+        {
+            float[] beatClickSamples = new float[beatClickSound.samples];
+            beatClickSound.GetData(beatClickSamples, 0);
+            beatClickSamples = AudioSampling.StereoToMono(beatClickSamples);
+            foreach (float beatTime in rythmTrack.beatTimes)
+            {
+                // Don't add beat sound on bar
+                if (Array.IndexOf(rythmTrack.barTimes, beatTime) == -1)
+                {
+                    int timeSamples = Mathf.FloorToInt(beatTime * sampleFrequency);
+                    AudioSampling.AddTo(ref clickTrackSamples, beatClickSamples, timeSamples);
+                }
+            }
+        }
+        // Set audio clip
+        ClickTrack = AudioClip.Create("ClickTrack", trackDurationSamples, 1, sampleFrequency, false);
+        ClickTrack.SetData(clickTrackSamples, 0);
     }
 
     private void AudioClickPlayback()

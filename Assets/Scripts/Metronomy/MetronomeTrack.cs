@@ -15,6 +15,15 @@ public struct MetronomeTrack
 
     public float StartBarDuration => startBeatDuration * startBeatsPerBar;
     public float EndBarDuration => endBeatsPerBar * endBeatDuration;
+    public float TrackDuration
+    {
+        get
+        {
+            int beatTrackLength = beatTimes != null ? beatTimes.Length : 0;
+            return beatTrackLength > 1 ? beatTimes[beatTrackLength - 1] - beatTimes[0] + endBeatDuration : 0f;
+        }
+
+    }
 
     #region Track setup
     public void SetRythm(TempoInfo[] tempoChanges, MeasureInfo[] measureChanges)
