@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections.Generic;
-using System;
 
 [ExecuteAlways]
 public class Metronome : MonoBehaviour
@@ -32,7 +30,8 @@ public class Metronome : MonoBehaviour
     private Playhead activePlayhead;
     private AudioSource clickSource;
 
-    public MetronomeTimeInfo TimeInfo { get; private set; }
+    public BeatInfo Beat { get; private set; }
+    public BarInfo Bar { get; private set; }
     public TempoInfo Tempo { get; private set; }
     public MeasureInfo Measure { get; private set; }
     public float BarProgress { get; private set; }
@@ -51,12 +50,13 @@ public class Metronome : MonoBehaviour
 
     private void OnEnable()
     {
-        TimeInfo = rythmTrack.GetInfo(playTime);
+        Beat = rythmTrack.GetBeat(playTime);
     }
 
     private void OnValidate()
     {
         rythmTrack.SetRythm(tempos, measures);
+        MoveTime(playTime);
     }
 
     private void FixedUpdate()
@@ -95,10 +95,11 @@ public class Metronome : MonoBehaviour
 
     private void MoveTime(float fromTime, float toTime)
     {
-        // Update playTime in seconds
+        // Update playTime
         playTime = toTime;
-        // Update beat
-        TimeInfo = rythmTrack.GetInfo(playTime);
+        // Update tempo and measure info
+        Beat = rythmTrack.GetBeat(playTime);
+        Bar = rythmTrack.GetBar(playTime);
     }
 
     private void GenerateClickTrack()

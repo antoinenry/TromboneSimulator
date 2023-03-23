@@ -5,19 +5,35 @@ using System.Collections.Generic;
 [Serializable]
 public struct MetronomeTrack
 {
-    public float[] beatTimesSeconds;
-    public float[] barTimesSeconds;
+    public float[] beatTimes;
+    public float[] barTimes;
+    [Header("Limit Values")]
+    public float startBeatDuration;
+    public int startBeatsPerBar;
+    public float endBeatDuration;
+    public int endBeatsPerBar;
 
+    public float StartBarDuration => startBeatDuration * startBeatsPerBar;
+    public float EndBarDuration => endBeatsPerBar * endBeatDuration;
+
+    #region Track setup
     public void SetRythm(TempoInfo[] tempoChanges, MeasureInfo[] measureChanges)
     {
         // Generate beat and bar times from tempo and measure changes
-        List<float> beatTimes = new List<float>();
-        List<float> barTimes = new List<float>();
+        List<float> getBeatTimes = new List<float>();
+        List<float> getBarTimes = new List<float>();
         int tempoChangesCount = tempoChanges != null ? tempoChanges.Length : 0;
         int measureChangesCount = measureChanges != null ? measureChanges.Length : 0;
-        // Initialize tempo and measure (default values at time and bar = 0)
-        TempoInfo tempoInfo = new TempoInfo(0f);
-        MeasureInfo measureInfo = new MeasureInfo(0);
+        // Initialize tempo and measure
+        TempoInfo tempoInfo = tempoChangesCount > 0 ? tempoChanges[0] : new TempoInfo(0f);
+        MeasureInfo measureInfo = measureChangesCount > 0 ? measureChanges[0] : new MeasureInfo(0);
+        // Get limit values
+        startBeatDuration = tempoInfo.secondsPerQuarterNote * measureInfo.quarterNotesPerBeat;
+        startBeatsPerBar = measureInfo.BeatsPerBar;
+        endBeatDuration =
+            (tempoChangesCount > 1 ? tempoChanges[tempoChangesCount - 1].secondsPerQuarterNote : tempoInfo.secondsPerQuarterNote)
+            * (measureChangesCount > 1 ? measureChanges[measureChangesCount - 1].quarterNotesPerBeat : measureInfo.quarterNotesPerBeat);
+        endBeatsPerBar = measureChangesCount > 1 ? measureChanges[measureChangesCount - 1].BeatsPerBar : startBeatsPerBar;
         // Units to navigate through time, tempos and measures
         int tempoChangeIndex = 0;
         int measureChangeIndex = 0;
@@ -39,8 +55,8 @@ public struct MetronomeTrack
             // Abort when those parameters are incorrect
             if (beatDuration <= 0f || beatsPerBar <= 0)
             {
-                beatTimesSeconds = null;
-                barTimesSeconds = null;
+                beatTimes = null;
+                barTimes = null;
                 return;
             }
             // Scope for next tempo change
@@ -77,9 +93,9 @@ public struct MetronomeTrack
                 // When a beat starts, add beat time
                 if (timeInBeats % 1f == 0f)
                 {
-                    beatTimes.Add(timeInSeconds);
+                    getBeatTimes.Add(timeInSeconds);
                     // When a bar starts, add bar time
-                    if (timeInBars % 1f == 0f) barTimes.Add(timeInSeconds);
+                    if (timeInBars % 1f == 0f) getBarTimes.Add(timeInSeconds);
                 }
                 // Time incrementation: next beat
                 float timeStepBeats = 1f - (timeInBeats % 1f);
@@ -105,112 +121,118 @@ public struct MetronomeTrack
             if (timeInBars >= nextMeasureChangeBars) measureChangeIndex++;
         }
         // End
-        beatTimesSeconds = beatTimes.ToArray();
-        barTimesSeconds = barTimes.ToArray();
+        beatTimes = getBeatTimes.ToArray();
+        barTimes = getBarTimes.ToArray();
     }
+    #endregion
 
-    public MetronomeTimeInfo GetInfo(float atTime)
+    #region Beat getters
+    public int GetBeatIndex(float time)
     {
-        // Default out values
-        MetronomeTimeInfo info = new MetronomeTimeInfo()
+        int beatTrackLength = beatTimes != null ? beatTimes.Length : 0;
+        if (beatTrackLength > 0)
         {
-            beatIndex = -1,
-            beatTime = float.NaN,
-            beatDuration = float.NaN,
-            barIndex = -1,
-            barTime = float.NaN,
-            nextBarTime = float.NaN
-        };
-        // Search for beat info in beat track
-        int beatTrackLength = beatTimesSeconds != null ? beatTimesSeconds.Length : 0;
-        // A beat track needs at least two beats
-        if (beatTrackLength > 1)
-        {
-            // Find beat just before time
-            int getBeatIndex = Array.FindLastIndex(beatTimesSeconds, t => t <= atTime);
+            // Find closest beat before time
+            int getBeatIndex = Array.FindLastIndex(beatTimes, t => t <= time);
             if (getBeatIndex != -1)
             {
-                // A beat was found before time
-                if (getBeatIndex < beatTrackLength - 1)
-                {
-                    // Beat is withing track range: set beat time and index from track
-                    info.beatIndex = getBeatIndex;
-                    info.beatTime = beatTimesSeconds[getBeatIndex];
-                    // Get next beat
-                    if (info.beatIndex + 1 < beatTrackLength)
-                        // Next beat is withing track range
-                        info.beatDuration = beatTimesSeconds[info.beatIndex + 1] - info.beatTime;
-                    else
-                    {
-                        // Next beat is out of range: extrapolate
-                        if (info.beatIndex > 0) info.beatDuration = info.beatTime - beatTimesSeconds[info.beatIndex - 1];
-                        else Debug.LogWarning("Couldn't guess beat duration.");
-                    }
-                }
-                else
-                {
-                    // Found beat is last beat of track: we need to extrapolate time and index
-                    info.beatDuration = beatTimesSeconds[beatTrackLength - 1] - beatTimesSeconds[beatTrackLength - 2];
-                    info.beatIndex = beatTrackLength + Mathf.FloorToInt((atTime - beatTimesSeconds[beatTrackLength - 1]) / info.beatDuration);
-                    info.beatTime = beatTimesSeconds[beatTrackLength - 1] + (info.beatIndex - beatTrackLength) * info.beatDuration;
-                }
+                // Beat is withing track range
+                if (getBeatIndex < beatTrackLength - 1) return getBeatIndex;
+                // Found beat is after the end of track: we need to extrapolate time and index
+                else return beatTrackLength - 1 + Mathf.FloorToInt((time - beatTimes[beatTrackLength - 1]) / endBeatDuration);
             }
+            // Time is before first beat: extrapolate
             else
             {
-                // No beat found (time is before first beat): extrapolate
-                info.beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
-                float floatingBeatIndex = (atTime - beatTimesSeconds[0]) / info.beatDuration;
-                info.beatIndex = Mathf.FloorToInt(floatingBeatIndex);
-                info.beatTime = beatTimesSeconds[0] + info.beatIndex * info.beatDuration;
+                float floatingBeatIndex = (time - beatTimes[0]) / startBeatDuration;
+                return Mathf.FloorToInt(floatingBeatIndex);
             }
         }
-        return info;
+        // Beat track is empty, return 0 as default index
+        return 0;
     }
 
-    public MetronomeTimeInfo GetInfo(int atBeat)
+    public float GetBeatStartTime(int beatIndex)
     {
-        // Default out values
-        MetronomeTimeInfo info = new MetronomeTimeInfo()
-        {
-            beatIndex = atBeat,
-            beatTime = float.NaN,
-            beatDuration = float.NaN,
-            barIndex = -1,
-            barTime = float.NaN,
-            nextBarTime = float.NaN
-        };
-        // Search for beat info in beat track
-        int beatTrackLength = beatTimesSeconds != null ? beatTimesSeconds.Length : 0;
-        if (atBeat >= 0 && atBeat < beatTrackLength)
-        {
-            info.beatTime = beatTimesSeconds[atBeat];
-            if (atBeat + 1 < beatTrackLength)
-                info.beatDuration = beatTimesSeconds[atBeat + 1] - info.beatTime;
-            else if (atBeat > 0)
-            {
-                // Extrapolate for next beat time
-                info.beatDuration = info.beatTime - beatTimesSeconds[atBeat - 1];
-            }
-            else Debug.LogWarning("Couldn't guess beat duration.");
-        }
-        else
-        {
-            // Extrapolate for beat time
-            if (beatTrackLength > 1)
-            {
-                if (atBeat < 0)
-                {
-                    info.beatDuration = beatTimesSeconds[1] - beatTimesSeconds[0];
-                    info.beatTime = beatTimesSeconds[0] + atBeat * info.beatDuration;
-                }
-                else if (atBeat >= beatTrackLength)
-                {
-                    info.beatDuration = beatTimesSeconds[beatTrackLength - 1] - beatTimesSeconds[beatTrackLength - 2];
-                    info.beatTime = beatTimesSeconds[beatTrackLength - 1] + (atBeat - beatTrackLength) * info.beatDuration;
-                }
-            }
-            else Debug.LogWarning("Couldn't guess beat duration.");
-        }
-        return info;
+        int beatTrackLength = beatTimes != null ? beatTimes.Length : 0;
+        if (beatIndex <= 0) return startBeatDuration * beatIndex;
+        else if (beatIndex < beatTrackLength - 1) return beatTimes[beatIndex];
+        else return endBeatDuration * (beatIndex - beatTrackLength + 1);
     }
+
+    public float GetBeatDuration(int beatIndex)
+    {
+        int beatTrackLength = beatTimes != null ? beatTimes.Length : 0;
+        if (beatIndex <= 0) return startBeatDuration;
+        else if (beatIndex < beatTrackLength - 1) return beatTimes[beatIndex + 1] - beatTimes[beatIndex];
+        else return endBeatDuration;
+    }
+
+    public BeatInfo GetBeat(int beatIndex) => new BeatInfo()
+    {
+        index = beatIndex,
+        startTime = GetBeatStartTime(beatIndex),
+        duration = GetBeatDuration(beatIndex)
+    };
+
+    public BeatInfo GetBeat(float time) => GetBeat(GetBeatIndex(time));
+    #endregion
+
+    #region Bar getters
+    public int GetBarIndex(float time)
+    {
+        int barTrackLength = barTimes != null ? barTimes.Length : 0;
+        if (barTrackLength > 0)
+        {
+            // Find closest bar before time
+            int getBarIndex = Array.FindLastIndex(barTimes, t => t <= time);
+            if (getBarIndex != -1)
+            {
+                // Bar is withing track range
+                if (getBarIndex < barTrackLength - 1) return getBarIndex;
+                // Found bar is after the end of track: we need to extrapolate time and index
+                else return barTrackLength - 1 + Mathf.FloorToInt((time - barTimes[barTrackLength - 1]) / EndBarDuration);
+            }
+            // Time is before first bar: extrapolate
+            else
+            {
+                float floatingBarIndex = (time - barTimes[0]) / StartBarDuration;
+                return Mathf.FloorToInt(floatingBarIndex);
+            }
+        }
+        // Bar track is empty, return 0 as default index
+        return 0;
+    }
+
+    public float GetBarStartTime(int barIndex)
+    {
+        int barTrackLength = barTimes != null ? barTimes.Length : 0;
+        if (barIndex <= 0) return StartBarDuration * barIndex;
+        else if (barIndex < barTrackLength - 1) return barTimes[barIndex];
+        else return EndBarDuration * (barIndex - barTrackLength + 1);
+    }
+
+    public float GetBarDuration(int barIndex)
+    {
+        int barTrackLength = barTimes != null ? barTimes.Length : 0;
+        if (barIndex <= 0) return StartBarDuration;
+        else if (barIndex < barTrackLength - 1) return barTimes[barIndex + 1] - barTimes[barIndex];
+        else return EndBarDuration;
+    }
+
+    public BarInfo GetBar(int barIndex)
+    {
+        BarInfo bar = new BarInfo()
+        {
+            index = barIndex,
+            startTime = GetBarStartTime(barIndex),
+            durationInSeconds = GetBarDuration(barIndex)
+        };
+        bar.startBeatIndex = GetBeatIndex(bar.startTime);
+        bar.durationInBeats = GetBeatIndex(bar.startTime + bar.durationInSeconds) - bar.startBeatIndex;
+        return bar;
+    }
+
+    public BarInfo GetBar(float time) => GetBar(GetBarIndex(time));
+    #endregion
 }

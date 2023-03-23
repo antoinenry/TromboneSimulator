@@ -250,18 +250,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  timeMode: 0
+  timeMode: 1
   playhead: {fileID: 0}
-  playTime: 0.33
+  playTime: 1.94
   tempos:
-  - time: 0
-    secondsPerQuarterNote: 1
+  - time: 1
+    secondsPerQuarterNote: 0.5
   measures:
   - bar: 0
-    timeSignatureNumerator: 3
-    timeSignatureDenominator: 4
-    quarterNotesPerBeat: 1
-  - bar: 1
     timeSignatureNumerator: 4
     timeSignatureDenominator: 4
     quarterNotesPerBeat: 1
