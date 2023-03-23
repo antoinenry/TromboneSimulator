@@ -256,7 +256,7 @@ public class LevelLoader : MonoBehaviour
         ClickTimer countdown = new ClickTimer(metronome);
         countdown.SetMaxSpeed(-Mathf.Abs(maxCountDownSpeed));
         countdown.onStep.AddListener(OnCountdownStep);
-        int countdownStartStep = (int)metronome.Measure.BeatsPerBar;
+        int countdownStartStep = (int)metronome.CurrentBar.durationInBeats;
         while (countdownStartStep < startCountdownValue) countdownStartStep *= 2;
         // Wait for player to grab the trombone, then start countdown
         GUI.ShowGrabTromboneMessage();

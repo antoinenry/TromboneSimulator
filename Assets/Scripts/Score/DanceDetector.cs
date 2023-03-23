@@ -22,18 +22,18 @@ public class DanceDetector : MonoBehaviour
 
     private void OnEnable()
     {
-        metronome.onBarProgress.AddListener(OnMetronomeBarProgress);
-        metronome.onBeat.AddListener(OnMetronomeClick);
+        metronome.onTimeChange.AddListener(OnMetronomeProgress);
+        metronome.onBeatChange.AddListener(OnMetronomeBeat);
     }
 
     private void OnDisable()
     {
-        metronome.onBarProgress.RemoveListener(OnMetronomeBarProgress);
-        metronome.onBeat.RemoveListener(OnMetronomeClick);
+        metronome.onTimeChange.RemoveListener(OnMetronomeProgress);
+        metronome.onBeatChange.RemoveListener(OnMetronomeBeat);
     }
 
 
-    private void OnMetronomeBarProgress(float from, float to)
+    private void OnMetronomeProgress(float fromTime, float toTime)
     {
         if (dancer != null)
         {
@@ -43,8 +43,8 @@ public class DanceDetector : MonoBehaviour
             {
                 float time = Time.time;
                 float dancePeriod = Mathf.Abs(time - lowTime);
-                //float error = Mathf.Abs(dancePeriod / metronome.Tempo.SecondsPerBeat - 1f);
-                //periodAccuracy = 1f - Mathf.Clamp01(error);
+                float error = Mathf.Abs(dancePeriod / metronome.CurrentBeat.duration - 1f);
+                periodAccuracy = 1f - Mathf.Clamp01(error);
                 lowTime = Time.time;
                 dancingDown = false;
             }
@@ -59,7 +59,7 @@ public class DanceDetector : MonoBehaviour
         }
     }
 
-    private void OnMetronomeClick()
+    private void OnMetronomeBeat(int fromBeat, int toBeat)
     {
         if (periodAccuracy >= minimumAccuracy) onDanceBeat.Invoke();
         else onMissBeat.Invoke();

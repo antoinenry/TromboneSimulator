@@ -21,26 +21,23 @@ public class Metronome : MonoBehaviour
     public AudioClip beatClickSound;
     public float clickSyncTolerance = .05f;
     [Header("Events")]
-    public UnityEvent onBar;
-    public UnityEvent<float, float> onBarProgress;
-    public UnityEvent onBeat;
-    public UnityEvent<float, float> onBeatProgress;
+    public UnityEvent<float, float> onTimeChange;
+    public UnityEvent<int,int> onBeatChange;
+    public UnityEvent<int, int> onBarChange;
 
     private MetronomeTrack rythmTrack;
     private Playhead activePlayhead;
     private AudioSource clickSource;
 
-    public BeatInfo Beat { get; private set; }
-    public BarInfo Bar { get; private set; }
-    public TempoInfo Tempo { get; private set; }
-    public MeasureInfo Measure { get; private set; }
-    public float BarProgress { get; private set; }
-    public float BeatProgress { get; private set; }
+    public BeatInfo CurrentBeat { get; private set; }
+    public BarInfo CurrentBar { get; private set; }
+    public float CurrentBeatProgress => CurrentBeat.duration != 0f ? (playTime - CurrentBeat.startTime) / CurrentBeat.duration : 0f;
+    public float CurrentBarProgress => CurrentBar.durationInSeconds != 0f ? (playTime - CurrentBar.startTime) / CurrentBar.durationInSeconds : 0f;
 
-    private AudioClip ClickTrack
+    public AudioClip ClickTrack
     {
         get => clickSource != null ? clickSource.clip : null;
-        set { if (clickSource != null) clickSource.clip = value; }
+        private set { if (clickSource != null) clickSource.clip = value; }
     }
 
     private void Awake()
@@ -50,7 +47,7 @@ public class Metronome : MonoBehaviour
 
     private void OnEnable()
     {
-        Beat = rythmTrack.GetBeat(playTime);
+        CurrentBeat = rythmTrack.GetBeat(playTime);
     }
 
     private void OnValidate()
@@ -97,9 +94,16 @@ public class Metronome : MonoBehaviour
     {
         // Update playTime
         playTime = toTime;
-        // Update tempo and measure info
-        Beat = rythmTrack.GetBeat(playTime);
-        Bar = rythmTrack.GetBar(playTime);
+        // Update beat
+        int beatIndex = CurrentBeat.index;
+        CurrentBeat = rythmTrack.GetBeat(playTime);
+        // Update bar
+        int barIndex = CurrentBeat.index;
+        CurrentBar = rythmTrack.GetBar(playTime);
+        // Trigger events
+        if (fromTime != toTime) onTimeChange.Invoke(playTime, toTime);
+        if (CurrentBeat.index != beatIndex) onBeatChange.Invoke(beatIndex, CurrentBeat.index);
+        if (CurrentBar.index != barIndex) onBarChange.Invoke(barIndex, CurrentBar.index);
     }
 
     private void GenerateClickTrack()

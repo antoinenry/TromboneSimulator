@@ -21,9 +21,10 @@ public class DanceAnimation : MonoBehaviour
     {
         switch (rythm)
         {
-            case DanceRythm.OnBar: Dance(metronome.BarProgress);
+            case DanceRythm.OnBeat:
+                Dance(metronome.CurrentBeatProgress);
                 break;
-            case DanceRythm.OnBeat: Dance(metronome.BeatProgress);
+            case DanceRythm.OnBar: Dance(metronome.CurrentBarProgress);
                 break;
         }
     }
