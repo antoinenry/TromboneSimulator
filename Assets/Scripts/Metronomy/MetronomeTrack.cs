@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [Serializable]
 public struct MetronomeTrack
 {
+    readonly public bool IsReady;
     readonly public int BeatCount;
     readonly public float StartBeatDuration;
     readonly public float EndBeatDuration;
@@ -12,9 +13,13 @@ public struct MetronomeTrack
     readonly public int StartBeatsPerBar;
     readonly public int EndBeatsPerBar;
 
+    private TempoInfo[] tempoChanges;
+    private MeasureInfo[] measureChanges;
     private float[] beatTimes;
     private float[] barTimes;
 
+    public TempoInfo[] TempoChanges => tempoChanges != null ? Array.ConvertAll(tempoChanges, t => t) : null;
+    public MeasureInfo[] MeasureChanges => measureChanges != null ? Array.ConvertAll(measureChanges, m => m) : null;
     public float FirstBeatTime => BeatCount > 0 ? beatTimes[0] : float.NaN;
     public float LastBeatTime => BeatCount > 0 ? beatTimes[BeatCount - 1] : float.NaN;
     public float StartBarDuration => StartBeatDuration * StartBeatsPerBar;
@@ -29,23 +34,23 @@ public struct MetronomeTrack
 
     }
 
-    public MetronomeTrack(TempoInfo[] tempoChanges, MeasureInfo[] measureChanges)
+    public MetronomeTrack(TempoInfo[] tempos, MeasureInfo[] measures)
     {
         // Generate beat and bar times from tempo and measure changes
         List<float> getBeatTimes = new List<float>();
         List<float> getBarTimes = new List<float>();
-        int tempoChangesCount = tempoChanges != null ? tempoChanges.Length : 0;
-        int measureChangesCount = measureChanges != null ? measureChanges.Length : 0;
+        int tempoChangesCount = tempos != null ? tempos.Length : 0;
+        int measureChangesCount = measures != null ? measures.Length : 0;
         // Initialize tempo and measure
-        TempoInfo tempoInfo = tempoChangesCount > 0 ? tempoChanges[0] : new TempoInfo(0f);
-        MeasureInfo measureInfo = measureChangesCount > 0 ? measureChanges[0] : new MeasureInfo(0);
+        TempoInfo tempoInfo = tempoChangesCount > 0 ? tempos[0] : new TempoInfo(0f);
+        MeasureInfo measureInfo = measureChangesCount > 0 ? measures[0] : new MeasureInfo(0);
         // Get limit values
         StartBeatDuration = tempoInfo.secondsPerQuarterNote * measureInfo.quarterNotesPerBeat;
         StartBeatsPerBar = measureInfo.BeatsPerBar;
         EndBeatDuration =
-            (tempoChangesCount > 1 ? tempoChanges[tempoChangesCount - 1].secondsPerQuarterNote : tempoInfo.secondsPerQuarterNote)
-            * (measureChangesCount > 1 ? measureChanges[measureChangesCount - 1].quarterNotesPerBeat : measureInfo.quarterNotesPerBeat);
-        EndBeatsPerBar = measureChangesCount > 1 ? measureChanges[measureChangesCount - 1].BeatsPerBar : StartBeatsPerBar;
+            (tempoChangesCount > 1 ? tempos[tempoChangesCount - 1].secondsPerQuarterNote : tempoInfo.secondsPerQuarterNote)
+            * (measureChangesCount > 1 ? measures[measureChangesCount - 1].quarterNotesPerBeat : measureInfo.quarterNotesPerBeat);
+        EndBeatsPerBar = measureChangesCount > 1 ? measures[measureChangesCount - 1].BeatsPerBar : StartBeatsPerBar;
         // Units to navigate through time, tempos and measures
         int tempoChangeIndex = 0;
         int measureChangeIndex = 0;
@@ -59,24 +64,27 @@ public struct MetronomeTrack
         while (noMoreTempoChanges == false || noMoreMeasureChanges == false || lastMeasure == false)
         {
             // Get tempo and measure
-            if (tempoChangeIndex < tempoChangesCount) tempoInfo = tempoChanges[tempoChangeIndex];
-            if (measureChangeIndex < measureChangesCount) measureInfo = measureChanges[measureChangeIndex];
+            if (tempoChangeIndex < tempoChangesCount) tempoInfo = tempos[tempoChangeIndex];
+            if (measureChangeIndex < measureChangesCount) measureInfo = measures[measureChangeIndex];
             // Durations of beats and bars
             float beatDuration = tempoInfo.secondsPerQuarterNote * measureInfo.quarterNotesPerBeat;
             int beatsPerBar = measureInfo.BeatsPerBar;
             // Abort when those parameters are incorrect
             if (beatDuration <= 0f || beatsPerBar <= 0)
             {
-                beatTimes = null;
+                tempoChanges = new TempoInfo[0];
+                measureChanges = new MeasureInfo[0];
+                IsReady = false;
+                beatTimes = new float[0];
                 BeatCount = 0;
-                barTimes = null;
+                barTimes = new float[0];
                 BarCount = 0;
                 return;
             }
             // Scope for next tempo change
             float nextTempoChangeSeconds;
             if (tempoChangeIndex < tempoChangesCount - 1)
-                nextTempoChangeSeconds = tempoChanges[tempoChangeIndex + 1].time;
+                nextTempoChangeSeconds = tempos[tempoChangeIndex + 1].time;
             else
             {
                 // No more tempo changes ahead: keep current tempo until the end
@@ -86,7 +94,7 @@ public struct MetronomeTrack
             // Scope for next measure change
             int nextMeasureChangeBars;
             if (measureChangeIndex < measureChangesCount - 1)
-                nextMeasureChangeBars = measureChanges[measureChangeIndex + 1].bar;
+                nextMeasureChangeBars = measures[measureChangeIndex + 1].bar;
             else
             {
                 // No more measure change: ensure we end with a complete measure
@@ -138,10 +146,13 @@ public struct MetronomeTrack
         getBeatTimes.Add(timeInSeconds);
         getBarTimes.Add(timeInSeconds);
         // End
+        tempoChanges = Array.ConvertAll(tempos, t => t);
+        measureChanges = Array.ConvertAll(measures, m => m);
         beatTimes = getBeatTimes.ToArray();
         BeatCount = getBeatTimes.Count;
         barTimes = getBarTimes.ToArray();
         BarCount = getBarTimes.Count;
+        IsReady = true;
     }
 
     #region Beat getters

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,13 +9,12 @@ public class Metronome : MonoBehaviour
     public enum TimeMode { Manual, FixedUpdate, FollowAudio, FollowPlayhead }
 
     public bool showDebug;
+    [SerializeField] private TempoInfo[] tempos;
+    [SerializeField] private MeasureInfo[] measures;
     [Header("Timing")]
     public TimeMode timeMode;
     public Playhead playhead;
     public float playTime = 0f;
-    [Header("Rythm")]
-    public TempoInfo[] tempos;
-    public MeasureInfo[] measures;
     [Header("Audio")]
     public bool click = false;
     public int sampleFrequency = 48000;
@@ -26,6 +26,7 @@ public class Metronome : MonoBehaviour
     public UnityEvent<int,int> onBeatChange;
     public UnityEvent<int, int> onBarChange;
 
+
     private MetronomeTrack rythmTrack;
     private Playhead activePlayhead;
     private AudioSource clickSource;
@@ -33,7 +34,6 @@ public class Metronome : MonoBehaviour
     private AudioClip audioClickStartLoop;
     private AudioClip audioClickEndLoop;
     private float audioTime;
-
     public BeatInfo CurrentBeat { get; private set; }
     public BarInfo CurrentBar { get; private set; }
     public float CurrentBeatProgress => CurrentBeat.duration != 0f ? (playTime - CurrentBeat.startTime) / CurrentBeat.duration : 0f;
@@ -58,7 +58,7 @@ public class Metronome : MonoBehaviour
     private void Awake()
     {
         clickSource = GetComponent<AudioSource>();
-        GenerateAudioClick();
+        SetRythm();
     }
 
     private void OnEnable()
@@ -69,15 +69,10 @@ public class Metronome : MonoBehaviour
 
     private void OnValidate()
     {
-        rythmTrack = new MetronomeTrack(tempos, measures);
-        MoveTime(playTime);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G)) GenerateAudioClick();
-        if (Input.GetKeyDown(KeyCode.S)) clickSource.Stop();
-        if (Input.GetKeyDown(KeyCode.P)) clickSource.Play();
+        if (rythmTrack.IsReady == false
+            || tempos.SequenceEqual(rythmTrack.TempoChanges) == false 
+            || measures.SequenceEqual(rythmTrack.MeasureChanges) == false)
+            SetRythm();
     }
 
     private void FixedUpdate()
@@ -131,9 +126,18 @@ public class Metronome : MonoBehaviour
         if (CurrentBar.index != barIndex) onBarChange.Invoke(barIndex, CurrentBar.index);
     }
 
-    private void GenerateAudioClick()
+    private void SetRythm()
     {
-        // Sample beat and bar sounds
+        // Generate rythm track
+        rythmTrack = new MetronomeTrack(tempos, measures);
+        if (rythmTrack.IsReady == false)
+        {
+            audioClickStartLoop = null;
+            audioClickMainClip = null;
+            audioClickEndLoop = null;
+            return;
+        }
+        // Generate audio track
         float[] beatClickSamples = AudioSampling.GetMonoSamples(beatClickSound);
         float[] barClickSamples = AudioSampling.GetMonoSamples(barClickSound);
         // Generate main click track (exclude final beat and bar)
