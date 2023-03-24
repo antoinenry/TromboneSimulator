@@ -250,22 +250,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  timeMode: 0
-  playhead: {fileID: 0}
-  playTime: 0
   tempos:
   - time: 0
-    secondsPerQuarterNote: 0.5
+    secondsPerQuarterNote: 1
   measures:
   - bar: 0
     timeSignatureNumerator: 4
     timeSignatureDenominator: 4
     quarterNotesPerBeat: 1
+  timeMode: 1
+  playhead: {fileID: 0}
+  playTime: 0
   click: 1
   sampleFrequency: 48000
   barClickSound: {fileID: 8300000, guid: adc0d94a9ac63674786b31dcb35782f9, type: 3}
   beatClickSound: {fileID: 8300000, guid: 30bc8bbc5e3f4be48be166db7fa42d10, type: 3}
-  clickSyncTolerance: 0.05
+  clickSyncTolerance: 0.1
   onTimeChange:
     m_PersistentCalls:
       m_Calls: []

@@ -216,25 +216,26 @@ public class MIDIExtractor
         if (tempoChanges != null)
         {
             // Move across tempo changes
-            for (int t = 0, tempoCount = tempoChanges.Length; t < tempoCount - 1; t++)
+            for (int t = 0, tempoCount = tempoChanges.Length; t < tempoCount; t++)
             {
                 // Get tempo infos
                 TempoInfo tempo = tempoChanges[t];
                 float ticksPerSeconds = ticksPerQuarterNote / tempo.secondsPerQuarterNote;
-                float tempoDurationSeconds = tempoChanges[t + 1].time - tempo.time;
+                float tempoDurationSeconds = t < tempoCount - 1 ? tempoChanges[t + 1].time - tempo.time : float.PositiveInfinity;
                 // End time is in this tempo
                 if (ticks + tempoDurationSeconds * ticksPerSeconds >= deltaTicks)
                 {
-                    movedSeconds += (deltaTicks - ticks) * ticksPerSeconds;
+                    movedSeconds += (deltaTicks - ticks) / ticksPerSeconds;
                     break;
                 }
                 // End time is further, move to next tempo
                 else
                 {
-                    movedSeconds += tempoDurationSeconds * ticksPerSeconds;
+                    movedSeconds += tempoDurationSeconds / ticksPerSeconds;
                     ticks += deltaTicks;
                 }
             }
+
         }
         return movedSeconds;
     }

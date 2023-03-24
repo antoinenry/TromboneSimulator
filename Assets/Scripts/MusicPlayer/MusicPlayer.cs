@@ -315,8 +315,7 @@ public class MusicPlayer : MonoBehaviour
                 backingSource.clip = backingGenerator.generatedAudio;
             }
             // Metronome setup
-            //metronome.SetTempoChanges(LoadedMusic.tempoChanges, LoadedMusic.DurationSeconds);
-            //metronome.SetTempo(0);
+            metronome.SetRythm(music.tempo, music.measure);
             // Event
             onMusicLoad.Invoke();
         }

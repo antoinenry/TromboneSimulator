@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -26,7 +27,6 @@ public class Metronome : MonoBehaviour
     public UnityEvent<int,int> onBeatChange;
     public UnityEvent<int, int> onBarChange;
 
-
     private MetronomeTrack rythmTrack;
     private Playhead activePlayhead;
     private AudioSource clickSource;
@@ -34,6 +34,7 @@ public class Metronome : MonoBehaviour
     private AudioClip audioClickStartLoop;
     private AudioClip audioClickEndLoop;
     private float audioTime;
+
     public BeatInfo CurrentBeat { get; private set; }
     public BarInfo CurrentBar { get; private set; }
     public float CurrentBeatProgress => CurrentBeat.duration != 0f ? (playTime - CurrentBeat.startTime) / CurrentBeat.duration : 0f;
@@ -124,6 +125,55 @@ public class Metronome : MonoBehaviour
         if (fromTime != toTime) onTimeChange.Invoke(playTime, toTime);
         if (CurrentBeat.index != beatIndex) onBeatChange.Invoke(beatIndex, CurrentBeat.index);
         if (CurrentBar.index != barIndex) onBarChange.Invoke(barIndex, CurrentBar.index);
+    }
+
+    public TempoInfo[] TempoChanges
+    {
+        get => tempos != null ? Array.ConvertAll(tempos, t => t) : new TempoInfo[0];
+        set
+        {
+            if (value != null)
+            {
+                if (tempos.SequenceEqual(value) == false)
+                {
+                    tempos = Array.ConvertAll(value, t => t);
+                    SetRythm();
+                }
+            }
+            else
+            {
+                tempos = new TempoInfo[0];
+                SetRythm();
+            }
+        }
+    }
+
+    public MeasureInfo[] MeasureChanges
+    {
+        get => measures != null ? Array.ConvertAll(measures, t => t) : new MeasureInfo[0];
+        set
+        {
+            if (value != null)
+            {
+                if (measures.SequenceEqual(value) == false)
+                {
+                    measures = Array.ConvertAll(value, m => m);
+                    SetRythm();
+                }
+            }
+            else
+            {
+                measures = new MeasureInfo[0];
+                SetRythm();
+            }
+        }
+    }
+
+    public void SetRythm(TempoInfo[] tempoChanges, MeasureInfo[] measureChanges)
+    {
+        tempos = tempoChanges != null ? Array.ConvertAll(tempoChanges, t => t) : new TempoInfo[0];
+        measures = measureChanges != null ? Array.ConvertAll(measureChanges, m => m) : new MeasureInfo[0];
+        SetRythm();
     }
 
     private void SetRythm()

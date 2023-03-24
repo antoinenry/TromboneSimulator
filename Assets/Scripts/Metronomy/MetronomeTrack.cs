@@ -146,8 +146,8 @@ public struct MetronomeTrack
         getBeatTimes.Add(timeInSeconds);
         getBarTimes.Add(timeInSeconds);
         // End
-        tempoChanges = Array.ConvertAll(tempos, t => t);
-        measureChanges = Array.ConvertAll(measures, m => m);
+        tempoChanges = tempos != null ? Array.ConvertAll(tempos, t => t) : new TempoInfo[1] { tempoInfo };
+        measureChanges = measures != null ? Array.ConvertAll(measures, m => m) : new MeasureInfo[1] { measureInfo };
         beatTimes = getBeatTimes.ToArray();
         BeatCount = getBeatTimes.Count;
         barTimes = getBarTimes.ToArray();

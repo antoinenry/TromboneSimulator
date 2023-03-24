@@ -249,7 +249,7 @@ public class LevelLoader : MonoBehaviour
         //noteSpawner.SpawnNotes(musicPlayer.loadedNotes, -noteSpawner.SpawnDelay, 0f);
         // Play metronome click
         Metronome metronome = musicPlayer.metronome;
-        metronome.timeMode = Metronome.TimeMode.FollowAudio;
+        metronome.timeMode = Metronome.TimeMode.FixedUpdate;
         metronome.click = true;
         metronome.enabled = true;
         // Initialize countdown
