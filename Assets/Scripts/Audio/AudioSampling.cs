@@ -3,6 +3,32 @@ using UnityEngine;
 
 static public class AudioSampling
 {
+    static public float[] GetSamples(AudioClip audio)
+    {
+        float[] samples;
+        if (audio != null)
+        {
+            samples = new float[audio.samples];
+            audio.GetData(samples, 0);
+        }
+        else samples = null;
+        return samples;
+    }
+
+    static public float[] GetMonoSamples(AudioClip audio)
+    {
+        float[] samples = GetSamples(audio);
+        if (samples != null && audio.channels == 2) return StereoToMono(samples);
+        return samples;
+    }
+
+    static public float[] GetStereoSamples(AudioClip audio, float pan = 0f)
+    {
+        float[] samples = GetSamples(audio);
+        if (samples != null && audio.channels == 1) return MonoToStereo(samples, pan);
+        return samples;
+    }
+
     static public void AddTo(ref float[] destination, float[] samples, int sampleOffset)
     {
         if (samples != null)

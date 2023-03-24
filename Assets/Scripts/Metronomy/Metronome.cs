@@ -29,21 +29,36 @@ public class Metronome : MonoBehaviour
     private MetronomeTrack rythmTrack;
     private Playhead activePlayhead;
     private AudioSource clickSource;
+    private AudioClip audioClickMainClip;
+    private AudioClip audioClickStartLoop;
+    private AudioClip audioClickEndLoop;
+    private float audioTime;
 
     public BeatInfo CurrentBeat { get; private set; }
     public BarInfo CurrentBar { get; private set; }
     public float CurrentBeatProgress => CurrentBeat.duration != 0f ? (playTime - CurrentBeat.startTime) / CurrentBeat.duration : 0f;
     public float CurrentBarProgress => CurrentBar.durationInSeconds != 0f ? (playTime - CurrentBar.startTime) / CurrentBar.durationInSeconds : 0f;
 
-    public AudioClip ClickTrack
+    private AudioClip AudioClick
     {
         get => clickSource != null ? clickSource.clip : null;
-        private set { if (clickSource != null) clickSource.clip = value; }
+        set 
+        {
+            if (clickSource != null && clickSource.clip != value)
+            {
+                bool isPlaying = clickSource.isPlaying;
+                clickSource.Stop();
+                clickSource.clip = value;
+                clickSource.time = 0f;
+                if (isPlaying && value != null) clickSource.Play();
+            }
+        }
     }
 
     private void Awake()
     {
         clickSource = GetComponent<AudioSource>();
+        GenerateAudioClick();
     }
 
     private void OnEnable()
@@ -54,8 +69,15 @@ public class Metronome : MonoBehaviour
 
     private void OnValidate()
     {
-        rythmTrack.SetRythm(tempos, measures);
+        rythmTrack = new MetronomeTrack(tempos, measures);
         MoveTime(playTime);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G)) GenerateAudioClick();
+        if (Input.GetKeyDown(KeyCode.S)) clickSource.Stop();
+        if (Input.GetKeyDown(KeyCode.P)) clickSource.Play();
     }
 
     private void FixedUpdate()
@@ -77,6 +99,7 @@ public class Metronome : MonoBehaviour
                 MoveTime(clickSource.time);
                 break;
         }
+        AudioClickPlayback();
     }
 
     public void SetPlayhead(Playhead p)
@@ -92,7 +115,7 @@ public class Metronome : MonoBehaviour
     
     public void MoveTime(float toTime) => MoveTime(playTime, toTime);
 
-    private void MoveTime(float fromTime, float toTime)
+    public void MoveTime(float fromTime, float toTime)
     {
         // Update playTime
         playTime = toTime;
@@ -108,84 +131,121 @@ public class Metronome : MonoBehaviour
         if (CurrentBar.index != barIndex) onBarChange.Invoke(barIndex, CurrentBar.index);
     }
 
-    private void GenerateClickTrack()
+    private void GenerateAudioClick()
     {
-        float trackDurationSeconds = rythmTrack.TrackDuration;
-        // Create empty click track
-        int trackDurationSamples = Mathf.CeilToInt(trackDurationSeconds * sampleFrequency);
-        float[] clickTrackSamples = new float[trackDurationSamples];
-        // Add bar sounds
-        if (barClickSound != null)
+        // Sample beat and bar sounds
+        float[] beatClickSamples = AudioSampling.GetMonoSamples(beatClickSound);
+        float[] barClickSamples = AudioSampling.GetMonoSamples(barClickSound);
+        // Generate main click track (exclude final beat and bar)
+        float[] beatTimes = rythmTrack.GetBeatTimes(false);
+        float[] barTimes = rythmTrack.GetBarTimes(false);
+        audioClickMainClip = GenerateClickTrack(rythmTrack.TrackDuration, beatTimes, barTimes, beatClickSamples, barClickSamples);
+        audioClickMainClip.name = "mainClick";
+        // Generate start loop (one measure at constant tempo)
+        audioClickStartLoop = GenerateClickTrack(rythmTrack.StartBarDuration, rythmTrack.StartBeatDuration, rythmTrack.StartBarDuration, beatClickSamples, barClickSamples);
+        audioClickStartLoop.name = "startClick";
+        // Generate end loop (same with end tempo)
+        audioClickEndLoop = GenerateClickTrack(rythmTrack.EndBarDuration, rythmTrack.EndBeatDuration, rythmTrack.EndBarDuration, beatClickSamples, barClickSamples);
+        audioClickEndLoop.name = "endClick";
+    }
+
+    private AudioClip GenerateClickTrack(float duration, float beatDuration, float barDuration, float[] beatSamples, float[] barSamples, float beatOffset = 0f, float barOffset = 0f)
+    {
+        int beatCount = Mathf.FloorToInt((duration - beatOffset) / beatDuration);
+        float[] beatTimes = new float[beatCount];
+        for (int i = 0; i < beatCount; i++) beatTimes[i] = beatOffset + i * beatDuration;
+        int barCount = Mathf.FloorToInt((duration - barOffset) / barDuration);
+        float[] barTimes = new float[barCount];
+        for (int i = 0; i < barCount; i++) barTimes[i] = barOffset + i * barDuration;
+        return GenerateClickTrack(duration, beatTimes, barTimes, beatSamples, barSamples);
+    }
+
+    private AudioClip GenerateClickTrack(float duration, float[] beatTimes, float[] barTimes, float[] beatSamples, float[] barSamples)
+    {
+        int durationSamples = Mathf.CeilToInt(duration * sampleFrequency);
+        float[] clickTrackSamples = new float[durationSamples];
+        // Add beat sounds
+        foreach (float beatTime in beatTimes)
         {
-            float[] barClickSamples = new float[barClickSound.samples];
-            barClickSound.GetData(barClickSamples, 0);
-            barClickSamples = AudioSampling.StereoToMono(barClickSamples);
-            foreach (float barTime in rythmTrack.barTimes)
+            // Don't add beat sound on bar
+            if (Array.IndexOf(barTimes, beatTime) == -1)
             {
-                int timeSamples = Mathf.FloorToInt(barTime * sampleFrequency);
-                AudioSampling.AddTo(ref clickTrackSamples, barClickSamples, timeSamples);
+                int timeSamples = Mathf.FloorToInt(beatTime * sampleFrequency);
+                AudioSampling.AddTo(ref clickTrackSamples, beatSamples, timeSamples);
             }
         }
-        // Add beat sounds
-        if (beatClickSound != null)
+        // Add bar sounds
+        foreach (float barTime in barTimes)
         {
-            float[] beatClickSamples = new float[beatClickSound.samples];
-            beatClickSound.GetData(beatClickSamples, 0);
-            beatClickSamples = AudioSampling.StereoToMono(beatClickSamples);
-            foreach (float beatTime in rythmTrack.beatTimes)
-            {
-                // Don't add beat sound on bar
-                if (Array.IndexOf(rythmTrack.barTimes, beatTime) == -1)
-                {
-                    int timeSamples = Mathf.FloorToInt(beatTime * sampleFrequency);
-                    AudioSampling.AddTo(ref clickTrackSamples, beatClickSamples, timeSamples);
-                }
-            }
+            int timeSamples = Mathf.FloorToInt(barTime * sampleFrequency);
+            AudioSampling.AddTo(ref clickTrackSamples, barSamples, timeSamples);
         }
         // Set audio clip
-        ClickTrack = AudioClip.Create("ClickTrack", trackDurationSamples, 1, sampleFrequency, false);
-        ClickTrack.SetData(clickTrackSamples, 0);
+        AudioClip audio = AudioClip.Create("", durationSamples, 1, sampleFrequency, false);
+        audio.SetData(clickTrackSamples, 0);
+        return audio;
     }
 
     private void AudioClickPlayback()
     {
-        if (ClickTrack == null) return;
+        if (clickSource == null) return;
         // Turn audio click off
         if (click == false)
         {
             clickSource.Stop();
             return;
         }
-        // Check audio track
-        if (ClickTrack == null)
+        // Ensure audio was generated
+        if (audioClickStartLoop == null || audioClickMainClip == null || audioClickEndLoop == null)
         {
-            Debug.LogWarning("Click track was not generated. Stopping audio click.");
+            Debug.LogWarning("Metronome audio must be generated before click can be activated.");
             click = false;
             return;
         }
-        // Sync audio on playTime
-        if (timeMode != TimeMode.FollowAudio)
-        {
-            //float audioTime;
-            //// Pre-track loop
-            //if (playTime < 0f)
-            //{
-
-            //}
-            //// In track
-            //else if (playTime < ClickTrack.length)
-            //{
-            //    audioTime = playTime;
-            //}
-            //// Post-track loop
-            //else
-            //{
-
-            //}
-            //// Sync (with tolerance)
-            //if (Mathf.Abs(clickSource.time - audioTime) > clickSyncTolerance) clickSource.time = audioTime;
-        }
+        // Sync audio and playtime
+        if (timeMode == TimeMode.FollowAudio) SyncPlaytimeOnAudio();
+        else SyncAudioOnPlaytime();
         // Play audio
         if (clickSource.isPlaying == false) clickSource.Play();
+    }
+
+    private void SyncAudioOnPlaytime()
+    {
+        audioTime = playTime - rythmTrack.FirstBeatTime;
+        // Pre-track loop
+        if (audioTime < 0f)
+        {
+            audioTime = Mathf.Repeat(audioTime, audioClickStartLoop.length);
+            AudioClick = audioClickStartLoop;
+        }
+        // In track
+        else if (audioTime < audioClickMainClip.length)
+        {
+            AudioClick = audioClickMainClip;
+        }
+        // Post-track loop
+        else
+        {
+            audioTime = Mathf.Repeat(audioTime - audioClickMainClip.length, audioClickEndLoop.length);
+            AudioClick = audioClickEndLoop;
+        }
+        // Sync (with tolerance)
+        if (AudioClick != null)
+        {
+            clickSource.loop = true;
+            if (Mathf.Abs(clickSource.time - audioTime) > clickSyncTolerance)
+            {
+                // Take loop in consideration
+                float loopLength = AudioClick.length;
+                if (Mathf.Abs(clickSource.time - audioTime + loopLength) > clickSyncTolerance && Mathf.Abs(clickSource.time - audioTime - loopLength) > clickSyncTolerance)
+                    // Force sync
+                    clickSource.time = audioTime;
+            }
+        }
+    }
+
+    private void SyncPlaytimeOnAudio()
+    {
+        Debug.LogWarning("Audio sync not implemented");
     }
 }
