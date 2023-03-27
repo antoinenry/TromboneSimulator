@@ -2918,6 +2918,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 0, y: 2}
+  rythm: 1
+  customCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &277338446
 GameObject:
   m_ObjectHideFlags: 0
@@ -3426,6 +3433,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 1, y: 0}
+  rythm: 1
+  customCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &289878346
 GameObject:
   m_ObjectHideFlags: 0
@@ -5338,6 +5352,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 0, y: 1}
+  rythm: 1
+  customCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &493407733
 GameObject:
   m_ObjectHideFlags: 0
@@ -9882,6 +9903,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 0, y: 1}
+  rythm: 1
+  customCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &847965564
 GameObject:
   m_ObjectHideFlags: 0
@@ -11241,6 +11269,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 0, y: 3}
+  rythm: 1
+  customCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1007869657
 GameObject:
   m_ObjectHideFlags: 0
@@ -16987,39 +17022,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  timeMode: 1
-  playTime: 0
-  BPM: 120
-  beatsPerBar: 4
-  beatsPerWholeNote: 4
-  customRythm: 030000000300000002000000
-  barProgress: 0
-  constantTempo: 1
-  tempoTrack:
-    tempoSections:
-    - tempo:
-        startTime: 0
-        secondsPerQuarterNote: 0.5
-        timeSignatureNumerator: 4
-        timeSignatureDenominator: 4
-        eighthNotesGrouping: 030000000300000002000000
-      barOffset: 0
+  tempos: []
+  measures: []
+  timeMode: 3
   playhead: {fileID: 11400000, guid: 8d955882cbde3424081524adaa02c690, type: 2}
+  playTime: 0
   click: 0
   sampleFrequency: 48000
   barClickSound: {fileID: 8300000, guid: adc0d94a9ac63674786b31dcb35782f9, type: 3}
   beatClickSound: {fileID: 8300000, guid: 30bc8bbc5e3f4be48be166db7fa42d10, type: 3}
   clickSyncTolerance: 0.05
-  onBeat:
+  onTimeChange:
     m_PersistentCalls:
       m_Calls: []
-  onBeatProgress:
+  onBeatChange:
     m_PersistentCalls:
       m_Calls: []
-  onBar:
-    m_PersistentCalls:
-      m_Calls: []
-  onBarProgress:
+  onBarChange:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1328911529
@@ -18860,6 +18879,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 0, y: 3}
+  rythm: 1
+  customCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1492873293
 GameObject:
   m_ObjectHideFlags: 0
@@ -19154,13 +19180,16 @@ MonoBehaviour:
   stepHeight: 11
   minPressureLevel: -100
   maxPressureLevel: 100
-  clickToGrab: 1
-  rightClickToRelease: 1
+  grabMode: 1
   grabRadius: 25
   grabOffset: {x: 46, y: 5}
-  showHandOnGrab: 1
-  hideCursorOnGrab: 1
+  blowButtonNumber: 0
+  grabButtonNumber: 0
+  releaseButtonNumber: 1
+  slideAxisName: Mouse X
+  pressureAxisName: Mouse Y
   mouseSensibility: {x: 7000, y: 7000}
+  useMouseAxis: 0
 --- !u!1 &1504163348
 GameObject:
   m_ObjectHideFlags: 0
@@ -21226,6 +21255,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 0, y: 1}
+  rythm: 1
+  customCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1678650381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23091,6 +23127,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 0, y: 2}
+  rythm: 1
+  customCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1817549159
 GameObject:
   m_ObjectHideFlags: 0
@@ -24027,6 +24070,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 0, y: 8}
+  rythm: 1
+  customCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!212 &1889132680
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -25876,9 +25926,9 @@ MonoBehaviour:
   spawner: {fileID: 1969521392}
   boundaries:
     serializedVersion: 2
-    x: 0
+    x: -0.015258789
     y: 0
-    width: 288
+    width: 288.03052
     height: 162
   onHorizontalCrash:
     m_PersistentCalls:

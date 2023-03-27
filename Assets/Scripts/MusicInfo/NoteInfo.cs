@@ -109,11 +109,11 @@ public struct NoteInfo
         return notes.OrderBy(n => n, comparer).ToArray();
     }
 
-    static public int[] OrderNotes(NoteInfo[] notes, int[] noteIndices, bool byStartTime = true, bool timeReverse = false, bool byTone = true, bool toneReverse = false)
+    static public int[] OrderNoteIndices(int[] noteIndices, NoteInfo[] notes, bool byStartTime = true, bool timeReverse = false, bool byTone = true, bool toneReverse = false)
     {
-        if (notes == null) return null;
-        int noteCount = notes.Length;
-        for (int i = 0; i < noteCount; i++) noteIndices[i] = i;
+        if (notes == null || noteIndices == null) return null;
+        int indexCount = noteIndices.Length;
+        for (int i = 0; i < indexCount; i++) noteIndices[i] = i;
         NoteComparer comparer = new NoteComparer()
         { 
             compareStartTime = byStartTime,
@@ -166,7 +166,7 @@ public struct NoteInfo
             }
         }
         // Order notes and return result
-        return OrderNotes(notes, assembled);
+        return OrderNoteIndices(assembled, notes);
     }
 
     public override string ToString()
