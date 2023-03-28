@@ -104,7 +104,7 @@ public class LevelEditor : MonoBehaviour
         {
             if (cursor.MainClick)
             {
-                Vector2 clickPosition = cursor.HandPosition;
+                Vector2 clickPosition = cursor.cursorPosition;
                 NoteInstance[] spawnedNotes = noteSpawner.GetComponentsInChildren<NoteInstance>();
                 if (spawnedNotes.Length > 0)
                 {

@@ -17660,18 +17660,21 @@ MonoBehaviour:
   handRenderer: {fileID: 46793563}
   menuUIRaycaster: {fileID: 277338447}
   gameUIRaycaster: {fileID: 217209161}
+  cursorPosition: {x: 0, y: 0}
+  handPosition: {x: 0, y: 0}
   cursorState: 1
   clickButtonNumber: 0
   secondaryClickButtonNumber: 1
   xAxisName: Mouse X
   yAxisName: Mouse Y
-  roundDisplayPosition: 0
+  sensibility: 0.3
+  keepOnScreen: 1
+  roundDisplayPosition: 1
   sprites:
     idle: {fileID: 804804779, guid: 6b8d39ea31a5f854ea9f3ceefaac1e56, type: 3}
     pointing: {fileID: -753431842, guid: 6b8d39ea31a5f854ea9f3ceefaac1e56, type: 3}
     clicking: {fileID: 80832508, guid: 6b8d39ea31a5f854ea9f3ceefaac1e56, type: 3}
     tromboning: {fileID: 653401722, guid: 6b8d39ea31a5f854ea9f3ceefaac1e56, type: 3}
-  showRealCursor: 0
   defaultSortingLayer: MenuUI
   tromboneSortingLayer: Trombone
 --- !u!4 &1408477185
@@ -19180,16 +19183,15 @@ MonoBehaviour:
   stepHeight: 11
   minPressureLevel: -100
   maxPressureLevel: 100
-  grabMode: 1
-  grabRadius: 25
+  grabMode: 3
   grabOffset: {x: 46, y: 5}
+  grabRadius: 20
+  releaseRadius: 50
+  releaseForce: 100
+  useHandCursor: 1
   blowButtonNumber: 0
   grabButtonNumber: 0
   releaseButtonNumber: 1
-  slideAxisName: Mouse X
-  pressureAxisName: Mouse Y
-  mouseSensibility: {x: 1, y: 1}
-  useMouseAxis: 0
 --- !u!1 &1504163348
 GameObject:
   m_ObjectHideFlags: 0
@@ -24041,7 +24043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1889132678
 Transform:
   m_ObjectHideFlags: 0

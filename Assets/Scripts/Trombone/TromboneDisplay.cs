@@ -6,7 +6,7 @@ public class TromboneDisplay : MonoBehaviour,
     ITromboneBlowInput, ITromboneSlideToneInput, ITrombonePressureLevelInput,
     ITromboneGrabOutput, ITromboneBlowOutput, ITromboneSlideToneOutput, ITrombonePressureLevelOutput
 {
-    [Flags] public enum GrabMode { AlwaysGrab = 0, Radius = 1, ClickToGrab = 2, ClickToRelease = 4 }
+    [Flags] public enum GrabMode { AlwaysGrab = 0, GrabRadius = 1, ReleaseRadius = 2, ClickToGrab = 4, ClickToRelease = 8 }
 
     public bool showDebug;
     [Header("Components")]
@@ -30,18 +30,18 @@ public class TromboneDisplay : MonoBehaviour,
     public float minPressureLevel = 0f;
     public float maxPressureLevel = 6f;
     [Header("Grab Control")]
-    public GrabMode grabMode = GrabMode.Radius;
-    public float grabRadius = 10f;
+    public GrabMode grabMode;
     public Vector2 grabOffset;
+    public float grabRadius = 10f;
+    public float releaseRadius = 10f;
+    public float releaseForce = 0f;
     [Header("Mouse Input")]
+    public bool useHandCursor = true;
     public int blowButtonNumber = 0;
     public int grabButtonNumber = 0;
     public int releaseButtonNumber = 1;
-    public string slideAxisName = "Mouse X";
-    public string pressureAxisName = "Mouse Y";
-    public Vector2 mouseSensibility = new Vector2(0f, 0f);
-    public bool useMouseAxis;
 
+    private HandCursor hand;
     private bool mouseGrab;
     private bool mouseBlow;
     private float mouseSlideTone;
@@ -79,6 +79,8 @@ public class TromboneDisplay : MonoBehaviour,
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(GrabPosition, grabRadius);
+        Gizmos.color *= .5f;
+        Gizmos.DrawWireSphere(GrabPosition, releaseRadius);
     }
 
     private void Reset()
@@ -89,6 +91,12 @@ public class TromboneDisplay : MonoBehaviour,
     private void Awake()
     {
         ClearInputs();
+        hand = FindObjectOfType<HandCursor>();
+        if (hand == null)
+        {
+            Debug.LogWarning("Missing hand cursor");
+            useHandCursor = false;
+        }
     }
 
     private void Start()
@@ -174,15 +182,19 @@ public class TromboneDisplay : MonoBehaviour,
             if (slidebar != null) slidebar.size = slide.size + slidePos.x * Vector2.right;
         }
         // Cursor position
-        //if (mouseGrab == true)
-        //{
-        //    cursor.cursorState |= HandCursor.CursorState.Trombone;
-        //    cursor.HandPosition = GrabPosition;
-        //}
-        //else
-        //{
-        //    cursor.cursorState &= ~HandCursor.CursorState.Trombone;
-        //}
+        if (useHandCursor)
+        {
+            if (mouseGrab == true)
+            {
+                hand.cursorState |= HandCursor.CursorState.Trombone;
+                hand.handPosition = GrabPosition;
+                if (releaseForce > 0f) hand.cursorPosition = Vector2.MoveTowards(hand.cursorPosition, hand.handPosition, releaseForce * Time.deltaTime);
+            }
+            else
+            {
+                hand.cursorState &= ~HandCursor.CursorState.Trombone;
+            }
+        }
     }
 
     public void UpdateAnimations()
@@ -211,27 +223,23 @@ public class TromboneDisplay : MonoBehaviour,
             return;
         }
         // Get mouse position
-        Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseWorldPosition = useHandCursor ? hand.cursorPosition : Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // Grab update
         if (mouseGrab == false)
         {
             // Grab
             if (grabMode == GrabMode.AlwaysGrab)
                 mouseGrab = true; 
-            else if ((grabMode.HasFlag(GrabMode.Radius) == false || Vector2.Distance(GrabPosition, mouseWorldPosition) < grabRadius)
+            else if ((grabMode.HasFlag(GrabMode.GrabRadius) == false || Vector2.Distance(GrabPosition, mouseWorldPosition) < grabRadius)
                 && (grabMode.HasFlag(GrabMode.ClickToGrab) == false || Input.GetMouseButtonDown(grabButtonNumber) == true))
                 mouseGrab = true;
-            // Lock cursor
-            if (mouseGrab == true && useMouseAxis == true) Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
             // Release
             if ((grabMode.HasFlag(GrabMode.ClickToRelease) == true && Input.GetMouseButtonDown(releaseButtonNumber))
-                || (grabMode.HasFlag(GrabMode.Radius) == true && Vector2.Distance(GrabPosition, mouseWorldPosition) > grabRadius))
+                || (grabMode.HasFlag(GrabMode.ReleaseRadius) == true && Vector2.Distance(GrabPosition, mouseWorldPosition) > releaseRadius))
                 mouseGrab = false;
-            // Free cursor
-            if (mouseGrab == false || useMouseAxis == false) Cursor.lockState = CursorLockMode.None;
         }
         // Mouse input
         if (Grab.Value == true)
@@ -239,27 +247,13 @@ public class TromboneDisplay : MonoBehaviour,
             // Get mouse blow control
             mouseBlow = Input.GetMouseButton(blowButtonNumber);
             // Get mouse tone control
-            if (useMouseAxis)
-            {
-                // Use Input.Axis to move trombone
-                Vector2 mouseSpeed = new Vector2(
-                    Input.GetAxis(slideAxisName) / Camera.main.scaledPixelWidth, 
-                    Input.GetAxis(pressureAxisName) / Camera.main.scaledPixelHeight);
-                Vector2 mouseMove = Vector2.Scale(mouseSpeed, mouseSensibility) * Time.deltaTime;
-                mouseSlideTone += mouseMove.x;
-                mousePressureLevel += mouseMove.y;
-            }
-            else
-            {
-                // Use mouse position
-                Vector2 relativeMousePosition = Vector2.Scale(mouseWorldPosition - GrabPositionOrigin, mouseSensibility);
-                mouseSlideTone = relativeMousePosition.x / toneWidth;
-                mousePressureLevel = relativeMousePosition.y / stepHeight;
-            }
-            // Clamp mouse inputs
+            Vector2 relativeMousePosition = mouseWorldPosition - GrabPositionOrigin;
+            mouseSlideTone = relativeMousePosition.x / toneWidth;
+            mousePressureLevel = relativeMousePosition.y / stepHeight;
+            // Clamp mouse tone control
             mouseSlideTone = Mathf.Clamp(mouseSlideTone, minSlideTone, maxSlideTone);
             mousePressureLevel = Mathf.Clamp(mousePressureLevel, minPressureLevel, maxPressureLevel);
-            // Round mouse inputs
+            // Round mouse tone control
             if (roundedPosition)
             {
                 mouseSlideTone = Mathf.Round(mouseSlideTone * toneWidth) / toneWidth;

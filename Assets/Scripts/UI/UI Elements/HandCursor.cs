@@ -4,10 +4,11 @@ using UnityEngine.EventSystems;
 using System;
 using System.Collections.Generic;
 
-public class HandCursor : MonoBehaviour
+public class HandCursor : BaseInput
 {
     [Flags]
     public enum CursorState { Visible = 1, PointAtUI = 2, Click = 4, SecondaryClick = 8, Trombone = 16 }
+
     [Serializable]
     public struct HandSprites
     {
@@ -42,58 +43,84 @@ public class HandCursor : MonoBehaviour
     public SpriteRenderer handRenderer;
     public GraphicRaycaster menuUIRaycaster;
     public GraphicRaycaster gameUIRaycaster;
-    [Header("Control")]
+    [Header("Outputs")]
+    public Vector2 cursorPosition;
+    public Vector2 handPosition;
     public CursorState cursorState;
+    [Header("Control")]
     public int clickButtonNumber = 0;
     public int secondaryClickButtonNumber = 1;
     public string xAxisName = "Mouse X";
     public string yAxisName = "Mouse Y";
+    [Header("Movement")]
+    public float sensibility = 1f;
+    public bool keepOnScreen = true;
     [Header("Look")]
     public bool roundDisplayPosition;
     public HandSprites sprites;
-    public bool showRealCursor;
     public string defaultSortingLayer;
     public string tromboneSortingLayer;
 
     public bool MainClick { get; private set; }
     public bool SecondaryClick { get; private set; }
-    public Vector2 HandPosition
-    {
-        get => roundDisplayPosition ? new Vector2(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y)) : transform.position;
-        set => transform.position = roundDisplayPosition ? new Vector2(Mathf.Round(value.x), Mathf.Round(value.y)) : value;
-    }
-    public Vector2 Move { get; private set; }
 
     private Camera cam;
+    private StandaloneInputModule inputModule;
     private PointerEventData pointerEventData;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        inputModule = FindObjectOfType<StandaloneInputModule>(true);
         pointerEventData = new PointerEventData(FindObjectOfType<EventSystem>(true));
         cam = Camera.main;
     }
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        inputModule.inputOverride = this;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        inputModule.inputOverride = null;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public override Vector2 mousePosition => enabled ? cam.WorldToScreenPoint(cursorPosition) : base.mousePosition;
+
     private void Update()
     {
-        // Hide/show default cursor
-        Cursor.visible = showRealCursor;
+        // Hide and confine actual cursor
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
         // Cursor movement
-        Move = new Vector2(Input.GetAxis(xAxisName), Input.GetAxis(yAxisName)) / cam.scaledPixelHeight;
-        if (cursorState.HasFlag(CursorState.Trombone))
+        Vector2 mouseMovement = new Vector2(Input.GetAxis(xAxisName), Input.GetAxis(yAxisName)) / cam.pixelHeight;
+        cursorPosition += sensibility * mouseMovement;
+        if (keepOnScreen)
         {
-            // When grabbing trombone, cursor is locked in the center of the screen
-            //Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            // Unlock cursor
-            Cursor.lockState = CursorLockMode.None;
-            // Follow mouse position
-            HandPosition = cam.ScreenToWorldPoint(Input.mousePosition);
+            cursorPosition.x = Mathf.Clamp(cursorPosition.x, 0f, 2f * cam.orthographicSize * cam.aspect);
+            cursorPosition.y = Mathf.Clamp(cursorPosition.y, 0f, 2f * cam.orthographicSize);
         }
         // Cursor click
         MainClick = Input.GetMouseButton(clickButtonNumber);
         SecondaryClick = Input.GetMouseButton(secondaryClickButtonNumber);
+        // Hand position
+        if (cursorState.HasFlag(CursorState.Trombone) == false)
+        {
+            // Hand follows cursor except when grabbing trombone
+            if (roundDisplayPosition)
+            {
+                handPosition.x = Mathf.Round(cursorPosition.x);
+                handPosition.y = Mathf.Round(cursorPosition.y);
+            }
+            else
+                handPosition = cursorPosition;
+        }
+        transform.position = handPosition;
         // Hand animation
         if (handRenderer != null)
         {
@@ -107,7 +134,7 @@ public class HandCursor : MonoBehaviour
     private void GetCurrentState(ref CursorState state)
     {
         // Raycast from cursor position
-        pointerEventData.position = Input.mousePosition;
+        pointerEventData.position = mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
         // In menus
         if (MenuUI.VisibleMenuCount > 0)
