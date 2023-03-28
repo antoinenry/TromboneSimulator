@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
+  m_Name: Test_tempo
+  m_EditorClassIdentifier: 
+  tempo:
+  - time: 0
+    secondsPerQuarterNote: 0.5
+  - time: 0.499999
+    secondsPerQuarterNote: 1
+  - time: 1.499998
+    secondsPerQuarterNote: 0.5
+  - time: 1.999997
+    secondsPerQuarterNote: 1
+  - time: 2.999996
+    secondsPerQuarterNote: 0.5
+  - time: 3.499995
+    secondsPerQuarterNote: 1
+  - time: 4.499994
+    secondsPerQuarterNote: 0.5
+  - time: 4.999993
+    secondsPerQuarterNote: 1
+  measure:
+  - bar: 0
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+    quarterNotesPerBeat: 1
+  parts:
+  - instrumentName: alto
+    notes:
+    - tone: 60
+      velocity: 0.625
+      startTime: 0
+      duration: 0.47395834
+    - tone: 62
+      velocity: 0.625
+      startTime: 0.50208235
+      duration: 0.9479166
+    - tone: 64
+      velocity: 0.625
+      startTime: 1.5020813
+      duration: 0.47395837
+    - tone: 65
+      velocity: 0.625
+      startTime: 2.006247
+      duration: 0.94791675
+    - tone: 67
+      velocity: 0.625
+      startTime: 3.0041625
+      duration: 0.47395825
+    - tone: 69
+      velocity: 0.625
+      startTime: 3.5104117
+      duration: 0.9479165
+    - tone: 71
+      velocity: 0.625
+      startTime: 4.5062437
+      duration: 0.4739585
+    - tone: 72
+      velocity: 0.625
+      startTime: 5.014576
+      duration: 0.9479165

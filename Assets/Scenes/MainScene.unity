@@ -17669,7 +17669,7 @@ MonoBehaviour:
   sprites:
     idle: {fileID: 804804779, guid: 6b8d39ea31a5f854ea9f3ceefaac1e56, type: 3}
     pointing: {fileID: -753431842, guid: 6b8d39ea31a5f854ea9f3ceefaac1e56, type: 3}
-    clicking: {fileID: 0}
+    clicking: {fileID: 80832508, guid: 6b8d39ea31a5f854ea9f3ceefaac1e56, type: 3}
     tromboning: {fileID: 653401722, guid: 6b8d39ea31a5f854ea9f3ceefaac1e56, type: 3}
   showRealCursor: 0
   defaultSortingLayer: MenuUI
@@ -19188,7 +19188,7 @@ MonoBehaviour:
   releaseButtonNumber: 1
   slideAxisName: Mouse X
   pressureAxisName: Mouse Y
-  mouseSensibility: {x: 7000, y: 7000}
+  mouseSensibility: {x: 1, y: 1}
   useMouseAxis: 0
 --- !u!1 &1504163348
 GameObject:
@@ -23914,15 +23914,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2b47c337dc06e4d93a5764357115b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackInfo: {fileID: 0}
-  orchestra: {fileID: 0}
+  trackInfo: {fileID: 11400000, guid: d5c6c7d00a594cf46a63269b57870a34, type: 2}
+  orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
   ignoredParts: []
   frequency: 48000
   stereo: 1
   sampleSmoothIn: 48
   sampleSmoothOut: 480
   normalize: 1
-  generatedAudio: {fileID: 0}
+  generatedAudio: {fileID: 2014368685}
   maintainFPS: 30
   minimumNotesPerFrames: 10
   OnGenerationProgress:
@@ -23938,7 +23938,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8496067993420674785, guid: f68f9a66afc981e45aeab3515c546139, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 2014368685}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -24041,7 +24041,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1889132678
 Transform:
   m_ObjectHideFlags: 0
@@ -26534,6 +26534,34 @@ RectTransform:
   m_AnchoredPosition: {x: -4, y: -4}
   m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 1, y: 1}
+--- !u!83 &2014368685
+AudioClip:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LuigisMansion
+  m_LoadType: 0
+  m_Channels: 2
+  m_Frequency: 48000
+  m_BitsPerSample: 32
+  m_Length: 0
+  m_IsTrackerFormat: 0
+  m_Ambisonic: 0
+  m_SubsoundIndex: 0
+  m_PreloadAudioData: 1
+  m_LoadInBackground: 0
+  m_Legacy3D: 0
+  m_Resource:
+    m_Source: 
+    m_Offset: 0
+    m_Size: 0
+  m_CompressionFormat: 0
+  m_EditorResource:
+    m_Source: 
+    m_Offset: 0
+    m_Size: 0
+  m_EditorCompressionFormat: 0
 --- !u!1 &2025909354
 GameObject:
   m_ObjectHideFlags: 0
@@ -27726,7 +27754,7 @@ MonoBehaviour:
   gameState: {fileID: 11400000, guid: 24a954f8a0e502e49aefa6efed4b3bcc, type: 2}
   currentMode: 0
   startContinues: 3
-  maxCountDownSpeed: 1.5
+  minimumCountdownStepDuration: 0.5
   startCountdownValue: 3
   levelSetupTransitionDuration: 2
   gameOverTransitionDuration: 2

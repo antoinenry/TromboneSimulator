@@ -12,7 +12,7 @@ public class LevelLoader : MonoBehaviour
     public Mode currentMode;
     public int startContinues = 3;
     [Header("Transitions")]
-    public float maxCountDownSpeed = 1.5f;
+    public float minimumCountdownStepDuration = 1.5f;
     public int startCountdownValue = 3;
     public float levelSetupTransitionDuration = .5f;
     public float gameOverTransitionDuration = 2f;
@@ -254,7 +254,7 @@ public class LevelLoader : MonoBehaviour
         metronome.enabled = true;
         // Initialize countdown
         ClickTimer countdown = new ClickTimer(metronome);
-        countdown.SetMaxSpeed(-Mathf.Abs(maxCountDownSpeed));
+        countdown.SetStepDuration(-1, minimumCountdownStepDuration);
         countdown.onStep.AddListener(OnCountdownStep);
         int countdownStartStep = (int)metronome.CurrentBar.durationInBeats;
         while (countdownStartStep < startCountdownValue) countdownStartStep *= 2;

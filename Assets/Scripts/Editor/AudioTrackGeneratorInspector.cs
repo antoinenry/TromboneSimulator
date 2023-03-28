@@ -43,7 +43,7 @@ public class AudioTrackGeneratorInspector : Editor
             EditorGUILayout.LabelField("Part " + generator.GeneratedPartCount + "/" + generator.PartCount, "Note " + generator.GeneratedNoteCount + "/" + generator.TotalNoteCount);
         }
         // Play button (if an AudioSource is attached to the target object)
-        if (Application.isPlaying && attachedAudioSource != null && generator.AudioIsReady)
+        if (attachedAudioSource != null && generator.AudioIsReady)
         {
             if (attachedAudioSource.isPlaying)
             {

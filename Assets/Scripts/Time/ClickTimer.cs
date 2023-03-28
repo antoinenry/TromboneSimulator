@@ -6,12 +6,12 @@ using System;
 public class ClickTimer
 {
     public Metronome metronome;
-    public float step = 4f;
-    public float stepsPerBeat = 1f;
+    public int step = 4;
+    public int beatsPerStep = 1;
 
     public UnityEvent<int> onStep;
 
-    public int StepInt => stepsPerBeat >= 0f ? Mathf.FloorToInt(step) : Mathf.CeilToInt(step);
+    private int beatCounter;
 
     public ClickTimer(Metronome m)
     {
@@ -19,47 +19,60 @@ public class ClickTimer
         onStep = new UnityEvent<int>();
     }
 
-    public void SetMaxSpeed(float maxStepsPerSecond)
+    public void SetStepDuration(int durationInBeats, float minimumDurationInSeconds)
     {
-        //stepsPerBeat = maxStepsPerSecond > 0f ? 1f : -1f;
-        //float beatsPerSeconds = metronome.BPM / 60f;
-        //while (Mathf.Abs(beatsPerSeconds) > Mathf.Abs(maxStepsPerSecond))
-        //{
-        //    beatsPerSeconds /= 2f;
-        //    stepsPerBeat /= 2f;
-        //}
+        beatsPerStep = durationInBeats;
+        // Adjust step duration to match required minimum
+        float beatDuration = metronome.CurrentBeat.duration;
+        float stepDuration = durationInBeats * beatDuration;
+        if (stepDuration != 0f)
+        {
+            while (Mathf.Abs(stepDuration) < Mathf.Abs(minimumDurationInSeconds))
+            {
+                beatsPerStep *= 2;
+                stepDuration *= 2f;
+            }
+        }
+        else
+            Debug.LogWarning("Beat duration is zero.");
     }
 
     public void StartOnNextBeat()
     {
-        //metronome.onBeat.AddListener(Start);
+        metronome.onBeatChange.AddListener(StartOnBeatChange);
     }
 
     public void StartOnNextBar()
     {
-        //metronome.onBar.AddListener(Start);
+        metronome.onBarChange.AddListener(StartOnBarChange);
     }
 
     public void Start()
     {
         Stop();
-        //metronome.onProgress.AddListener(OnMetronomeProgress);
+        beatCounter = 0;
+        metronome.onBeatChange.AddListener(StepOnBeat);
     }
+
+    public void StartOnBeatChange(int previousBeat, int nextBeat) => Start();
+    public void StartOnBarChange(int previousBar, int nextBar) => Start();
 
     public void Stop()
     {
-        //metronome.onBeat.RemoveListener(Start);
-        //metronome.onBar.RemoveListener(Start);
-        //metronome.onProgress.RemoveListener(OnMetronomeProgress);
+        metronome.onBeatChange.RemoveListener(StartOnBeatChange);
+        metronome.onBarChange.RemoveListener(StartOnBarChange);
+        metronome.onBeatChange.RemoveListener(StepOnBeat);
     }
 
-    private void OnMetronomeProgress(float deltaBar, float deltaClick, float deltaBeat)
+    private void StepOnBeat(int previousBeat, int nextBeat)
     {
-        float delta = deltaClick;
-        if (delta < 0f) delta += 1f;
-        int lastStepInt = StepInt;
-        step += stepsPerBeat * delta;
-        int newStepInt = StepInt;
-        if (newStepInt != lastStepInt) onStep.Invoke(newStepInt);
+        if (++beatCounter > Mathf.Abs(beatsPerStep))
+        {
+            if (beatsPerStep >= 0) step++;
+            else step--;
+            onStep.Invoke(step);
+            beatCounter = 0;
+        }
+
     }
 }

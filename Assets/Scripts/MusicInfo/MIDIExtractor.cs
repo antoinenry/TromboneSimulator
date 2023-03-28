@@ -210,33 +210,46 @@ public class MIDIExtractor
 
     private float MoveTimeByTicks(float time, long deltaTicks, TempoInfo[] tempoChanges)
     {
+        if (deltaTicks < 0f) Debug.LogError("MoveTimeByTicks not implemented for negative deltaticks");
+        if (deltaTicks == 0f) return time;
         // Move time in seconds by delta in ticks, applying tempo changes
-        long ticks = 0;
-        float movedSeconds = time;
+        float moveTime = time;
+        long remainingTicks = deltaTicks;
         if (tempoChanges != null)
         {
+            // Starting tempo
+            int t = Array.FindLastIndex(tempoChanges, tempo => tempo.time <= time);
+            if (t == -1)
+            {
+                Debug.LogError("Missing tempo informations");
+                return time;
+            }
             // Move across tempo changes
-            for (int t = 0, tempoCount = tempoChanges.Length; t < tempoCount; t++)
+            for (int tempoCount = tempoChanges.Length; t < tempoCount; t++)
             {
                 // Get tempo infos
                 TempoInfo tempo = tempoChanges[t];
                 float ticksPerSeconds = ticksPerQuarterNote / tempo.secondsPerQuarterNote;
-                float tempoDurationSeconds = t < tempoCount - 1 ? tempoChanges[t + 1].time - tempo.time : float.PositiveInfinity;
+                float nextTempoChangeTime = t < tempoCount - 1 ? tempoChanges[t + 1].time : float.PositiveInfinity;
                 // End time is in this tempo
-                if (ticks + tempoDurationSeconds * ticksPerSeconds >= deltaTicks)
+                if (moveTime + remainingTicks / ticksPerSeconds <= nextTempoChangeTime)
                 {
-                    movedSeconds += (deltaTicks - ticks) / ticksPerSeconds;
+                    moveTime += remainingTicks / ticksPerSeconds;
                     break;
                 }
                 // End time is further, move to next tempo
                 else
                 {
-                    movedSeconds += tempoDurationSeconds / ticksPerSeconds;
-                    ticks += deltaTicks;
+                    remainingTicks -= (long)(ticksPerSeconds * (nextTempoChangeTime - moveTime));
+                    moveTime = nextTempoChangeTime;
                 }
             }
-
+            return moveTime;
         }
-        return movedSeconds;
+        else
+        {
+            Debug.LogError("Missing tempo informations");
+            return time;
+        }
     }
 }

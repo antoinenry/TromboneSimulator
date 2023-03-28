@@ -12,22 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
   m_Name: Corneria
   m_EditorClassIdentifier: 
-  tempoChanges:
+  tempo:
   - time: 0
     secondsPerQuarterNote: 0.333333
-    quarterNotePerBeat: 1
-    timeSignatureNumerator: 0
-    timeSignatureDenominator: 0
-  - time: 55.999943
-    secondsPerQuarterNote: 0.333333
-    quarterNotePerBeat: 1
-    timeSignatureNumerator: 5
-    timeSignatureDenominator: 4
-  - time: 69.33326
-    secondsPerQuarterNote: 0.333333
-    quarterNotePerBeat: 1
+  measure:
+  - bar: 0
     timeSignatureNumerator: 4
     timeSignatureDenominator: 4
+    quarterNotesPerBeat: 1
+  - bar: 42
+    timeSignatureNumerator: 5
+    timeSignatureDenominator: 4
+    quarterNotesPerBeat: 1
+  - bar: 50
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+    quarterNotesPerBeat: 1
   parts:
   - instrumentName: Trp
     notes:
@@ -161,408 +161,408 @@ MonoBehaviour:
       duration: 0.27777672
     - tone: 67
       velocity: 0.859375
-      startTime: 19.333313
+      startTime: 19.333311
       duration: 0.16319466
     - tone: 69
       velocity: 0.859375
-      startTime: 19.499979
+      startTime: 19.499977
       duration: 0.16319466
     - tone: 70
       velocity: 0.859375
-      startTime: 19.833313
+      startTime: 19.833311
       duration: 0.16319466
     - tone: 63
       velocity: 0.859375
-      startTime: 19.999979
+      startTime: 19.999977
       duration: 0.27777672
     - tone: 65
       velocity: 0.859375
-      startTime: 21.333311
+      startTime: 21.33331
       duration: 0.27777672
     - tone: 65
       velocity: 0.859375
-      startTime: 22.33331
+      startTime: 22.333307
       duration: 0.27777672
     - tone: 74
       velocity: 0.859375
-      startTime: 22.999975
+      startTime: 22.999973
       duration: 0.27777672
     - tone: 72
       velocity: 0.859375
-      startTime: 23.333307
+      startTime: 23.333305
       duration: 0.27777672
     - tone: 70
       velocity: 0.859375
-      startTime: 23.66664
+      startTime: 23.666637
       duration: 0.27777672
     - tone: 69
       velocity: 0.859375
-      startTime: 23.999971
+      startTime: 23.99997
       duration: 0.16319466
     - tone: 70
       velocity: 0.859375
-      startTime: 24.166637
+      startTime: 24.166636
       duration: 0.16319466
     - tone: 67
       velocity: 0.859375
-      startTime: 24.333303
+      startTime: 24.333302
       duration: 0.16319466
     - tone: 69
       velocity: 0.859375
-      startTime: 24.49997
+      startTime: 24.499968
       duration: 0.16319466
     - tone: 65
       velocity: 0.859375
-      startTime: 24.833303
+      startTime: 24.833302
       duration: 0.16319466
     - tone: 67
       velocity: 0.859375
-      startTime: 24.99997
+      startTime: 24.999968
       duration: 0.16319466
     - tone: 69
       velocity: 0.859375
-      startTime: 25.166636
+      startTime: 25.166634
       duration: 0.16319466
     - tone: 72
       velocity: 0.859375
-      startTime: 25.333302
+      startTime: 25.3333
       duration: 0.27777672
     - tone: 70
       velocity: 0.859375
-      startTime: 25.666634
+      startTime: 25.666632
       duration: 0.16319466
     - tone: 69
       velocity: 0.859375
-      startTime: 25.8333
+      startTime: 25.833298
       duration: 0.16319466
     - tone: 70
       velocity: 0.859375
-      startTime: 26.166634
+      startTime: 26.166632
       duration: 0.16319466
     - tone: 70
       velocity: 0.859375
-      startTime: 26.3333
+      startTime: 26.333298
       duration: 0.16319466
     - tone: 72
       velocity: 0.859375
-      startTime: 26.499966
+      startTime: 26.499964
       duration: 0.16319466
     - tone: 72
       velocity: 0.859375
-      startTime: 26.666632
+      startTime: 26.66663
       duration: 0.27777672
     - tone: 74
       velocity: 0.859375
-      startTime: 26.999964
+      startTime: 26.999962
       duration: 0.16319466
     - tone: 74
       velocity: 0.859375
-      startTime: 27.16663
+      startTime: 27.166628
       duration: 0.27777672
     - tone: 62
       velocity: 0.859375
-      startTime: 27.666628
+      startTime: 27.666626
       duration: 0.27777672
     - tone: 63
       velocity: 0.859375
-      startTime: 27.99996
+      startTime: 27.999958
       duration: 0.27777672
     - tone: 65
       velocity: 0.859375
-      startTime: 28.333292
+      startTime: 28.33329
       duration: 0.16319466
     - tone: 65
       velocity: 0.859375
-      startTime: 28.499958
+      startTime: 28.499956
       duration: 0.27777672
     - tone: 67
       velocity: 0.859375
-      startTime: 28.999956
+      startTime: 28.999954
       duration: 0.27777672
     - tone: 69
       velocity: 0.859375
-      startTime: 29.333288
+      startTime: 29.333286
       duration: 0.27777672
     - tone: 67
       velocity: 0.859375
-      startTime: 29.66662
+      startTime: 29.666618
       duration: 0.16319466
     - tone: 67
       velocity: 0.859375
-      startTime: 29.833286
+      startTime: 29.833284
       duration: 0.27777672
     - tone: 69
       velocity: 0.859375
-      startTime: 30.333284
+      startTime: 30.333282
       duration: 0.27777672
     - tone: 70
       velocity: 0.859375
-      startTime: 30.666616
+      startTime: 30.666615
       duration: 0.27777672
     - tone: 68
       velocity: 0.859375
-      startTime: 30.999949
+      startTime: 30.999947
       duration: 0.16319466
     - tone: 68
       velocity: 0.859375
-      startTime: 31.166615
+      startTime: 31.166613
       duration: 0.27777672
     - tone: 70
       velocity: 0.859375
-      startTime: 31.666613
+      startTime: 31.66661
       duration: 0.27777672
     - tone: 67
       velocity: 0.859375
-      startTime: 31.999945
-      duration: 0.16319466
+      startTime: 31.999943
+      duration: 0.16319275
     - tone: 62
       velocity: 0.859375
-      startTime: 32.16661
+      startTime: 32.166607
       duration: 0.16319275
     - tone: 67
       velocity: 0.859375
-      startTime: 32.333275
+      startTime: 32.33327
       duration: 0.16319275
     - tone: 68
       velocity: 0.859375
-      startTime: 32.49994
+      startTime: 32.499935
       duration: 0.16319275
     - tone: 63
       velocity: 0.859375
-      startTime: 32.666603
+      startTime: 32.6666
       duration: 0.16319275
     - tone: 68
       velocity: 0.859375
-      startTime: 32.833267
+      startTime: 32.833263
       duration: 0.16319275
     - tone: 69
       velocity: 0.859375
-      startTime: 32.99993
+      startTime: 32.999928
       duration: 0.16319275
     - tone: 64
       velocity: 0.859375
-      startTime: 33.166595
+      startTime: 33.16659
       duration: 0.16319275
     - tone: 69
       velocity: 0.859375
-      startTime: 33.33326
+      startTime: 33.333256
       duration: 0.16319275
     - tone: 70
       velocity: 0.859375
-      startTime: 33.499924
+      startTime: 33.49992
       duration: 0.16319275
     - tone: 65
       velocity: 0.859375
-      startTime: 33.666588
+      startTime: 33.666584
       duration: 0.16319275
     - tone: 70
       velocity: 0.859375
-      startTime: 33.833252
+      startTime: 33.83325
       duration: 0.16319275
     - tone: 71
       velocity: 0.859375
-      startTime: 33.999916
+      startTime: 33.999912
       duration: 0.27777863
     - tone: 72
       velocity: 0.859375
-      startTime: 34.333252
+      startTime: 34.33325
       duration: 0.27777863
     - tone: 70
       velocity: 0.859375
-      startTime: 34.666588
+      startTime: 34.666584
       duration: 0.27777863
     - tone: 67
       velocity: 0.859375
-      startTime: 36.666588
+      startTime: 36.666584
       duration: 0.16319275
     - tone: 69
       velocity: 0.859375
-      startTime: 36.833252
+      startTime: 36.83325
       duration: 0.16319275
     - tone: 70
       velocity: 0.859375
-      startTime: 37.166584
+      startTime: 37.16658
       duration: 0.16319275
     - tone: 63
       velocity: 0.859375
-      startTime: 37.33325
+      startTime: 37.333244
       duration: 0.27777863
     - tone: 69
       velocity: 0.859375
-      startTime: 38.66658
+      startTime: 38.666576
       duration: 0.27777863
     - tone: 69
       velocity: 0.859375
-      startTime: 39.66658
+      startTime: 39.666576
       duration: 0.27777863
     - tone: 70
       velocity: 0.859375
-      startTime: 39.999916
+      startTime: 39.999912
       duration: 0.27777863
     - tone: 67
       velocity: 0.859375
-      startTime: 41.999916
+      startTime: 41.999912
       duration: 0.16319275
     - tone: 69
       velocity: 0.859375
-      startTime: 42.16658
+      startTime: 42.166576
       duration: 0.16319275
     - tone: 70
       velocity: 0.859375
-      startTime: 42.499912
+      startTime: 42.49991
       duration: 0.16319275
     - tone: 63
       velocity: 0.859375
-      startTime: 42.666576
+      startTime: 42.666573
       duration: 0.27777863
     - tone: 65
       velocity: 0.859375
-      startTime: 43.99991
+      startTime: 43.999905
       duration: 0.27777863
     - tone: 65
       velocity: 0.859375
-      startTime: 44.99991
+      startTime: 44.999905
       duration: 0.27777863
     - tone: 74
       velocity: 0.859375
-      startTime: 45.666576
+      startTime: 45.666573
       duration: 0.27777863
     - tone: 72
       velocity: 0.859375
-      startTime: 45.999912
+      startTime: 45.99991
       duration: 0.27777863
     - tone: 70
       velocity: 0.859375
-      startTime: 46.33325
+      startTime: 46.333244
       duration: 0.27777863
     - tone: 69
       velocity: 0.859375
-      startTime: 46.666584
+      startTime: 46.66658
       duration: 0.16319275
     - tone: 70
       velocity: 0.859375
-      startTime: 46.83325
+      startTime: 46.833244
       duration: 0.16319275
     - tone: 67
       velocity: 0.859375
-      startTime: 46.999912
+      startTime: 46.99991
       duration: 0.16319275
     - tone: 69
       velocity: 0.859375
-      startTime: 47.166576
+      startTime: 47.166573
       duration: 0.16319275
     - tone: 65
       velocity: 0.859375
-      startTime: 47.49991
+      startTime: 47.499905
       duration: 0.16319275
     - tone: 67
       velocity: 0.859375
-      startTime: 47.666573
+      startTime: 47.66657
       duration: 0.16319275
     - tone: 69
       velocity: 0.859375
-      startTime: 47.833237
+      startTime: 47.833233
       duration: 0.16319275
     - tone: 72
       velocity: 0.859375
-      startTime: 47.9999
+      startTime: 47.999897
       duration: 0.27777863
     - tone: 70
       velocity: 0.859375
-      startTime: 48.333237
+      startTime: 48.333233
       duration: 0.16319275
     - tone: 69
       velocity: 0.859375
-      startTime: 48.4999
+      startTime: 48.499897
       duration: 0.16319275
     - tone: 70
       velocity: 0.859375
-      startTime: 48.833233
+      startTime: 48.83323
       duration: 0.16319275
     - tone: 70
       velocity: 0.859375
-      startTime: 48.999897
+      startTime: 48.999893
       duration: 0.16319275
     - tone: 72
       velocity: 0.859375
-      startTime: 49.16656
+      startTime: 49.166557
       duration: 0.16319275
     - tone: 72
       velocity: 0.859375
-      startTime: 49.333225
+      startTime: 49.33322
       duration: 0.27777863
     - tone: 74
       velocity: 0.859375
-      startTime: 49.66656
+      startTime: 49.666557
       duration: 0.16319275
     - tone: 74
       velocity: 0.859375
-      startTime: 49.833225
+      startTime: 49.83322
       duration: 0.27777863
     - tone: 62
       velocity: 0.859375
-      startTime: 50.333225
+      startTime: 50.33322
       duration: 0.27777863
     - tone: 63
       velocity: 0.859375
-      startTime: 50.66656
+      startTime: 50.666557
       duration: 0.27777863
     - tone: 65
       velocity: 0.859375
-      startTime: 50.999897
+      startTime: 50.999893
       duration: 0.16319275
     - tone: 65
       velocity: 0.859375
-      startTime: 51.16656
+      startTime: 51.166557
       duration: 0.27777863
     - tone: 67
       velocity: 0.859375
-      startTime: 51.66656
+      startTime: 51.666557
       duration: 0.27777863
     - tone: 69
       velocity: 0.859375
-      startTime: 51.999897
+      startTime: 51.999893
       duration: 0.27777863
     - tone: 67
       velocity: 0.859375
-      startTime: 52.333233
+      startTime: 52.33323
       duration: 0.16319275
     - tone: 67
       velocity: 0.859375
-      startTime: 52.499897
+      startTime: 52.499893
       duration: 0.27777863
     - tone: 69
       velocity: 0.859375
-      startTime: 52.999897
+      startTime: 52.999893
       duration: 0.27777863
     - tone: 70
       velocity: 0.859375
-      startTime: 53.333233
+      startTime: 53.33323
       duration: 0.27777863
     - tone: 68
       velocity: 0.859375
-      startTime: 53.66657
+      startTime: 53.666565
       duration: 0.16319275
     - tone: 68
       velocity: 0.859375
-      startTime: 53.833233
+      startTime: 53.83323
       duration: 0.27777863
     - tone: 70
       velocity: 0.859375
-      startTime: 54.333233
+      startTime: 54.33323
       duration: 0.27777863
     - tone: 72
       velocity: 0.859375
-      startTime: 62.999893
+      startTime: 62.99989
       duration: 0.27777863
     - tone: 72
       velocity: 0.859375
-      startTime: 63.33323
+      startTime: 63.333225
       duration: 0.27777863
     - tone: 72
       velocity: 0.859375
-      startTime: 63.999897
-      duration: 0.2777748
+      startTime: 63.999893
+      duration: 0.27777863
     - tone: 72
       velocity: 0.859375
       startTime: 64.66656
@@ -1691,180 +1691,180 @@ MonoBehaviour:
       duration: 0.27777672
     - tone: 70
       velocity: 0.859375
-      startTime: 19.333319
+      startTime: 19.333317
       duration: 0.16319466
     - tone: 72
       velocity: 0.859375
-      startTime: 19.499985
+      startTime: 19.499983
       duration: 0.16319466
     - tone: 74
       velocity: 0.859375
-      startTime: 19.833319
+      startTime: 19.833317
       duration: 0.16319466
     - tone: 67
       velocity: 0.859375
-      startTime: 19.999985
+      startTime: 19.999983
       duration: 0.27777672
     - tone: 69
       velocity: 0.859375
-      startTime: 21.333317
+      startTime: 21.333315
       duration: 0.27777672
     - tone: 69
       velocity: 0.859375
-      startTime: 22.333315
+      startTime: 22.333313
       duration: 0.27777672
     - tone: 63
       velocity: 0.859375
-      startTime: 22.666647
+      startTime: 22.666645
       duration: 0.16319466
     - tone: 63
       velocity: 0.859375
-      startTime: 22.833313
+      startTime: 22.833311
       duration: 0.16319466
     - tone: 67
       velocity: 0.859375
-      startTime: 22.999979
+      startTime: 22.999977
       duration: 0.16319466
     - tone: 63
       velocity: 0.859375
-      startTime: 23.333313
+      startTime: 23.333311
       duration: 0.16319466
     - tone: 67
       velocity: 0.859375
-      startTime: 23.499979
+      startTime: 23.499977
       duration: 0.16319466
     - tone: 70
       velocity: 0.859375
-      startTime: 23.666645
+      startTime: 23.666643
       duration: 0.16319466
     - tone: 75
       velocity: 0.859375
-      startTime: 23.833311
+      startTime: 23.83331
       duration: 0.16319466
     - tone: 63
       velocity: 0.859375
-      startTime: 24.166645
+      startTime: 24.166643
       duration: 0.16319466
     - tone: 67
       velocity: 0.859375
-      startTime: 24.333311
+      startTime: 24.33331
       duration: 0.16319466
     - tone: 63
       velocity: 0.859375
-      startTime: 24.666645
+      startTime: 24.666643
       duration: 0.16319466
     - tone: 67
       velocity: 0.859375
-      startTime: 24.833311
+      startTime: 24.83331
       duration: 0.16319466
     - tone: 70
       velocity: 0.859375
-      startTime: 24.999977
+      startTime: 24.999975
       duration: 0.16319466
     - tone: 75
       velocity: 0.859375
-      startTime: 25.166643
+      startTime: 25.166641
       duration: 0.16319466
     - tone: 62
       velocity: 0.859375
-      startTime: 25.499977
+      startTime: 25.499975
       duration: 0.16319466
     - tone: 65
       velocity: 0.859375
-      startTime: 25.666643
+      startTime: 25.666641
       duration: 0.16319466
     - tone: 62
       velocity: 0.859375
-      startTime: 25.999977
+      startTime: 25.999975
       duration: 0.16319466
     - tone: 65
       velocity: 0.859375
-      startTime: 26.166643
+      startTime: 26.166641
       duration: 0.16319466
     - tone: 69
       velocity: 0.859375
-      startTime: 26.33331
+      startTime: 26.333307
       duration: 0.16319466
     - tone: 74
       velocity: 0.859375
-      startTime: 26.499975
+      startTime: 26.499973
       duration: 0.16319466
     - tone: 60
       velocity: 0.859375
-      startTime: 26.83331
+      startTime: 26.833307
       duration: 0.16319466
     - tone: 63
       velocity: 0.859375
-      startTime: 26.999975
+      startTime: 26.999973
       duration: 0.16319466
     - tone: 60
       velocity: 0.859375
-      startTime: 27.33331
+      startTime: 27.333307
       duration: 0.16319466
     - tone: 63
       velocity: 0.859375
-      startTime: 27.499975
+      startTime: 27.499973
       duration: 0.16319466
     - tone: 67
       velocity: 0.859375
-      startTime: 27.666641
+      startTime: 27.66664
       duration: 0.16319466
     - tone: 72
       velocity: 0.859375
-      startTime: 27.833307
+      startTime: 27.833305
       duration: 0.16319466
     - tone: 63
       velocity: 0.859375
-      startTime: 27.999973
+      startTime: 27.999971
       duration: 0.27777672
     - tone: 58
       velocity: 0.859375
-      startTime: 28.333305
+      startTime: 28.333303
       duration: 0.16319466
     - tone: 58
       velocity: 0.859375
-      startTime: 28.499971
+      startTime: 28.49997
       duration: 0.27777672
     - tone: 63
       velocity: 0.859375
-      startTime: 28.99997
+      startTime: 28.999968
       duration: 0.27777672
     - tone: 65
       velocity: 0.859375
-      startTime: 29.333302
+      startTime: 29.3333
       duration: 0.27777672
     - tone: 60
       velocity: 0.859375
-      startTime: 29.666634
+      startTime: 29.666632
       duration: 0.16319466
     - tone: 60
       velocity: 0.859375
-      startTime: 29.8333
+      startTime: 29.833298
       duration: 0.27777672
     - tone: 65
       velocity: 0.859375
-      startTime: 30.333298
+      startTime: 30.333296
       duration: 0.27777672
     - tone: 66
       velocity: 0.859375
-      startTime: 30.66663
+      startTime: 30.666628
       duration: 0.27777672
     - tone: 61
       velocity: 0.859375
-      startTime: 30.999962
+      startTime: 30.99996
       duration: 0.16319466
     - tone: 61
       velocity: 0.859375
-      startTime: 31.166628
+      startTime: 31.166626
       duration: 0.27777672
     - tone: 66
       velocity: 0.859375
-      startTime: 31.666626
+      startTime: 31.666624
       duration: 0.27777672
     - tone: 67
       velocity: 0.859375
-      startTime: 31.999958
-      duration: 0.16319275
+      startTime: 31.999956
+      duration: 0.16319466
     - tone: 62
       velocity: 0.859375
       startTime: 32.166622
@@ -3143,1675 +3143,1675 @@ MonoBehaviour:
       duration: 0.277771
   - instrumentName: Tenor
     notes:
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 1.333332
       duration: 0.27777743
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 1.8333313
       duration: 0.1631943
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 2.083331
       duration: 0.079860926
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 2.1666644
       duration: 0.079860926
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 2.3333309
       duration: 0.16319418
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 2.6666636
       duration: 0.27777743
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 3.1666632
       duration: 0.16319418
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 3.3333297
       duration: 0.16319418
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 3.4999962
       duration: 0.16319418
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 3.6666627
       duration: 0.16319418
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 3.8333292
       duration: 0.16319418
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 3.9999957
       duration: 0.27777767
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 4.499995
       duration: 0.16319418
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 4.7499948
       duration: 0.079861164
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 4.8333282
       duration: 0.079861164
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 4.9999948
       duration: 0.16319418
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 5.333328
       duration: 0.27777767
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 5.8333273
       duration: 0.16319418
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 5.999994
       duration: 0.16319418
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 6.1666603
       duration: 0.16319418
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 6.333327
       duration: 0.16319418
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 6.4999933
       duration: 0.16319418
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 6.66666
       duration: 0.27777767
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 7.1666594
       duration: 0.16319418
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 7.416659
       duration: 0.079861164
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 7.4999924
       duration: 0.079861164
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 7.666659
       duration: 0.16319418
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 7.999992
       duration: 0.2777772
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 8.499991
       duration: 0.16319466
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 8.666658
       duration: 0.16319466
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 8.833325
       duration: 0.16319466
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 8.999992
       duration: 0.16319466
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 9.166659
       duration: 0.16319466
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 9.333326
       duration: 0.27777767
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 9.833326
       duration: 0.16319466
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 10.083326
       duration: 0.07986069
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 10.166659
       duration: 0.07986069
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 10.333325
       duration: 0.16319466
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 10.666658
       duration: 0.27777767
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 11.166658
       duration: 0.16319466
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 11.333325
       duration: 0.16319466
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 11.499992
       duration: 0.16319466
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 11.666659
       duration: 0.16319466
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 11.833326
       duration: 0.16319466
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 11.999993
       duration: 0.27777767
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 13.999991
       duration: 0.16319466
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 14.166658
       duration: 0.16319466
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 14.499991
       duration: 0.16319466
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 14.666658
       duration: 0.27777767
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 15.99999
       duration: 0.27777672
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 16.999989
       duration: 0.27777672
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 17.33332
       duration: 0.27777672
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
-      startTime: 19.333319
+      startTime: 19.333317
+      duration: 0.16319466
+    - tone: 74
+      velocity: 0.859375
+      startTime: 19.499983
+      duration: 0.16319466
+    - tone: 77
+      velocity: 0.859375
+      startTime: 19.833317
+      duration: 0.16319466
+    - tone: 70
+      velocity: 0.859375
+      startTime: 19.999983
+      duration: 0.27777672
+    - tone: 72
+      velocity: 0.859375
+      startTime: 21.333315
+      duration: 0.27777672
+    - tone: 72
+      velocity: 0.859375
+      startTime: 22.333313
+      duration: 0.27777672
+    - tone: 63
+      velocity: 0.859375
+      startTime: 22.666645
+      duration: 0.16319466
+    - tone: 63
+      velocity: 0.859375
+      startTime: 22.833311
+      duration: 0.16319466
+    - tone: 67
+      velocity: 0.859375
+      startTime: 22.999977
+      duration: 0.16319466
+    - tone: 63
+      velocity: 0.859375
+      startTime: 23.333311
+      duration: 0.16319466
+    - tone: 67
+      velocity: 0.859375
+      startTime: 23.499977
+      duration: 0.16319466
+    - tone: 70
+      velocity: 0.859375
+      startTime: 23.666643
+      duration: 0.16319466
+    - tone: 75
+      velocity: 0.859375
+      startTime: 23.83331
+      duration: 0.16319466
+    - tone: 63
+      velocity: 0.859375
+      startTime: 24.166643
+      duration: 0.16319466
+    - tone: 67
+      velocity: 0.859375
+      startTime: 24.33331
+      duration: 0.16319466
+    - tone: 63
+      velocity: 0.859375
+      startTime: 24.666643
+      duration: 0.16319466
+    - tone: 67
+      velocity: 0.859375
+      startTime: 24.83331
+      duration: 0.16319466
+    - tone: 70
+      velocity: 0.859375
+      startTime: 24.999975
+      duration: 0.16319466
+    - tone: 75
+      velocity: 0.859375
+      startTime: 25.166641
       duration: 0.16319466
     - tone: 62
       velocity: 0.859375
-      startTime: 19.499985
+      startTime: 25.499975
       duration: 0.16319466
     - tone: 65
       velocity: 0.859375
-      startTime: 19.833319
-      duration: 0.16319466
-    - tone: 58
-      velocity: 0.859375
-      startTime: 19.999985
-      duration: 0.27777672
-    - tone: 60
-      velocity: 0.859375
-      startTime: 21.333317
-      duration: 0.27777672
-    - tone: 60
-      velocity: 0.859375
-      startTime: 22.333315
-      duration: 0.27777672
-    - tone: 51
-      velocity: 0.859375
-      startTime: 22.666647
-      duration: 0.16319466
-    - tone: 51
-      velocity: 0.859375
-      startTime: 22.833313
-      duration: 0.16319466
-    - tone: 55
-      velocity: 0.859375
-      startTime: 22.999979
-      duration: 0.16319466
-    - tone: 51
-      velocity: 0.859375
-      startTime: 23.333313
-      duration: 0.16319466
-    - tone: 55
-      velocity: 0.859375
-      startTime: 23.499979
-      duration: 0.16319466
-    - tone: 58
-      velocity: 0.859375
-      startTime: 23.666645
-      duration: 0.16319466
-    - tone: 63
-      velocity: 0.859375
-      startTime: 23.833311
-      duration: 0.16319466
-    - tone: 51
-      velocity: 0.859375
-      startTime: 24.166645
-      duration: 0.16319466
-    - tone: 55
-      velocity: 0.859375
-      startTime: 24.333311
-      duration: 0.16319466
-    - tone: 51
-      velocity: 0.859375
-      startTime: 24.666645
-      duration: 0.16319466
-    - tone: 55
-      velocity: 0.859375
-      startTime: 24.833311
-      duration: 0.16319466
-    - tone: 58
-      velocity: 0.859375
-      startTime: 24.999977
-      duration: 0.16319466
-    - tone: 63
-      velocity: 0.859375
-      startTime: 25.166643
-      duration: 0.16319466
-    - tone: 50
-      velocity: 0.859375
-      startTime: 25.499977
-      duration: 0.16319466
-    - tone: 53
-      velocity: 0.859375
-      startTime: 25.666643
-      duration: 0.16319466
-    - tone: 50
-      velocity: 0.859375
-      startTime: 25.999977
-      duration: 0.16319466
-    - tone: 53
-      velocity: 0.859375
-      startTime: 26.166643
-      duration: 0.16319466
-    - tone: 57
-      velocity: 0.859375
-      startTime: 26.33331
+      startTime: 25.666641
       duration: 0.16319466
     - tone: 62
       velocity: 0.859375
-      startTime: 26.499975
+      startTime: 25.999975
       duration: 0.16319466
-    - tone: 48
+    - tone: 65
       velocity: 0.859375
-      startTime: 26.83331
+      startTime: 26.166641
       duration: 0.16319466
-    - tone: 51
+    - tone: 69
       velocity: 0.859375
-      startTime: 26.999975
+      startTime: 26.333307
       duration: 0.16319466
-    - tone: 48
+    - tone: 74
       velocity: 0.859375
-      startTime: 27.33331
-      duration: 0.16319466
-    - tone: 51
-      velocity: 0.859375
-      startTime: 27.499975
-      duration: 0.16319466
-    - tone: 55
-      velocity: 0.859375
-      startTime: 27.666641
+      startTime: 26.499973
       duration: 0.16319466
     - tone: 60
       velocity: 0.859375
-      startTime: 27.833307
+      startTime: 26.833307
       duration: 0.16319466
-    - tone: 58
+    - tone: 63
       velocity: 0.859375
-      startTime: 27.999973
-      duration: 0.27777672
-    - tone: 53
-      velocity: 0.859375
-      startTime: 28.333305
+      startTime: 26.999973
       duration: 0.16319466
-    - tone: 53
-      velocity: 0.859375
-      startTime: 28.499971
-      duration: 0.27777672
-    - tone: 58
-      velocity: 0.859375
-      startTime: 28.99997
-      duration: 0.27777672
     - tone: 60
       velocity: 0.859375
-      startTime: 29.333302
-      duration: 0.27777672
-    - tone: 55
-      velocity: 0.859375
-      startTime: 29.666634
+      startTime: 27.333307
       duration: 0.16319466
-    - tone: 55
+    - tone: 63
       velocity: 0.859375
-      startTime: 29.8333
-      duration: 0.27777672
-    - tone: 60
-      velocity: 0.859375
-      startTime: 30.333298
-      duration: 0.27777672
-    - tone: 61
-      velocity: 0.859375
-      startTime: 30.66663
-      duration: 0.27777672
-    - tone: 56
-      velocity: 0.859375
-      startTime: 30.999962
+      startTime: 27.499973
       duration: 0.16319466
-    - tone: 56
+    - tone: 67
       velocity: 0.859375
-      startTime: 31.166628
+      startTime: 27.66664
+      duration: 0.16319466
+    - tone: 72
+      velocity: 0.859375
+      startTime: 27.833305
+      duration: 0.16319466
+    - tone: 70
+      velocity: 0.859375
+      startTime: 27.999971
       duration: 0.27777672
-    - tone: 61
+    - tone: 65
       velocity: 0.859375
-      startTime: 31.666626
+      startTime: 28.333303
+      duration: 0.16319466
+    - tone: 65
+      velocity: 0.859375
+      startTime: 28.49997
       duration: 0.27777672
-    - tone: 55
+    - tone: 70
       velocity: 0.859375
-      startTime: 31.999958
-      duration: 0.16319275
-    - tone: 50
+      startTime: 28.999968
+      duration: 0.27777672
+    - tone: 72
+      velocity: 0.859375
+      startTime: 29.3333
+      duration: 0.27777672
+    - tone: 67
+      velocity: 0.859375
+      startTime: 29.666632
+      duration: 0.16319466
+    - tone: 67
+      velocity: 0.859375
+      startTime: 29.833298
+      duration: 0.27777672
+    - tone: 72
+      velocity: 0.859375
+      startTime: 30.333296
+      duration: 0.27777672
+    - tone: 73
+      velocity: 0.859375
+      startTime: 30.666628
+      duration: 0.27777672
+    - tone: 68
+      velocity: 0.859375
+      startTime: 30.99996
+      duration: 0.16319466
+    - tone: 68
+      velocity: 0.859375
+      startTime: 31.166626
+      duration: 0.27777672
+    - tone: 73
+      velocity: 0.859375
+      startTime: 31.666624
+      duration: 0.27777672
+    - tone: 67
+      velocity: 0.859375
+      startTime: 31.999956
+      duration: 0.16319466
+    - tone: 62
       velocity: 0.859375
       startTime: 32.166622
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 32.333286
       duration: 0.16319275
-    - tone: 56
+    - tone: 68
       velocity: 0.859375
       startTime: 32.49995
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 32.666615
       duration: 0.16319275
-    - tone: 56
+    - tone: 68
       velocity: 0.859375
       startTime: 32.83328
       duration: 0.16319275
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 32.999943
       duration: 0.16319275
-    - tone: 52
+    - tone: 64
       velocity: 0.859375
       startTime: 33.166607
       duration: 0.16319275
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 33.33327
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 33.499935
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 33.6666
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 33.833263
       duration: 0.16319275
-    - tone: 59
+    - tone: 71
       velocity: 0.859375
       startTime: 33.999928
       duration: 0.16319275
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 34.16659
       duration: 0.07986069
-    - tone: 61
+    - tone: 73
       velocity: 0.859375
       startTime: 34.249924
       duration: 0.07986069
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 34.333256
       duration: 0.07986069
-    - tone: 63
+    - tone: 75
       velocity: 0.859375
       startTime: 34.416588
       duration: 0.07986069
-    - tone: 64
+    - tone: 76
       velocity: 0.859375
       startTime: 34.49992
       duration: 0.07986069
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 34.583252
       duration: 0.07986069
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 34.666584
       duration: 0.27777863
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 36.666584
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 36.83325
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 37.16658
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 37.333244
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 38.666576
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 39.666576
       duration: 0.27777863
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 39.999912
       duration: 0.27777863
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 41.999912
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 42.166576
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 42.49991
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 42.666573
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 43.999905
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 44.999905
       duration: 0.27777863
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 45.33324
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 45.499905
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 45.66657
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 45.9999
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 46.166565
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 46.33323
       duration: 0.16319275
-    - tone: 63
+    - tone: 75
       velocity: 0.859375
       startTime: 46.499893
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 46.833225
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 46.99989
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 47.33322
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 47.499886
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 47.66655
       duration: 0.16319275
-    - tone: 63
+    - tone: 75
       velocity: 0.859375
       startTime: 47.833214
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 48.166546
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 48.33321
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 48.666542
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 48.833206
       duration: 0.16319275
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 48.99987
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 49.166534
       duration: 0.16319275
-    - tone: 48
+    - tone: 60
       velocity: 0.859375
       startTime: 49.499866
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 49.66653
       duration: 0.16319275
-    - tone: 48
+    - tone: 60
       velocity: 0.859375
       startTime: 49.999863
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 50.166527
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 50.33319
       duration: 0.16319275
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 50.499855
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 50.66652
       duration: 0.27777863
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 50.999855
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 51.16652
       duration: 0.27777863
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 51.66652
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 51.999855
       duration: 0.27777863
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 52.33319
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 52.499855
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 52.999855
       duration: 0.27777863
-    - tone: 61
+    - tone: 73
       velocity: 0.859375
       startTime: 53.33319
       duration: 0.27777863
-    - tone: 56
+    - tone: 68
       velocity: 0.859375
       startTime: 53.666527
       duration: 0.16319275
-    - tone: 56
+    - tone: 68
       velocity: 0.859375
       startTime: 53.83319
       duration: 0.27777863
-    - tone: 61
+    - tone: 73
       velocity: 0.859375
       startTime: 54.33319
       duration: 0.27777863
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 54.666527
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 54.83319
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 54.999855
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 55.16652
       duration: 0.16319275
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 55.333183
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 55.499847
       duration: 0.16319275
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 55.66651
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 55.833176
       duration: 0.16319275
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 59.666504
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 59.99984
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 60.666508
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 61.333176
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 61.66651
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 62.33318
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 62.999847
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 63.333183
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 63.99985
       duration: 0.2777748
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 64.66651
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 64.99985
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 65.66651
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 66.333176
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 66.66651
       duration: 0.27777863
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 67.333176
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 67.99984
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 68.333176
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 68.99984
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 69.333176
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 69.833176
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 70.083176
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 70.16651
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 70.33318
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 70.66651
       duration: 0.27777863
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 71.16651
       duration: 0.16319275
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 71.333176
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 71.49984
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 71.666504
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 71.83317
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 71.99983
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 72.49983
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 72.74983
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 72.83317
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 72.99984
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 73.33317
       duration: 0.27777863
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 73.83317
       duration: 0.16319275
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 73.99983
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 74.1665
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 74.33316
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 74.499825
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 74.66649
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 75.16649
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 75.41649
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 75.499825
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 75.6665
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 75.999825
       duration: 0.27777863
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 76.499825
       duration: 0.16319275
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 76.66649
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 76.83315
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 76.99982
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 77.16648
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 77.333145
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 77.833145
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 78.083145
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 78.16648
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 78.33315
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 78.66648
       duration: 0.27777863
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 79.16648
       duration: 0.16319275
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 79.333145
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 79.49981
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 79.66647
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 79.83314
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 79.9998
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 80.4998
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 80.7498
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 80.83314
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 80.99981
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 81.33314
       duration: 0.27777863
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 81.83314
       duration: 0.16319275
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 81.9998
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 82.166466
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 82.33313
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 82.499794
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 82.66646
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 83.16646
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 83.41646
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 83.499794
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 83.666466
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 83.999794
       duration: 0.27777863
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 84.499794
       duration: 0.16319275
-    - tone: 70
+    - tone: 82
       velocity: 0.859375
       startTime: 84.66646
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 84.83312
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 84.99979
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 85.16645
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 85.333115
       duration: 0.27777863
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 85.833115
       duration: 0.16319275
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 86.083115
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 86.16645
       duration: 0.0798645
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 86.33312
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 86.66645
       duration: 0.44444275
-    - tone: 49
+    - tone: 61
       velocity: 0.859375
       startTime: 87.16645
       duration: 0.27777863
-    - tone: 48
+    - tone: 60
       velocity: 0.859375
       startTime: 87.49979
       duration: 0.27777863
-    - tone: 45
+    - tone: 57
       velocity: 0.859375
       startTime: 87.83312
       duration: 0.16319275
-    - tone: 48
+    - tone: 60
       velocity: 0.859375
       startTime: 98.66644
       duration: 0.44444275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 99.16644
       duration: 0.27777863
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 99.49978
       duration: 0.27777863
-    - tone: 52
+    - tone: 64
       velocity: 0.859375
       startTime: 99.833115
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 99.99978
       duration: 0.08333588
-    - tone: 45
+    - tone: 57
       velocity: 0.859375
       startTime: 100.833115
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 100.99978
       duration: 0.16319275
-    - tone: 54
+    - tone: 66
       velocity: 0.859375
       startTime: 101.16644
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 101.33311
       duration: 0.27777863
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 103.33311
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 103.49977
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 103.8331
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 103.99976
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 105.3331
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 106.3331
       duration: 0.27777863
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 106.666435
       duration: 0.27777863
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 108.666435
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 108.8331
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 109.16643
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 109.33309
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 110.66643
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 111.66643
       duration: 0.27777863
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 111.99976
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 112.16643
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 112.33309
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 112.66642
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 112.833084
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 112.99975
       duration: 0.16319275
-    - tone: 63
+    - tone: 75
       velocity: 0.859375
       startTime: 113.16641
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 113.49974
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 113.666405
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 113.99973
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 114.1664
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 114.33306
       duration: 0.16319275
-    - tone: 63
+    - tone: 75
       velocity: 0.859375
       startTime: 114.499725
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 114.83305
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 114.99972
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 115.333046
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 115.49971
       duration: 0.16319275
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 115.666374
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 115.83304
       duration: 0.16319275
-    - tone: 48
+    - tone: 60
       velocity: 0.859375
       startTime: 116.16637
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 116.33303
       duration: 0.16319275
-    - tone: 48
+    - tone: 60
       velocity: 0.859375
       startTime: 116.66636
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 116.83302
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 116.99969
       duration: 0.16319275
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 117.16635
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 117.333015
       duration: 0.27777863
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 117.66635
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 117.833015
       duration: 0.27777863
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 118.333015
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 118.66635
       duration: 0.27777863
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 118.99969
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 119.16635
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 119.66635
       duration: 0.27777863
-    - tone: 61
+    - tone: 73
       velocity: 0.859375
       startTime: 119.99969
       duration: 0.27777863
-    - tone: 56
+    - tone: 68
       velocity: 0.859375
       startTime: 120.33302
       duration: 0.16319275
-    - tone: 56
+    - tone: 68
       velocity: 0.859375
       startTime: 120.49969
       duration: 0.27777863
-    - tone: 61
+    - tone: 73
       velocity: 0.859375
       startTime: 120.99969
       duration: 0.27777863
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 121.33302
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 121.49969
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 121.66635
       duration: 0.16319275
-    - tone: 54
+    - tone: 66
       velocity: 0.859375
       startTime: 121.833015
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 121.99968
       duration: 0.16319275
-    - tone: 54
+    - tone: 66
       velocity: 0.859375
       startTime: 122.16634
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 122.33301
       duration: 0.16319275
-    - tone: 49
+    - tone: 61
       velocity: 0.859375
       startTime: 122.49967
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 122.666336
       duration: 0.16319275
-    - tone: 52
+    - tone: 64
       velocity: 0.859375
       startTime: 122.833
       duration: 0.44444275
-    - tone: 45
+    - tone: 57
       velocity: 0.859375
       startTime: 123.499664
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 123.66633
       duration: 0.16319275
-    - tone: 54
+    - tone: 66
       velocity: 0.859375
       startTime: 123.83299
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 123.99966
       duration: 0.27777863
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 125.99966
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 126.16632
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 126.49965
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 126.66631
       duration: 0.27777863
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 127.99965
       duration: 0.277771
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 128.99965
       duration: 0.277771
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 129.33298
       duration: 0.277771
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 131.33296
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 131.49963
       duration: 0.16319275
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 131.83296
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 131.99963
       duration: 0.277771
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 133.33296
       duration: 0.277771
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 134.33296
       duration: 0.277771
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 134.66629
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 134.83296
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 134.99963
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 135.33296
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 135.49963
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 135.6663
       duration: 0.16319275
-    - tone: 63
+    - tone: 75
       velocity: 0.859375
       startTime: 135.83298
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 136.1663
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 136.33298
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 136.6663
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 136.83298
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 136.99965
       duration: 0.16319275
-    - tone: 63
+    - tone: 75
       velocity: 0.859375
       startTime: 137.16632
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 137.49965
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 137.66632
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 137.99965
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 138.16632
       duration: 0.16319275
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 138.333
       duration: 0.16319275
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 138.49966
       duration: 0.16319275
-    - tone: 48
+    - tone: 60
       velocity: 0.859375
       startTime: 138.833
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 138.99966
       duration: 0.16319275
-    - tone: 48
+    - tone: 60
       velocity: 0.859375
       startTime: 139.333
       duration: 0.16319275
-    - tone: 51
+    - tone: 63
       velocity: 0.859375
       startTime: 139.49966
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 139.66634
       duration: 0.16319275
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 139.83301
       duration: 0.16319275
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 139.99968
       duration: 0.277771
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 140.33301
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 140.49968
       duration: 0.277771
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 140.99968
       duration: 0.277771
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 141.33301
       duration: 0.277771
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 141.66634
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 141.83301
       duration: 0.277771
-    - tone: 60
+    - tone: 72
       velocity: 0.859375
       startTime: 142.33301
       duration: 0.277771
-    - tone: 61
+    - tone: 73
       velocity: 0.859375
       startTime: 142.66634
       duration: 0.277771
-    - tone: 56
+    - tone: 68
       velocity: 0.859375
       startTime: 142.99966
       duration: 0.16319275
-    - tone: 56
+    - tone: 68
       velocity: 0.859375
       startTime: 143.16634
       duration: 0.277771
-    - tone: 61
+    - tone: 73
       velocity: 0.859375
       startTime: 143.66634
       duration: 0.277771
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 143.99966
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 144.333
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 144.66632
       duration: 0.277771
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 144.99965
       duration: 0.277771
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 145.33298
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 145.6663
       duration: 0.277771
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 146.6663
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 146.99963
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 147.33296
       duration: 0.277771
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 147.66629
       duration: 0.277771
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 147.99962
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 148.33295
       duration: 0.277771
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 149.33295
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 149.66628
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 149.9996
       duration: 0.277771
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 150.33293
       duration: 0.277771
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 150.66626
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 150.99959
       duration: 0.277771
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 151.99959
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 152.33292
       duration: 0.277771
-    - tone: 67
+    - tone: 79
       velocity: 0.859375
       startTime: 152.66624
       duration: 0.277771
-    - tone: 65
+    - tone: 77
       velocity: 0.859375
       startTime: 152.99957
       duration: 0.277771
-    - tone: 62
+    - tone: 74
       velocity: 0.859375
       startTime: 153.3329
       duration: 0.277771
-    - tone: 58
+    - tone: 70
       velocity: 0.859375
       startTime: 153.8329
       duration: 0.16319275
-    - tone: 57
+    - tone: 69
       velocity: 0.859375
       startTime: 153.99957
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 154.16624
       duration: 0.16319275
-    - tone: 50
+    - tone: 62
       velocity: 0.859375
       startTime: 154.33292
       duration: 0.16319275
-    - tone: 53
+    - tone: 65
       velocity: 0.859375
       startTime: 154.49959
       duration: 0.16319275
-    - tone: 55
+    - tone: 67
       velocity: 0.859375
       startTime: 154.66626
       duration: 0.277771
