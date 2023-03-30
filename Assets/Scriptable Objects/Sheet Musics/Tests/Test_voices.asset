@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
+  m_Name: Test_voices
+  m_EditorClassIdentifier: 
+  tempo:
+  - time: 0
+    secondsPerQuarterNote: 0.333333
+  measure:
+  - bar: 0
+    timeSignatureNumerator: 4
+    timeSignatureDenominator: 4
+    quarterNotesPerBeat: 1
+  parts:
+  - instrumentName: Trb
+    notes:
+    - tone: 56
+      velocity: 0.859375
+      startTime: 4.166662
+      duration: 0.055555344
+    - tone: 60
+      velocity: 0.859375
+      startTime: 4.166662
+      duration: 0.055555344
+    - tone: 56
+      velocity: 0.859375
+      startTime: 4.499995
+      duration: 0.055555344
+    - tone: 60
+      velocity: 0.859375
+      startTime: 4.499995
+      duration: 0.055555344
+    - tone: 56
+      velocity: 0.859375
+      startTime: 4.8333282
+      duration: 0.055555344
+    - tone: 60
+      velocity: 0.859375
+      startTime: 4.8333282
+      duration: 0.055555344
+    - tone: 56
+      velocity: 0.859375
+      startTime: 5.1666613
+      duration: 0.055555344
+    - tone: 60
+      velocity: 0.859375
+      startTime: 5.1666613
+      duration: 0.055555344
+    - tone: 56
+      velocity: 0.859375
+      startTime: 5.4999943
+      duration: 0.055555344
+    - tone: 60
+      velocity: 0.859375
+      startTime: 5.4999943
+      duration: 0.055555344
+    - tone: 56
+      velocity: 0.859375
+      startTime: 5.8333273
+      duration: 0.055555344
+    - tone: 60
+      velocity: 0.859375
+      startTime: 5.8333273
+      duration: 0.055555344
+    - tone: 56
+      velocity: 0.859375
+      startTime: 6.1666603
+      duration: 0.055555344
+    - tone: 60
+      velocity: 0.859375
+      startTime: 6.1666603
+      duration: 0.055555344

@@ -188,7 +188,7 @@ public class TromboneDisplay : MonoBehaviour,
             {
                 hand.cursorState |= HandCursor.CursorState.Trombone;
                 hand.handPosition = GrabPosition;
-                if (releaseForce > 0f) hand.cursorPosition = Vector2.MoveTowards(hand.cursorPosition, hand.handPosition, releaseForce * Time.deltaTime);
+                if (releaseForce > 0f && Vector2.Distance(hand.cursorPosition, GrabPosition) > grabRadius) hand.cursorPosition = Vector2.MoveTowards(hand.cursorPosition, GrabPosition, releaseForce * Time.deltaTime);
             }
             else
             {

@@ -138,9 +138,9 @@ public class AudioTrackGenerator : MonoBehaviour
                         // Check alternative voices
                         if (voiceCount > 1)
                         {
-                            for (int v = 0; v < voiceCount - 1; v++)
+                            for (int v = 0; v < voiceCount; v++)
                             {
-                                if (ignoredVoices == null || Array.IndexOf(ignoredVoices, v) != -1)
+                                if (ignoredVoices == null || Array.IndexOf(ignoredVoices, v) == -1)
                                     noteList.AddRange(otherVoices[v]);
                                 else
                                 {

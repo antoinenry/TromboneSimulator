@@ -283,7 +283,7 @@ public class MusicPlayer : MonoBehaviour
             if (p != null) p.Clear();
     }
 
-    public void LoadMusic(SheetMusic sheetMusic, AudioClip preloadedAudio = null, SamplerInstrument playedInstrument = null, int voiceIndex = 0)
+    public void LoadMusic(SheetMusic sheetMusic, AudioClip preloadedAudio = null, SamplerInstrument playedInstrument = null, int voiceIndex = 1)
     {
         // Unload previous music
         if (LoadedAudio != preloadedAudio) UnloadMusic();
@@ -292,8 +292,16 @@ public class MusicPlayer : MonoBehaviour
         music = sheetMusic;
         if (LoadedMusic != null)
         {
-            // Get notes to play
-            loadedNotes = music.GetNotes(playedInstrument, voiceIndex);
+            if (playedInstrument != null)
+            {
+                // Get notes to play
+                loadedNotes = music.GetNotes(playedInstrument, voiceIndex);
+                playedInstrument.ApplyStyle(loadedNotes);
+            }
+            else
+            {
+                loadedNotes = new NotePlay[0];
+            }
             if (backingSource != null)
             {
                 backingSource.clip = null;

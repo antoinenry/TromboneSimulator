@@ -7404,7 +7404,7 @@ MonoBehaviour:
   showDebug: 0
   playOnStart: 0
   fixedUpdate: 1
-  music: {fileID: 0}
+  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
   orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
   instrumentDictionary: {fileID: 11400000, guid: 783db9433904c0b4c962588891b020a9, type: 2}
   metronome: {fileID: 1300806622}
@@ -23916,15 +23916,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2b47c337dc06e4d93a5764357115b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackInfo: {fileID: 11400000, guid: d5c6c7d00a594cf46a63269b57870a34, type: 2}
+  trackInfo: {fileID: 11400000, guid: 3b0a961f3f7af1a49a84c2c1a5580b23, type: 2}
   orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
-  ignoredParts: []
+  ignoredParts:
+  - partName: Trombone
+    mainVoice: 0
+    alternativeVoiceIndices: 01000000
   frequency: 48000
   stereo: 1
   sampleSmoothIn: 48
   sampleSmoothOut: 480
   normalize: 1
-  generatedAudio: {fileID: 2014368685}
+  generatedAudio: {fileID: 0}
   maintainFPS: 30
   minimumNotesPerFrames: 10
   OnGenerationProgress:
@@ -23940,7 +23943,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8496067993420674785, guid: f68f9a66afc981e45aeab3515c546139, type: 2}
-  m_audioClip: {fileID: 2014368685}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -26536,34 +26539,6 @@ RectTransform:
   m_AnchoredPosition: {x: -4, y: -4}
   m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 1, y: 1}
---- !u!83 &2014368685
-AudioClip:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: LuigisMansion
-  m_LoadType: 0
-  m_Channels: 2
-  m_Frequency: 48000
-  m_BitsPerSample: 32
-  m_Length: 0
-  m_IsTrackerFormat: 0
-  m_Ambisonic: 0
-  m_SubsoundIndex: 0
-  m_PreloadAudioData: 1
-  m_LoadInBackground: 0
-  m_Legacy3D: 0
-  m_Resource:
-    m_Source: 
-    m_Offset: 0
-    m_Size: 0
-  m_CompressionFormat: 0
-  m_EditorResource:
-    m_Source: 
-    m_Offset: 0
-    m_Size: 0
-  m_EditorCompressionFormat: 0
 --- !u!1 &2025909354
 GameObject:
   m_ObjectHideFlags: 0

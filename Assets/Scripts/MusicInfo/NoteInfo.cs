@@ -113,7 +113,6 @@ public struct NoteInfo
     {
         if (notes == null || noteIndices == null) return null;
         int indexCount = noteIndices.Length;
-        for (int i = 0; i < indexCount; i++) noteIndices[i] = i;
         NoteComparer comparer = new NoteComparer()
         { 
             compareStartTime = byStartTime,

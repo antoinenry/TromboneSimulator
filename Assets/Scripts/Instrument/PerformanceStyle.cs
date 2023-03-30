@@ -67,7 +67,7 @@ public class PerformanceStyle : ScriptableObject
 
     static public void DetachRepeatedNotes(ref NoteInfo[] notes, float minimumSpacing)
     {
-        // Reduce duration of repeated note to ensure correct articulation
+        // Reduce duration of repeated note for better articulation
         if (notes != null)
             for (int n = 0, nCount = notes.Length; n < nCount - 1; n++)
                 if (notes[n].tone == notes[n + 1].tone && notes[n + 1].startTime - notes[n].EndTime < minimumSpacing)

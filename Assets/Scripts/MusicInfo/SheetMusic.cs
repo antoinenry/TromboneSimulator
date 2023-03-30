@@ -279,7 +279,8 @@ public class SheetMusic : ScriptableObject
             alternativeNotes.Add(newVoice.ToArray());
         }
         // Return voice count
-        return alternativeNotes.Count + 1;
+        if (alternativeNotes.Count == 0) return mainNotes.Length > 0 ? 1 : 0;
+        else return alternativeNotes.Count;
     }
 
     public int SplitPartVoices(int partIndex, out NoteInfo[] mainNotes, out List<NoteInfo[]> alternativeNotes)

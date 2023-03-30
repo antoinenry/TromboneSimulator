@@ -314,6 +314,11 @@ public class SamplerInstrument : ScriptableObject
         }
     }
 
+    public void ApplyStyle(INote[] notes)
+    {
+        if (style != null) style.ProcessNotes(notes);
+    }
+
     private int FindClosestToneIndex(float tone)
     {
         int toneIndex = -1;

@@ -53,7 +53,6 @@ static public class AudioSampling
             foreach (float s in samples) peakLevel = Mathf.Max(peakLevel, Mathf.Abs(s));
             float normalizeGain = peakLevel > 0f ? 1f / peakLevel : 1f;
             samples = Array.ConvertAll(samples, s => s * normalizeGain);
-            Debug.Log("Normalization gain: " + normalizeGain);
         }
     }
 
