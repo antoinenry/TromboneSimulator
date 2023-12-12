@@ -103,12 +103,15 @@ public class LevelGUI : GameUI
 
     public void SetPowerButton(bool enable)
     {
-        if (powerButton != null && enable != powerButton.interactable)
+        if (powerButton != null)
         {
-            if (enable) powerButton.onClick.AddListener(OnClickPowerButton);
-            else powerButton.onClick.RemoveListener(OnClickPowerButton);
+            if (enable != powerButton.interactable)
+            {
+                if (enable) powerButton.onClick.AddListener(OnClickPowerButton);
+                else powerButton.onClick.RemoveListener(OnClickPowerButton);
+            }
+            powerButton.interactable = enable;
         }
-        powerButton.interactable = enable;
     }
 
     public void SetScore(float score)
