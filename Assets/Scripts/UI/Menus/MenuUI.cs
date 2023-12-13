@@ -14,6 +14,7 @@ public abstract class MenuUI : MonoBehaviour
 
     static public List<MenuUI> visibleMenuUis;
     static public int VisibleMenuCount => visibleMenuUis != null ? visibleMenuUis.Count : 0;
+    static public HandCursor cursor;
 
     public bool IsVisible { get; private set; }
 
@@ -25,6 +26,7 @@ public abstract class MenuUI : MonoBehaviour
     protected virtual void Awake()
     {
         if (visibleMenuUis == null) visibleMenuUis = new List<MenuUI>();
+        if (cursor == null) cursor = FindObjectOfType<HandCursor>(true);
     }
 
     protected virtual void Start()

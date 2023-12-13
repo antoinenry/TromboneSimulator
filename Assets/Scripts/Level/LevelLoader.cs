@@ -210,6 +210,7 @@ public class LevelLoader : MonoBehaviour
         UIPause.ShowUI();
         UIPause.onUnpause.AddListener(UnpauseLevel);
         UIPause.onQuit.AddListener(QuitLevel);
+        StopCoroutine(LevelUnpauseSequence());
     }
 
     public void UnpauseLevel()
@@ -218,7 +219,9 @@ public class LevelLoader : MonoBehaviour
         trombone.enabled = true;
         UIPause.onUnpause.RemoveListener(UnpauseLevel);
         UIPause.onQuit.RemoveListener(QuitLevel);
-        musicPlayer.Play(true);
+        //musicPlayer.Play(true);
+        // Unpause sequence, only if we're in the middle of the song
+        if (musicPlayer.CurrentPlayTime > 0f) StartCoroutine(LevelUnpauseSequence());
     }
 
     public void QuitLevel()
@@ -303,6 +306,16 @@ public class LevelLoader : MonoBehaviour
     {
         // Show countdown
         if (step >= 0 && step <= startCountdownValue) GUI.ShowCountdown(step);
+    }
+
+    private IEnumerator LevelUnpauseSequence()
+    {
+        // Wait for player to grab the trombone
+        GUI.ShowGrabTromboneMessage();
+        yield return new WaitUntil(() => trombone.grab == true);
+        // Play music
+        GUI.ClearMessage();
+        musicPlayer.Play();
     }
 
     private void OnLevelEnd()

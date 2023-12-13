@@ -194,4 +194,9 @@ public class LevelGUI : GameUI
             }
         }
     }
+
+    public void ClearMessage()
+    {
+        if (messageDisplay != null) messageDisplay.FreeText();
+    }
 }

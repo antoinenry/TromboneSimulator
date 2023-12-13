@@ -111,6 +111,10 @@ public class TromboneDisplay : MonoBehaviour,
     private void OnDisable()
     {
         ClearInputs();
+        // Clear internal inputs (mouse)
+        mouseGrab = false;
+        mouseBlow = false;
+
     }
 
     void Update()
@@ -127,6 +131,7 @@ public class TromboneDisplay : MonoBehaviour,
 
     public void ClearInputs()
     {
+        // Clear internal inputs (e.g. auto)
         blowInput = null;
         slideToneInput = null;
         pressureLevelInput = null;

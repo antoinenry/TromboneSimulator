@@ -48,12 +48,20 @@ public class Trombone : MonoBehaviour,
     {
         if (showDebug) Debug.Log("Enabling " + name);
         LoadBuild();
+        // Enable trombone components
+        tromboneDisplay.enabled = true;
+        tromboneAuto.enabled = true;
+        tromboneAudio.enabled = true;
     }
 
     private void OnDisable()
     {
         if (showDebug) Debug.Log("Disabling " + name);
         ResetTrombone();
+        // Disable trombone components
+        tromboneDisplay.enabled = false;
+        tromboneAuto.enabled = false;
+        tromboneAudio.enabled = false;
     }
 
     public void ClearInputs()

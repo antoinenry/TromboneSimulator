@@ -16,14 +16,14 @@ public class LoadingScreen : MenuUI
     public Color orchestraHighTint = Color.white;
 
     private AudioTrackGenerator trackGenerator;
-    private HandCursor cursor;
+    //private HandCursor cursor;
     private Image[] loadingOrchestra;
 
     protected override void Awake()
     {
         base.Awake();
         trackGenerator = FindObjectOfType<AudioTrackGenerator>(true);
-        cursor = FindObjectOfType<HandCursor>(true);
+        //cursor = FindObjectOfType<HandCursor>(true);
         if (loadingOrchestraLayout != null) loadingOrchestra = loadingOrchestraLayout.GetComponentsInChildren<Image>(true);
     }
 
@@ -47,7 +47,7 @@ public class LoadingScreen : MenuUI
             {
                 SetOrchestraLayout(trackGenerator.trackInfo.PartNames);
                 ResetOrchestraLoadProgress();
-                cursor.cursorState &= ~HandCursor.CursorState.Visible;
+                if (cursor != null) cursor.cursorState &= ~HandCursor.CursorState.Visible;
                 ShowUI();
             }
             if (loadingSlider != null) loadingSlider.value = progress * loadingSlider.maxValue;
@@ -58,7 +58,7 @@ public class LoadingScreen : MenuUI
             if (IsVisible == true)
             {
                 SetOrchestraLayout(null);
-                cursor.cursorState |= HandCursor.CursorState.Visible;
+                if (cursor != null) cursor.cursorState |= HandCursor.CursorState.Visible;
                 HideUI();
             }
         }
