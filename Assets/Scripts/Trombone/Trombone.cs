@@ -168,4 +168,17 @@ public class Trombone : MonoBehaviour,
         slide = pressureTone - tone;
         return slide >= 0f && slide <= slideTones;
     }
+
+    public void Freeze()
+    {
+        if (tromboneAuto != null) tromboneAuto.enabled = false;
+        if (tromboneDisplay != null) tromboneDisplay.enabled = false;
+    }
+
+    public void Unfreeze()
+    {
+        if (tromboneAuto != null) tromboneAuto.enabled = true;
+        if (tromboneDisplay != null) tromboneDisplay.enabled = true;
+
+    }
 }

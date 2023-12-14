@@ -28,16 +28,16 @@ public class LevelGUI : GameUI
     private bool isShowingMissedMessage;
     private string randomMissedMessage;
 
-    private void OnEnable()
+    private void Awake()
     {
-        if (pauseButton != null) pauseButton.onClick.AddListener(OnClickPauseButton);
-        if (Application.isPlaying) SetPowerButton(false);
+        // Initialize buttons
+        if (Application.isPlaying)
+        {
+            if (pauseButton != null) pauseButton.interactable = false;
+            if (powerButton != null) powerButton.interactable = false;
+        }
     }
 
-    private void OnDisable()
-    {
-        if (pauseButton != null) pauseButton.onClick.RemoveListener(OnClickPauseButton);
-    }
 
     public override bool GUIActive
     {
@@ -79,7 +79,7 @@ public class LevelGUI : GameUI
     private void OnClickPowerButton()
     {
         onPressPower.Invoke();
-        SetPowerButton(false);
+        SetPowerButtonActive(false);
     }
 
     public void SetTimeBar(float time, float maxTime, bool interactable = false)
@@ -101,7 +101,20 @@ public class LevelGUI : GameUI
         if (danceBar != null) danceBar.value = danceLevel;
     }
 
-    public void SetPowerButton(bool enable)
+    public void SetPauseButtonActive(bool enable)
+    {
+        if (pauseButton != null)
+        {
+            if (enable != pauseButton.interactable)
+            {
+                if (enable) pauseButton.onClick.AddListener(OnClickPauseButton);
+                else pauseButton.onClick.RemoveListener(OnClickPauseButton);
+            }
+            pauseButton.interactable = enable;
+        }
+    }
+
+    public void SetPowerButtonActive(bool enable)
     {
         if (powerButton != null)
         {

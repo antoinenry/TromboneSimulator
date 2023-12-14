@@ -63,16 +63,6 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        GUI.onPressPause.AddListener(PauseLevel);
-    }
-
-    private void OnDisable()
-    {
-        GUI.onPressPause.RemoveListener(PauseLevel);
-    }
-
     private void Start()
     {
         // Permanents listeners (even when LevelLoader is disabled)
@@ -141,26 +131,6 @@ public class LevelLoader : MonoBehaviour
         LoadLevel(Mode.ONE_LEVEL, levelNumber);
     }
 
-    public void Unload()
-    {
-        LoadedLevel = null;
-        LoadedLevelAudio = null;
-        // Stop GUI
-        GUI.GUIActive = false;
-        // Stop music
-        musicPlayer.Stop();
-        musicPlayer.UnloadMusic();
-        musicPlayer.onMusicEnd.RemoveListener(OnLevelEnd);
-        // Stop trombone
-        trombone.enabled = false;
-        // Stop performance judge
-        DisablePerformanceJudge();
-        // Stop note spawner
-        noteSpawner.enabled = false;
-        // Stop note catcher
-        noteCatcher.enabled = false;
-    }
-
     public void LoadLevel(Mode mode, int levelNumber)
     {
         currentMode = mode;
@@ -175,9 +145,9 @@ public class LevelLoader : MonoBehaviour
         musicPlayer.loop = false;
         musicPlayer.onMusicEnd.AddListener(OnLevelEnd);
         // Trombone setup
-        trombone.enabled = true;
         trombone.LoadBuild();
         trombone.ResetTrombone();
+        trombone.Unfreeze();
         // NoteSpawner setup
         noteSpawner.enabled = true;
         // Note catcher setup
@@ -188,8 +158,30 @@ public class LevelLoader : MonoBehaviour
         if (trombone.Sampler != null) perfJudge.LevelSetup(LoadedLevel.music, trombone.Sampler.instrumentName);
         // GUI Setup
         GUI.GUIActive = true;
+        GUI.onPressPause.AddListener(PauseLevel);
+        GUI.SetPauseButtonActive(true);
         // Level start sequence
         StartCoroutine(LevelStartSequence());
+    }
+
+    public void Unload()
+    {
+        LoadedLevel = null;
+        LoadedLevelAudio = null;
+        // Stop GUI
+        GUI.GUIActive = false;
+        GUI.SetPauseButtonActive(false);
+        GUI.onPressPause.RemoveListener(PauseLevel);
+        // Stop music
+        musicPlayer.Stop();
+        musicPlayer.UnloadMusic();
+        musicPlayer.onMusicEnd.RemoveListener(OnLevelEnd);
+        // Stop performance judge
+        DisablePerformanceJudge();
+        // Stop note spawner
+        noteSpawner.enabled = false;
+        // Stop note catcher
+        noteCatcher.enabled = false;
     }
 
     public void RestartLevel()
@@ -205,22 +197,31 @@ public class LevelLoader : MonoBehaviour
 
     public void PauseLevel()
     {
-        musicPlayer.Pause(true);
-        trombone.enabled = false;
+        // Show pause screen
         UIPause.ShowUI();
         UIPause.onUnpause.AddListener(UnpauseLevel);
         UIPause.onQuit.AddListener(QuitLevel);
+        // Toggle pause button behaviour
+        GUI.onPressPause.RemoveListener(PauseLevel);
+        GUI.onPressPause.AddListener(UnpauseLevel);
+        // Pause game and music
+        musicPlayer.Pause(true);
+        trombone.Freeze();
+        // Interrupt unpause sequence (grabbing trombone)
         StopCoroutine(LevelUnpauseSequence());
     }
 
     public void UnpauseLevel()
     {
+        // Hide pause screen
         UIPause.HideUI();
-        trombone.enabled = true;
         UIPause.onUnpause.RemoveListener(UnpauseLevel);
         UIPause.onQuit.RemoveListener(QuitLevel);
-        //musicPlayer.Play(true);
-        // Unpause sequence, only if we're in the middle of the song
+        // Toggle pause button behaviour
+        GUI.onPressPause.RemoveListener(UnpauseLevel);
+        GUI.onPressPause.AddListener(PauseLevel);
+        // Start unpause sequence (wait for trombone to be grabbed), unless the game was paused before the song starts (then it's back to countdown sequence)
+        trombone.Unfreeze();
         if (musicPlayer.CurrentPlayTime > 0f) StartCoroutine(LevelUnpauseSequence());
     }
 
@@ -320,6 +321,8 @@ public class LevelLoader : MonoBehaviour
 
     private void OnLevelEnd()
     {
+        // Disable pause button
+        GUI.SetPauseButtonActive(false);
         // Unload level
         Unload();
         // Score
@@ -350,8 +353,12 @@ public class LevelLoader : MonoBehaviour
         // Death
         if (health <= 0f)
         {
+            // Stop level
+            trombone.Freeze();
             DisablePerformanceJudge();
             musicPlayer.Stop(gameOverTransitionDuration);
+            GUI.SetPauseButtonActive(false);
+            // Start game over sequence
             Invoke("GameOver", gameOverTransitionDuration);
         }
     }
@@ -361,7 +368,7 @@ public class LevelLoader : MonoBehaviour
         // Update GUI
         GUI.SetDanceBar(dance);
         // Enable power
-        if (dance >= perfJudge.danceLength) GUI.SetPowerButton(true);
+        if (dance >= perfJudge.danceLength) GUI.SetPowerButtonActive(true);
     }
 
     private void OnNotePerformanceCorrect(NoteInstance note, float accuracy, float points)
@@ -394,6 +401,9 @@ public class LevelLoader : MonoBehaviour
 
     private void GameOver()
     {
+        // Trombone was frozen during transition and must be returned to normal
+        trombone.Unfreeze();
+        // Display a different screen depending on game mode
         switch (currentMode)
         {
             case Mode.ARCADE:
