@@ -8,7 +8,6 @@ public class MenuMusic : MonoBehaviour
     public Trombone trombone;
     [Header("Music")]
     public SheetMusic music;
-    public AudioClip preloadedAudio;
     public bool loop = true;
     [Header("Execution")]
     public MenuUI[] playInMenus;
@@ -56,18 +55,23 @@ public class MenuMusic : MonoBehaviour
         // Setup background music
         if (musicPlayer != null)
         {
+            // Reset player settings
             musicPlayer.enabled = true;
             musicPlayer.Stop();
             musicPlayer.loop = loop;
             musicPlayer.playingSpeed = 1f;
-            if (preloadedAudio == null) StartCoroutine(SetPreloadedAudioCoroutine());
-            else musicPlayer.LoadMusic(music, preloadedAudio, trombone.Sampler);
+            // Turn off metronome
+            musicPlayer.metronome.click = false;
+            // Play menu music
+            musicPlayer.LoadMusic(music, null, trombone.Sampler);
             musicPlayer.Play();
         }        
         // Setup trombone
         if (trombone != null)
         {
-            trombone.enabled = enableTrombone;
+            //trombone.enabled = enableTrombone;
+            if (enableTrombone) trombone.Unfreeze();
+            else trombone.Freeze();
             restoreTromboneSettings = trombone.tromboneAuto.settings;
             if (setAutoTrombone) trombone.tromboneAuto.settings = tromboneAutoSettings;
         }
@@ -80,13 +84,5 @@ public class MenuMusic : MonoBehaviour
         musicPlayer.Stop();
         IsPlaying = false;
         if (trombone != null) trombone.tromboneAuto.settings = restoreTromboneSettings;
-    }
-
-    private IEnumerator SetPreloadedAudioCoroutine()
-    {
-        musicPlayer.LoadMusic(music, null, trombone.Sampler);
-        preloadedAudio = musicPlayer.backingSource.clip;
-        while (musicPlayer.IsLoading) yield return null;
-        if (preloadedAudio != musicPlayer.backingSource.clip) preloadedAudio = null;
     }
 }

@@ -43,5 +43,5 @@ MonoBehaviour:
     pan: 0
   - name: Drums
     instrument: {fileID: 11400000, guid: 03c24e8fc3e0c274ababb8e4a5df02ee, type: 2}
-    volume: 0
+    volume: 0.724
     pan: 0
