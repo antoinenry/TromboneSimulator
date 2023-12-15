@@ -43,6 +43,7 @@ public class LevelGUI : GameUI
     {
         get
         {
+            // Check if each GUI component is active
             if (pauseButton != null && pauseButton.gameObject.activeInHierarchy == false) return false;
             if (scoreDisplay != null && scoreDisplay.gameObject.activeInHierarchy == false) return false;
             if (comboDisplay != null && comboDisplay.gameObject.activeInHierarchy == false) return false;
@@ -58,6 +59,7 @@ public class LevelGUI : GameUI
 
         set
         {
+            // Activate/Deactivate every GUI component
             if (pauseButton != null) pauseButton.gameObject.SetActive(value);
             if (scoreDisplay != null) scoreDisplay.gameObject.SetActive(value);
             if (comboDisplay != null) comboDisplay.gameObject.SetActive(value);
@@ -68,6 +70,9 @@ public class LevelGUI : GameUI
             if (powerButton != null) powerButton.gameObject.SetActive(value);
             if (pointsDisplay != null) pointsDisplay.gameObject.SetActive(value);
             if (messageDisplay != null) messageDisplay.gameObject.SetActive(value);
+            // When deactivating, remove listeners
+            onPressPause.RemoveAllListeners();
+            onPressPower.RemoveAllListeners();
         }
     }
 

@@ -55,22 +55,27 @@ public class PauseScreen : MenuUI
         base.HideUI();
         if (Application.isPlaying)
         {
+            // Disable buttons
             stopButton.onClick.RemoveListener(Quit);
             playButton.onClick.RemoveListener(Unpause);
             settingsButton.onClick.RemoveListener(OpenSettings);
+            // Remove all listeners
+            onUnpause.RemoveAllListeners();
+            onQuit.RemoveAllListeners();
+            onOpenSettings.RemoveAllListeners();
         }
     }
 
     public void Unpause()
     {
-        HideUI();
         onUnpause.Invoke();
+        HideUI();
     }
 
     private void Quit()
     {
-        HideUI();
         onQuit.Invoke();
+        HideUI();
     }
 
     private void OpenSettings()
