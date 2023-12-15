@@ -783,7 +783,7 @@ MonoBehaviour:
   tromboneDisplay: {fileID: 1502692987}
   tromboneAudio: {fileID: 1012859072}
   tromboneAuto: {fileID: 1920212839}
-  currentBuild: {fileID: 0}
+  currentBuild: {fileID: 11400000, guid: 06abc53a60234a440a0a6d550c55ea21, type: 2}
   grab: 0
   blow: 0
   slideTone: 0
@@ -791,11 +791,11 @@ MonoBehaviour:
   baseTone: 46
   slideTones: 6
   pressureStepTones:
+  - 0
   - 7
   - 5
   - 4
   - 3
-  - 2
   - 2
   - 2
 --- !u!4 &64880550
@@ -3283,7 +3283,6 @@ MonoBehaviour:
   musicPlayer: {fileID: 650345739}
   trombone: {fileID: 64880549}
   music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
-  preloadedAudio: {fileID: 0}
   loop: 1
   playInMenus:
   - {fileID: 1609945150}
@@ -4973,7 +4972,6 @@ MonoBehaviour:
   musicPlayer: {fileID: 650345739}
   trombone: {fileID: 64880549}
   music: {fileID: 0}
-  preloadedAudio: {fileID: 0}
   loop: 0
   playInMenus:
   - {fileID: 409629776}
@@ -13715,7 +13713,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0b3e55a80d1c77641b62fc04e2a75e66, type: 3}
-  m_Color: {r: 0.9058824, g: 0.80392164, b: 0.34509805, a: 1}
+  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -14156,7 +14154,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: fa99ca4e09bff9c4c8ce6aec920bc02d, type: 3}
-  m_Color: {r: 0.9058824, g: 0.80392164, b: 0.34509805, a: 1}
+  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -15602,7 +15600,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bb5fa9037856072489bd0292630df698, type: 3}
-  m_Color: {r: 0.9058824, g: 0.80392164, b: 0.34509805, a: 1}
+  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -19558,7 +19556,7 @@ MonoBehaviour:
   slidebar: {fileID: 1018350545}
   bell: {fileID: 1539497750}
   grabArrow: {fileID: 1889132680}
-  color: {r: 0.9058824, g: 0.80392164, b: 0.34509805, a: 1}
+  color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
   bodyLength: 108
   slideLength: 100
   grabArrowDelay: -1
@@ -20338,7 +20336,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d712299c3c533644c86a0c9eed973d4a, type: 3}
-  m_Color: {r: 0.9058824, g: 0.80392164, b: 0.34509805, a: 1}
+  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -25727,13 +25725,13 @@ MonoBehaviour:
   dimensions:
     lineTones:
     - 46
+    - 46
     - 53
     - 58
     - 62
     - 65
     - 67
     - 69
-    - 71
     columns: 7
     tonePerColumn: 1
   gridSize: {x: 288, y: 162}
@@ -25761,9 +25759,9 @@ MonoBehaviour:
   spawner: {fileID: 1969521392}
   boundaries:
     serializedVersion: 2
-    x: 0.10157776
+    x: -0.061645508
     y: 0
-    width: 287.79684
+    width: 288.1233
     height: 162
   onHorizontalCrash:
     m_PersistentCalls:

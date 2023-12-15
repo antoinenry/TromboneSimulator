@@ -15,20 +15,22 @@ MonoBehaviour:
   instrument: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
   slideTones: 6
   pressureStepTones:
-  - 46
-  - 53
-  - 58
-  - 62
-  - 65
-  - 68
-  - 70
-  color: {r: 0.9058824, g: 0.80392164, b: 0.34509805, a: 1}
+  - 0
+  - 7
+  - 5
+  - 4
+  - 3
+  - 2
+  - 2
+  color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
   bodyLength: 108
   slideLength: 100
   autoSettings:
-    grab: 0
-    blow: 1
-    slide: 0
-    pressure: 0
-    pressureMagnetDistance: 0
+    blowControls: 0
+    blowConditions: 0
+    pressureControls: 0
+    pressureConditions: 0
+    lockPressureRadius: 0.5
+    unlockPressureRadius: 1
+    lockedPressureLevel: 0
   correctLockToneTolerance: 1

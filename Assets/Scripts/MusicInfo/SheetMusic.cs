@@ -17,6 +17,7 @@ public class SheetMusic : ScriptableObject
     public TempoInfo[] tempo;
     public MeasureInfo[] measure;
     public InstrumentPart[] parts;
+    public bool completeLastBar = true;
 
     public int PartCount
     {
@@ -41,6 +42,16 @@ public class SheetMusic : ScriptableObject
             if (parts != null)
                 foreach (InstrumentPart p in parts)
                     duration = Mathf.Max(duration, NoteInfo.GetTotalDuration(p.notes));
+            if (completeLastBar)
+            {
+                MetronomeTrack rythmTrack = new MetronomeTrack(tempo, measure);
+                if (rythmTrack.IsReady)
+                {
+                    int lastBarIndex = rythmTrack.GetBarIndex(duration);
+                    float lastBarEndTime = rythmTrack.GetBarStartTime(lastBarIndex) + rythmTrack.GetBarDuration(lastBarIndex);
+                    duration = lastBarEndTime;
+                }
+            }
             return duration;
         }
     }

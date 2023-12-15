@@ -177,8 +177,10 @@ public class MusicPlayer : MonoBehaviour
 
     private void UpdateAudio()
     {
+        // Check audiosource
         if (backingSource == null || backingSource.enabled == false) return;
         float audioLength = backingSource.clip != null ? backingSource.clip.length : 0f;
+        backingSource.loop = loop;
         // Playing
         if (Playing == PlayState.Play || Playing == PlayState.Transition)
         {

@@ -82,6 +82,7 @@ public class AudioTrackGenerator : MonoBehaviour
 
     private IEnumerator SampleTrackCoroutine()
     {
+        // Coroutine with timeouts to avoid freezing (eg display a loading screen)
         ErrorType error = ErrorType.NoError;
         if (trackInfo != null)
         {
