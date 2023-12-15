@@ -48,8 +48,8 @@ public class SheetMusic : ScriptableObject
                 if (rythmTrack.IsReady)
                 {
                     int lastBarIndex = rythmTrack.GetBarIndex(duration);
-                    float lastBarEndTime = rythmTrack.GetBarStartTime(lastBarIndex) + rythmTrack.GetBarDuration(lastBarIndex);
-                    duration = lastBarEndTime;
+                    float lastBarStartTime = rythmTrack.GetBarStartTime(lastBarIndex);
+                    if (lastBarStartTime != duration) duration = lastBarStartTime + rythmTrack.GetBarDuration(lastBarIndex); ;
                 }
             }
             return duration;

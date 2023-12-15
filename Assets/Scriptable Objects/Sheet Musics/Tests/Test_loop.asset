@@ -42,5 +42,5 @@ MonoBehaviour:
     - tone: 38
       velocity: 1
       startTime: 1.5
-      duration: 0.2
+      duration: 0.45
   completeLastBar: 1

@@ -3282,7 +3282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicPlayer: {fileID: 650345739}
   trombone: {fileID: 64880549}
-  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
+  music: {fileID: 11400000, guid: 62088b5879a4d324cb7b5abf019afa6c, type: 2}
   loop: 1
   playInMenus:
   - {fileID: 1609945150}
@@ -7845,10 +7845,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6b619e5f218934ca0376357676fd3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 0
+  showDebug: 1
   playOnStart: 0
   fixedUpdate: 1
-  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
+  music: {fileID: 0}
   orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
   instrumentDictionary: {fileID: 11400000, guid: 783db9433904c0b4c962588891b020a9, type: 2}
   metronome: {fileID: 1300806622}
