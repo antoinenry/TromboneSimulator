@@ -14,6 +14,7 @@ public class TromboneAuto : MonoBehaviour,
     private bool autoBlow;
     private float autoSlideTone;
     private float autoPressureLevel;
+    private float lockedPressureLevel;
 
     private bool? grabInput;
     private bool? blowInput;
@@ -59,50 +60,41 @@ public class TromboneAuto : MonoBehaviour,
         set => pressureLevelInput = value;
         get
         {
-            // Blow / Silence conditions
-            bool controlConditions =
-                (autoBlow == true && settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnAutoBlow))
-                || (blowInput == true && settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnInputBlow))
-                || (autoBlow == false && settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnAutoSilence))
-                || (blowInput == false && settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnInputSilence));
-            // Auto pressure
-            if (settings.pressureControls != TromboneAutoSettings.PressureControls.LockPressure || controlConditions == false)
-                settings.lockedPressureLevel = float.NaN;
-            if (float.IsNaN(autoPressureLevel) == false)
+            // No pressure control
+            if (settings.pressureControls == TromboneAutoSettings.PressureControls.Nothing)
+                return pressureLevelInput;
+            // Check activation conditions
+            bool control;
+            control =
+                   (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnAutoBlow) && autoBlow == true)
+                || (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnInputBlow) && blowInput == true)
+                || (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnAutoSilence) && autoBlow == false)
+                || (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnInputSilence) && blowInput == false);
+            // Special condition: correct pressure input
+            if (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnCorrectInput) )
             {
-                // Control pressure
-                if (settings.pressureControls == TromboneAutoSettings.PressureControls.ControlPressure)
-                    return controlConditions ? autoPressureLevel : null;
-                // Lock pressure
-                if (settings.pressureControls == TromboneAutoSettings.PressureControls.LockPressure)
-                {
-                    // Get locked pressure
-                    if (pressureLevelInput != null && controlConditions == true)
-                    {
-                        // Lock on correct input: when pressure input matches auto pressure value
-                        if (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnCorrectInput))
-                        {
-                            if (!float.IsNaN(pressureLevelInput.Value) && !float.IsNaN(autoPressureLevel))
-                            {
-                                // Lock / Unlock
-                                if (Mathf.Abs(pressureLevelInput.Value - autoPressureLevel) <= settings.lockPressureRadius) settings.lockedPressureLevel = autoPressureLevel;
-                                if (Mathf.Abs(pressureLevelInput.Value - autoPressureLevel) > settings.unlockPressureRadius) settings.lockedPressureLevel = float.NaN;
-                            }
-                        }
-                        // Lock disregarding pressure input
-                        else
-                        {
-                            // Lock / Unlock
-                            settings.lockedPressureLevel = pressureLevelInput != null ? pressureLevelInput.Value : float.NaN;
-                        }
-                    }
-                    // Control pressure when lock is active
-                    if (!float.IsNaN(settings.lockedPressureLevel))
-                        return settings.lockedPressureLevel;
-                }
+                // Prevent control as long as pressure is incorrect
+                if (Mathf.RoundToInt(lockedPressureLevel) != Mathf.RoundToInt(autoPressureLevel)) control = false;
             }
-            // No control
-            return pressureLevelInput;
+            // Pressure control
+            if (control == true)
+            {
+                // Pressure lock
+                if (settings.pressureControls == TromboneAutoSettings.PressureControls.LockPressure)
+                    return lockedPressureLevel;
+                // Full auto
+                else
+                    return autoPressureLevel;
+            }
+            // No pressure control
+            else
+            {
+                // Change locked pressure only when conditions are not met
+                if (settings.pressureControls == TromboneAutoSettings.PressureControls.LockPressure && pressureLevelInput != null)
+                    lockedPressureLevel = pressureLevelInput.Value;
+                // No controls means no change from input
+                return pressureLevelInput;
+            }
         }
     }
 

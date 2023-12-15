@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 
 [Serializable]
 public struct TromboneAutoSettings
@@ -29,7 +28,4 @@ public struct TromboneAutoSettings
     public BlowConditions blowConditions;
     public PressureControls pressureControls;
     public PressureConditions pressureConditions;
-    public float lockPressureRadius;
-    public float unlockPressureRadius;
-    public float lockedPressureLevel;
 }
