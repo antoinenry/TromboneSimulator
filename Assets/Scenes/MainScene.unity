@@ -7845,7 +7845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6b619e5f218934ca0376357676fd3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebug: 1
+  showDebug: 0
   playOnStart: 0
   fixedUpdate: 1
   music: {fileID: 0}

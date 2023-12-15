@@ -109,10 +109,10 @@ public class MusicPlayer : MonoBehaviour
         // Update play state
         else
         {
-            UpdatePlayTime();
-            if (showDebug && hasLooped) Debug.Log("Music has looped at " + CurrentPlayTime + "s back to " + LoopedPlayTime + "s");
             UpdateAudio();
             UpdatePlayheads();
+            UpdatePlayTime();
+            if (showDebug && hasLooped) Debug.Log("Music has looped at " + CurrentPlayTime + "s back to " + LoopedPlayTime + "s");            
         }
     }
 
@@ -195,25 +195,18 @@ public class MusicPlayer : MonoBehaviour
                 // Sync audio and playtime
                 if (backingSource.isPlaying)
                 {
-                    // Resync audio on loop
-                    if (hasLooped)
+                    // When playing, sync audio and playtime
+                    float audioTime = Mathf.Repeat(backingSource.time, backingSource.clip.length);
+                    audioLag = LoopedPlayTime - audioTime;
+                    if (Mathf.Abs(audioLag) > Mathf.Abs(audioSyncTolerance * CurrentPlayingSpeed))
                     {
+                        if (showDebug) Debug.LogWarning("Audio sync at " + LoopedPlayTime + " by " + audioLag);
                         backingSource.time = LoopedPlayTime;
+                        // Watch out for lag (consecutive resyncs)
+                        ++ConsecutiveAudioSyncs;
                     }
-                    // When playing, sync audio and watch out for lag
                     else
-                    {
-                        float audioTime = backingSource.time;
-                        audioLag = LoopedPlayTime - audioTime;
-                        if (Mathf.Abs(audioLag) > Mathf.Abs(audioSyncTolerance * CurrentPlayingSpeed))
-                        {
-                            if (showDebug) Debug.LogWarning("Audio sync at " + LoopedPlayTime + " by " + audioLag);
-                            backingSource.time = LoopedPlayTime;
-                            ++ConsecutiveAudioSyncs;
-                        }
-                        else
-                            ConsecutiveAudioSyncs = 0;
-                    }                    
+                        ConsecutiveAudioSyncs = 0;
                 }
                 // Speed
                 if (CurrentPlayingSpeed == 0f)
@@ -229,6 +222,7 @@ public class MusicPlayer : MonoBehaviour
                         backingSource.Stop();
                         backingSource.time = LoopedPlayTime;
                         backingSource.Play();
+                        if (showDebug) Debug.Log("Restarting backing source (" + backingSource.time + "s)");
                     }
                 }
             }
