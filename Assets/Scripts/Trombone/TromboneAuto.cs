@@ -32,15 +32,15 @@ public class TromboneAuto : MonoBehaviour,
         get
         {
             // Grab/Release contitions
-            bool controlConditions = 
-                (grabInput == true && settings.blowConditions.HasFlag(TromboneAutoSettings.BlowConditions.OnGrabbed))
-                || (grabInput == false && settings.blowConditions.HasFlag(TromboneAutoSettings.BlowConditions.OnReleased));
+            bool grabConditions = 
+                (grabInput == true && settings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed))
+                || (grabInput == false && settings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Released));
             // Control blows
-            if (settings.blowControls.HasFlag(TromboneAutoSettings.BlowControls.ControlBlows) && autoBlow == true)
-                return controlConditions ? true : null;            
+            if (settings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
+                return grabConditions ? true : null;
             // Control silences
-            if (settings.blowControls.HasFlag(TromboneAutoSettings.BlowControls.ControlSilences) && autoBlow == false)
-                return controlConditions ? false : null;
+            if (settings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false)
+                return grabConditions ? false : null;
             // No control
             return blowInput;
         }
@@ -60,41 +60,41 @@ public class TromboneAuto : MonoBehaviour,
         set => pressureLevelInput = value;
         get
         {
-            // No pressure control
-            if (settings.pressureControls == TromboneAutoSettings.PressureControls.Nothing)
-                return pressureLevelInput;
-            // Check activation conditions
-            bool control;
-            control =
-                   (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnAutoBlow) && autoBlow == true)
-                || (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnInputBlow) && blowInput == true)
-                || (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnAutoSilence) && autoBlow == false)
-                || (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnInputSilence) && blowInput == false);
-            // Special condition: correct pressure input
-            if (settings.pressureConditions.HasFlag(TromboneAutoSettings.PressureConditions.OnCorrectInput) )
-            {
-                // Prevent control as long as pressure is incorrect
-                if (Mathf.RoundToInt(lockedPressureLevel) != Mathf.RoundToInt(autoPressureLevel)) control = false;
-            }
+            bool grabConditions, blowConditions, toneCondition;
             // Pressure control
-            if (control == true)
+            if (settings.pressureControl != TromboneAutoSettings.ControlConditions.Never)
             {
-                // Pressure lock
-                if (settings.pressureControls == TromboneAutoSettings.PressureControls.LockPressure)
-                    return lockedPressureLevel;
-                // Full auto
-                else
+                grabConditions =
+                    ((settings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed) && grabInput == true)
+                        || (settings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Released) && grabInput == false));
+                blowConditions =
+                    ((settings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
+                        || (settings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false));
+                if (grabConditions == true && blowConditions == true)
+                {
+                    // Set pressure to automatic value
                     return autoPressureLevel;
+                }
             }
-            // No pressure control
-            else
+            // Pressure lock
+            if (settings.pressureLock != TromboneAutoSettings.LockConditions.Never)
             {
-                // Change locked pressure only when conditions are not met
-                if (settings.pressureControls == TromboneAutoSettings.PressureControls.LockPressure && pressureLevelInput != null)
-                    lockedPressureLevel = pressureLevelInput.Value;
-                // No controls means no change from input
-                return pressureLevelInput;
+                blowConditions =
+                    ((settings.pressureLock.HasFlag(TromboneAutoSettings.LockConditions.InputBlows) && blowInput == true)
+                        || (settings.pressureLock.HasFlag(TromboneAutoSettings.LockConditions.AutoBlows) && autoBlow == true));
+                toneCondition =
+                    (settings.pressureLock.HasFlag(TromboneAutoSettings.LockConditions.CorrectPressure) == false
+                        || Mathf.RoundToInt(lockedPressureLevel) == Mathf.RoundToInt(autoPressureLevel));
+                if (blowConditions && toneCondition)
+                {
+                    // Set pressure to registered (locked) value
+                    return lockedPressureLevel;
+                }
+                // When pressure is "unlocked", registered value follows the input value
+                else if (pressureLevelInput != null) lockedPressureLevel = pressureLevelInput.Value;
             }
+            // No controls or lock
+            return pressureLevelInput;
         }
     }
 

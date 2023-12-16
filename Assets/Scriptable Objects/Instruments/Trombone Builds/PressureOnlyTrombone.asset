@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3b9729a948bfc44a19eef88457aa5a, type: 3}
+  m_Name: PressureOnlyTrombone
+  m_EditorClassIdentifier: 
+  instrument: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
+  slideTones: 6
+  pressureStepTones:
+  - 7
+  - 5
+  - 4
+  - 3
+  - 2
+  - 2
+  - 2
+  color: {r: 0, g: 0.9150943, b: 0.3146505, a: 1}
+  bodyLength: 116
+  slideLength: 76
+  autoSettings:
+    blowControl: 0
+    slideControl: 0
+    pressureControl: 0
+    pressureLock: 0
+  correctLockToneTolerance: 1

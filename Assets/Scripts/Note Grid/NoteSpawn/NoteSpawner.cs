@@ -109,7 +109,7 @@ public class NoteSpawner : MonoBehaviour
                 {
                     instance.Move(time, TimeScale);
                     // Flat mode
-                    instance.SetVisible(!grid.flattenY, true);
+                    instance.SetVisible(!grid.flattenY, !grid.flattenX);
                 }
             }
         }

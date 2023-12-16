@@ -19,7 +19,7 @@ public class NoteGrid : MonoBehaviour
     public bool cameraConstrained;
     public Vector2Int cellSize;
     public Vector2Int cellSpacing;
-    //public bool flattenX = false;
+    public bool flattenX = false;
     public bool flattenY = false;
 
     private void Update()
@@ -53,6 +53,7 @@ public class NoteGrid : MonoBehaviour
                     + (Vector3)((Vector2)cellSize / 2f)                                             // center of the cell
                     + cellSize.x * Vector3.left;                                                    // first column
                 // Special "flat" modes
+                flattenX = !trombone.tromboneDisplay.enableSlideMovement;
                 flattenY = !trombone.tromboneDisplay.enablePressureMovement;
             }
         }
@@ -89,21 +90,30 @@ public class NoteGrid : MonoBehaviour
         // Place vertical lines
         if (verticalLines != null && verticalLines.sprite != null)
         {
-            // Get cell borders from sprite
-            float spriteBorder = verticalLines.sprite.border.x + verticalLines.sprite.border.z;
-            // Keep lines on bottom side of the screen
-            verticalLines.transform.position = Vector3.Scale(verticalLines.transform.position, new Vector3(1f, 0f, 1f));
-            // Set sprite size
-            verticalLines.size = new Vector2()
+            // Flat mode: no vertical lines
+            if (flattenX == true)
+                verticalLines.enabled = false;
+            // Normal mode
+            else
             {
-                // Sprite width depends on cell count and size
-                x = spriteBorder + (cellSize.x + cellSpacing.x) * dimensions.columns,
-                // Vertical lines take the whole screen height
-                y = gridSize.y
-            };
-            // Apply margins
-            verticalLines.transform.position += gridMargin.bottom * Vector3.up;
-            verticalLines.size -= (gridMargin.bottom + gridMargin.top) * Vector2.up;
+                verticalLines.enabled = true;
+                // Get cell borders from sprite
+                float spriteBorder = verticalLines.sprite.border.x + verticalLines.sprite.border.z;
+                // Keep lines on bottom side of the screen
+                verticalLines.transform.position = Vector3.Scale(verticalLines.transform.position, new Vector3(1f, 0f, 1f));
+                // Set sprite size
+                verticalLines.size = new Vector2()
+                {
+                    // Sprite width depends on cell count and size
+                    x = spriteBorder + (cellSize.x + cellSpacing.x) * dimensions.columns,
+                    // Vertical lines take the whole screen height
+                    y = gridSize.y
+                };
+                // Apply margins
+                verticalLines.transform.position += gridMargin.bottom * Vector3.up;
+                verticalLines.size -= (gridMargin.bottom + gridMargin.top) * Vector2.up;
+
+            }
         }
     }
 

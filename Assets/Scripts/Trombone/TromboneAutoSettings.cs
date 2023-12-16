@@ -3,29 +3,24 @@
 [Serializable]
 public struct TromboneAutoSettings
 {
-    [Flags] public enum BlowControls 
-    { 
-        ControlBlows = 1, ControlSilences = 2, FullControl = ~0 
-    }
-    [Flags] public enum BlowConditions 
-    { 
-        Never = 0, OnGrabbed = 1, OnReleased = 2, Always =~0 
-    }
-    public enum PressureControls 
-    { 
-        Nothing = 0, LockPressure = 1, ControlPressure = 2
-    }
-    [Flags] public enum PressureConditions 
-    { 
-        Never = 0, 
-        OnInputBlow = 1, OnInputSilence = 2, 
-        OnAutoBlow = 4, OnAutoSilence = 8, 
-        OnCorrectInput = 16,
-        Always = OnInputBlow | OnInputSilence | OnAutoBlow | OnAutoSilence
+    [Flags] public enum ControlConditions
+    {
+        Never = 0,
+        Grabbed = 1, Released = 2,
+        Blows = 4, Silences = 8,
+        Always = ~0
     }
 
-    public BlowControls blowControls;
-    public BlowConditions blowConditions;
-    public PressureControls pressureControls;
-    public PressureConditions pressureConditions;
+    [Flags] public enum LockConditions
+    {
+        Never = 0,
+        InputBlows = 4, AutoBlows = 8,
+        CorrectPressure = 16 | AutoBlows,
+        Always = InputBlows | AutoBlows,
+    }
+
+    public ControlConditions blowControl;
+    public ControlConditions slideControl;
+    public ControlConditions pressureControl;
+    public LockConditions pressureLock;
 }

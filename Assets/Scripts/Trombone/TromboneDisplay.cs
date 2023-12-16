@@ -24,7 +24,7 @@ public class TromboneDisplay : MonoBehaviour,
     [Header("Movement")]
     public bool roundedPosition = true;
     [Header("Slide")]
-    //public bool enableSlideMovement = true;
+    public bool enableSlideMovement = true;
     public float toneWidth = 10f;
     public float minSlideTone = 0f;
     public float maxSlideTone = 6f;
@@ -185,15 +185,19 @@ public class TromboneDisplay : MonoBehaviour,
         }
         body.transform.localPosition = bodyPos;
         // Slide position (horizontal movement)
-        if (SlideTone != null && slide != null)
+        Vector3 slidePos = slide.transform.localPosition;
+        if (enableSlideMovement && SlideTone != null && slide != null)
         {
-            Vector3 slidePos = slide.transform.localPosition;
             slidePos.x = SlideTone.Value * toneWidth;
-            if (roundedPosition) slidePos.x = Mathf.Round(slidePos.x);
-            slide.transform.localPosition = slidePos;
-            // Slide bar strech
-            if (slidebar != null) slidebar.size = slide.size + slidePos.x * Vector2.right;
+            if (roundedPosition) slidePos.x = Mathf.Round(slidePos.x);            
         }
+        else
+        {
+            slidePos.x = 0f;
+        }
+        slide.transform.localPosition = slidePos;
+        // Slide bar strech
+        if (slidebar != null) slidebar.size = slide.size + slidePos.x * Vector2.right;
         // Cursor position
         if (useHandCursor)
         {
