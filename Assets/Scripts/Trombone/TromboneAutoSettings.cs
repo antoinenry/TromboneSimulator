@@ -21,7 +21,7 @@ public struct TromboneAutoSettings
         OnInputBlow = 1, OnInputSilence = 2, 
         OnAutoBlow = 4, OnAutoSilence = 8, 
         OnCorrectInput = 16,
-        Always = ~0 
+        Always = OnInputBlow | OnInputSilence | OnAutoBlow | OnAutoSilence
     }
 
     public BlowControls blowControls;

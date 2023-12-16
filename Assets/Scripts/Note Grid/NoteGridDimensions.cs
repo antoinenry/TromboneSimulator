@@ -9,7 +9,7 @@ public struct NoteGridDimensions
     [Min(0)] public int columns;
     public float tonePerColumn;
 
-    public int lines
+    public int LineCount
     {
         get => lineTones != null ? lineTones.Length : 0;
         set

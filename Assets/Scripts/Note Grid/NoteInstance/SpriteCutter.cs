@@ -253,4 +253,14 @@ public class SpriteCutter : MonoBehaviour
             }
         }
     }
+
+    public void SetVisible(bool visible)
+    {
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = visible;
+        if (sliceRenderers != null)
+            foreach (SpriteRenderer s in sliceRenderers)
+                if (s != null)
+                    s.enabled = visible;
+    }
 }

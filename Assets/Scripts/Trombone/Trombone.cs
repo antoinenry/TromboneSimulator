@@ -18,8 +18,8 @@ public class Trombone : MonoBehaviour,
     //public TromboneControlWiring controlWiring;
     [Header("Tone")]
     [Tone] public float baseTone;
-    public float slideTones = 6f;
     public float[] pressureStepTones;
+    public float slideTones = 6f;
 
     public int PressureIndex => RoundToPressureIndex(pressureLevel);
     public float Tone => GetTone(PressureIndex, slideTone);

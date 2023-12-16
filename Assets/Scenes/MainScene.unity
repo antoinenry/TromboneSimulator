@@ -783,21 +783,20 @@ MonoBehaviour:
   tromboneDisplay: {fileID: 1502692987}
   tromboneAudio: {fileID: 1012859072}
   tromboneAuto: {fileID: 1920212839}
-  currentBuild: {fileID: 11400000, guid: 06abc53a60234a440a0a6d550c55ea21, type: 2}
+  currentBuild: {fileID: 11400000, guid: 1732201f41bc0eb46a3d3b83c9f3e0aa, type: 2}
   grab: 0
   blow: 0
   slideTone: 0
   pressureLevel: 0
   baseTone: 46
-  slideTones: 6
   pressureStepTones:
-  - 0
   - 7
   - 5
   - 4
   - 3
   - 2
   - 2
+  slideTones: 6
 --- !u!4 &64880550
 Transform:
   m_ObjectHideFlags: 0
@@ -3282,7 +3281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicPlayer: {fileID: 650345739}
   trombone: {fileID: 64880549}
-  music: {fileID: 11400000, guid: 62088b5879a4d324cb7b5abf019afa6c, type: 2}
+  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
   loop: 1
   playInMenus:
   - {fileID: 1609945150}
@@ -3297,9 +3296,6 @@ MonoBehaviour:
     blowConditions: 0
     pressureControls: 0
     pressureConditions: 0
-    lockPressureRadius: 0
-    unlockPressureRadius: 0
-    lockedPressureLevel: 0
 --- !u!1 &281858542
 GameObject:
   m_ObjectHideFlags: 0
@@ -4982,9 +4978,6 @@ MonoBehaviour:
     blowConditions: 0
     pressureControls: 0
     pressureConditions: 0
-    lockPressureRadius: 0
-    unlockPressureRadius: 0
-    lockedPressureLevel: 0
 --- !u!1 &415789910
 GameObject:
   m_ObjectHideFlags: 0
@@ -13663,7 +13656,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018350543}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20, y: -0, z: 0}
+  m_LocalPosition: {x: -13, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13713,11 +13706,11 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0b3e55a80d1c77641b62fc04e2a75e66, type: 3}
-  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
+  m_Color: {r: 0.850541, g: 0.514151, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 100, y: 32}
+  m_Size: {x: 122, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -14154,11 +14147,11 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: fa99ca4e09bff9c4c8ce6aec920bc02d, type: 3}
-  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
+  m_Color: {r: 0.850541, g: 0.514151, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 100, y: 32}
+  m_Size: {x: 122, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -15600,11 +15593,11 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bb5fa9037856072489bd0292630df698, type: 3}
-  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
+  m_Color: {r: 0.850541, g: 0.514151, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 108, y: 32}
+  m_Size: {x: 115, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -19556,17 +19549,18 @@ MonoBehaviour:
   slidebar: {fileID: 1018350545}
   bell: {fileID: 1539497750}
   grabArrow: {fileID: 1889132680}
-  color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
-  bodyLength: 108
-  slideLength: 100
+  color: {r: 0.850541, g: 0.514151, b: 1, a: 1}
+  bodyLength: 115
+  slideLength: 122
   grabArrowDelay: -1
   roundedPosition: 1
   toneWidth: 10
   minSlideTone: 0
   maxSlideTone: 6
+  enablePressureMovement: 0
   stepHeight: 11
   minPressureLevel: -2
-  maxPressureLevel: 10
+  maxPressureLevel: 12
   grabMode: 13
   grabOffset: {x: 46, y: 5}
   grabRadius: 20
@@ -20336,11 +20330,11 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d712299c3c533644c86a0c9eed973d4a, type: 3}
-  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
+  m_Color: {r: 0.850541, g: 0.514151, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 108, y: 32}
+  m_Size: {x: 115, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -23939,7 +23933,7 @@ GameObject:
   - component: {fileID: 1888059635}
   - component: {fileID: 1888059636}
   m_Layer: 0
-  m_Name: BackingTrack
+  m_Name: AudioBacking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24000,7 +23994,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8496067993420674785, guid: f68f9a66afc981e45aeab3515c546139, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -24786,11 +24780,8 @@ MonoBehaviour:
   settings:
     blowControls: 1
     blowConditions: 1
-    pressureControls: 0
-    pressureConditions: 0
-    lockPressureRadius: 1
-    unlockPressureRadius: 2
-    lockedPressureLevel: 0
+    pressureControls: 2
+    pressureConditions: 15
 --- !u!1 &1920729533
 GameObject:
   m_ObjectHideFlags: 0
@@ -25627,7 +25618,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969521389}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 79, y: 19, z: 0}
+  m_LocalPosition: {x: 108, y: 19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25725,7 +25716,6 @@ MonoBehaviour:
   dimensions:
     lineTones:
     - 46
-    - 46
     - 53
     - 58
     - 62
@@ -25743,6 +25733,7 @@ MonoBehaviour:
   cameraConstrained: 0
   cellSize: {x: 10, y: 10}
   cellSpacing: {x: 0, y: 1}
+  flattenY: 1
 --- !u!114 &1969521394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26743,7 +26734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067895445}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -49, y: -6, z: 0}
+  m_LocalPosition: {x: -78, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26757,7 +26748,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067895445}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -26796,7 +26787,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 238, y: 93}
+  m_Size: {x: 238, y: 82}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

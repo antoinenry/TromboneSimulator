@@ -23,9 +23,13 @@ public class TromboneDisplay : MonoBehaviour,
     public float grabArrowDelay = -1f;
     [Header("Movement")]
     public bool roundedPosition = true;
+    [Header("Slide")]
+    //public bool enableSlideMovement = true;
     public float toneWidth = 10f;
     public float minSlideTone = 0f;
     public float maxSlideTone = 6f;
+    [Header("Pressure")]
+    public bool enablePressureMovement = true;
     public float stepHeight = 11f;
     public float minPressureLevel = 0f;
     public float maxPressureLevel = 6f;
@@ -169,13 +173,17 @@ public class TromboneDisplay : MonoBehaviour,
     public void UpdatePosition()
     {
         // Body position (vertical movement)
-        if (PressureLevel != null && body != null)
+        Vector3 bodyPos = body.transform.localPosition;
+        if (enablePressureMovement && PressureLevel != null && body != null)
         {
-            Vector3 bodyPos = body.transform.localPosition;
             bodyPos.y = PressureLevel.Value * stepHeight;
             if (roundedPosition) bodyPos.y = Mathf.Round(bodyPos.y);
-            body.transform.localPosition = bodyPos;
         }
+        else
+        {
+            bodyPos.y = 0f;
+        }
+        body.transform.localPosition = bodyPos;
         // Slide position (horizontal movement)
         if (SlideTone != null && slide != null)
         {

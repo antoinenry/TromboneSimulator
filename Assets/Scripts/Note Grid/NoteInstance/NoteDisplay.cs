@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.UIElements;
 
 [ExecuteAlways]
 public class NoteDisplay : MonoBehaviour
@@ -173,6 +174,12 @@ public class NoteDisplay : MonoBehaviour
         }
         if (hRenderer != null) hRenderer.Cut(fromPosition, toPosition);
         if (vRenderer != null) vRenderer.Cut(fromPosition, toPosition);
+    }
+
+    public void SetVisible(bool horizontal, bool vertical)
+    {
+        if (hRenderer != null) hRenderer.SetVisible(horizontal);
+        if (vRenderer != null) vRenderer.SetVisible(vertical);
     }
 
     public void SetColor(Color c, float fromPosition, float toPosition)

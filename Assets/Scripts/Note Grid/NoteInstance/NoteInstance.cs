@@ -95,4 +95,9 @@ public class NoteInstance : MonoBehaviour, INote
         // Update catch state
         catchState = CatchState.All;
     }
+
+    public void SetVisible(bool x, bool y)
+    {
+        display.SetVisible(x, y);
+    }
 }

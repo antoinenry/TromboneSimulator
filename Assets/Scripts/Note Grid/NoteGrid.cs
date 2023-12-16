@@ -19,6 +19,8 @@ public class NoteGrid : MonoBehaviour
     public bool cameraConstrained;
     public Vector2Int cellSize;
     public Vector2Int cellSpacing;
+    //public bool flattenX = false;
+    public bool flattenY = false;
 
     private void Update()
     {
@@ -50,6 +52,8 @@ public class NoteGrid : MonoBehaviour
                     + trombone.tromboneDisplay.SlideBumperMinX * Vector3.right                       // tip of the slide
                     + (Vector3)((Vector2)cellSize / 2f)                                             // center of the cell
                     + cellSize.x * Vector3.left;                                                    // first column
+                // Special "flat" modes
+                flattenY = !trombone.tromboneDisplay.enablePressureMovement;
             }
         }
         // Get screen size from camera
@@ -58,21 +62,29 @@ public class NoteGrid : MonoBehaviour
         // Place horizontal lines
         if (horizontalLines != null)
         {
-            // Get cell borders from sprite
-            float spriteBorder = horizontalLines.sprite.border.y + horizontalLines.sprite.border.w;
-            // Keep lines on left side of the screen
-            horizontalLines.transform.position = Vector3.Scale(horizontalLines.transform.position, new Vector3(0f, 1f, 1f));
-            // Set sprite size
-            horizontalLines.size = new Vector2()
+            // Flat mode: no horizontal lines
+            if (flattenY == true)
+                horizontalLines.enabled = false;
+            // Normal mode
+            else
             {
-                // Horizontal lines take the whole screen width
-                x = gridSize.x,
-                // Sprite height depends on cell count and size
-                y = spriteBorder + (cellSize.y + cellSpacing.y) * dimensions.lines
-            };
-            // Apply margins
-            horizontalLines.transform.position += gridMargin.left * Vector3.right;
-            horizontalLines.size -= (gridMargin.left + gridMargin.right) * Vector2.right;
+                horizontalLines.enabled = true;
+                // Get cell borders from sprite
+                float spriteBorder = horizontalLines.sprite.border.y + horizontalLines.sprite.border.w;
+                // Keep lines on left side of the screen
+                horizontalLines.transform.position = Vector3.Scale(horizontalLines.transform.position, new Vector3(0f, 1f, 1f));
+                // Set sprite size
+                horizontalLines.size = new Vector2()
+                {
+                    // Horizontal lines take the whole screen width
+                    x = gridSize.x,
+                    // Sprite height depends on cell count and size
+                    y = spriteBorder + (cellSize.y + cellSpacing.y) * dimensions.LineCount
+                };
+                // Apply margins
+                horizontalLines.transform.position += gridMargin.left * Vector3.right;
+                horizontalLines.size -= (gridMargin.left + gridMargin.right) * Vector2.right;
+            }
         }
         // Place vertical lines
         if (verticalLines != null && verticalLines.sprite != null)
@@ -95,7 +107,14 @@ public class NoteGrid : MonoBehaviour
         }
     }
 
-    public Vector2 CoordinatesToLocalPosition(Vector2 coord) => Vector2.Scale(coord, cellSize + cellSpacing);
+    public Vector2 CoordinatesToLocalPosition(Vector2 coord)
+    {
+        // Get position from coordinates and cell size, with spacing
+        Vector2 pos = Vector2.Scale(coord, cellSize + cellSpacing);
+        // "Flat" mode
+        if (flattenY) pos.y = 0f;
+        return pos;
+    }
 
     public Vector2 WorldPositionToCoordinates(Vector2 position)
     {
