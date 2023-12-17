@@ -857,11 +857,14 @@ MonoBehaviour:
     from: {fileID: 64880549}
     to: {fileID: 1012859072}
   - valueType: SlideTone
-    from: {fileID: 1502692987}
+    from: {fileID: 1920212839}
     to: {fileID: 64880549}
   - valueType: SlideTone
     from: {fileID: 64880549}
     to: {fileID: 1012859072}
+  - valueType: SlideTone
+    from: {fileID: 1502692987}
+    to: {fileID: 1920212839}
 --- !u!1 &73332986
 GameObject:
   m_ObjectHideFlags: 0
@@ -24781,7 +24784,7 @@ MonoBehaviour:
   spawner: {fileID: 1969521392}
   settings:
     blowControl: 13
-    slideControl: 0
+    slideControl: 13
     pressureControl: 0
     pressureLock: 24
 --- !u!1 &1920729533

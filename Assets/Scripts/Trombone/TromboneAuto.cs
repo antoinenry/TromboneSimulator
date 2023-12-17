@@ -51,7 +51,24 @@ public class TromboneAuto : MonoBehaviour,
         set => slideToneInput = value;
         get
         {
-            return null;
+            // Slide control
+            bool grabConditions, blowConditions;
+            if (settings.slideControl != TromboneAutoSettings.ControlConditions.Never)
+            {
+                grabConditions =
+                    ((settings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed) && grabInput == true)
+                        || (settings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Released) && grabInput == false));
+                blowConditions =
+                    ((settings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
+                        || (settings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false));
+                if (grabConditions == true && blowConditions == true)
+                {
+                    // Set slide to automatic value
+                    return autoSlideTone;
+                }
+            }
+            // No controls
+            return slideToneInput;
         }
     }
 
@@ -60,8 +77,8 @@ public class TromboneAuto : MonoBehaviour,
         set => pressureLevelInput = value;
         get
         {
-            bool grabConditions, blowConditions, toneCondition;
             // Pressure control
+            bool grabConditions, blowConditions;
             if (settings.pressureControl != TromboneAutoSettings.ControlConditions.Never)
             {
                 grabConditions =
@@ -77,6 +94,7 @@ public class TromboneAuto : MonoBehaviour,
                 }
             }
             // Pressure lock
+            bool toneCondition;
             if (settings.pressureLock != TromboneAutoSettings.LockConditions.Never)
             {
                 blowConditions =
