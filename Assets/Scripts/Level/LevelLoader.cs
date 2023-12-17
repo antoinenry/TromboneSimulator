@@ -20,6 +20,12 @@ public class LevelLoader : MonoBehaviour
     public Level LoadedLevel { get; private set; }
     public AudioClip LoadedLevelAudio { get; private set; }
 
+    // Coroutines
+    private Coroutine startLevelCoroutine;
+    private Coroutine unpauseLevelCoroutine;
+    private Coroutine submitLevelHighscoreCoroutine;
+    private Coroutine submitArcadeHighscoreCoroutine;
+    // Component references
     private MusicPlayer musicPlayer;
     private NoteCatcher noteCatcher;
     private NoteSpawner noteSpawner;
@@ -161,7 +167,7 @@ public class LevelLoader : MonoBehaviour
         GUI.onPressPause.AddListener(PauseLevel);
         GUI.SetPauseButtonActive(true);
         // Level start sequence
-        StartCoroutine(LevelStartSequence());
+        startLevelCoroutine = StartCoroutine(LevelStartSequence());
     }
 
     public void Unload()
@@ -208,7 +214,7 @@ public class LevelLoader : MonoBehaviour
         musicPlayer.Pause(true);
         trombone.Freeze();
         // Interrupt unpause sequence (grabbing trombone)
-        StopCoroutine(LevelUnpauseSequence());
+        if (unpauseLevelCoroutine != null) StopCoroutine(unpauseLevelCoroutine);
     }
 
     public void UnpauseLevel()
@@ -222,7 +228,7 @@ public class LevelLoader : MonoBehaviour
         GUI.onPressPause.AddListener(PauseLevel);
         // Start unpause sequence (wait for trombone to be grabbed), unless the game was paused before the song starts (then it's back to countdown sequence)
         trombone.Unfreeze();
-        if (musicPlayer.CurrentPlayTime > 0f) StartCoroutine(LevelUnpauseSequence());
+        if (musicPlayer.CurrentPlayTime > 0f) unpauseLevelCoroutine = StartCoroutine(LevelUnpauseSequence());
     }
 
     public void QuitLevel()
@@ -235,7 +241,7 @@ public class LevelLoader : MonoBehaviour
                 UILevelSelection.unlockedLevelCount = gameState.GetUnlockedLevelCount();
                 // Submit score
                 if (gameState.IsArcadeHighscore(gameState.CurrentArcadeScore))
-                    StartCoroutine(SubmitArcadeHighscore());
+                    submitArcadeHighscoreCoroutine = StartCoroutine(SubmitArcadeHighscore());
                 else
                     UIMainMenu.ShowUI();
                 break;
@@ -448,7 +454,7 @@ public class LevelLoader : MonoBehaviour
     private void OnLevelHighscore()
     {
         UIScore.onFinishDisplayScore.RemoveListener(OnLevelHighscore);
-        StartCoroutine(SubmitLevelHighscore());
+        submitLevelHighscoreCoroutine = StartCoroutine(SubmitLevelHighscore());
     }
 
     private IEnumerator SubmitLevelHighscore()
