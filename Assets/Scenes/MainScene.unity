@@ -3298,6 +3298,8 @@ MonoBehaviour:
   tromboneAutoSettings:
     blowControl: 0
     slideControl: 0
+    slideLegatoSpeed: 0
+    maxLegatoDistance: 0
     pressureControl: 0
     pressureLock: 0
 --- !u!1 &281858542
@@ -4980,6 +4982,8 @@ MonoBehaviour:
   tromboneAutoSettings:
     blowControl: 0
     slideControl: 0
+    slideLegatoSpeed: 0
+    maxLegatoDistance: 0
     pressureControl: 0
     pressureLock: 0
 --- !u!1 &415789910
@@ -24785,6 +24789,8 @@ MonoBehaviour:
   settings:
     blowControl: 13
     slideControl: 13
+    slideLegatoSpeed: 20
+    maxLegatoDistance: 2
     pressureControl: 0
     pressureLock: 24
 --- !u!1 &1920729533

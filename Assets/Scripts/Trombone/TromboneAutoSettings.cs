@@ -21,6 +21,8 @@ public struct TromboneAutoSettings
 
     public ControlConditions blowControl;
     public ControlConditions slideControl;
+    public float slideLegatoSpeed;
+    public float maxLegatoDistance;
     public ControlConditions pressureControl;
     public LockConditions pressureLock;
 }

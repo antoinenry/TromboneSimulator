@@ -14,6 +14,7 @@ public class TromboneAuto : MonoBehaviour,
     private bool autoBlow;
     private float autoSlideTone;
     private float autoPressureLevel;
+    private float legatoSlideTone;
     private float lockedPressureLevel;
 
     private bool? grabInput;
@@ -64,7 +65,20 @@ public class TromboneAuto : MonoBehaviour,
                 if (grabConditions == true && blowConditions == true)
                 {
                     // Set slide to automatic value
-                    return autoSlideTone;
+                    if (settings.slideLegatoSpeed <= 0f)
+                    {
+                        return autoSlideTone;
+                    }
+                    // ..with legato effect
+                    else
+                    {
+                        float distance = Mathf.Abs(legatoSlideTone - autoSlideTone);
+                        if (distance > settings.maxLegatoDistance)
+                            legatoSlideTone = legatoSlideTone < autoSlideTone ? autoSlideTone - settings.maxLegatoDistance : autoSlideTone + settings.maxLegatoDistance;
+                        else
+                            legatoSlideTone = Mathf.MoveTowards(legatoSlideTone, autoSlideTone, Time.deltaTime * settings.slideLegatoSpeed);
+                        return legatoSlideTone;
+                    }
                 }
             }
             // No controls
