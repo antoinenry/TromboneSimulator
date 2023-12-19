@@ -46,6 +46,7 @@ public class TromboneDisplay : MonoBehaviour,
     public int releaseButtonNumber = 1;
 
     private HandCursor hand;
+    private bool mouseHover;
     private bool mouseGrab;
     private bool mouseBlow;
     private float mouseSlideTone;
@@ -198,9 +199,13 @@ public class TromboneDisplay : MonoBehaviour,
         slide.transform.localPosition = slidePos;
         // Slide bar strech
         if (slidebar != null) slidebar.size = slide.size + slidePos.x * Vector2.right;
-        // Cursor position
+        // Cursor position and animation
         if (useHandCursor)
         {
+            if (mouseHover == true)
+                hand.cursorState |= HandCursor.CursorState.PointAtTrombone;
+            else
+                hand.cursorState &= ~HandCursor.CursorState.PointAtTrombone;
             if (mouseGrab == true)
             {
                 hand.cursorState |= HandCursor.CursorState.Trombone;
@@ -244,12 +249,19 @@ public class TromboneDisplay : MonoBehaviour,
         // Grab update
         if (mouseGrab == false)
         {
-            // Grab
+            // Always grab
             if (grabMode == GrabMode.AlwaysGrab)
-                mouseGrab = true; 
-            else if ((grabMode.HasFlag(GrabMode.GrabRadius) == false || Vector2.Distance(GrabPosition, mouseWorldPosition) < grabRadius)
-                && (grabMode.HasFlag(GrabMode.ClickToGrab) == false || Input.GetMouseButtonDown(grabButtonNumber) == true))
                 mouseGrab = true;
+            // Hover
+            else if (grabMode.HasFlag(GrabMode.GrabRadius) == false || Vector2.Distance(GrabPosition, mouseWorldPosition) < grabRadius)
+            {
+                mouseHover = true;
+                // Grab
+                if (grabMode.HasFlag(GrabMode.ClickToGrab) == false || Input.GetMouseButtonDown(grabButtonNumber) == true)
+                    mouseGrab = true;
+            }
+            else
+                mouseHover = false;
         }
         else
         {

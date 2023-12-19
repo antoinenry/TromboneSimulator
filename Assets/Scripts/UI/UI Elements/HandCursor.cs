@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class HandCursor : BaseInput
 {
     [Flags]
-    public enum CursorState { Visible = 1, PointAtUI = 2, Click = 4, SecondaryClick = 8, Trombone = 16 }
+    public enum CursorState { Visible = 1, PointAtUI = 2, Click = 4, SecondaryClick = 8, Trombone = 16, PointAtTrombone = 32 }
 
     [Serializable]
     public struct HandSprites
@@ -32,6 +32,10 @@ public class HandCursor : BaseInput
                 {
                     return tromboning;
                 }
+                else if (cursor.HasFlag(CursorState.PointAtTrombone))
+                {
+                    return pointing;
+                }    
                 else
                     return idle;
             }
@@ -134,12 +138,12 @@ public class HandCursor : BaseInput
     private void GetCurrentState(ref CursorState state)
     {
         // Raycast from cursor position
-        pointerEventData.position = mousePosition;
         List<RaycastResult> results = new List<RaycastResult>();
-        // In menus
+        pointerEventData.position = mousePosition;
+        // Menus
         if (MenuUI.VisibleMenuCount > 0)
             menuUIRaycaster.Raycast(pointerEventData, results);
-        // In game
+        // GUI
         else
             gameUIRaycaster.Raycast(pointerEventData, results);
         // Process raycast hits
