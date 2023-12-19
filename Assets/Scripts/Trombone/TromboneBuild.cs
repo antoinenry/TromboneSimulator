@@ -1,60 +1,80 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewTrombone", menuName = "Trombone Hero/Instruments/Trombone Build")]
 public class TromboneBuild : ScriptableObject
 {
     [Header("Tones")]
-    public SamplerInstrument instrument;
     public float slideTones;
     public float[] pressureStepTones;
     [Header("Aspect")]
     public Color color = Color.white;
     public int bodyLength = 128;
     public int slideLength = 128;
-    [Header("Auto")]
+    [Header("Controls")]
+    public bool horizontalMovements = true;
+    public bool verticalMovements = true;
+    //public List<TromboneControlWiring.Wire> controlWiring;
     public TromboneAutoSettings autoSettings;
-    public float correctLockToneTolerance = 1f;
 
     public void Load(Trombone trombone)
     {
+        // Copy settings to trombone components
         if (trombone != null)
         {
-            // Trombone sound
-            //trombone.audioInstrument = instrument;
+            // Trombone component
             trombone.pressureStepTones = pressureStepTones;
             trombone.slideTones = slideTones;
-            // Trombone aspect
+            // TromboneDisplay component
             TromboneDisplay visual = trombone.tromboneDisplay;
             if (visual != null)
             {
+                // Aspect
                 visual.color = color;
                 visual.bodyLength = bodyLength;
                 visual.slideLength = slideLength;
                 visual.UpdateAspect();
+                // Controls
+                visual.enableSlideMovement = horizontalMovements;
+                visual.enablePressureMovement = verticalMovements;
             }
-            // Auto setting
-            //trombone.autoSettings.mode = autoMode;
+            // TromboneAuto component
+            TromboneAuto auto = trombone.tromboneAuto;
+            if (auto != null)
+            {
+                // Auto settings
+                auto.settings = autoSettings;
+            }
         }
     }
 
     public void Save(Trombone trombone)
     {
-        // Trombone sound
+        // Copy settings from trombone components
         if (trombone != null)
         {
-            //instrument = trombone.audioInstrument;
-            slideTones = trombone.slideTones;
+            // Trombone component
             pressureStepTones = trombone.pressureStepTones;
-            // Trombone aspect
+            slideTones = trombone.slideTones;
+            // TromboneDisplay component
             TromboneDisplay visual = trombone.tromboneDisplay;
             if (visual != null)
             {
+                // Aspect
                 color = visual.color;
                 bodyLength = visual.bodyLength;
                 slideLength = visual.slideLength;
+                // Controls
+                horizontalMovements = visual.enableSlideMovement;
+                verticalMovements = visual.enablePressureMovement;
             }
-            // Auto settings
-            //autoMode = trombone.autoSettings.mode;
+            // TromboneAuto component
+            TromboneAuto auto = trombone.tromboneAuto;
+            if (auto != null)
+            {
+                // Auto settings
+                autoSettings = auto.settings;
+            }
         }
     }
 }

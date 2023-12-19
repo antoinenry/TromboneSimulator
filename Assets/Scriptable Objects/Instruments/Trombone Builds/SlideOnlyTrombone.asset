@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3b9729a948bfc44a19eef88457aa5a, type: 3}
   m_Name: SlideOnlyTrombone
   m_EditorClassIdentifier: 
-  instrument: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
   slideTones: 6
   pressureStepTones:
   - 7
@@ -25,12 +24,12 @@ MonoBehaviour:
   color: {r: 0.90588236, g: 0.34509802, b: 0.8221342, a: 1}
   bodyLength: 108
   slideLength: 100
+  horizontalMovements: 1
+  verticalMovements: 0
   autoSettings:
-    blowControls: 0
-    blowConditions: 0
-    pressureControls: 2
-    pressureConditions: -1
-    lockPressureRadius: 0
-    unlockPressureRadius: 0
-    lockedPressureLevel: 0
-  correctLockToneTolerance: 1
+    blowControl: 13
+    slideControl: 0
+    slideLegatoSpeed: 0
+    maxLegatoDistance: 0
+    pressureControl: 13
+    pressureLock: 0
