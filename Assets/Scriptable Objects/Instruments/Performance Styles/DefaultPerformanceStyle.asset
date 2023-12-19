@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DefaultPerformanceStyle
   m_EditorClassIdentifier: 
   useAsDefault: 1
-  minimumNoteDuration: 0.025
+  minimumNoteDuration: 0.05
   detachRepeatedNote: 0.05
   forceLegato: 0.025
   velocityCurve:

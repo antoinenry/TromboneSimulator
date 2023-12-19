@@ -121,7 +121,8 @@ public class NoteGrid : MonoBehaviour
     {
         // Get position from coordinates and cell size, with spacing
         Vector2 pos = Vector2.Scale(coord, cellSize + cellSpacing);
-        // "Flat" mode
+        // "Flat" modes
+        if (flattenX) pos.x = 0f;
         if (flattenY) pos.y = 0f;
         return pos;
     }
