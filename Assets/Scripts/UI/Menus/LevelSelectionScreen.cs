@@ -18,6 +18,12 @@ public class LevelSelectionScreen : MenuUI
     public UnityEvent<int> onSelectLevel;
     public UnityEvent onGoBack;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        UILevelSelection = this;
+    }
+
     public override void ShowUI()
     {
         base.ShowUI();

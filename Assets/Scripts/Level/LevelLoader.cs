@@ -32,13 +32,6 @@ public class LevelLoader : MonoBehaviour
     private PerformanceJudge perfJudge;
     private Trombone trombone;
     private LevelGUI GUI;
-    private MainMenu UIMainMenu;
-    private LevelSelectionScreen UILevelSelection;
-    private LeaderBoardScreen UILeaderboard;
-    private PauseScreen UIPause;
-    private ScoreScreen UIScore;
-    private GameOverScreen UIGameOver;
-    private NewHighscoreScreen UIHighScore;
 
     private void Awake()
     {
@@ -50,13 +43,6 @@ public class LevelLoader : MonoBehaviour
         trombone = FindObjectOfType<Trombone>(true);
         // Find UI components
         GUI = FindObjectOfType<LevelGUI>(true);
-        UIMainMenu = FindObjectOfType<MainMenu>(true);
-        UILevelSelection = FindObjectOfType<LevelSelectionScreen>(true);
-        UILeaderboard = FindObjectOfType<LeaderBoardScreen>(true);
-        UIPause = FindObjectOfType<PauseScreen>(true);
-        UIScore = FindObjectOfType<ScoreScreen>(true);
-        UIGameOver = FindObjectOfType<GameOverScreen>(true);
-        UIHighScore = FindObjectOfType<NewHighscoreScreen>(true);
         // Clear level load
         Unload();
         // Initialize savestate
@@ -73,20 +59,20 @@ public class LevelLoader : MonoBehaviour
     {
         // Permanents listeners (even when LevelLoader is disabled)
         gameState.onChangeGameSettings.AddListener(ApplySettings);
-        UIMainMenu.onLaunchArcade.AddListener(LaunchArcadeMode);
-        UILevelSelection.onShowUI.AddListener(UpdateLevelSelection);
-        UILevelSelection.onSelectLevel.AddListener(LaunchOneLevelMode);
-        UILeaderboard.onShowUI.AddListener(UpdateLeaderBoard);
+        MenuUI.UIMainMenu.onLaunchArcade.AddListener(LaunchArcadeMode);
+        MenuUI.UILevelSelection.onShowUI.AddListener(UpdateLevelSelection);
+        MenuUI.UILevelSelection.onSelectLevel.AddListener(LaunchOneLevelMode);
+        MenuUI.UILeaderboard.onShowUI.AddListener(UpdateLeaderBoard);
     }
 
     private void OnDestroy()
     {
         // Remove permanents listeners
         gameState.onChangeGameSettings.RemoveListener(ApplySettings);
-        UIMainMenu.onLaunchArcade.RemoveListener(LaunchArcadeMode);
-        UILevelSelection.onShowUI.RemoveListener(UpdateLevelSelection);
-        UILevelSelection.onSelectLevel.RemoveListener(LaunchOneLevelMode);
-        UILeaderboard.onShowUI.RemoveListener(UpdateLeaderBoard);
+        MenuUI.UIMainMenu.onLaunchArcade.RemoveListener(LaunchArcadeMode);
+        MenuUI.UILevelSelection.onShowUI.RemoveListener(UpdateLevelSelection);
+        MenuUI.UILevelSelection.onSelectLevel.RemoveListener(LaunchOneLevelMode);
+        MenuUI.UILeaderboard.onShowUI.RemoveListener(UpdateLeaderBoard);
     }
 
     private void Update()
@@ -204,9 +190,9 @@ public class LevelLoader : MonoBehaviour
     public void PauseLevel()
     {
         // Show pause screen
-        UIPause.ShowUI();
-        UIPause.onUnpause.AddListener(UnpauseLevel);
-        UIPause.onQuit.AddListener(QuitLevel);
+        MenuUI.UIPause.ShowUI();
+        MenuUI.UIPause.onUnpause.AddListener(UnpauseLevel);
+        MenuUI.UIPause.onQuit.AddListener(QuitLevel);
         // Toggle pause button behaviour
         GUI.onPressPause.RemoveListener(PauseLevel);
         GUI.onPressPause.AddListener(UnpauseLevel);
@@ -220,9 +206,9 @@ public class LevelLoader : MonoBehaviour
     public void UnpauseLevel()
     {
         // Hide pause screen
-        UIPause.HideUI();
-        UIPause.onUnpause.RemoveListener(UnpauseLevel);
-        UIPause.onQuit.RemoveListener(QuitLevel);
+        MenuUI.UIPause.HideUI();
+        MenuUI.UIPause.onUnpause.RemoveListener(UnpauseLevel);
+        MenuUI.UIPause.onQuit.RemoveListener(QuitLevel);
         // Toggle pause button behaviour
         GUI.onPressPause.RemoveListener(UnpauseLevel);
         GUI.onPressPause.AddListener(PauseLevel);
@@ -238,15 +224,15 @@ public class LevelLoader : MonoBehaviour
         switch (currentMode)
         {
             case Mode.ARCADE:
-                UILevelSelection.unlockedLevelCount = gameState.GetUnlockedLevelCount();
+                MenuUI.UILevelSelection.unlockedLevelCount = gameState.GetUnlockedLevelCount();
                 // Submit score
                 if (gameState.IsArcadeHighscore(gameState.CurrentArcadeScore))
                     submitArcadeHighscoreCoroutine = StartCoroutine(SubmitArcadeHighscore());
                 else
-                    UIMainMenu.ShowUI();
+                    MenuUI.UIMainMenu.ShowUI();
                 break;
             case Mode.ONE_LEVEL:
-                UILevelSelection.ShowUI();
+                MenuUI.UILevelSelection.ShowUI();
                 break;
         }
     }
@@ -338,11 +324,11 @@ public class LevelLoader : MonoBehaviour
             int levelIndex = gameState.currentLevelIndex;
             gameState.SetLevelScore(levelIndex, scoreInfo);
             // Show score screen
-            UIScore.DisplayScore(levelIndex, gameState.CurrentLevel.Name, scoreInfo);
+            MenuUI.UIScore.DisplayScore(levelIndex, gameState.CurrentLevel.Name, scoreInfo);
             if (gameState.IsLevelHighscore(scoreInfo.Total, levelIndex))
-                UIScore.onFinishDisplayScore.AddListener(OnLevelHighscore);
+                MenuUI.UIScore.onFinishDisplayScore.AddListener(OnLevelHighscore);
             else
-                UIScore.onFinishDisplayScore.AddListener(OnScoreDisplayEnd);
+                MenuUI.UIScore.onFinishDisplayScore.AddListener(OnScoreDisplayEnd);
         }
     }
 
@@ -413,19 +399,19 @@ public class LevelLoader : MonoBehaviour
         switch (currentMode)
         {
             case Mode.ARCADE:
-                UIGameOver.DisplayGameOver(gameState.continues);
-                UIGameOver.onContinue.AddListener(OnContinue);
+                MenuUI.UIGameOver.DisplayGameOver(gameState.continues);
+                MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
                 break;
             case Mode.ONE_LEVEL:
-                UIGameOver.DisplayGameOver();
-                UIGameOver.onContinue.AddListener(OnContinue);
+                MenuUI.UIGameOver.DisplayGameOver();
+                MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
                 break;
         }
     }
 
     private void OnContinue(bool useContinue)
     {
-        UIGameOver.onContinue.RemoveListener(OnContinue);
+        MenuUI.UIGameOver.onContinue.RemoveListener(OnContinue);
         if (useContinue)
         {
             if (currentMode == Mode.ARCADE) gameState.continues--;
@@ -439,7 +425,7 @@ public class LevelLoader : MonoBehaviour
 
     private void OnScoreDisplayEnd()
     {
-        UIScore.onFinishDisplayScore.RemoveListener(OnScoreDisplayEnd);
+        MenuUI.UIScore.onFinishDisplayScore.RemoveListener(OnScoreDisplayEnd);
         if (currentMode == Mode.ARCADE)
         {
             // Unlock next level
@@ -453,7 +439,7 @@ public class LevelLoader : MonoBehaviour
 
     private void OnLevelHighscore()
     {
-        UIScore.onFinishDisplayScore.RemoveListener(OnLevelHighscore);
+        MenuUI.UIScore.onFinishDisplayScore.RemoveListener(OnLevelHighscore);
         submitLevelHighscoreCoroutine = StartCoroutine(SubmitLevelHighscore());
     }
 
@@ -462,10 +448,10 @@ public class LevelLoader : MonoBehaviour
         LevelScoreInfo score = perfJudge.GetLevelScore();
         int levelIndex = gameState.currentLevelIndex;
         string playerName = null;
-        UIHighScore.DisplayLevelHighscoreInput(gameState.CurrentLevel.Name, score.Total);
-        UIHighScore.onSubmitName.AddListener(s => playerName = s);
+        MenuUI.UIHighScore.DisplayLevelHighscoreInput(gameState.CurrentLevel.Name, score.Total);
+        MenuUI.UIHighScore.onSubmitName.AddListener(s => playerName = s);
         yield return new WaitWhile(() => playerName == null);
-        UIHighScore.onSubmitName.RemoveAllListeners();
+        MenuUI.UIHighScore.onSubmitName.RemoveAllListeners();
         gameState.SetLevelHighscore(score.Total, levelIndex, playerName);
         OnScoreDisplayEnd();
     }
@@ -475,29 +461,29 @@ public class LevelLoader : MonoBehaviour
         int score = gameState.CurrentArcadeScore;
         int rank = gameState.GetArcadeScoreRank(score);
         string playerName = null;
-        UIHighScore.DisplayArcadeHighscoreInput(score, rank);
-        UIHighScore.onSubmitName.AddListener(s => playerName = s);
+        MenuUI.UIHighScore.DisplayArcadeHighscoreInput(score, rank);
+        MenuUI.UIHighScore.onSubmitName.AddListener(s => playerName = s);
         yield return new WaitWhile(() => playerName == null);
-        UIHighScore.onSubmitName.RemoveAllListeners();
+        MenuUI.UIHighScore.onSubmitName.RemoveAllListeners();
         gameState.SetArcadeHighscore(score, rank, playerName);
-        UIMainMenu.ShowUI();
+        MenuUI.UIMainMenu.ShowUI();
     }
 
     private void UpdateLevelSelection()
     {
         // Update level selection screen
-        UILevelSelection.unlockedLevelCount = gameState.GetUnlockedLevelCount();
-        UILevelSelection.levelNames = gameState.LevelNames;
-        UILevelSelection.UpdateLevelList();
+        MenuUI.UILevelSelection.unlockedLevelCount = gameState.GetUnlockedLevelCount();
+        MenuUI.UILevelSelection.levelNames = gameState.LevelNames;
+        MenuUI.UILevelSelection.UpdateLevelList();
     }
 
     private void UpdateLeaderBoard()
     {
         // Update leaderboard screen
-        UILeaderboard.unlockedLevelCount = gameState.GetUnlockedLevelCount();
-        UILeaderboard.levelNames = gameState.LevelNames;
-        UILeaderboard.levelHighScores = gameState.LevelHighScores;
-        UILeaderboard.arcadeHighScores = gameState.ArcadeHighScores;
+        MenuUI.UILeaderboard.unlockedLevelCount = gameState.GetUnlockedLevelCount();
+        MenuUI.UILeaderboard.levelNames = gameState.LevelNames;
+        MenuUI.UILeaderboard.levelHighScores = gameState.LevelHighScores;
+        MenuUI.UILeaderboard.arcadeHighScores = gameState.ArcadeHighScores;
     }
 
     private void CheatKeys()

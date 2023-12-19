@@ -15,15 +15,11 @@ public class GameOverScreen : MenuUI
     [Header("Events")]
     public UnityEvent<bool> onContinue;
 
-    //override protected void Start()
-    //{
-    //    if (Application.isPlaying)
-    //    {
-    //        levelLoader = FindObjectOfType<LevelLoader>(true);
-    //        if (levelLoader != null) levelLoader.onGameOver.AddListener(ShowUI);
-    //    }
-    //    base.Start();
-    //}
+    protected override void Awake()
+    {
+        base.Awake();
+        UIGameOver = this;
+    }
 
     public override void ShowUI()
     {

@@ -27,6 +27,12 @@ public class LeaderBoardScreen : MenuUI
     private int levelLineCount;
     private int circlePage;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        UILeaderboard = this;
+    }
+
     public override void ShowUI()
     {
         base.ShowUI();

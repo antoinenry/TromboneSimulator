@@ -20,6 +20,7 @@ public class SettingsScreen : MenuUI
     protected override void Awake()
     {
         base.Awake();
+        UISettings = this;
         if (Application.isPlaying)
         {
             LevelLoader levelLoader = FindObjectOfType<LevelLoader>(true);

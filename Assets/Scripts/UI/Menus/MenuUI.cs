@@ -12,9 +12,19 @@ public abstract class MenuUI : MonoBehaviour
     public UnityEvent onShowUI;
     public UnityEvent onHideUI;
 
-    static public List<MenuUI> visibleMenuUis;
-    static public int VisibleMenuCount => visibleMenuUis != null ? visibleMenuUis.Count : 0;
     static public HandCursor cursor;
+    static public List<MenuUI> visibleMenuUis;
+    static public MainMenu UIMainMenu;
+    static public LevelSelectionScreen UILevelSelection;
+    static public LeaderBoardScreen UILeaderboard;
+    static public PauseScreen UIPause;
+    static public ScoreScreen UIScore;
+    static public GameOverScreen UIGameOver;
+    static public NewHighscoreScreen UIHighScore;
+    static public SettingsScreen UISettings;
+    static public LoadingScreen UILoading;
+
+    static public int VisibleMenuCount => visibleMenuUis != null ? visibleMenuUis.Count : 0;
 
     public bool IsVisible { get; private set; }
 
@@ -25,8 +35,8 @@ public abstract class MenuUI : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if (visibleMenuUis == null) visibleMenuUis = new List<MenuUI>();
         if (cursor == null) cursor = FindObjectOfType<HandCursor>(true);
+        if (visibleMenuUis == null) visibleMenuUis = new List<MenuUI>();
     }
 
     protected virtual void Start()

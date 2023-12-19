@@ -22,6 +22,7 @@ public class MainMenu : MenuUI
     protected override void Awake()
     {
         base.Awake();
+        UIMainMenu = this;
         //levelLoader = FindObjectOfType<LevelLoader>(true);
         levelSelection = FindObjectOfType<LevelSelectionScreen>(true);
         leaderBoards = FindObjectOfType<LeaderBoardScreen>(true);
