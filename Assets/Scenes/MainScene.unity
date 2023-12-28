@@ -3294,14 +3294,14 @@ MonoBehaviour:
   - {fileID: 1712308057}
   - {fileID: 156611402}
   enableTrombone: 1
-  setAutoTrombone: 0
+  setAutoTrombone: 1
   tromboneAutoSettings:
     blowControl: 0
     slideControl: 0
     slideLegatoSpeed: 0
     maxLegatoDistance: 0
     pressureControl: 0
-    pressureLock: 0
+    pressureLock: 8
 --- !u!1 &281858542
 GameObject:
   m_ObjectHideFlags: 0
