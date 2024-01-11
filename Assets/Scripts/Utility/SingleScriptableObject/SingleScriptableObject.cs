@@ -21,6 +21,7 @@ public abstract class SingleScriptableObject : ScriptableObject
 
     protected virtual void OnValidate() => SetCurrent();
     protected virtual void OnEnable() => SetCurrent();
+    protected virtual void OnDisable() => SetCurrent();
 
     private void SetCurrent()
     {
@@ -31,7 +32,7 @@ public abstract class SingleScriptableObject : ScriptableObject
         }
         else
         {
-            if (CurrentObject = this) CurrentObject = null;
+            if (CurrentObject == this) CurrentObject = null;
         }
     }
 }
