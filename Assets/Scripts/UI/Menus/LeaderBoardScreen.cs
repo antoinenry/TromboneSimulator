@@ -152,10 +152,10 @@ public class LeaderBoardScreen : MenuUI
         currentPage = (int)Mathf.Repeat(currentPage -1, totalPageCount);
     }
 
-    private void GoBack()
-    {
-        onGoBack.Invoke();
-        onGoBack.RemoveAllListeners();
-        HideUI();
-    }
+    //private void GoBack()
+    //{
+    //    onGoBack.Invoke();
+    //    onGoBack.RemoveAllListeners();
+    //    HideUI();
+    //}
 }

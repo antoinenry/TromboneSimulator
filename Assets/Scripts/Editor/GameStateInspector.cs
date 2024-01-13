@@ -1,14 +1,14 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(GameState))]
+[CustomEditor(typeof(GameState_old))]
 public class GameStateInspector : Editor
 {
-    GameState state;
+    GameState_old state;
 
     private void OnEnable()
     {
-        state = target as GameState;
+        state = target as GameState_old;
     }
 
     public override void OnInspectorGUI()

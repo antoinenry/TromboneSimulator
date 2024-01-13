@@ -14,9 +14,8 @@ public class LevelSelectionScreen : MenuUI
     public string lockedLevelText = "?";
     public string[] levelNames;
     public int unlockedLevelCount;
-
-    public UnityEvent<int> onSelectLevel;
-    public UnityEvent onGoBack;
+    [Header("Events")]
+    public UnityEvent<Level> onSelectLevel;
 
     protected override void Awake()
     {
@@ -53,6 +52,12 @@ public class LevelSelectionScreen : MenuUI
 
     public void UpdateLevelList()
     {
+        // Get level list
+        if (GameContentLibrary.Current != null)
+        {
+            levelNames = GameContentLibrary.Current.GetLevelNames;
+        }
+        // Update UI
         if (levelListUI != null)
         {
             IndexedButton[] buttons = GetComponentsInChildren<IndexedButton>(true);
@@ -79,28 +84,23 @@ public class LevelSelectionScreen : MenuUI
                         b.text = lockedLevelText;
                         b.button.interactable = false;
                     }
+                    // Ensure that buttons are displayed correctly in the same frame
+                    b.Update();
                 }    
             }
-
         }
     }
 
     private void SelectLevel(int index)
     {
+        Level getLevel = GameContentLibrary.Current != null ? GameContentLibrary.Current.levels[index] : null;
         HideUI();
-        onSelectLevel.Invoke(index + 1);
+        onSelectLevel.Invoke(getLevel);
     }
 
     private void EnterPassword(string word)
     {
         //gameState.SubmitPassword(word);
         UpdateLevelList();
-    }
-
-    private void GoBack()
-    {
-        onGoBack.Invoke();
-        onGoBack.RemoveAllListeners();
-        HideUI();
     }
 }

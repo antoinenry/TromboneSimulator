@@ -4,8 +4,8 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-[CreateAssetMenu(fileName = "NewGameState", menuName = "Trombone Hero/Game Data/Game State")]
-public class GameState : ScriptableObject
+[CreateAssetMenu(fileName = "NewGameState", menuName = "Trombone Hero/Game Data/Game State (old)")]
+public class GameState_old : ScriptableObject
 {
     public bool showDebug;
     public LevelCollection levelCollection;
