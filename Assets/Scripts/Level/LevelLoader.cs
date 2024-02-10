@@ -4,6 +4,7 @@ using System.Collections;
 public class LevelLoader : MonoBehaviour
 {
     public enum Mode { ARCADE, ONE_LEVEL }
+    public enum Step { LOADING, WAIT_GRAB, COUNTDOWN, PLAYING, END }
 
     public bool cheatMode = false;
     [Header("Transitions")]
@@ -18,26 +19,28 @@ public class LevelLoader : MonoBehaviour
     private Coroutine submitLevelHighscoreCoroutine;
     private Coroutine submitArcadeHighscoreCoroutine;
     // Component references
-    private LevelGUI GUI;
     private Trombone trombone;
     private MusicPlayer musicPlayer;
     private NoteCatcher noteCatcher;
     private NoteSpawner noteSpawner;
     private PerformanceJudge perfJudge;
+    private LevelGUI GUI;
     // Load state
+    public Step LevelStep { get; private set; }
     public Mode LoadedMode { get; private set; }
     public Level LoadedLevel { get; private set; }
     public AudioClip LoadedLevelAudio { get; private set; }
+    public float MusicProgress => musicPlayer ? musicPlayer.CurrentPlayTime / musicPlayer.MusicDuration : 0f;
 
     private void Awake()
     {
         // Find components
-        GUI = FindObjectOfType<LevelGUI>(true);
         trombone = FindObjectOfType<Trombone>(true);
         musicPlayer = FindObjectOfType<MusicPlayer>(true);
         noteCatcher = FindObjectOfType<NoteCatcher>(true);
         noteSpawner = FindObjectOfType<NoteSpawner>(true);
         perfJudge = FindObjectOfType<PerformanceJudge>(true);
+        GUI = FindObjectOfType<LevelGUI>(true);
         // Clear level load
         Unload();
         // Initialize savestate
@@ -52,12 +55,7 @@ public class LevelLoader : MonoBehaviour
 
     private void Start()
     {
-        // Permanents listeners (even when LevelLoader is disabled)
-        //gameState.onChangeGameSettings.AddListener(ApplySettings);
-        //MenuUI.UIMainMenu.onLaunchArcade.AddListener(LaunchArcadeMode);
-        //MenuUI.UILevelSelection.onShowUI.AddListener(UpdateLevelSelection);
-        //MenuUI.UILevelSelection.onSelectLevel.AddListener(LaunchOneLevelMode);
-        //MenuUI.UILeaderboard.onShowUI.AddListener(UpdateLeaderBoard);
+        if (MenuUI.UILevelSelection) MenuUI.UILevelSelection.onSelectLevel.AddListener(LaunchOneLevelMode);
     }
 
     private void OnDestroy()
@@ -75,9 +73,6 @@ public class LevelLoader : MonoBehaviour
         // Cheat mode
         if (MenuUI.VisibleMenuCount == 0 && cheatMode == true)
             CheatKeys();
-        // Update GUI
-        if (musicPlayer != null)
-            GUI.SetTimeBar(musicPlayer.playTime, musicPlayer.MusicDuration);
     }
 
     private void EnablePerformanceJudge()
@@ -143,7 +138,7 @@ public class LevelLoader : MonoBehaviour
         if (trombone.Sampler != null) perfJudge.LevelSetup(LoadedLevel.music, trombone.Sampler.instrumentName);
         // GUI Setup
         GUI.GUIActive = true;
-        GUI.onPressPause.AddListener(PauseLevel);
+        GUI.onPauseRequest.AddListener(PauseLevel);
         GUI.SetPauseButtonActive(true);
         // Level start sequence
         startLevelCoroutine = StartCoroutine(LevelStartSequence());
@@ -156,7 +151,7 @@ public class LevelLoader : MonoBehaviour
         // Stop GUI
         GUI.GUIActive = false;
         GUI.SetPauseButtonActive(false);
-        GUI.onPressPause.RemoveListener(PauseLevel);
+        GUI.onPauseRequest.RemoveListener(PauseLevel);
         // Stop music
         musicPlayer.Stop();
         musicPlayer.UnloadMusic();
@@ -182,8 +177,8 @@ public class LevelLoader : MonoBehaviour
         MenuUI.UIPause.onUnpause.AddListener(UnpauseLevel);
         MenuUI.UIPause.onQuit.AddListener(QuitLevel);
         // Toggle pause button behaviour
-        GUI.onPressPause.RemoveListener(PauseLevel);
-        GUI.onPressPause.AddListener(UnpauseLevel);
+        GUI.onPauseRequest.RemoveListener(PauseLevel);
+        GUI.onPauseRequest.AddListener(UnpauseLevel);
         // Pause game and music
         musicPlayer.Pause(true);
         trombone.Freeze();
@@ -198,8 +193,8 @@ public class LevelLoader : MonoBehaviour
         MenuUI.UIPause.onUnpause.RemoveListener(UnpauseLevel);
         MenuUI.UIPause.onQuit.RemoveListener(QuitLevel);
         // Toggle pause button behaviour
-        GUI.onPressPause.RemoveListener(UnpauseLevel);
-        GUI.onPressPause.AddListener(PauseLevel);
+        GUI.onPauseRequest.RemoveListener(UnpauseLevel);
+        GUI.onPauseRequest.AddListener(PauseLevel);
         // Start unpause sequence (wait for trombone to be grabbed), unless the game was paused before the song starts (then it's back to countdown sequence)
         trombone.Unfreeze();
         if (musicPlayer.CurrentPlayTime > 0f) unpauseLevelCoroutine = StartCoroutine(LevelUnpauseSequence());
@@ -320,16 +315,8 @@ public class LevelLoader : MonoBehaviour
         //}
     }
 
-    private void OnScore(float score)
-    {
-        // Update GUI
-        GUI.SetScore(score);
-    }
-
     private void OnHealth(float health)
     {
-        // Update GUI
-        GUI.SetHealthBar(health);
         // Death
         if (health <= 0f)
         {
@@ -341,42 +328,6 @@ public class LevelLoader : MonoBehaviour
             // Start game over sequence
             Invoke("GameOver", gameOverTransitionDuration);
         }
-    }
-
-    private void OnDance(int dance)
-    {
-        // Update GUI
-        GUI.SetDanceBar(dance);
-        // Enable power
-        if (dance >= perfJudge.danceLength) GUI.SetPowerButtonActive(true);
-    }
-
-    private void OnNotePerformanceCorrect(NoteInstance note, float accuracy, float points)
-    {
-        // Update GUI
-        GUI.SetNoteAccuracy(accuracy);
-        GUI.SetNotePoints(points, note.DisplayColor);
-    }
-
-    private void OnNotePerformanceWrong(NoteInstance note)
-    {
-        // Update GUI
-        //GUI.SetNoteAccuracy(0f);
-        GUI.ShowMissedMessage();
-    }
-
-    private void OnNotePerformanceMiss(NoteInstance note)
-    {
-        // Update GUI
-        //GUI.ShowMissedMessage();
-    }
-
-    private void OnNotePerformanceEnd(NoteInstance note, float points, bool fullPlay)
-    {
-        // Update GUI
-        if (note == null) GUI.EndNotePoints();
-        else GUI.EndNotePoints(points, note.DisplayColor);
-        GUI.SetNoteCombo(perfJudge.combo);
     }
 
     private void GameOver()
