@@ -5,12 +5,14 @@ using System;
 // Including unlockables (levels, instruments, etc)
 
 [CreateAssetMenu(fileName = "NewContentLibrary", menuName = "Trombone Hero/Game Data/Game Content Library")]
-public class GameContentLibrary : SingleScriptableObject
+public class GameContentLibrary : ScriptableObject
 {
-    #region SingleScriptableObject implementation (only one active GameContentLibrary at a time)
-    protected override SingleScriptableObject CurrentObject { get => Current; set => Current = value as GameContentLibrary; }
-    static public GameContentLibrary Current;
-    #endregion
+    [CurrentToggle] public bool isCurrent;
+    static public GameContentLibrary Current
+    {
+        get => CurrentAssetsManager.GetCurrent<GameContentLibrary>();
+        set => CurrentAssetsManager.SetCurrent(value);
+    }
 
     public Level[] levels;
     public TromboneBuild[] trombones;
