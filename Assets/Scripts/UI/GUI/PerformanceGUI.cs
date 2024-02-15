@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 [ExecuteAlways]
@@ -8,75 +7,138 @@ public class PerformanceGUI : GameUI
     [Header("UI Components")]
     public CounterDisplay scoreDisplay;
     public Slider healthBar;
+    public TintFlash frameTint;
     public MultiplierDisplay comboDisplay;
     public MultiplierDisplay accuracyDisplay;
-    public SwooshDisplay onInstrumentDisplay;
+    public SwooshDisplay smallMessageDisplay;
+    public TransformShaker smallMessageShake;
     [Header("Content")]
-    public string[] missedMessages;
-    public Color missedMessageColor = Color.red;
-    
-    private string randomMissedMessage;
+    public string[] wrongNoteMessages;
+    public Color wrongNoteMessageColor = Color.red;
+
+    private PerformanceJudge judge;
+    private string wrongNoteMessage;
 
     public override Component[] UIComponents => new Component[]
-        { scoreDisplay, comboDisplay, accuracyDisplay, healthBar, onInstrumentDisplay };
+        { scoreDisplay, comboDisplay, accuracyDisplay, healthBar, smallMessageDisplay };
 
-    public void SetHealthBar(float hp)
+
+    public PerformanceJudge Judge
     {
-        if (healthBar) healthBar.value = hp * healthBar.maxValue;
+        get => judge;
+        set
+        {
+            RemoveListenners(judge);
+            judge = value;
+            AddListenners(judge);
+            GUIActive = judge;
+        }
     }
 
+    public void DisplayHealth(float healthValue, float healthChange = 0f)
+    {
+        if (healthBar) healthBar.value = healthValue * healthBar.maxValue;
+        if (frameTint)
+        {
+            if (healthChange < 0f) frameTint.Tint();
+        }
+    }
 
-    public void SetScore(float score)
+    public void DisplayScore(float score)
     {
         if (scoreDisplay) scoreDisplay.value = Mathf.FloorToInt(score);
     }
 
-    public void SetNoteAccuracy(float accuracy)
+    public void DisplayCorrectlyPlayedNote(NoteInstance note, float accuracy, float points)
+    {
+        DisplayNoteAccuracy(accuracy);
+        if (note) DisplayNotePoints(points, note.DisplayColor);
+    }
+
+    public void DisplayWronglyPlayedNote(NoteInstance note)
+    {
+        DisplayNoteAccuracy(0f);
+        DisplayMissedMessage();
+    }
+
+    public void DisplayPlayedNoteEnd(NoteInstance note, float points, int combo)
+    {
+        if (note) DisplayNotePointsEnd(points, note.DisplayColor);
+        else DisplayNotePointsEnd();
+        wrongNoteMessage = null;
+        DisplayNoteCombo(combo);
+    }
+
+    public void DisplayNoteAccuracy(float accuracy)
     {
         if (accuracyDisplay) accuracyDisplay.value = accuracy;
     }
 
-    public void SetNoteCombo(int combo)
+    public void DisplayNoteCombo(int combo)
     {
         if (comboDisplay) comboDisplay.value = combo;
     }
 
-    public void SetNotePoints(float points, Color pointsColor)
+    public void DisplayNotePoints(float points, Color pointsColor)
     {
-        if (onInstrumentDisplay)
+        if (smallMessageDisplay)
         {
             string pointsString = Mathf.FloorToInt(points).ToString();
-            onInstrumentDisplay.SetTextContent(pointsString);
-            onInstrumentDisplay.SetTextColor(pointsColor);
+            smallMessageDisplay.SetTextContent(pointsString);
+            smallMessageDisplay.SetTextColor(pointsColor);
         }
     }
 
-    public void EndNotePoints(float points, Color pointsColor)
+    public void DisplayNotePointsEnd(float points, Color pointsColor)
     {
-        if (onInstrumentDisplay)
+        if (smallMessageDisplay)
         {
-            if (points > 0f) SetNotePoints(points, pointsColor);
-            onInstrumentDisplay.FreeText();
-            if (missedMessages != null && missedMessages.Length > 0)
-                randomMissedMessage = missedMessages[Random.Range(0, missedMessages.Length)];
+            if (points > 0f) DisplayNotePoints(points, pointsColor);
+            smallMessageDisplay.FreeText();            
         }
     }
 
-    public void EndNotePoints()
+    public void DisplayNotePointsEnd()
     {
-        if (onInstrumentDisplay)
+        if (smallMessageDisplay)
         {
-            onInstrumentDisplay.FreeText();
+            smallMessageDisplay.FreeText();
         }
     }
 
-    public void ShowMissedMessage()
+    public void DisplayMissedMessage()
     {
-        if (onInstrumentDisplay && missedMessages != null && missedMessages.Length > 0)
+        if (wrongNoteMessage == null && wrongNoteMessages != null && wrongNoteMessages.Length > 0)
+                wrongNoteMessage = wrongNoteMessages[Random.Range(0, wrongNoteMessages.Length)];
+        if (smallMessageDisplay && wrongNoteMessages != null && wrongNoteMessages.Length > 0)
         {
-            onInstrumentDisplay.SetTextContent(randomMissedMessage);
-            onInstrumentDisplay.SetTextColor(missedMessageColor);
+            smallMessageDisplay.SetTextContent(wrongNoteMessage);
+            smallMessageDisplay.SetTextColor(wrongNoteMessageColor);
+        }
+        if (smallMessageShake) smallMessageShake.Shake();
+    }
+
+    private void AddListenners(PerformanceJudge perfJudge)
+    {
+        if (perfJudge)
+        {
+            perfJudge.onScore.AddListener(DisplayScore);
+            perfJudge.onHealth.AddListener(DisplayHealth);
+            perfJudge.onCorrectNote.AddListener(DisplayCorrectlyPlayedNote);
+            perfJudge.onWrongNote.AddListener(DisplayWronglyPlayedNote);
+            perfJudge.onNotePerformanceEnd.AddListener(DisplayPlayedNoteEnd);
         }
     }
 
+    private void RemoveListenners(PerformanceJudge perfJudge)
+    {
+        if (perfJudge)
+        {
+            perfJudge.onScore.RemoveListener(DisplayScore);
+            perfJudge.onHealth.RemoveListener(DisplayHealth);
+            perfJudge.onCorrectNote.RemoveListener(DisplayCorrectlyPlayedNote);
+            perfJudge.onWrongNote.RemoveListener(DisplayWronglyPlayedNote);
+            perfJudge.onNotePerformanceEnd.RemoveListener(DisplayPlayedNoteEnd);
+        }
+    }
 }

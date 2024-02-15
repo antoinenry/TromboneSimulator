@@ -15,37 +15,22 @@ public class LevelGUI : GameUI
     [Header("Events")]
     public UnityEvent onPauseRequest;
 
+    private LevelLoader levelLoader;
+
     public override Component[] UIComponents => new Component[] 
         { pauseButton, timeBar, messageDisplay };
-
-    private void Awake()
-    {
-        if (Application.isPlaying)
-        {
-            if (pauseButton) pauseButton.interactable = false;
-        }
-    }
 
     private void OnClickPauseButton()
     {
         onPauseRequest.Invoke();
     }
 
-    public void SetTimeBar(float progress)
+    public void SetTimeBar(float timeValue, float timeMax)
     {
         if (timeBar)
         {
-            timeBar.maxValue = 1f;
-            timeBar.value = progress;
-        }
-    }
-
-    public void SetTimeBar(float time, float maxTime)
-    {
-        if (timeBar)
-        {
-            timeBar.maxValue =maxTime;
-            timeBar.value = time;
+            timeBar.value = timeValue;
+            timeBar.maxValue = timeMax;
         }
     }
 
