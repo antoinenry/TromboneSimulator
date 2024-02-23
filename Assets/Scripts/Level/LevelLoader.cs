@@ -289,7 +289,8 @@ public class LevelLoader : MonoBehaviour
         perfJudge.DisableDetection();
         GUI.SetPauseButtonActive(false);
         musicPlayer.Stop(gameOverTransitionDuration);
-        yield return new WaitWhile(() => musicPlayer.State == MusicPlayer.PlayState.Transition);
+        // Wait
+        yield return new WaitForSeconds(gameOverTransitionDuration); 
         // End of transition
         trombone.Unfreeze();
         // Display a different screen depending on game mode

@@ -108,13 +108,11 @@ public class PerformanceJudge : MonoBehaviour
         // Reset values
         performanceDetail = new List<NotePerformance>();
         score = 0f;
-        onScore.Invoke(score);
         health = 1f;
-        onHealth.Invoke(health, health);
         dance = 0;
-        onDance.Invoke(dance);
         combo = 0;
-        onNotePerformanceEnd.Invoke(null, 0f, 0);
+        // Reset GUI
+        if (GUI) GUI.ResetDisplay();
     }
 
     public void LevelSetup(SheetMusic lvl, SamplerInstrument playedInstrument)

@@ -35,6 +35,15 @@ public class PerformanceGUI : GameUI
         }
     }
 
+    public void ResetDisplay()
+    {
+        DisplayHealth(1f);
+        DisplayScore(0f);
+        DisplayNoteAccuracy(1f);
+        DisplayNoteCombo(0);
+        DisplayNotePointsEnd();
+    }
+
     public void DisplayHealth(float healthValue, float healthChange = 0f)
     {
         if (healthBar) healthBar.value = healthValue * healthBar.maxValue;
