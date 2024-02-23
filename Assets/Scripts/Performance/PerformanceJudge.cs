@@ -42,6 +42,28 @@ public class PerformanceJudge : MonoBehaviour
 
     private void OnEnable()
     {
+        EnableDetection();
+        EnableGUI();
+    }
+
+    private void OnDisable()
+    {
+        DisableDetection();
+        DisableGUI();
+    }
+
+    public void EnableGUI()
+    {
+        if (GUI) GUI.Judge = this;
+    }
+
+    public void DisableGUI()
+    {
+        if (GUI && GUI.Judge == this) GUI.Judge = null;
+    }
+
+    public void EnableDetection()
+    {
         if (noteCatcher)
         {
             noteCatcher.onCorrectNote.AddListener(OnPlayCorrectNote);
@@ -59,13 +81,9 @@ public class PerformanceJudge : MonoBehaviour
             danceDetector.onDanceBeat.AddListener(OnDanceBeat);
             danceDetector.onMissBeat.AddListener(OnMissDanceBeat);
         }
-        if (GUI)
-        {
-            GUI.Judge = this;
-        }
     }
 
-    private void OnDisable()
+    public void DisableDetection()
     {
         if (noteCatcher != null)
         {
@@ -84,12 +102,7 @@ public class PerformanceJudge : MonoBehaviour
             danceDetector.onDanceBeat.RemoveListener(OnDanceBeat);
             danceDetector.onMissBeat.RemoveListener(OnMissDanceBeat);
         }
-        if (GUI)
-        {
-            if (GUI.Judge == this) GUI.Judge = null;
-        }
     }
-
     public void ResetPerformance()
     {
         // Reset values

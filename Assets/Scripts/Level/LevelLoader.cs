@@ -27,6 +27,7 @@ public class LevelLoader : MonoBehaviour
     public Level LoadedLevel { get; private set; }
     public float MusicProgress => musicPlayer ? musicPlayer.CurrentPlayTime / musicPlayer.MusicDuration : 0f;
 
+    #region INIT
     private void Awake()
     {
         // Find components
@@ -40,16 +41,18 @@ public class LevelLoader : MonoBehaviour
         UnloadLevel();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         if (MenuUI.UILevelSelection) MenuUI.UILevelSelection.onSelectLevel.AddListener(LaunchOneLevelMode);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         if (MenuUI.UILevelSelection) MenuUI.UILevelSelection.onSelectLevel.RemoveListener(LaunchOneLevelMode);
     }
+    #endregion
 
+    #region LAUNCH
     public void LaunchArcadeMode()
     {
         //gameState.continues = startContinues;
@@ -64,7 +67,9 @@ public class LevelLoader : MonoBehaviour
         LoadLevel(Mode.ONE_LEVEL, level);
         StartLevel();
     }
+    #endregion
 
+    #region LOAD/UNLOAD
     public void LoadLevel(Mode mode, Level level)
     {
         LoadedMode = mode;
@@ -97,6 +102,7 @@ public class LevelLoader : MonoBehaviour
         {
             perfJudge.enabled = true;
             if (trombone.Sampler != null) perfJudge.LevelSetup(LoadedLevel.music, trombone.Sampler);
+            perfJudge.onHealth.AddListener(OnHealthChange);
         }
         // GUI Setup
         if (GUI)
@@ -125,89 +131,25 @@ public class LevelLoader : MonoBehaviour
             musicPlayer.onPlayerUpdate.RemoveListener(OnMusicPlayerUpdate);
         }
         // Stop performance judge
-        if (perfJudge) perfJudge.enabled = false;
+        if (perfJudge)
+        {
+            perfJudge.onHealth.RemoveListener(OnHealthChange);
+            perfJudge.enabled = false;
+        }
         // Stop note spawner
         if (noteSpawner) noteSpawner.enabled = false;
         // Stop note catcher
         if (noteCatcher) noteCatcher.enabled = false;
     }
+    #endregion
 
+    #region START
     public void StartLevel()
     {
         // Level start sequence
         if (startLevelCoroutine != null) StopCoroutine(LevelStartCoroutine());
         startLevelCoroutine = StartCoroutine(LevelStartCoroutine());
     }
-
-    public void PauseLevel()
-    {
-        // Show pause screen
-        if (MenuUI.UIPause)
-        {
-            MenuUI.UIPause.ShowUI();
-            MenuUI.UIPause.onUnpause.AddListener(UnpauseLevel);
-            MenuUI.UIPause.onQuit.AddListener(QuitLevel);
-        }
-        // Toggle pause button behaviour
-        if (GUI)
-        {
-            GUI.onPauseRequest.RemoveListener(PauseLevel);
-            GUI.onPauseRequest.AddListener(UnpauseLevel);
-        }
-        // Pause game and music
-        if (musicPlayer) musicPlayer.Pause(true);
-        if (trombone) trombone.Freeze();
-        // Interrupt unpause sequence (grabbing trombone)
-        if (unpauseLevelCoroutine != null) StopCoroutine(unpauseLevelCoroutine);
-    }
-
-    public void UnpauseLevel()
-    {
-        // Hide pause screen
-        if (MenuUI.UIPause)
-        {
-            MenuUI.UIPause.HideUI();
-            MenuUI.UIPause.onUnpause.RemoveListener(UnpauseLevel);
-            MenuUI.UIPause.onQuit.RemoveListener(QuitLevel);
-        }
-        // Toggle pause button behaviour
-        if (GUI)
-        {
-            GUI.onPauseRequest.RemoveListener(UnpauseLevel);
-            GUI.onPauseRequest.AddListener(PauseLevel);
-        }
-        // Start unpause sequence (wait for trombone to be grabbed), unless the game was paused before the song starts (then it's back to countdown sequence)
-        if (trombone) trombone.Unfreeze();
-        if (musicPlayer && musicPlayer.CurrentPlayTime > 0f) unpauseLevelCoroutine = StartCoroutine(LevelUnpauseCoroutine());
-    }
-
-    public void QuitLevel()
-    {
-        UnloadLevel();
-        // Back to menu screen
-        switch (LoadedMode)
-        {
-            case Mode.ARCADE:
-                //MenuUI.UILevelSelection.unlockedLevelCount = gameState.GetUnlockedLevelCount();
-                //// Submit score
-                //if (gameState.IsArcadeHighscore(gameState.CurrentArcadeScore))
-                //    submitArcadeHighscoreCoroutine = StartCoroutine(SubmitArcadeHighscore());
-                //else
-                //    MenuUI.UIMainMenu.ShowUI();
-                //break;
-            case Mode.ONE_LEVEL:
-                MenuUI.UILevelSelection.ShowUI();
-                break;
-        }
-    }
-
-    private void OnMusicPlayerUpdate()
-    {
-        if (musicPlayer == null) return;
-        if (musicPlayer.CurrentPlayTime >= musicPlayer.MusicDuration) OnLevelEnd();
-        if (GUI) GUI.SetTimeBar(musicPlayer.LoopedPlayTime, musicPlayer.MusicDuration);
-    }
-
     private IEnumerator LevelStartCoroutine()
     {
         // Wait for music to finish loading
@@ -272,6 +214,57 @@ public class LevelLoader : MonoBehaviour
         if (step >= 0 && step <= startCountdownValue) GUI.ShowCountdown(step);
     }
 
+    private void OnMusicPlayerUpdate()
+    {
+        if (musicPlayer == null) return;
+        if (musicPlayer.CurrentPlayTime >= musicPlayer.MusicDuration) OnLevelEnd();
+        if (GUI) GUI.SetTimeBar(musicPlayer.LoopedPlayTime, musicPlayer.MusicDuration);
+    }
+    #endregion
+
+    #region PAUSE/UNPAUSE
+    public void PauseLevel()
+    {
+        // Show pause screen
+        if (MenuUI.UIPause)
+        {
+            MenuUI.UIPause.ShowUI();
+            MenuUI.UIPause.onUnpause.AddListener(UnpauseLevel);
+            MenuUI.UIPause.onQuit.AddListener(QuitLevel);
+        }
+        // Toggle pause button behaviour
+        if (GUI)
+        {
+            GUI.onPauseRequest.RemoveListener(PauseLevel);
+            GUI.onPauseRequest.AddListener(UnpauseLevel);
+        }
+        // Pause game and music
+        if (musicPlayer) musicPlayer.Pause(true);
+        if (trombone) trombone.Freeze();
+        // Interrupt unpause sequence (grabbing trombone)
+        if (unpauseLevelCoroutine != null) StopCoroutine(unpauseLevelCoroutine);
+    }
+
+    public void UnpauseLevel()
+    {
+        // Hide pause screen
+        if (MenuUI.UIPause)
+        {
+            MenuUI.UIPause.HideUI();
+            MenuUI.UIPause.onUnpause.RemoveListener(UnpauseLevel);
+            MenuUI.UIPause.onQuit.RemoveListener(QuitLevel);
+        }
+        // Toggle pause button behaviour
+        if (GUI)
+        {
+            GUI.onPauseRequest.RemoveListener(UnpauseLevel);
+            GUI.onPauseRequest.AddListener(PauseLevel);
+        }
+        // Start unpause sequence (wait for trombone to be grabbed), unless the game was paused before the song starts (then it's back to countdown sequence)
+        if (trombone) trombone.Unfreeze();
+        if (musicPlayer && musicPlayer.CurrentPlayTime > 0f) unpauseLevelCoroutine = StartCoroutine(LevelUnpauseCoroutine());
+    }
+
     private IEnumerator LevelUnpauseCoroutine()
     {
         // Wait for player to grab the trombone
@@ -281,7 +274,60 @@ public class LevelLoader : MonoBehaviour
         GUI.ClearMessage();
         musicPlayer.Play();
     }
+    #endregion
 
+    #region GAMEOVER/CONTINUE
+    private void OnHealthChange(float healthValue, float healthDelta)
+    {
+        if (healthValue <= 0f) StartCoroutine(GameOverCoroutine());
+    }
+
+    private IEnumerator GameOverCoroutine()
+    {
+        // Transition
+        trombone.Freeze();
+        perfJudge.DisableDetection();
+        GUI.SetPauseButtonActive(false);
+        musicPlayer.Stop(gameOverTransitionDuration);
+        yield return new WaitWhile(() => musicPlayer.State == MusicPlayer.PlayState.Transition);
+        // End of transition
+        trombone.Unfreeze();
+        // Display a different screen depending on game mode
+        switch (LoadedMode)
+        {
+            case Mode.ARCADE:
+                //MenuUI.UIGameOver.DisplayGameOver(gameState.continues);
+                //MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
+                break;
+            case Mode.ONE_LEVEL:
+                if (MenuUI.UIGameOver)
+                {
+                    MenuUI.UIGameOver.DisplayGameOver();
+                    MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
+                }
+                break;
+        }
+    }
+
+    private void OnContinue(bool useContinue)
+    {
+        MenuUI.UIGameOver.onContinue.RemoveListener(OnContinue);
+        if (useContinue)
+        {
+            //if (currentMode == Mode.ARCADE) gameState.continues--;
+            trombone.ResetTrombone();
+            perfJudge.ResetPerformance();
+            perfJudge.EnableDetection();
+            StartLevel();
+        }
+        else
+        {
+            QuitLevel();
+        }
+    }
+    #endregion
+
+    #region END/QUIT
     private void OnLevelEnd()
     {
         // Disable pause button
@@ -303,39 +349,28 @@ public class LevelLoader : MonoBehaviour
         //}
     }
 
-    private void OnHealth(float health)
+    public void QuitLevel()
     {
-        // Death
-        if (health <= 0f)
-        {
-            // Stop level
-            trombone.Freeze();
-            DisablePerformanceJudge();
-            musicPlayer.Stop(gameOverTransitionDuration);
-            GUI.SetPauseButtonActive(false);
-            // Start game over sequence
-            Invoke("GameOver", gameOverTransitionDuration);
-        }
-    }
-
-    private void GameOver()
-    {
-        // Trombone was frozen during transition and must be returned to normal
-        trombone.Unfreeze();
-        // Display a different screen depending on game mode
+        UnloadLevel();
+        // Back to menu screen
         switch (LoadedMode)
         {
             case Mode.ARCADE:
-                //MenuUI.UIGameOver.DisplayGameOver(gameState.continues);
-                //MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
-                break;
+                //MenuUI.UILevelSelection.unlockedLevelCount = gameState.GetUnlockedLevelCount();
+                //// Submit score
+                //if (gameState.IsArcadeHighscore(gameState.CurrentArcadeScore))
+                //    submitArcadeHighscoreCoroutine = StartCoroutine(SubmitArcadeHighscore());
+                //else
+                //    MenuUI.UIMainMenu.ShowUI();
+                //break;
             case Mode.ONE_LEVEL:
-                MenuUI.UIGameOver.DisplayGameOver();
-                MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
+                MenuUI.UILevelSelection.ShowUI();
                 break;
         }
     }
+    #endregion
 
+    #region DEPRECIATED
     private void CheatKeys()
     {
         if (Input.anyKeyDown)
@@ -358,50 +393,6 @@ public class LevelLoader : MonoBehaviour
                     musicPlayer.Play();
             }
         }
-    }
-
-
-    //--------- TO MOVE
-
-
-    private void EnablePerformanceJudge()
-    {
-        //perfJudge.onScore.AddListener(OnScore);
-        //perfJudge.onHealth.AddListener(OnHealth);
-        //perfJudge.onDance.AddListener(OnDance);
-        //perfJudge.onCorrectNote.AddListener(OnNotePerformanceCorrect);
-        //perfJudge.onWrongNote.AddListener(OnNotePerformanceWrong);
-        //perfJudge.onMissNote.AddListener(OnNotePerformanceMiss);
-        //perfJudge.onNotePerformanceEnd.AddListener(OnNotePerformanceEnd);
-        //perfJudge.enabled = true;
-    }
-
-    private void DisablePerformanceJudge()
-    {
-        //perfJudge.onScore.RemoveListener(OnScore);
-        //perfJudge.onHealth.RemoveListener(OnHealth);
-        //perfJudge.onDance.RemoveListener(OnDance);
-        //perfJudge.onCorrectNote.RemoveListener(OnNotePerformanceCorrect);
-        //perfJudge.onWrongNote.RemoveListener(OnNotePerformanceWrong);
-        //perfJudge.onMissNote.RemoveListener(OnNotePerformanceMiss);
-        //perfJudge.onNotePerformanceEnd.RemoveListener(OnNotePerformanceEnd);
-        //perfJudge.enabled = false;
-    }
-
-
-
-    private void OnContinue(bool useContinue)
-    {
-        //MenuUI.UIGameOver.onContinue.RemoveListener(OnContinue);
-        //if (useContinue)
-        //{
-        //    if (currentMode == Mode.ARCADE) gameState.continues--;
-        //    RestartLevel();
-        //}
-        //else
-        //{
-        //    QuitLevel();
-        //}
     }
 
     private void OnScoreDisplayEnd()
@@ -466,4 +457,5 @@ public class LevelLoader : MonoBehaviour
         //MenuUI.UILeaderboard.levelHighScores = gameState.LevelHighScores;
         //MenuUI.UILeaderboard.arcadeHighScores = gameState.ArcadeHighScores;
     }
+    #endregion
 }
