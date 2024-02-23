@@ -11728,14 +11728,16 @@ MonoBehaviour:
   comboDisplay: {fileID: 378858697}
   accuracyDisplay: {fileID: 643296409}
   smallMessageDisplay: {fileID: 1307318232}
-  missedMessages:
-  - POUET
-  - PROUT
-  - PWAP
-  - BURP
+  smallMessageShake: {fileID: 1307318233}
+  wrongNoteMessages:
   - OUPS
+  - BURP
+  - POUET
+  - PWAP
   - PWOP
-  missedMessageColor: {r: 0.5176471, g: 0.227451, b: 0.227451, a: 1}
+  - BWAP
+  - BWOP
+  wrongNoteMessageColor: {r: 0.5176471, g: 0.227451, b: 0.227451, a: 1}
 --- !u!1 &910096295
 GameObject:
   m_ObjectHideFlags: 0
@@ -18095,6 +18097,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1307318231}
   - component: {fileID: 1307318232}
+  - component: {fileID: 1307318233}
   m_Layer: 5
   m_Name: On Intrument Display
   m_TagString: Untagged
@@ -18141,6 +18144,21 @@ MonoBehaviour:
   swooshSpeed: 200
   fadeSpeed: 3
   color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &1307318233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307318230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6bb144cedc53240a5b517973349875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amplitude: 2
+  frequency: 25
+  holdDuration: 0.1
 --- !u!1 &1328911529
 GameObject:
   m_ObjectHideFlags: 0
@@ -26073,7 +26091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 1
   frequency: 25
-  holdDuration: 0.5
+  holdDuration: 0.25
 --- !u!1 &2012053886
 GameObject:
   m_ObjectHideFlags: 0
@@ -26644,7 +26662,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 1
   frequency: 25
-  holdDuration: 0.5
+  holdDuration: 0.25
 --- !u!1 &2071765401
 GameObject:
   m_ObjectHideFlags: 0
