@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.Events;
 using System.Collections;
+using UnityEngine.UI;
 
 [ExecuteAlways]
 public class ScoreScreen : MenuUI
@@ -15,12 +15,16 @@ public class ScoreScreen : MenuUI
     public ScoreLineDisplay comboDisplay;
     public ScoreLineDisplay totalDisplay;
     [Header("Display Parameters")]
+    public Button nextButton;
+    [Header("Timing")]
     [Min(0f)] public float displayDelay = .5f;
     [Min(0f)] public float endDisplayDelay = 3f;
     [Header("Values")]
     public string levelName;
     public LevelScoreInfo score;
     public int levelIndex;
+
+    private Coroutine displayLinesCoroutine;
 
     override protected void Reset()
     {
@@ -47,46 +51,50 @@ public class ScoreScreen : MenuUI
     {
         base.Update();
         // Display without animation in editor mode
-        if (!Application.isPlaying)
-        {
-            // Header
-            ShowLine(header);
-            // Level title
-            ShowLine(title);
-            SetLineTexts(title, levelName);
-            // Base score
-            ShowLine(baseScoreDisplay);
-            SetLineValues(baseScoreDisplay, score.baseScore);
-            // Accuracy
-            ShowLine(accuracyDisplay);
-            SetLineValues(accuracyDisplay, score.accuracyAverage, score.AccuracyBonus);
-            // Combo
-            ShowLine(comboDisplay);
-            SetLineValues(comboDisplay, score.bestCombo, score.ComboBonus);
-            // Note count
-            ShowLine(noteCountDisplay);
-            SetLineValues(noteCountDisplay, score.correctNoteCount, score.totalNoteCount, score.PlayedNoteBonus);
-            // Total score
-            ShowLine(totalDisplay);
-            SetLineValues(totalDisplay, score.Total);
-        }
+        if (!Application.isPlaying) ShowAllLines();
     }
 
     public override void ShowUI()
     {
         base.ShowUI();
         HideAllLines();
-        if (Application.isPlaying) StartCoroutine(DisplayLinesCoroutine());
+        if (Application.isPlaying)
+        {
+            nextButton.onClick.AddListener(OnPressNext);
+            displayLinesCoroutine = StartCoroutine(DisplayLinesCoroutine());
+        }
     }
 
     public override void HideUI()
     {
         base.HideUI();
         HideAllLines();
-        if (Application.isPlaying)StopAllCoroutines();
+        if (Application.isPlaying)
+        {
+            nextButton.onClick.RemoveListener(OnPressNext);
+            if (displayLinesCoroutine != null) StopCoroutine(displayLinesCoroutine);
+            displayLinesCoroutine = null;
+        }
     }
 
-    private void HideAllLines()
+    public void ShowAllLines()
+    {
+        ShowLine(header);
+        ShowLine(title);
+        SetLineTexts(title, levelName);
+        ShowLine(baseScoreDisplay);
+        SetLineValues(baseScoreDisplay, score.baseScore);
+        ShowLine(accuracyDisplay);
+        SetLineValues(accuracyDisplay, score.accuracyAverage, score.AccuracyBonus);
+        ShowLine(comboDisplay);
+        SetLineValues(comboDisplay, score.bestCombo, score.ComboBonus);
+        ShowLine(noteCountDisplay);
+        SetLineValues(noteCountDisplay, score.correctNoteCount, score.totalNoteCount, score.PlayedNoteBonus);
+        ShowLine(totalDisplay);
+        SetLineValues(totalDisplay, score.Total);
+    }
+
+    public void HideAllLines()
     {
         HideLine(header);
         HideLine(title);
@@ -162,8 +170,6 @@ public class ScoreScreen : MenuUI
             displayTimer -= Time.deltaTime;
         }
         while (displayTimer > 0f || noteCountDisplay.IsMoving || totalDisplay.IsMoving);
-        // Back to level
-        HideUI();
     }
 
     public void DisplayScore(int lvlIndex, string lvlName, LevelScoreInfo scr)
@@ -201,5 +207,19 @@ public class ScoreScreen : MenuUI
     private void SetLineValues(ScoreLineDisplay line, params float[] values)
     {
         if (line != null) line.SetValues(values);
+    }
+
+    private void OnPressNext()
+    {
+        if (displayLinesCoroutine != null)
+        {
+            StopCoroutine(displayLinesCoroutine);
+            displayLinesCoroutine = null;
+            ShowAllLines();
+        }
+        else
+        {
+            HideUI();
+        }
     }
 }
