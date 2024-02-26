@@ -5218,8 +5218,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 556477227
-  m_fontColor: {r: 0.16897066, g: 0.16897066, b: 0.16897066, a: 0.13026597}
+    rgba: 4286480512
+  m_fontColor: {r: 0.50102895, g: 0.5002912, b: 0.4956319, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5303,9 +5303,9 @@ MonoBehaviour:
   value: 0
   type: 0
   lowerValue: -1
-  lowerColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 0.12156863}
+  lowerColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   higherValue: 100
-  higherColor: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
+  higherColor: {r: 0.6039216, g: 0.5294118, b: 0.058823533, a: 1}
 --- !u!1 &384093081
 GameObject:
   m_ObjectHideFlags: 0
@@ -8328,7 +8328,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: justesse x0.5
+  m_text: justesse x1.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f95086caedccc941a05acaeb30169f9, type: 2}
   m_sharedMaterial: {fileID: -7873930991938731865, guid: 3f95086caedccc941a05acaeb30169f9, type: 2}
@@ -8337,8 +8337,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280439889
-  m_fontColor: {r: 0.3160377, g: 0.32974797, b: 0.13220118, a: 1}
+    rgba: 4279207834
+  m_fontColor: {r: 0.6037736, g: 0.5307262, b: 0.05980776, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8419,12 +8419,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 643296407}
   label: 'justesse '
-  value: 0.5
+  value: 1.07
   type: 1
   lowerValue: 0
-  lowerColor: {r: 0.6320754, g: 0.12224099, b: 0.16615869, a: 1}
+  lowerColor: {r: 0.5176471, g: 0.227451, b: 0.227451, a: 1}
   higherValue: 1
-  higherColor: {r: 0, g: 0.5372549, b: 0.09824366, a: 1}
+  higherColor: {r: 0.6037736, g: 0.5307262, b: 0.05980776, a: 1}
 --- !u!1 &643662498
 GameObject:
   m_ObjectHideFlags: 0

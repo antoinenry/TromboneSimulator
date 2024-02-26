@@ -11,6 +11,8 @@ public class LevelLoader : MonoBehaviour
     public int startCountdownValue = 3;
     public float levelSetupTransitionDuration = .5f;
     public float gameOverTransitionDuration = 2f;
+    [Header("TO MOVE")]
+    public GameState_old gameState;
 
     // Coroutines
     private Coroutine startLevelCoroutine;
@@ -335,19 +337,26 @@ public class LevelLoader : MonoBehaviour
         GUI.SetPauseButtonActive(false);
         // Unload level
         UnloadLevel();
-        // Score
-        //if (gameState != null)
-        //{
-        //    LevelScoreInfo scoreInfo = perfJudge.GetLevelScore();
-        //    int levelIndex = gameState.currentLevelIndex;
-        //    gameState.SetLevelScore(levelIndex, scoreInfo);
-        //    // Show score screen
-        //    MenuUI.UIScore.DisplayScore(levelIndex, gameState.CurrentLevel.Name, scoreInfo);
-        //    if (gameState.IsLevelHighscore(scoreInfo.Total, levelIndex))
-        //        MenuUI.UIScore.onFinishDisplayScore.AddListener(OnLevelHighscore);
-        //    else
-        //        MenuUI.UIScore.onFinishDisplayScore.AddListener(OnScoreDisplayEnd);
-        //}
+        // Display score screen
+        StartCoroutine(DisplayScoreCoroutine());
+    }
+
+    private IEnumerator DisplayScoreCoroutine()
+    {
+        if (gameState)
+        {
+            LevelScoreInfo scoreInfo = perfJudge.GetLevelScore();
+            int levelIndex = gameState.currentLevelIndex;
+            gameState.SetLevelScore(levelIndex, scoreInfo);
+            if (MenuUI.UIScore)
+            {
+                // Show score screen
+                if (gameState.CurrentLevel) MenuUI.UIScore.DisplayScore(levelIndex, gameState.CurrentLevel.name, scoreInfo);
+                else MenuUI.UIScore.DisplayScore(levelIndex, "", scoreInfo);
+                yield return new WaitWhile(() => MenuUI.UIScore.IsVisible);
+            }
+        }
+        QuitLevel();
     }
 
     public void QuitLevel()
@@ -372,49 +381,35 @@ public class LevelLoader : MonoBehaviour
     #endregion
 
     #region DEPRECIATED
-    private void CheatKeys()
-    {
-        if (Input.anyKeyDown)
-        {
-            if (Input.GetKeyDown(KeyCode.X))
-                perfJudge.TakeDamage(1f);
-            else if (Input.GetKeyDown(KeyCode.H))
-                perfJudge.HealDamage(1f);
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                musicPlayer.playingSpeed -= .1f;
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-                musicPlayer.playingSpeed += .1f;
-            else if (Input.GetKeyDown(KeyCode.F))
-                OnLevelEnd();
-            else if (Input.GetKey(KeyCode.P))
-            {
-                if (musicPlayer.State == MusicPlayer.PlayState.Play)
-                    musicPlayer.Pause();
-                else if (musicPlayer.State == MusicPlayer.PlayState.Pause)
-                    musicPlayer.Play();
-            }
-        }
-    }
+    //private void CheatKeys()
+    //{
+    //    if (Input.anyKeyDown)
+    //    {
+    //        if (Input.GetKeyDown(KeyCode.X))
+    //            perfJudge.TakeDamage(1f);
+    //        else if (Input.GetKeyDown(KeyCode.H))
+    //            perfJudge.HealDamage(1f);
+    //        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+    //            musicPlayer.playingSpeed -= .1f;
+    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
+    //            musicPlayer.playingSpeed += .1f;
+    //        else if (Input.GetKeyDown(KeyCode.F))
+    //            OnLevelEnd();
+    //        else if (Input.GetKey(KeyCode.P))
+    //        {
+    //            if (musicPlayer.State == MusicPlayer.PlayState.Play)
+    //                musicPlayer.Pause();
+    //            else if (musicPlayer.State == MusicPlayer.PlayState.Pause)
+    //                musicPlayer.Play();
+    //        }
+    //    }
+    //}    
 
-    private void OnScoreDisplayEnd()
-    {
-        //MenuUI.UIScore.onFinishDisplayScore.RemoveListener(OnScoreDisplayEnd);
-        //if (currentMode == Mode.ARCADE)
-        //{
-        //    // Unlock next level
-        //    gameState.UnlockLevel(gameState.currentLevelIndex + 1);
-        //    // Load next level
-        //    LoadLevel(Mode.ARCADE, gameState.CurrentLevelNumber + 1);
-        //}
-        //else
-        //    QuitLevel();
-    }
-
-    private void OnLevelHighscore()
-    {
-        //MenuUI.UIScore.onFinishDisplayScore.RemoveListener(OnLevelHighscore);
-        //submitLevelHighscoreCoroutine = StartCoroutine(SubmitLevelHighscore());
-    }
+    //private void OnLevelHighscore()
+    //{
+    //    MenuUI.UIScore.onFinishDisplayScore.RemoveListener(OnLevelHighscore);
+    //    submitLevelHighscoreCoroutine = StartCoroutine(SubmitLevelHighscore());
+    //}
 
     //private IEnumerator SubmitLevelHighscore()
     //{

@@ -21,8 +21,6 @@ public class ScoreScreen : MenuUI
     public string levelName;
     public LevelScoreInfo score;
     public int levelIndex;
-    [Header("Events")]
-    public UnityEvent onFinishDisplayScore;
 
     override protected void Reset()
     {
@@ -166,7 +164,6 @@ public class ScoreScreen : MenuUI
         while (displayTimer > 0f || noteCountDisplay.IsMoving || totalDisplay.IsMoving);
         // Back to level
         HideUI();
-        onFinishDisplayScore.Invoke();
     }
 
     public void DisplayScore(int lvlIndex, string lvlName, LevelScoreInfo scr)
