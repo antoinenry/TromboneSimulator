@@ -15,6 +15,7 @@ public class LevelLoader : MonoBehaviour
     public GameState_old gameState;
 
     // Coroutines
+    private Coroutine loadLevelCoroutine;
     private Coroutine startLevelCoroutine;
     private Coroutine unpauseLevelCoroutine;
     // Component references
@@ -69,6 +70,7 @@ public class LevelLoader : MonoBehaviour
         LoadLevel(Mode.ONE_LEVEL, level);
         StartLevel();
     }
+
     #endregion
 
     #region LOAD/UNLOAD
@@ -76,11 +78,16 @@ public class LevelLoader : MonoBehaviour
     {
         LoadedMode = mode;
         LoadedLevel = level;
+        loadLevelCoroutine = StartCoroutine(LoadLevelCoroutine());
+    }
+
+    private IEnumerator LoadLevelCoroutine()
+    {
         // Music setup
         if (musicPlayer)
         {
             musicPlayer.Stop();
-            musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler);
+            musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler);            
             musicPlayer.loop = false;
             musicPlayer.onPlayerUpdate.AddListener(OnMusicPlayerUpdate);
         }
@@ -92,7 +99,7 @@ public class LevelLoader : MonoBehaviour
             trombone.Unfreeze();
         }
         // NoteSpawner setup
-        if (noteSpawner) noteSpawner.enabled = true; 
+        if (noteSpawner) noteSpawner.enabled = true;
         // Note catcher setup
         if (noteCatcher)
         {
@@ -109,10 +116,12 @@ public class LevelLoader : MonoBehaviour
         // GUI Setup
         if (GUI)
         {
+            if (musicPlayer) yield return new WaitWhile(() => musicPlayer.IsLoading);
             GUI.GUIActive = true;
             GUI.onPauseRequest.AddListener(PauseLevel);
             GUI.SetPauseButtonActive(true);
         }
+        loadLevelCoroutine = null;
     }
 
     public void UnloadLevel()
