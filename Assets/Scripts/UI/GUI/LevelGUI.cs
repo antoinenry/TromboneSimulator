@@ -1,114 +1,42 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 [ExecuteAlways]
 public class LevelGUI : GameUI
 {
     [Header("UI Components")]
-    public Button pauseButton;
-    public CounterDisplay scoreDisplay;
-    public MultiplierDisplay comboDisplay;
-    public MultiplierDisplay accuracyDisplay;
+    public Button pauseButton;    
     public Slider timeBar;
-    public Slider healthBar;
-    public Slider danceBar;
-    public Button powerButton;
-    public SwooshDisplay pointsDisplay;
     public SwooshDisplay messageDisplay;
     [Header("Content")]
     public string grabTromboneMessage = "a vos coulisses";
     public int startCountDownAt = 3;
-    public string[] missedMessages;
-    public Color missedMessageColor = Color.red;
     [Header("Events")]
-    public UnityEvent onPressPause;
-    public UnityEvent onPressPower;
+    public UnityEvent onPauseRequest;
 
-    private bool isShowingMissedMessage;
-    private string randomMissedMessage;
+    private LevelLoader levelLoader;
 
-    private void Awake()
-    {
-        // Initialize buttons
-        if (Application.isPlaying)
-        {
-            if (pauseButton != null) pauseButton.interactable = false;
-            if (powerButton != null) powerButton.interactable = false;
-        }
-    }
-
-
-    public override bool GUIActive
-    {
-        get
-        {
-            // Check if each GUI component is active
-            if (pauseButton != null && pauseButton.gameObject.activeInHierarchy == false) return false;
-            if (scoreDisplay != null && scoreDisplay.gameObject.activeInHierarchy == false) return false;
-            if (comboDisplay != null && comboDisplay.gameObject.activeInHierarchy == false) return false;
-            if (accuracyDisplay != null && accuracyDisplay.gameObject.activeInHierarchy == false) return false;
-            if (timeBar != null && timeBar.gameObject.activeInHierarchy == false) return false;
-            if (healthBar != null && healthBar.gameObject.activeInHierarchy == false) return false;
-            if (danceBar != null && danceBar.gameObject.activeInHierarchy == false) return false;
-            if (powerButton != null && powerButton.gameObject.activeInHierarchy == false) return false;
-            if (pointsDisplay != null && pointsDisplay.gameObject.activeInHierarchy == false) return false;
-            if (messageDisplay != null && messageDisplay.gameObject.activeInHierarchy == false) return false;
-            return true;
-        }
-
-        set
-        {
-            // Activate/Deactivate every GUI component
-            if (pauseButton != null) pauseButton.gameObject.SetActive(value);
-            if (scoreDisplay != null) scoreDisplay.gameObject.SetActive(value);
-            if (comboDisplay != null) comboDisplay.gameObject.SetActive(value);
-            if (accuracyDisplay != null) accuracyDisplay.gameObject.SetActive(value);
-            if (timeBar != null) timeBar.gameObject.SetActive(value);
-            if (healthBar != null) healthBar.gameObject.SetActive(value);
-            if (danceBar != null) danceBar.gameObject.SetActive(value);
-            if (powerButton != null) powerButton.gameObject.SetActive(value);
-            if (pointsDisplay != null) pointsDisplay.gameObject.SetActive(value);
-            if (messageDisplay != null) messageDisplay.gameObject.SetActive(value);
-            // When deactivating, remove listeners
-            onPressPause.RemoveAllListeners();
-            onPressPower.RemoveAllListeners();
-        }
-    }
+    public override Component[] UIComponents => new Component[] 
+        { pauseButton, timeBar, messageDisplay };
 
     private void OnClickPauseButton()
     {
-        onPressPause.Invoke();
+        onPauseRequest.Invoke();
     }
 
-    private void OnClickPowerButton()
+    public void SetTimeBar(float timeValue, float timeMax)
     {
-        onPressPower.Invoke();
-        SetPowerButtonActive(false);
-    }
-
-    public void SetTimeBar(float time, float maxTime, bool interactable = false)
-    {
-        if (timeBar != null)
+        if (timeBar)
         {
-            timeBar.interactable = interactable;
-            timeBar.value = (time / maxTime) * timeBar.maxValue;
+            timeBar.value = timeValue;
+            timeBar.maxValue = timeMax;
         }
-    }
-
-    public void SetHealthBar(float hp)
-    {
-        if (healthBar != null) healthBar.value = hp * healthBar.maxValue;
-    }
-
-    public void SetDanceBar(float danceLevel)
-    {
-        if (danceBar != null) danceBar.value = danceLevel;
     }
 
     public void SetPauseButtonActive(bool enable)
     {
-        if (pauseButton != null)
+        if (pauseButton)
         {
             if (enable != pauseButton.interactable)
             {
@@ -119,81 +47,9 @@ public class LevelGUI : GameUI
         }
     }
 
-    public void SetPowerButtonActive(bool enable)
-    {
-        if (powerButton != null)
-        {
-            if (enable != powerButton.interactable)
-            {
-                if (enable) powerButton.onClick.AddListener(OnClickPowerButton);
-                else powerButton.onClick.RemoveListener(OnClickPowerButton);
-            }
-            powerButton.interactable = enable;
-        }
-    }
-
-    public void SetScore(float score)
-    {
-        if (scoreDisplay != null) scoreDisplay.value = Mathf.FloorToInt(score);
-    }
-
-    public void SetNoteAccuracy(float accuracy)
-    {
-        if (accuracyDisplay != null) accuracyDisplay.value = accuracy;
-    }
-
-    public void SetNoteCombo(int combo)
-    {
-        if (comboDisplay != null) comboDisplay.value = combo;
-    }
-
-    public void SetNotePoints(float points, Color pointsColor)
-    {
-        if (pointsDisplay != null)
-        {
-            if (isShowingMissedMessage)
-            {
-                //pointsDisplay.FreeText();
-                isShowingMissedMessage = false;
-            }
-            string pointsString = Mathf.FloorToInt(points).ToString();
-            pointsDisplay.SetTextContent(pointsString);
-            pointsDisplay.SetTextColor(pointsColor);
-        }
-    }
-
-    public void EndNotePoints(float points, Color pointsColor)
-    {
-        if (pointsDisplay != null)
-        {
-            if (points > 0f) SetNotePoints(points, pointsColor);
-            pointsDisplay.FreeText();
-            if (missedMessages != null && missedMessages.Length > 0)
-                randomMissedMessage = missedMessages[Random.Range(0, missedMessages.Length)];
-        }
-    }
-
-    public void EndNotePoints()
-    {
-        if (pointsDisplay != null)
-        {
-            pointsDisplay.FreeText();
-        }
-    }
-
-    public void ShowMissedMessage()
-    {
-        if (pointsDisplay != null && missedMessages != null && missedMessages.Length > 0)
-        {
-            pointsDisplay.SetTextContent(randomMissedMessage);
-            pointsDisplay.SetTextColor(missedMessageColor);
-            isShowingMissedMessage = true;
-        }
-    }
-
     public void ShowGrabTromboneMessage()
     {
-        if (messageDisplay != null)
+        if (messageDisplay)
         {
             messageDisplay.FreeText();
             messageDisplay.SetTextContent(grabTromboneMessage);
@@ -202,7 +58,7 @@ public class LevelGUI : GameUI
 
     public void ShowCountdown(int time)
     {
-        if (messageDisplay != null)
+        if (messageDisplay)
         {
             messageDisplay.FreeText();
             if (time > 0)
@@ -215,6 +71,6 @@ public class LevelGUI : GameUI
 
     public void ClearMessage()
     {
-        if (messageDisplay != null) messageDisplay.FreeText();
+        if (messageDisplay) messageDisplay.FreeText();
     }
 }

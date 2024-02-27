@@ -29,7 +29,7 @@ public class IndexedButton : MonoBehaviour
         if (Application.isPlaying && button != null) button.onClick.RemoveListener(Click);
     }
 
-    private void Update()
+    public void Update()
     {
         if (buttonText != null) buttonText.text = text;
     }

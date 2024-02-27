@@ -25,7 +25,7 @@ public class MusicPlayerInspector : Editor
         //GUI.enabled = GUIEnabled;
         EditorGUILayout.EndHorizontal();
         transitionEffects = EditorGUILayout.Toggle("Transition effects", transitionEffects);
-        EditorGUILayout.LabelField("Playing state", musicPlayer.Playing.ToString());
+        EditorGUILayout.LabelField("Playing state", musicPlayer.State.ToString());
         EditorGUILayout.LabelField("Playing speed", musicPlayer.CurrentPlayingSpeed.ToString());
         EditorGUILayout.EndVertical();
     }

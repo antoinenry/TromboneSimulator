@@ -64,6 +64,12 @@ public class CounterDisplay : MonoBehaviour
         textRenderer.enabled = false;
     }
 
+    public void SetValueImmediate()
+    {
+        CurrentDisplayValue = value;
+        Update();
+    }
+
     public void SetValueImmediate(float setValue)
     {
         value = setValue;

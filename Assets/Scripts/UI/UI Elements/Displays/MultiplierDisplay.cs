@@ -29,11 +29,11 @@ public class MultiplierDisplay : MonoBehaviour
             switch (type)
             {
                 case ValueType.COUNTER:
-                    if (value > lowerValue) valueString = "x" + Mathf.FloorToInt(value).ToString();
+                    if (value >= lowerValue) valueString = "x" + Mathf.FloorToInt(value).ToString();
                     else valueString = "";
                     break;
                 case ValueType.RATIO:
-                    if (value > lowerValue) valueString = "x" + Mathf.FloorToInt(value).ToString() + "." + Mathf.FloorToInt((value * 10f) % 10f).ToString("0");
+                    if (value >= lowerValue) valueString = "x" + Mathf.FloorToInt(value).ToString() + "." + Mathf.FloorToInt((value * 10f) % 10f).ToString("0");
                     else valueString = "";
                     break;
             }

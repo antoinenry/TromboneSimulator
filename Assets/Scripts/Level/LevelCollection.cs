@@ -7,5 +7,5 @@ public class LevelCollection : ScriptableObject
     public Level[] levels;
 
     public int Count => levels != null ? levels.Length : 0;
-    public string[] LevelNames => levels != null ? Array.ConvertAll(levels, lvl => lvl.Name) : new string[0];
+    public string[] LevelNames => levels != null ? Array.ConvertAll(levels, lvl => lvl.name) : new string[0];
 }

@@ -24,6 +24,8 @@ public abstract class MenuUI : MonoBehaviour
     static public SettingsScreen UISettings;
     static public LoadingScreen UILoading;
 
+    public MenuUI PreviousUI { get; protected set; }
+
     static public int VisibleMenuCount => visibleMenuUis != null ? visibleMenuUis.Count : 0;
 
     public bool IsVisible { get; private set; }
@@ -79,5 +81,25 @@ public abstract class MenuUI : MonoBehaviour
         {
             visibleMenuUis.RemoveAll(m => m == this);
         }
+    }
+
+    public virtual void GoTo(MenuUI nextUI)
+    {
+        if (nextUI != null)
+        {
+            nextUI.ShowUI();
+            nextUI.PreviousUI = this;
+        }
+        HideUI();
+    }
+
+    public virtual void GoBack()
+    {
+        if (PreviousUI != null)
+        {
+            PreviousUI.ShowUI();
+            PreviousUI = null;
+        }
+        HideUI();
     }
 }

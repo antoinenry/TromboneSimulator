@@ -9,16 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
-  m_Name: Test_longNote
+  m_Script: {fileID: 11500000, guid: 1c3a3c1970ba3804db0825b36696319d, type: 3}
+  m_Name: TestContentLibrary
   m_EditorClassIdentifier: 
-  tempo: []
-  measure: []
-  parts:
-  - instrumentName: Trombone
-    notes:
-    - tone: 53
-      velocity: 1
-      startTime: 0
-      duration: 10
-  completeLastBar: 1
+  isCurrent: 0
+  levels: []
+  trombones: []
+  orchestras: []

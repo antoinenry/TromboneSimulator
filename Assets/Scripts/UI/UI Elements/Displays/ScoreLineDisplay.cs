@@ -41,11 +41,11 @@ public class ScoreLineDisplay : MonoBehaviour
         else textDisplays[index].text = text;
     }
 
-    public void SetValueAt(int index, float value)
+    public void SetValueAt(int index, float value, bool immediate = false)
     {
         if (valueDisplays == null || index < 0 || index >= valueDisplays.Length) return;
         else valueDisplays[index].value = value;
-
+        if (immediate) valueDisplays[index].SetValueImmediate();
         if (Application.isPlaying == false)
         {
             foreach (CounterDisplay d in valueDisplays) d.Update();
@@ -62,6 +62,12 @@ public class ScoreLineDisplay : MonoBehaviour
     {
         for (int i = 0, iend = values.Length; i < iend; i++)
             SetValueAt(i, values[i]);
+    }
+
+    public void SetValuesImmediate(params float[] values)
+    {
+        for (int i = 0, iend = values.Length; i < iend; i++)
+            SetValueAt(i, values[i], true);
     }
 
     public void ResetValues()

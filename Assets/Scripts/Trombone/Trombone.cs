@@ -75,6 +75,7 @@ public class Trombone : MonoBehaviour,
     public void ResetTrombone()
     {
         ClearInputs();
+        tromboneDisplay.ResetDisplay();
     }
 
     public void LoadBuild()

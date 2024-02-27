@@ -18,16 +18,18 @@ public class PerformanceJudge : MonoBehaviour
     public int dance;
     [Header("Events")]
     public UnityEvent<float> onScore;
-    public UnityEvent<float> onHealth;
+    public UnityEvent<float,float> onHealth;
     public UnityEvent<int> onDance;
     public UnityEvent<NoteInstance, float, float> onCorrectNote;
     public UnityEvent<NoteInstance> onWrongNote;
     public UnityEvent<NoteInstance> onMissNote;
-    public UnityEvent<NoteInstance, float, bool> onNotePerformanceEnd;
+    public UnityEvent<NoteInstance, float, int> onNotePerformanceEnd;
 
     private NoteCatcher noteCatcher;
     private NoteCrasher noteCrasher;
     private DanceDetector danceDetector;
+    private PerformanceGUI GUI;
+
     private int danceBufferCounter;
 
     private void Awake()
@@ -35,11 +37,34 @@ public class PerformanceJudge : MonoBehaviour
         noteCatcher = FindObjectOfType<NoteCatcher>(true);
         noteCrasher = FindObjectOfType<NoteCrasher>(true);
         danceDetector = FindObjectOfType<DanceDetector>(true);
+        GUI = FindObjectOfType<PerformanceGUI>(true);
     }
 
     private void OnEnable()
     {
-        if (noteCatcher != null)
+        EnableDetection();
+        EnableGUI();
+    }
+
+    private void OnDisable()
+    {
+        DisableDetection();
+        DisableGUI();
+    }
+
+    public void EnableGUI()
+    {
+        if (GUI) GUI.Judge = this;
+    }
+
+    public void DisableGUI()
+    {
+        if (GUI && GUI.Judge == this) GUI.Judge = null;
+    }
+
+    public void EnableDetection()
+    {
+        if (noteCatcher)
         {
             noteCatcher.onCorrectNote.AddListener(OnPlayCorrectNote);
             noteCatcher.onWrongNote.AddListener(OnPlayWrongNote);
@@ -47,18 +72,18 @@ public class PerformanceJudge : MonoBehaviour
             noteCatcher.onMissNote.AddListener(OnMissNote);
             noteCatcher.onNoteCatchEnd.AddListener(OnNoteExit);
         }
-        if (noteCrasher != null)
+        if (noteCrasher)
         {
             noteCrasher.onHorizontalCrash.AddListener(OnNoteCrash);
         }
-        if (danceDetector != null)
+        if (danceDetector)
         {
             danceDetector.onDanceBeat.AddListener(OnDanceBeat);
             danceDetector.onMissBeat.AddListener(OnMissDanceBeat);
         }
     }
 
-    private void OnDisable()
+    public void DisableDetection()
     {
         if (noteCatcher != null)
         {
@@ -78,83 +103,25 @@ public class PerformanceJudge : MonoBehaviour
             danceDetector.onMissBeat.RemoveListener(OnMissDanceBeat);
         }
     }
-
     public void ResetPerformance()
     {
         // Reset values
         performanceDetail = new List<NotePerformance>();
         score = 0f;
-        onScore.Invoke(score);
         health = 1f;
-        onHealth.Invoke(health);
         dance = 0;
-        onDance.Invoke(dance);
         combo = 0;
-        onNotePerformanceEnd.Invoke(null, 0f, false);
+        // Reset GUI
+        if (GUI) GUI.ResetDisplay();
     }
 
-    public void LevelSetup(SheetMusic lvl, string playedInstrument)
+    public void LevelSetup(SheetMusic lvl, SamplerInstrument playedInstrument)
     {
         // Reset
         ResetPerformance();
         // Prepare level
-        if (lvl != null) performanceDetail = new List<NotePerformance>(lvl.GetPartLength(playedInstrument));
-    }       
-
-    private void OnPlayCorrectNote(NoteInstance note)
-    {
-        if (note != null) onCorrectNote.Invoke(note, GetNoteAccuracy(note.performance), GetNoteScore(note.performance));
-    }
-
-    private void OnPlayFullNote(NoteInstance note)
-    {
-        if (note != null) AddNotePerformance(note);
-    }
-
-    private void OnPlayWrongNote(NoteInstance note)
-    {
-        if (note != null) onWrongNote.Invoke(note);
-    }
-
-    private void OnMissNote(NoteInstance note)
-    {
-        if (note != null) onMissNote.Invoke(note);
-    }
-
-    private void OnNoteExit(NoteInstance note)
-    {
-        if (note != null)
-        {
-            // If note was fully caught, performance has already been added by OnPlayFullNote
-            if (note.catchState == NoteInstance.CatchState.All) return;
-            else AddNotePerformance(note);
-        }
-    }
-
-    private void OnNoteCrash(float deltaTime)
-    {
-        TakeDamage(deltaTime * damageRate);
-    }
-
-    private void OnDanceBeat()
-    {
-        if (dance == 0 && danceBufferCounter < danceBuffer) danceBufferCounter++;
-        else
-        {
-            dance = Mathf.Clamp(dance + 1, 0, danceLength);
-            onDance.Invoke(dance);
-        }
-    }
-
-    private void OnMissDanceBeat()
-    {
-        if (danceBufferCounter > 0) danceBufferCounter--;
-        else
-        {
-            dance = Mathf.Clamp(dance - 1, 0, danceLength);
-            onDance.Invoke(dance);
-        }
-    }
+        if (lvl != null && playedInstrument != null) performanceDetail = new List<NotePerformance>(lvl.GetPartLength(playedInstrument.name));
+    }  
 
     public void AddNotePerformance(NoteInstance instance)
     {
@@ -169,19 +136,19 @@ public class PerformanceJudge : MonoBehaviour
         if (fullPlay) combo++;
         // Else break combo
         else combo = 0;
-        onNotePerformanceEnd.Invoke(instance, noteScore, fullPlay);
+        onNotePerformanceEnd.Invoke(instance, noteScore, combo);
     }
 
     public void TakeDamage(float damagePoints)
     {
         health = Mathf.Max(health - damagePoints, 0f);
-        onHealth.Invoke(health);
+        onHealth.Invoke(health, -damagePoints);
     }
 
     public void HealDamage(float healPoints)
     {
         health = Mathf.Min(health + healPoints, 1f);
-        onHealth.Invoke(health);
+        onHealth.Invoke(health, healPoints);
     }
 
     public float GetNoteAccuracy(NotePerformance notePerformance, bool rounded = true)
@@ -238,5 +205,60 @@ public class PerformanceJudge : MonoBehaviour
             scoreInfo.accuracyAverage = 1f;
 
         return scoreInfo;
+    }
+
+    private void OnPlayCorrectNote(NoteInstance note)
+    {
+        if (note != null) onCorrectNote.Invoke(note, GetNoteAccuracy(note.performance), GetNoteScore(note.performance));
+    }
+
+    private void OnPlayFullNote(NoteInstance note)
+    {
+        if (note != null) AddNotePerformance(note);
+    }
+
+    private void OnPlayWrongNote(NoteInstance note)
+    {
+        if (note != null) onWrongNote.Invoke(note);
+    }
+
+    private void OnMissNote(NoteInstance note)
+    {
+        if (note != null) onMissNote.Invoke(note);
+    }
+
+    private void OnNoteExit(NoteInstance note)
+    {
+        if (note != null)
+        {
+            // If note was fully caught, performance has already been added by OnPlayFullNote
+            if (note.catchState == NoteInstance.CatchState.All) return;
+            else AddNotePerformance(note);
+        }
+    }
+
+    private void OnNoteCrash(float deltaTime)
+    {
+        TakeDamage(deltaTime * damageRate);
+    }
+
+    private void OnDanceBeat()
+    {
+        if (dance == 0 && danceBufferCounter < danceBuffer) danceBufferCounter++;
+        else
+        {
+            dance = Mathf.Clamp(dance + 1, 0, danceLength);
+            onDance.Invoke(dance);
+        }
+    }
+
+    private void OnMissDanceBeat()
+    {
+        if (danceBufferCounter > 0) danceBufferCounter--;
+        else
+        {
+            dance = Mathf.Clamp(dance - 1, 0, danceLength);
+            onDance.Invoke(dance);
+        }
     }
 }

@@ -108,6 +108,7 @@ public class TromboneDisplay : MonoBehaviour,
     {
         UpdateAspect();
     }
+
     private void OnEnable()
     {
         ClearInputs();
@@ -122,7 +123,7 @@ public class TromboneDisplay : MonoBehaviour,
 
     }
 
-    void Update()
+    private void Update()
     {
         // Cursor input
         UpdateMouseInput();
@@ -136,10 +137,21 @@ public class TromboneDisplay : MonoBehaviour,
 
     public void ClearInputs()
     {
-        // Clear internal inputs (e.g. auto)
+        // Clear external inputs (e.g. auto)
         blowInput = null;
         slideToneInput = null;
         pressureLevelInput = null;
+    }
+
+    public void ResetDisplay()
+    {
+        mouseBlow = false;
+        mouseGrab = false;
+        mouseHover = false;
+        mousePressureLevel = 0f;
+        mouseSlideTone = 0f;
+        UpdatePosition();
+        UpdateAnimations();
     }
 
     public void UpdateAspect()
