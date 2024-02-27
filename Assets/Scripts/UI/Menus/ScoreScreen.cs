@@ -83,15 +83,15 @@ public class ScoreScreen : MenuUI
         ShowLine(title);
         SetLineTexts(title, levelName);
         ShowLine(baseScoreDisplay);
-        SetLineValues(baseScoreDisplay, score.baseScore);
+        SetLineValuesImmediate(baseScoreDisplay, score.baseScore);
         ShowLine(accuracyDisplay);
-        SetLineValues(accuracyDisplay, score.accuracyAverage, score.AccuracyBonus);
+        SetLineValuesImmediate(accuracyDisplay, score.accuracyAverage, score.AccuracyBonus);
         ShowLine(comboDisplay);
-        SetLineValues(comboDisplay, score.bestCombo, score.ComboBonus);
+        SetLineValuesImmediate(comboDisplay, score.bestCombo, score.ComboBonus);
         ShowLine(noteCountDisplay);
-        SetLineValues(noteCountDisplay, score.correctNoteCount, score.totalNoteCount, score.PlayedNoteBonus);
+        SetLineValuesImmediate(noteCountDisplay, score.correctNoteCount, score.totalNoteCount, score.PlayedNoteBonus);
         ShowLine(totalDisplay);
-        SetLineValues(totalDisplay, score.Total);
+        SetLineValuesImmediate(totalDisplay, score.Total);
     }
 
     public void HideAllLines()
@@ -170,6 +170,7 @@ public class ScoreScreen : MenuUI
             displayTimer -= Time.deltaTime;
         }
         while (displayTimer > 0f || noteCountDisplay.IsMoving || totalDisplay.IsMoving);
+        displayLinesCoroutine = null;
     }
 
     public void DisplayScore(int lvlIndex, string lvlName, LevelScoreInfo scr)
@@ -207,6 +208,11 @@ public class ScoreScreen : MenuUI
     private void SetLineValues(ScoreLineDisplay line, params float[] values)
     {
         if (line != null) line.SetValues(values);
+    }
+
+    private void SetLineValuesImmediate(ScoreLineDisplay line, params float[] values)
+    {
+        if (line != null) line.SetValuesImmediate(values);
     }
 
     private void OnPressNext()

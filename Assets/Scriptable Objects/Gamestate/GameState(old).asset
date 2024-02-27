@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameState(old)
   m_EditorClassIdentifier: 
   showDebug: 0
-  levelCollection: {fileID: 0}
+  levelCollection: {fileID: 11400000, guid: bd77bdfb167b83b4691ac1de51016b96, type: 2}
   continues: 0
   saveFolderName: SavedGames
   saveFileName: NewSave
