@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using System;
 
 public class NoteSpawner : MonoBehaviour
 {
@@ -203,9 +204,7 @@ public class NoteSpawner : MonoBehaviour
         // Spawn all notes detected by playhead
         for (int n = 0; n < noteCount; n++)
             if (progressOnNotes[n] != Playhead.ProgressOnNote.None)
-            {
                 SpawnNote(notes[n]);
-            }
         // Restore time
         previousTime = keep_previousTime;
         time = keep_time;

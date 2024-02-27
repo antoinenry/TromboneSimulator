@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using System;
 
 public class MusicPlayer : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class MusicPlayer : MonoBehaviour
     public UnityEvent onPlayerUpdate;
 
     public SheetMusic LoadedMusic { get; private set; }
+    public NotePlay[] LoadedNotes { get; private set; }
     public AudioClip LoadedAudio => backingSource.clip;
     public PlayState State { get; private set; }
     public float CurrentPlayTime { get; private set; }
@@ -40,7 +42,6 @@ public class MusicPlayer : MonoBehaviour
     public int ConsecutiveAudioSyncs { get; private set; }
     public bool IsLoading => backingGenerator != null && backingGenerator.AudioIsReady == false;
 
-    private NotePlay[] loadedNotes;
     private bool hasLooped;
     private float playHeadsTime;
     private float applicationDeltaTime;
@@ -262,7 +263,7 @@ public class MusicPlayer : MonoBehaviour
                     p.loop = loop;
                     p.loopStart = 0f;
                     p.loopEnd = musicDuration;
-                    p.Move(loadedNotes, fromTime, toTime, offsetFromTime, offsetToTime);
+                    p.Move(LoadedNotes, fromTime, toTime, offsetFromTime, offsetToTime);
                 }
             }
         }
@@ -289,12 +290,12 @@ public class MusicPlayer : MonoBehaviour
             if (playedInstrument != null)
             {
                 // Get notes to play
-                loadedNotes = music.GetNotes(playedInstrument, voiceIndex);
-                playedInstrument.ApplyStyle(loadedNotes);
+                LoadedNotes = music.GetNotes(playedInstrument, voiceIndex);
+                playedInstrument.ApplyStyle(LoadedNotes);
             }
             else
             {
-                loadedNotes = new NotePlay[0];
+                LoadedNotes = new NotePlay[0];
             }
             if (backingSource != null)
             {

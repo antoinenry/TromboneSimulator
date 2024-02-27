@@ -157,7 +157,7 @@ public class LevelLoader : MonoBehaviour
         // Wait for music to finish loading
         while (musicPlayer.IsLoading) yield return null;
         // Initialize note spawn: display first notes
-        //noteSpawner.SpawnNotes(musicPlayer.loadedNotes, -noteSpawner.SpawnDelay, 0f);
+        noteSpawner.SpawnNotes(musicPlayer.LoadedNotes, -noteSpawner.SpawnDelay, 0f);
         // Play metronome click
         Metronome metronome = musicPlayer.metronome;
         metronome.timeMode = Metronome.TimeMode.FixedUpdate;
