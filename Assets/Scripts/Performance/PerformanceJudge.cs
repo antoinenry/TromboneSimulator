@@ -68,7 +68,6 @@ public class PerformanceJudge : MonoBehaviour
         {
             noteCatcher.onCorrectNote.AddListener(OnPlayCorrectNote);
             noteCatcher.onWrongNote.AddListener(OnPlayWrongNote);
-            noteCatcher.onFullCorrectNote.AddListener(OnPlayFullNote);
             noteCatcher.onMissNote.AddListener(OnMissNote);
             noteCatcher.onNoteCatchEnd.AddListener(OnNoteExit);
         }
@@ -89,7 +88,6 @@ public class PerformanceJudge : MonoBehaviour
         {
             noteCatcher.onCorrectNote.RemoveListener(OnPlayCorrectNote);
             noteCatcher.onWrongNote.RemoveListener(OnPlayWrongNote);
-            noteCatcher.onFullCorrectNote.RemoveListener(OnPlayFullNote);
             noteCatcher.onMissNote.RemoveListener(OnMissNote);
             noteCatcher.onNoteCatchEnd.RemoveListener(OnNoteExit);
         }
@@ -154,8 +152,6 @@ public class PerformanceJudge : MonoBehaviour
     public float GetNoteAccuracy(NotePerformance notePerformance, bool rounded = true)
     {
         if (notePerformance.CorrectTime == 0f) return 0f;
-        //float errorPerSecond = NotePerformance.PerformanceSegment.ToneErrorAverage(notePerformance.CorrectSegments) / notePerformance.TotalPerformanceTime;
-        //float accuracy = noteCatcher.toneTolerance != 0f ? 1f - errorPerSecond / noteCatcher.toneTolerance : 1f;
         float averageError = NotePerformance.PerformanceSegment.ToneErrorAverage(notePerformance.CorrectSegments);
         float accuracy = noteCatcher.toneTolerance != 0f ? 1f - averageError / noteCatcher.toneTolerance : 1f;
         if (rounded == true && accuracyRounding > 1f) accuracy = Mathf.Ceil(accuracy * accuracyRounding) / accuracyRounding;
@@ -212,11 +208,6 @@ public class PerformanceJudge : MonoBehaviour
         if (note != null) onCorrectNote.Invoke(note, GetNoteAccuracy(note.performance), GetNoteScore(note.performance));
     }
 
-    private void OnPlayFullNote(NoteInstance note)
-    {
-        if (note != null) AddNotePerformance(note);
-    }
-
     private void OnPlayWrongNote(NoteInstance note)
     {
         if (note != null) onWrongNote.Invoke(note);
@@ -229,12 +220,7 @@ public class PerformanceJudge : MonoBehaviour
 
     private void OnNoteExit(NoteInstance note)
     {
-        if (note != null)
-        {
-            // If note was fully caught, performance has already been added by OnPlayFullNote
-            if (note.catchState == NoteInstance.CatchState.All) return;
-            else AddNotePerformance(note);
-        }
+        if (note != null) AddNotePerformance(note);
     }
 
     private void OnNoteCrash(float deltaTime)
