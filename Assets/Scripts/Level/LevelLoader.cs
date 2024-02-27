@@ -9,10 +9,10 @@ public class LevelLoader : MonoBehaviour
     [Header("Transitions")]
     public float minimumCountdownStepDuration = 1.5f;
     public int startCountdownValue = 3;
-    public float levelSetupTransitionDuration = .5f;
     public float gameOverTransitionDuration = 2f;
+    public float levelEndTransitionDuration = 2f;
     [Header("TO MOVE")]
-    public GameState_old gameState;
+    //public GameState_old gameState;
 
     // Coroutines
     private Coroutine loadLevelCoroutine;
@@ -342,28 +342,25 @@ public class LevelLoader : MonoBehaviour
     #region END/QUIT
     private void OnLevelEnd()
     {
-        // Disable pause button
-        GUI.SetPauseButtonActive(false);
-        // Unload level
-        UnloadLevel();
-        // Display score screen
-        StartCoroutine(DisplayScoreCoroutine());
+        StartCoroutine(LevelEndCoroutine());
     }
 
-    private IEnumerator DisplayScoreCoroutine()
+    private IEnumerator LevelEndCoroutine()
     {
-        if (gameState)
+        // Stop level
+        GUI.SetPauseButtonActive(false);
+        musicPlayer.Stop();
+        // Transition
+        yield return new WaitForSeconds(levelEndTransitionDuration);
+        // Unload level
+        UnloadLevel();
+        LevelScoreInfo scoreInfo = perfJudge.GetLevelScore();
+        if (MenuUI.UIScore)
         {
-            LevelScoreInfo scoreInfo = perfJudge.GetLevelScore();
-            int levelIndex = gameState.currentLevelIndex;
-            gameState.SetLevelScore(levelIndex, scoreInfo);
-            if (MenuUI.UIScore)
-            {
-                // Show score screen
-                if (gameState.CurrentLevel) MenuUI.UIScore.DisplayScore(levelIndex, gameState.CurrentLevel.name, scoreInfo);
-                else MenuUI.UIScore.DisplayScore(levelIndex, "", scoreInfo);
-                yield return new WaitWhile(() => MenuUI.UIScore.IsVisible);
-            }
+            // Show score screen
+            if (LoadedLevel) MenuUI.UIScore.DisplayScore(LoadedLevel.name, scoreInfo);
+            else MenuUI.UIScore.DisplayScore("", scoreInfo);
+            yield return new WaitWhile(() => MenuUI.UIScore.IsVisible);
         }
         QuitLevel();
     }
@@ -454,13 +451,13 @@ public class LevelLoader : MonoBehaviour
     //    //MenuUI.UILevelSelection.UpdateLevelList();
     //}
 
-    private void UpdateLeaderBoard()
-    {
+    //private void UpdateLeaderBoard()
+    //{
         // Update leaderboard screen
         //MenuUI.UILeaderboard.unlockedLevelCount = gameState.GetUnlockedLevelCount();
         //MenuUI.UILeaderboard.levelNames = gameState.LevelNames;
         //MenuUI.UILeaderboard.levelHighScores = gameState.LevelHighScores;
         //MenuUI.UILeaderboard.arcadeHighScores = gameState.ArcadeHighScores;
-    }
+    //}
     #endregion
 }

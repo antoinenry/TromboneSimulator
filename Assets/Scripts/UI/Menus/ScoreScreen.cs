@@ -22,7 +22,6 @@ public class ScoreScreen : MenuUI
     [Header("Values")]
     public string levelName;
     public LevelScoreInfo score;
-    public int levelIndex;
 
     private Coroutine displayLinesCoroutine;
 
@@ -173,9 +172,8 @@ public class ScoreScreen : MenuUI
         displayLinesCoroutine = null;
     }
 
-    public void DisplayScore(int lvlIndex, string lvlName, LevelScoreInfo scr)
+    public void DisplayScore(string lvlName, LevelScoreInfo scr)
     {
-        levelIndex = lvlIndex;
         levelName = lvlName;
         score = scr;
         ShowUI();
