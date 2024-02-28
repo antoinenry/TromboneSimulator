@@ -83,6 +83,7 @@ public class AudioTrackGenerator : MonoBehaviour
     private IEnumerator SampleTrackCoroutine()
     {
         // Coroutine with timeouts to avoid freezing (eg display a loading screen)
+        generatedAudio = null;
         ErrorType error = ErrorType.NoError;
         if (trackInfo != null)
         {
@@ -90,8 +91,6 @@ public class AudioTrackGenerator : MonoBehaviour
             int channels = stereo ? 2 : 1;
             int durationSamples = Mathf.CeilToInt(trackInfo.DurationSeconds * frequency) * channels;
             float[] samples = new float[durationSamples];
-            // Create new clip
-            generatedAudio = AudioClip.Create(trackInfo.name, durationSamples / channels, channels, frequency, false);
             // Initialize progress
             TotalNoteCount = trackInfo.TotalNoteCount;
             PartCount = trackInfo.PartCount;
@@ -171,11 +170,11 @@ public class AudioTrackGenerator : MonoBehaviour
                                 if (Time.deltaTime < 1f / maintainFPS) NotesPerFrame++;
                                 else NotesPerFrame--;
                                 NotesPerFrame = Mathf.Max(NotesPerFrame, minimumNotesPerFrames);
-                                NotesPerFrame = Mathf.Min(NotesPerFrame, CurrentPartLength - n);
+                                int sampleNotes = Mathf.Min(NotesPerFrame, CurrentPartLength - n);
                                 // Sample part
-                                error |= SamplePart(notes, n, NotesPerFrame, partInstrument, ref partSamples);
-                                GeneratedNoteCount += NotesPerFrame;
-                                CurrentPartGeneratedNotes += NotesPerFrame;
+                                error |= SamplePart(notes, n, sampleNotes, partInstrument, ref partSamples);
+                                GeneratedNoteCount += sampleNotes;
+                                CurrentPartGeneratedNotes += sampleNotes;
                                 OnGenerationProgress.Invoke((float)GeneratedNoteCount / TotalNoteCount);
                                 yield return null;
                             }
@@ -211,14 +210,11 @@ public class AudioTrackGenerator : MonoBehaviour
             }
             // Ensure audio levels are between -1f and 1f
             if (normalize) AudioSampling.Normalize(ref samples);
+            // Create new clip
+            generatedAudio = AudioClip.Create(trackInfo.name, durationSamples / channels, channels, frequency, false);
             // Transfer samples to audio clip
             generatedAudio.SetData(samples, 0);
         }
-        else
-        {
-            generatedAudio = null;
-        }
-        yield return null;
     }
 
     private ErrorType SamplePart(NoteInfo[] notes, SamplerInstrument instrument, out float[] partSamples)

@@ -18,6 +18,7 @@ public class MenuMusic : MonoBehaviour
     public bool IsPlaying { get; private set; }
 
     private TromboneAutoSettings restoreTromboneSettings;
+    private AudioClip pregeneratedAudio;
 
     private void OnEnable()
     {
@@ -63,13 +64,13 @@ public class MenuMusic : MonoBehaviour
             // Turn off metronome
             musicPlayer.metronome.click = false;
             // Play menu music
-            musicPlayer.LoadMusic(music, null, trombone.Sampler);
+            if (pregeneratedAudio == null) StartCoroutine(PregenerateAudioCoroutine());
+            else musicPlayer.LoadMusic(music, pregeneratedAudio, trombone.Sampler);
             musicPlayer.Play();
         }        
         // Setup trombone
         if (trombone != null)
         {
-            //trombone.enabled = enableTrombone;
             if (enableTrombone) trombone.Unfreeze();
             else trombone.Freeze();
             restoreTromboneSettings = trombone.tromboneAuto.settings;
@@ -84,5 +85,12 @@ public class MenuMusic : MonoBehaviour
         musicPlayer.Stop();
         IsPlaying = false;
         if (trombone != null) trombone.tromboneAuto.settings = restoreTromboneSettings;
+    }
+
+    private IEnumerator PregenerateAudioCoroutine()
+    {
+        musicPlayer.LoadMusic(music, playedInstrument:trombone.Sampler);
+        yield return new WaitWhile(() => musicPlayer.IsLoading);
+        pregeneratedAudio = AudioSampling.CloneAudioClip(musicPlayer.LoadedAudio, musicPlayer.LoadedAudio.name);
     }
 }

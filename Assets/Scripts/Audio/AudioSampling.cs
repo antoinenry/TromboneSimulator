@@ -153,4 +153,15 @@ static public class AudioSampling
         else
             return null;
     }
+
+    static public AudioClip CloneAudioClip(AudioClip original, string cloneName = null)
+    {
+        if (original == null) return null;
+        float[] loadedAudioData = new float[original.samples * original.channels];
+        original.GetData(loadedAudioData, 0);
+        string clipName = cloneName != null ? cloneName : original.name;
+        AudioClip clone = AudioClip.Create(clipName, original.samples, original.channels, original.frequency, false);
+        clone.SetData(loadedAudioData, 0);
+        return clone;
+    }
 }

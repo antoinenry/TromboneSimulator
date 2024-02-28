@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
-using System;
 
 public class MusicPlayer : MonoBehaviour
 {
@@ -278,10 +277,10 @@ public class MusicPlayer : MonoBehaviour
             if (p != null) p.Clear();
     }
 
-    public void LoadMusic(SheetMusic sheetMusic, AudioClip preloadedAudio = null, SamplerInstrument playedInstrument = null, int voiceIndex = 1)
+    public void LoadMusic(SheetMusic sheetMusic, AudioClip preGeneratedAudio = null, SamplerInstrument playedInstrument = null, int voiceIndex = 1)
     {
         // Unload previous music
-        if (LoadedAudio != preloadedAudio) UnloadMusic();
+        if (LoadedAudio != preGeneratedAudio) UnloadMusic();
         // Load new music
         LoadedMusic = sheetMusic;
         music = sheetMusic;
@@ -299,9 +298,11 @@ public class MusicPlayer : MonoBehaviour
             }
             if (backingSource != null)
             {
-                backingSource.clip = null;
-                // If audio is preloaded, set as backing clip
-                if (preloadedAudio != null) backingGenerator.generatedAudio = preloadedAudio;
+                // If audio is already generated, set as backing clip
+                if (preGeneratedAudio != null)
+                {
+                    backingSource.clip = AudioSampling.CloneAudioClip(preGeneratedAudio);
+                }
                 // Else generate new audio
                 else
                 {
@@ -313,9 +314,9 @@ public class MusicPlayer : MonoBehaviour
                         // Don't generate playable voices (main voice and played alternative)
                         if (playedInstrument != null) backingGenerator.IgnoreVoice(playedInstrument.instrumentName, true, voiceIndex);
                         backingGenerator.SampleTrack();
+                        StartCoroutine(WaitForGeneratedAudio());
                     }
                 }
-                backingSource.clip = backingGenerator.generatedAudio;
             }
             // Metronome setup
             metronome.SetRythm(music.tempo, music.measure);
@@ -326,12 +327,19 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
+    private IEnumerator WaitForGeneratedAudio()
+    {
+        backingSource.clip = null;
+        yield return new WaitUntil(() => backingGenerator.AudioIsReady);
+        backingSource.clip = backingGenerator.generatedAudio;
+    }
+
     public void UnloadMusic()
     {
         StartCoroutine(UnloadAudioCoroutine(backingSource.clip));
     }
 
-    public IEnumerator UnloadAudioCoroutine(AudioClip audio)
+    private IEnumerator UnloadAudioCoroutine(AudioClip audio)
     {
         // Wait until audio is fully loaded, then unload it
         if (audio != null)

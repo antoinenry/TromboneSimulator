@@ -27505,8 +27505,8 @@ MonoBehaviour:
   cheatMode: 1
   minimumCountdownStepDuration: 0.5
   startCountdownValue: 3
-  levelSetupTransitionDuration: 2
   gameOverTransitionDuration: 2
+  levelEndTransitionDuration: 3
 --- !u!1 &2146001702
 GameObject:
   m_ObjectHideFlags: 0
