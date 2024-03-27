@@ -16,7 +16,7 @@ public class TromboneBuild : ScriptableObject
     //public List<TromboneControlWiring.Wire> controlWiring;
     public TromboneAutoSettings autoSettings;
 
-    public void Load(TromboneCore trombone)
+    public void LoadTo(TromboneCore trombone)
     {
         // Copy settings to trombone components
         if (trombone != null)
@@ -49,7 +49,7 @@ public class TromboneBuild : ScriptableObject
         }
     }
 
-    public void Save(TromboneCore trombone)
+    public void SaveFrom(TromboneCore trombone)
     {
         // Copy settings from trombone components
         if (trombone != null)
@@ -76,6 +76,26 @@ public class TromboneBuild : ScriptableObject
                 // Auto settings
                 autoSettings = auto.settings;
             }
+        }
+    }
+
+    public void Copy(TromboneBuild other)
+    {
+        // Copy settings from other build
+        if (other != null)
+        {
+            // Core
+            pressureStepTones = other.pressureStepTones;
+            slideTones = other.slideTones;
+            // Aspect
+            color = other.color;
+            bodyLength = other.bodyLength;
+            slideLength = other.slideLength;
+            // Controls
+            horizontalMovements = other.horizontalMovements;
+            verticalMovements = other.verticalMovements;
+            // Auto settings
+            autoSettings = other.autoSettings;
         }
     }
 }

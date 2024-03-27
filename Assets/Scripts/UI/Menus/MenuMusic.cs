@@ -12,12 +12,10 @@ public class MenuMusic : MonoBehaviour
     [Header("Execution")]
     public MenuUI[] playInMenus;
     public bool enableTrombone = true;
-    public bool setAutoTrombone = true;
-    public TromboneAutoSettings tromboneAutoSettings;
+    public bool pressureLock = true;
 
     public bool IsPlaying { get; private set; }
 
-    private TromboneAutoSettings restoreTromboneSettings;
     private AudioClip pregeneratedAudio;
 
     private void OnEnable()
@@ -73,8 +71,7 @@ public class MenuMusic : MonoBehaviour
         {
             if (enableTrombone) trombone.Unfreeze();
             else trombone.Freeze();
-            restoreTromboneSettings = trombone.tromboneAuto.settings;
-            if (setAutoTrombone) trombone.tromboneAuto.settings = tromboneAutoSettings;
+            if (pressureLock) LockTrombonePressure();
         }
         IsPlaying = true;
     }
@@ -84,7 +81,6 @@ public class MenuMusic : MonoBehaviour
         if (!IsPlaying) return;
         musicPlayer.Stop();
         IsPlaying = false;
-        if (trombone != null) trombone.tromboneAuto.settings = restoreTromboneSettings;
     }
 
     private IEnumerator PregenerateAudioCoroutine()
@@ -92,5 +88,13 @@ public class MenuMusic : MonoBehaviour
         musicPlayer.LoadMusic(music, playedInstrument:trombone.Sampler);
         yield return new WaitWhile(() => musicPlayer.IsLoading);
         pregeneratedAudio = AudioSampling.CloneAudioClip(musicPlayer.LoadedAudio, musicPlayer.LoadedAudio.name);
+    }
+
+    private void LockTrombonePressure()
+    {
+        if (trombone?.tromboneAuto == null) return;
+        TromboneAutoSettings autoSettings = trombone.tromboneAuto.settings;
+        autoSettings.pressureLock = TromboneAutoSettings.LockConditions.AutoBlows;
+        trombone.tromboneAuto.settings = autoSettings;
     }
 }

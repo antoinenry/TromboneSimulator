@@ -31,8 +31,8 @@ public class TromboneCoreInspector : Editor
             build = EditorGUILayout.ObjectField("Load from", build, typeof(TromboneBuild), false) as TromboneBuild;
             if (build != null)
             {
-                build.Load(trombone);
-                if (saveBuild) build.Save(trombone);
+                build.LoadTo(trombone);
+                if (saveBuild) build.SaveFrom(trombone);
                 if (GUILayout.Button("OK", EditorStyles.miniButtonRight)) loadBuild = false;
             }
             else if (GUILayout.Button("Cancel", EditorStyles.miniButtonRight)) loadBuild = false;
@@ -42,7 +42,7 @@ public class TromboneCoreInspector : Editor
             build = EditorGUILayout.ObjectField("Save to", build, typeof(TromboneBuild), false) as TromboneBuild;
             if (build != null && GUILayout.Button("OK", EditorStyles.miniButtonRight))
             {
-                build.Save(trombone);
+                build.SaveFrom(trombone);
                 saveBuild = false;
             }
             if (GUILayout.Button("Cancel", EditorStyles.miniButtonRight))

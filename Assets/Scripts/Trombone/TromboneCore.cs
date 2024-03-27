@@ -21,6 +21,8 @@ public class TromboneCore : MonoBehaviour,
     public float[] pressureStepTones;
     public float slideTones = 6f;
 
+    private TromboneBuild currentBuild;
+
     public UnityEvent onChangeBuild;
 
     public int PressureIndex => RoundToPressureIndex(pressureLevel);
@@ -45,7 +47,11 @@ public class TromboneCore : MonoBehaviour,
     public float? PressureLevel { get => pressureLevel; set { if (value != null) pressureLevel = value.Value; } }
     public float? PressureTone { get => GetTone(PressureIndex, 0f); set { if (value != null) TryGetPressureLevel(value.Value, out pressureLevel); } }
     #endregion
-
+    
+    private void Awake()
+    {
+        SaveCurrentBuild();
+    }
 
     private void OnEnable()
     {
@@ -169,5 +175,16 @@ public class TromboneCore : MonoBehaviour,
     {
         if (tromboneAuto != null) tromboneAuto.enabled = true;
         if (tromboneDisplay != null) tromboneDisplay.enabled = true;
+    }
+
+    public void SaveCurrentBuild()
+    {
+        if (currentBuild == null) currentBuild = ScriptableObject.CreateInstance<TromboneBuild>();
+        currentBuild.SaveFrom(this);
+    }
+
+    public void LoadCurrentBuild()
+    {
+        currentBuild?.LoadTo(this);
     }
 }
