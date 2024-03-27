@@ -127,7 +127,7 @@ public class AudioTrackGenerator : MonoBehaviour
                     }
                     else
                     {
-                        int voiceCount = music.SplitPartVoices(p, out NoteInfo[] mainVoice, out List<NoteInfo[]> otherVoices);
+                        int voiceCount = music.SplitPartVoices(p, out NoteInfo[] mainVoice, out List<NoteInfo[]> otherVoices, tempoStretch);
                         List<NoteInfo> noteList = new List<NoteInfo>(CurrentPartLength);
                         // Check if main voice is ignored
                         if (ignoreMainVoice == false) noteList.AddRange(mainVoice);

@@ -254,13 +254,13 @@ public class SheetMusic : ScriptableObject
         else return alternativeNotes.Count;
     }
 
-    public int SplitPartVoices(int partIndex, out NoteInfo[] mainNotes, out List<NoteInfo[]> alternativeNotes)
+    public int SplitPartVoices(int partIndex, out NoteInfo[] mainNotes, out List<NoteInfo[]> alternativeNotes, float timeStretch = 1f)
     {
         mainNotes = null;
         alternativeNotes = null;
         int voiceCount = SplitPartVoices(partIndex, out int[] mainNoteIndices, out List<int[]> alternativeNoteIndices);
         if (voiceCount == 0) return 0;
-        NoteInfo[] notes = GetPartNotes(partIndex);
+        NoteInfo[] notes = GetPartNotes(partIndex, timeStretch);
         mainNotes = Array.ConvertAll(mainNoteIndices, n => notes[n]);
         if (voiceCount > 1)
         {
