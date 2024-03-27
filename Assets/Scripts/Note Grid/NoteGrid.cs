@@ -7,7 +7,7 @@ public class NoteGrid : MonoBehaviour
     [Serializable] public struct Margin { public float left, right, bottom, top; }
 
     [Header("Components")]
-    public Trombone trombone;
+    public TromboneCore trombone;
     public SpriteRenderer verticalLines;
     public SpriteRenderer horizontalLines;
     [Header("Dimensions")]

@@ -19,7 +19,7 @@ public class LevelLoader : MonoBehaviour
     private Coroutine startLevelCoroutine;
     private Coroutine unpauseLevelCoroutine;
     // Component references
-    private Trombone trombone;
+    private TromboneCore trombone;
     private MusicPlayer musicPlayer;
     private NoteCatcher noteCatcher;
     private NoteSpawner noteSpawner;
@@ -34,7 +34,7 @@ public class LevelLoader : MonoBehaviour
     private void Awake()
     {
         // Find components
-        trombone = FindObjectOfType<Trombone>(true);
+        trombone = FindObjectOfType<TromboneCore>(true);
         musicPlayer = FindObjectOfType<MusicPlayer>(true);
         noteCatcher = FindObjectOfType<NoteCatcher>(true);
         noteSpawner = FindObjectOfType<NoteSpawner>(true);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Trombone : MonoBehaviour,
+public class TromboneCore : MonoBehaviour,
     ITromboneGrabInput, ITromboneBlowInput, ITromboneSlideToneInput, ITrombonePressureLevelInput, ITrombonePressureToneInput,
     ITromboneGrabOutput, ITromboneBlowOutput, ITromboneSlideToneOutput, ITrombonePressureLevelOutput, ITrombonePressureToneOutput
 {

@@ -5,7 +5,7 @@ public class MenuMusic : MonoBehaviour
 {   
     [Header("Components")]
     public MusicPlayer musicPlayer;
-    public Trombone trombone;
+    public TromboneCore trombone;
     [Header("Music")]
     public SheetMusic music;
     public bool loop = true;

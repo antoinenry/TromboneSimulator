@@ -6,7 +6,7 @@ public class NoteCatcher : MonoBehaviour
     public bool showDebug;
     [Header("Components")]
     public NoteSpawner spawner;
-    public Trombone trombone;
+    public TromboneCore trombone;
     public Playhead playhead;
     [Header("Activation")]
     public bool catchNotes;

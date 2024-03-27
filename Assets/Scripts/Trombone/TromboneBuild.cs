@@ -17,7 +17,7 @@ public class TromboneBuild : ScriptableObject
     //public List<TromboneControlWiring.Wire> controlWiring;
     public TromboneAutoSettings autoSettings;
 
-    public void Load(Trombone trombone)
+    public void Load(TromboneCore trombone)
     {
         // Copy settings to trombone components
         if (trombone != null)
@@ -48,7 +48,7 @@ public class TromboneBuild : ScriptableObject
         }
     }
 
-    public void Save(Trombone trombone)
+    public void Save(TromboneCore trombone)
     {
         // Copy settings from trombone components
         if (trombone != null)

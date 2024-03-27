@@ -3,7 +3,7 @@ using TMPro;
 
 public class TromboneDebugPanel : MonoBehaviour
 {
-    public Trombone trombone;
+    public TromboneCore trombone;
     public TromboneDisplay tromboneDisplay;
     public TextMeshProUGUI textRenderer;
     public KeyCode exitKey = KeyCode.Escape;
