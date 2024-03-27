@@ -25584,12 +25584,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2b47c337dc06e4d93a5764357115b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackInfo: {fileID: 11400000, guid: 3b0a961f3f7af1a49a84c2c1a5580b23, type: 2}
+  music: {fileID: 0}
   orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
   ignoredParts:
   - partName: Trombone
     mainVoice: 0
     alternativeVoiceIndices: 01000000
+  tempoModifier: 1
   frequency: 48000
   stereo: 1
   sampleSmoothIn: 48

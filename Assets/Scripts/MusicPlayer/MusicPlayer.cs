@@ -17,6 +17,7 @@ public class MusicPlayer : MonoBehaviour
     [Header("Timing")]
     public Metronome metronome;
     public float playTime = 0f;
+    public float tempoStretch = 1f;
     public float playingSpeed = 1f;
     public float playStateTransitionDuration = .5f;
     public bool loop = false;
@@ -34,7 +35,7 @@ public class MusicPlayer : MonoBehaviour
     public AudioClip LoadedAudio => backingSource.clip;
     public PlayState State { get; private set; }
     public float CurrentPlayTime { get; private set; }
-    public float MusicDuration => LoadedMusic != null ? LoadedMusic.DurationSeconds : 0f;
+    public float MusicDuration => LoadedMusic != null ? LoadedMusic.GetDuration(tempoStretch) : 0f;
     public float CurrentPlayingSpeed { get; private set; }
     public float LoopedPlayTime { get; private set; }
     public bool IsReversePlaying { get; private set; }
@@ -149,7 +150,7 @@ public class MusicPlayer : MonoBehaviour
                 CurrentPlayTime += deltaPlayTime;
                 playTime = CurrentPlayTime;
                 LoopedPlayTime += deltaPlayTime;
-                float musicDuration = LoadedMusic != null ? LoadedMusic.DurationSeconds : 0f;
+                float musicDuration = LoadedMusic != null ? LoadedMusic.GetDuration(tempoStretch) : 0f;
                 // Out of music
                 if ((!IsReversePlaying && LoopedPlayTime > musicDuration)
                 || (IsReversePlaying && LoopedPlayTime < 0f))
@@ -253,7 +254,7 @@ public class MusicPlayer : MonoBehaviour
         // Make playhead read notes
         if (playHeads != null && LoadedMusic != null)
         {
-            float musicDuration = LoadedMusic != null ? LoadedMusic.DurationSeconds : 0f;
+            float musicDuration = LoadedMusic != null ? LoadedMusic.GetDuration(tempoStretch) : 0f;
             foreach (Playhead p in playHeads)
             {
                 if (p != null)
@@ -289,7 +290,7 @@ public class MusicPlayer : MonoBehaviour
             if (playedInstrument != null)
             {
                 // Get notes to play
-                LoadedNotes = music.GetNotes(playedInstrument, voiceIndex);
+                LoadedNotes = music.GetVoiceNotes(playedInstrument, voiceIndex, tempoStretch);
                 playedInstrument.ApplyStyle(LoadedNotes);
             }
             else
@@ -309,17 +310,19 @@ public class MusicPlayer : MonoBehaviour
                     if (backingGenerator != null)
                     {
                         backingGenerator.orchestra = orchestra;
-                        backingGenerator.trackInfo = LoadedMusic;
-                        backingGenerator.ignoredParts = null;
+                        backingGenerator.music = LoadedMusic;
+                        backingGenerator.tempoStretch = tempoStretch;
                         // Don't generate playable voices (main voice and played alternative)
+                        backingGenerator.ignoredParts = null;
                         if (playedInstrument != null) backingGenerator.IgnoreVoice(playedInstrument.instrumentName, true, voiceIndex);
+                        // Begin sampling
                         backingGenerator.SampleTrack();
                         StartCoroutine(WaitForGeneratedAudio());
                     }
                 }
             }
             // Metronome setup
-            metronome.SetRythm(music.tempo, music.measure);
+            metronome.SetRythm(music.GetTempo(tempoStretch), music.GetMeasure());
         }
         else
         {

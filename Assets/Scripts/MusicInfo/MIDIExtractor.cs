@@ -26,7 +26,7 @@ public class MIDIExtractor
             // Get tempo changes
             TrackChunk[] tempoChunks = FindChunksWithEventType(midi, MidiEventType.SetTempo);
             if (tempoChunks.Length == 1)
-                extracted.tempo = GetTempoChanges(tempoChunks[0].Events);
+                extracted.SetTempo(GetTempoChanges(tempoChunks[0].Events));
             else
             {
                 Debug.LogWarning("Incorrect tempo chunks count (" + tempoChunks.Length + ")");
@@ -35,7 +35,7 @@ public class MIDIExtractor
             // Get meter changes
             TrackChunk[] timeSignatureChunks = FindChunksWithEventType(midi, MidiEventType.TimeSignature);
             if (timeSignatureChunks.Length == 1)
-                extracted.measure = GetMeasureChanges(timeSignatureChunks[0].Events);
+                extracted.SetMeasure(GetMeasureChanges(timeSignatureChunks[0].Events));
             else
             {
                 Debug.LogWarning("Incorrect signature chunks count (" + timeSignatureChunks.Length + ")");
@@ -48,8 +48,7 @@ public class MIDIExtractor
             int c = 0;
             foreach (TrackChunk chunk in noteChunks)
             {
-                extracted.parts[c].instrumentName = GetPartName(chunk.Events);
-                extracted.parts[c].notes = GetNotes(chunk.Events, extracted.tempo);
+                extracted.SetPart(c, GetPartName(chunk.Events), GetNotes(chunk.Events, extracted.GetTempo()));
                 c++;
             }
         }

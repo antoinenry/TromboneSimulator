@@ -46,7 +46,7 @@ public class LoadingScreen : MenuUI
             showOrchestra = VisibleMenuCount == 1;
             if (IsVisible == false)
             {
-                SetOrchestraLayout(trackGenerator.trackInfo.PartNames);
+                SetOrchestraLayout(trackGenerator.music.PartNames);
                 ResetOrchestraLoadProgress();
                 if (cursor != null) cursor.cursorState &= ~HandCursor.CursorState.Visible;
                 ShowUI();

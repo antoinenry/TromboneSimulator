@@ -87,6 +87,16 @@ public struct NoteInfo
         duration = copyFrom.duration;
     }
 
+    public NoteInfo ScaleTime(float scale)
+    {
+        NoteInfo newNote = new NoteInfo();
+        newNote.tone = tone;
+        newNote.velocity = velocity;
+        newNote.startTime = startTime * scale;
+        newNote.duration = duration * scale;
+        return newNote;
+    }
+
     static public float GetTotalDuration(NoteInfo[] notes)
     {
         float duration = 0f;

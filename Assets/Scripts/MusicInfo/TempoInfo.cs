@@ -17,4 +17,7 @@ public struct TempoInfo
         time = atTime;
         secondsPerQuarterNote = secPerQuarterNote;
     }
+
+    public static TempoInfo operator *(TempoInfo t, float m)
+        => new TempoInfo(t.time * m, t.secondsPerQuarterNote * m);
 }

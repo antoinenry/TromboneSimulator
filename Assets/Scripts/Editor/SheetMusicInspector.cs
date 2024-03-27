@@ -82,8 +82,7 @@ public class SheetMusicInspector : Editor
         if (GUILayout.Button("Check instrument ranges"))
         {
             displayCheckResult = true;
-            foreach(SheetMusic.InstrumentPart part in sheetMusic.parts)
-                sheetMusic.FindOutOfRangeTones(out outOfRangeInstrumentNames, out outOfRangeTones);
+            sheetMusic.FindOutOfRangeTones(out outOfRangeInstrumentNames, out outOfRangeTones);
         }
         // Drumhit tone check
         if (GUILayout.Button("Check drum part"))
