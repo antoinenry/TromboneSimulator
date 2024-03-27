@@ -60,6 +60,8 @@ public class TromboneCore : MonoBehaviour,
         tromboneDisplay.enabled = true;
         tromboneAuto.enabled = true;
         tromboneAudio.enabled = true;
+        // Listen to trombone build changes
+        MenuUI.UITromboneSelection?.onTromboneSelect.AddListener(SetCurrentBuild);
     }
 
     private void OnDisable()
@@ -70,6 +72,8 @@ public class TromboneCore : MonoBehaviour,
         tromboneDisplay.enabled = false;
         tromboneAuto.enabled = false;
         tromboneAudio.enabled = false;
+        // Stop listening to trombone build changes
+        MenuUI.UITromboneSelection?.onTromboneSelect.RemoveListener(SetCurrentBuild);
     }
 
     public void ClearInputs()
@@ -175,6 +179,13 @@ public class TromboneCore : MonoBehaviour,
     {
         if (tromboneAuto != null) tromboneAuto.enabled = true;
         if (tromboneDisplay != null) tromboneDisplay.enabled = true;
+    }
+
+    public void SetCurrentBuild(TromboneBuild build)
+    {
+        if (currentBuild == null) currentBuild = ScriptableObject.CreateInstance<TromboneBuild>();
+        currentBuild.CopyFrom(build);
+        LoadCurrentBuild();
     }
 
     public void SaveCurrentBuild()

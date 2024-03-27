@@ -79,7 +79,7 @@ public class TromboneBuild : ScriptableObject
         }
     }
 
-    public void Copy(TromboneBuild other)
+    public void CopyFrom(TromboneBuild other)
     {
         // Copy settings from other build
         if (other != null)

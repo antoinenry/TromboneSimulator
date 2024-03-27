@@ -16,6 +16,7 @@ public abstract class MenuUI : MonoBehaviour
     static public List<MenuUI> visibleMenuUis;
     static public MainMenu UIMainMenu;
     static public LevelSelectionScreen UILevelSelection;
+    static public TromboneSelectionScreen UITromboneSelection;
     static public LeaderBoardScreen UILeaderboard;
     static public PauseScreen UIPause;
     static public ScoreScreen UIScore;
