@@ -13,8 +13,10 @@ public class TromboneBuild : ScriptableObject
     [Header("Controls")]
     public bool horizontalMovements = true;
     public bool verticalMovements = true;
-    //public List<TromboneControlWiring.Wire> controlWiring;
     public TromboneAutoSettings autoSettings;
+    //public List<TromboneControlWiring.Wire> controlWiring;
+    [Header("Music Modifiers")]
+    public float tempoStrecher = 1f;
 
     public void LoadTo(TromboneCore trombone)
     {
@@ -96,6 +98,8 @@ public class TromboneBuild : ScriptableObject
             verticalMovements = other.verticalMovements;
             // Auto settings
             autoSettings = other.autoSettings;
+            // Music modifiers
+            tempoStrecher = other.tempoStrecher;
         }
     }
 }

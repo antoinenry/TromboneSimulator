@@ -21,7 +21,7 @@ public class TromboneCore : MonoBehaviour,
     public float[] pressureStepTones;
     public float slideTones = 6f;
 
-    private TromboneBuild currentBuild;
+    public TromboneBuild CurrentBuild { get; private set; }
 
     public UnityEvent onChangeBuild;
 
@@ -61,7 +61,7 @@ public class TromboneCore : MonoBehaviour,
         tromboneAuto.enabled = true;
         tromboneAudio.enabled = true;
         // Listen to trombone build changes
-        MenuUI.UITromboneSelection?.onTromboneSelect.AddListener(SetCurrentBuild);
+        MenuUI.Get<TromboneSelectionScreen>()?.onTromboneSelect?.AddListener(SetCurrentBuild);
     }
 
     private void OnDisable()
@@ -73,7 +73,7 @@ public class TromboneCore : MonoBehaviour,
         tromboneAuto.enabled = false;
         tromboneAudio.enabled = false;
         // Stop listening to trombone build changes
-        MenuUI.UITromboneSelection?.onTromboneSelect.RemoveListener(SetCurrentBuild);
+        MenuUI.Get<TromboneSelectionScreen>()?.onTromboneSelect?.RemoveListener(SetCurrentBuild);
     }
 
     public void ClearInputs()
@@ -183,19 +183,19 @@ public class TromboneCore : MonoBehaviour,
 
     public void SetCurrentBuild(TromboneBuild build)
     {
-        if (currentBuild == null) currentBuild = ScriptableObject.CreateInstance<TromboneBuild>();
-        currentBuild.CopyFrom(build);
+        if (CurrentBuild == null) CurrentBuild = ScriptableObject.CreateInstance<TromboneBuild>();
+        CurrentBuild.CopyFrom(build);
         LoadCurrentBuild();
     }
 
     public void SaveCurrentBuild()
     {
-        if (currentBuild == null) currentBuild = ScriptableObject.CreateInstance<TromboneBuild>();
-        currentBuild.SaveFrom(this);
+        if (CurrentBuild == null) CurrentBuild = ScriptableObject.CreateInstance<TromboneBuild>();
+        CurrentBuild.SaveFrom(this);
     }
 
     public void LoadCurrentBuild()
     {
-        currentBuild?.LoadTo(this);
+        CurrentBuild?.LoadTo(this);
     }
 }

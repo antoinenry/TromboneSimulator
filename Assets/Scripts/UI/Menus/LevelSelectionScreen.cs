@@ -17,12 +17,6 @@ public class LevelSelectionScreen : MenuUI
     [Header("Events")]
     public UnityEvent<Level> onSelectLevel;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        UILevelSelection = this;
-    }
-
     public override void ShowUI()
     {
         base.ShowUI();

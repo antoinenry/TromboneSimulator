@@ -13,12 +13,6 @@ public class TromboneSelectionScreen : MenuUI
     [Header("Events")]
     public UnityEvent<TromboneBuild> onTromboneSelect;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        UITromboneSelection = this;
-    }
-
     public override void ShowUI()
     {
         base.ShowUI();

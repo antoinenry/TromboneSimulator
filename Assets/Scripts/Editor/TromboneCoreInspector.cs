@@ -32,7 +32,6 @@ public class TromboneCoreInspector : Editor
             if (build != null)
             {
                 build.LoadTo(trombone);
-                if (saveBuild) build.SaveFrom(trombone);
                 if (GUILayout.Button("OK", EditorStyles.miniButtonRight)) loadBuild = false;
             }
             else if (GUILayout.Button("Cancel", EditorStyles.miniButtonRight)) loadBuild = false;

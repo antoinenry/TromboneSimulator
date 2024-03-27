@@ -9212,6 +9212,7 @@ MonoBehaviour:
   instrumentDictionary: {fileID: 11400000, guid: 783db9433904c0b4c962588891b020a9, type: 2}
   metronome: {fileID: 1300806622}
   playTime: 0
+  tempoStretch: 1
   playingSpeed: 1
   playStateTransitionDuration: 0.5
   loop: 1
@@ -25590,7 +25591,7 @@ MonoBehaviour:
   - partName: Trombone
     mainVoice: 0
     alternativeVoiceIndices: 01000000
-  tempoModifier: 1
+  tempoStretch: 1
   frequency: 48000
   stereo: 1
   sampleSmoothIn: 48

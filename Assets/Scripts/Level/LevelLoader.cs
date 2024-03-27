@@ -46,12 +46,12 @@ public class LevelLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        if (MenuUI.UILevelSelection) MenuUI.UILevelSelection.onSelectLevel.AddListener(LaunchOneLevelMode);
+        MenuUI.Get<LevelSelectionScreen>()?.onSelectLevel?.AddListener(LaunchOneLevelMode);
     }
 
     private void OnDisable()
     {
-        if (MenuUI.UILevelSelection) MenuUI.UILevelSelection.onSelectLevel.RemoveListener(LaunchOneLevelMode);
+        MenuUI.Get<LevelSelectionScreen>()?.onSelectLevel?.RemoveListener(LaunchOneLevelMode);
     }
     #endregion
 
@@ -83,20 +83,21 @@ public class LevelLoader : MonoBehaviour
 
     private IEnumerator LoadLevelCoroutine()
     {
-        // Music setup
-        if (musicPlayer)
-        {
-            musicPlayer.Stop();
-            musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler);            
-            musicPlayer.loop = false;
-            musicPlayer.onPlayerUpdate.AddListener(OnMusicPlayerUpdate);
-        }
         // Trombone setup
         if (trombone)
         {
             trombone.LoadCurrentBuild();
             trombone.ResetTrombone();
             trombone.Unfreeze();
+        }
+        // Music setup
+        if (musicPlayer)
+        {
+            musicPlayer.Stop();
+            musicPlayer.loop = false;
+            musicPlayer.tempoStretch = trombone.CurrentBuild != null ? trombone.CurrentBuild.tempoStrecher : 1f;
+            musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler); 
+            musicPlayer.onPlayerUpdate.AddListener(OnMusicPlayerUpdate);
         }
         // NoteSpawner setup
         if (noteSpawner) noteSpawner.enabled = true;
@@ -237,11 +238,12 @@ public class LevelLoader : MonoBehaviour
     public void PauseLevel()
     {
         // Show pause screen
-        if (MenuUI.UIPause)
+        PauseScreen UIPause = MenuUI.Get<PauseScreen>();
+        if (UIPause)
         {
-            MenuUI.UIPause.ShowUI();
-            MenuUI.UIPause.onUnpause.AddListener(UnpauseLevel);
-            MenuUI.UIPause.onQuit.AddListener(QuitLevel);
+            UIPause.ShowUI();
+            UIPause.onUnpause.AddListener(UnpauseLevel);
+            UIPause.onQuit.AddListener(QuitLevel);
         }
         // Toggle pause button behaviour
         if (GUI)
@@ -259,11 +261,12 @@ public class LevelLoader : MonoBehaviour
     public void UnpauseLevel()
     {
         // Hide pause screen
-        if (MenuUI.UIPause)
+        PauseScreen UIPause = MenuUI.Get<PauseScreen>();
+        if (UIPause)
         {
-            MenuUI.UIPause.HideUI();
-            MenuUI.UIPause.onUnpause.RemoveListener(UnpauseLevel);
-            MenuUI.UIPause.onQuit.RemoveListener(QuitLevel);
+            UIPause.HideUI();
+            UIPause.onUnpause.RemoveListener(UnpauseLevel);
+            UIPause.onQuit.RemoveListener(QuitLevel);
         }
         // Toggle pause button behaviour
         if (GUI)
@@ -312,10 +315,11 @@ public class LevelLoader : MonoBehaviour
                 //MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
                 break;
             case Mode.ONE_LEVEL:
-                if (MenuUI.UIGameOver)
+                GameOverScreen UIGameOver = MenuUI.Get<GameOverScreen>();
+                if (UIGameOver)
                 {
-                    MenuUI.UIGameOver.DisplayGameOver();
-                    MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
+                    UIGameOver.DisplayGameOver();
+                    UIGameOver.onContinue.AddListener(OnContinue);
                 }
                 break;
         }
@@ -323,7 +327,7 @@ public class LevelLoader : MonoBehaviour
 
     private void OnContinue(bool useContinue)
     {
-        MenuUI.UIGameOver.onContinue.RemoveListener(OnContinue);
+        MenuUI.Get<GameOverScreen>()?.onContinue?.RemoveListener(OnContinue);
         if (useContinue)
         {
             //if (currentMode == Mode.ARCADE) gameState.continues--;
@@ -355,12 +359,13 @@ public class LevelLoader : MonoBehaviour
         // Unload level
         UnloadLevel();
         LevelScoreInfo scoreInfo = perfJudge.GetLevelScore();
-        if (MenuUI.UIScore)
+        ScoreScreen UIScore = MenuUI.Get<ScoreScreen>();
+        if (UIScore)
         {
             // Show score screen
-            if (LoadedLevel) MenuUI.UIScore.DisplayScore(LoadedLevel.name, scoreInfo);
-            else MenuUI.UIScore.DisplayScore("", scoreInfo);
-            yield return new WaitWhile(() => MenuUI.UIScore.IsVisible);
+            if (LoadedLevel) UIScore.DisplayScore(LoadedLevel.name, scoreInfo);
+            else UIScore.DisplayScore("", scoreInfo);
+            yield return new WaitWhile(() => UIScore.IsVisible);
         }
         QuitLevel();
     }
@@ -380,7 +385,7 @@ public class LevelLoader : MonoBehaviour
                 //    MenuUI.UIMainMenu.ShowUI();
                 //break;
             case Mode.ONE_LEVEL:
-                MenuUI.UILevelSelection.ShowUI();
+                MenuUI.Get<LevelSelectionScreen>()?.ShowUI();
                 break;
         }
     }

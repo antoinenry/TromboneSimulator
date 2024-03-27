@@ -40,12 +40,6 @@ public class ScoreScreen : MenuUI
         if (lCount > 6) totalDisplay = getLines[6];
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-        UIScore = this;
-    }
-
     protected override void Update()
     {
         base.Update();

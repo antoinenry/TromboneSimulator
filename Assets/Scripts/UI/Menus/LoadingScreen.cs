@@ -22,7 +22,6 @@ public class LoadingScreen : MenuUI
     protected override void Awake()
     {
         base.Awake();
-        UILoading = this;
         trackGenerator = FindObjectOfType<AudioTrackGenerator>(true);
         //cursor = FindObjectOfType<HandCursor>(true);
         if (loadingOrchestraLayout != null) loadingOrchestra = loadingOrchestraLayout.GetComponentsInChildren<Image>(true);

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d3b9729a948bfc44a19eef88457aa5a, type: 3}
-  m_Name: DefaultTrombone
+  m_Name: Fastboi
   m_EditorClassIdentifier: 
   slideTones: 6
   pressureStepTones:
@@ -21,9 +21,9 @@ MonoBehaviour:
   - 3
   - 2
   - 2
-  color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
-  bodyLength: 108
-  slideLength: 100
+  color: {r: 0.34901962, g: 0.610951, b: 0.98039216, a: 1}
+  bodyLength: 100
+  slideLength: 85
   horizontalMovements: 1
   verticalMovements: 1
   autoSettings:
@@ -33,3 +33,4 @@ MonoBehaviour:
     maxLegatoDistance: 0
     pressureControl: 0
     pressureLock: 0
+  tempoStrecher: 0.75

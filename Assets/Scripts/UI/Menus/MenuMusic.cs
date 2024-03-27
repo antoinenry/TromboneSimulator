@@ -51,6 +51,15 @@ public class MenuMusic : MonoBehaviour
     public void Play()
     {
         if (IsPlaying) return;
+        float tempoStretch = 1f;
+        // Setup trombone
+        if (trombone != null)
+        {
+            if (enableTrombone) trombone.Unfreeze();
+            else trombone.Freeze();
+            if (pressureLock) LockTrombonePressure();
+            if (trombone.CurrentBuild != null) tempoStretch = trombone.CurrentBuild.tempoStrecher;
+        }
         // Setup background music
         if (musicPlayer != null)
         {
@@ -62,16 +71,10 @@ public class MenuMusic : MonoBehaviour
             // Turn off metronome
             musicPlayer.metronome.click = false;
             // Play menu music
+            musicPlayer.tempoStretch = tempoStretch;
             if (pregeneratedAudio == null) StartCoroutine(PregenerateAudioCoroutine());
             else musicPlayer.LoadMusic(music, pregeneratedAudio, trombone.Sampler);
             musicPlayer.Play();
-        }        
-        // Setup trombone
-        if (trombone != null)
-        {
-            if (enableTrombone) trombone.Unfreeze();
-            else trombone.Freeze();
-            if (pressureLock) LockTrombonePressure();
         }
         IsPlaying = true;
     }

@@ -19,9 +19,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6c689a00d0e33c041814ee4286c08d62, type: 2}
   - {fileID: 11400000, guid: 227fa29b09a3dc247948dd29d7f0f22a, type: 2}
   trombones:
-  - {fileID: 11400000, guid: 06abc53a60234a440a0a6d550c55ea21, type: 2}
   - {fileID: 11400000, guid: 74ef25dc9fe76864d934724187ebfbd0, type: 2}
   - {fileID: 11400000, guid: 1732201f41bc0eb46a3d3b83c9f3e0aa, type: 2}
+  - {fileID: 11400000, guid: e7f6ddd27f4f5da4aa79908ade418dfd, type: 2}
+  - {fileID: 11400000, guid: 06abc53a60234a440a0a6d550c55ea21, type: 2}
+  - {fileID: 11400000, guid: befd4290bc5963f4bbd5de2e37f76108, type: 2}
   orchestras:
   - {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
   - {fileID: 11400000, guid: b2ad0760834ae6444a0f2d81079112a1, type: 2}
