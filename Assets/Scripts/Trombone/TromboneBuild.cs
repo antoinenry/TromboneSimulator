@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewTrombone", menuName = "Trombone Hero/Instruments/Trombone Build")]
@@ -45,6 +44,8 @@ public class TromboneBuild : ScriptableObject
                 // Auto settings
                 auto.settings = autoSettings;
             }
+            // Signal changes
+            trombone.onChangeBuild.Invoke();
         }
     }
 

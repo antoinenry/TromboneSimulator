@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TromboneCore : MonoBehaviour,
     ITromboneGrabInput, ITromboneBlowInput, ITromboneSlideToneInput, ITrombonePressureLevelInput, ITrombonePressureToneInput,
@@ -9,7 +10,6 @@ public class TromboneCore : MonoBehaviour,
     public TromboneDisplay tromboneDisplay;
     public TromboneAudio tromboneAudio;
     public TromboneAuto tromboneAuto;
-    [HideInInspector] public TromboneBuild currentBuild;
     [Header("Controls")]
     public bool grab;
     public bool blow;
@@ -20,6 +20,8 @@ public class TromboneCore : MonoBehaviour,
     [Tone] public float baseTone;
     public float[] pressureStepTones;
     public float slideTones = 6f;
+
+    public UnityEvent onChangeBuild;
 
     public int PressureIndex => RoundToPressureIndex(pressureLevel);
     public float Tone => GetTone(PressureIndex, slideTone);
@@ -44,10 +46,10 @@ public class TromboneCore : MonoBehaviour,
     public float? PressureTone { get => GetTone(PressureIndex, 0f); set { if (value != null) TryGetPressureLevel(value.Value, out pressureLevel); } }
     #endregion
 
+
     private void OnEnable()
     {
         if (showDebug) Debug.Log("Enabling " + name);
-        LoadBuild();
         // Enable trombone components
         tromboneDisplay.enabled = true;
         tromboneAuto.enabled = true;
@@ -77,19 +79,6 @@ public class TromboneCore : MonoBehaviour,
         ClearInputs();
         tromboneDisplay.ResetDisplay();
     }
-
-    public void LoadBuild()
-    {
-        if (currentBuild != null)
-        {
-            currentBuild.Load(this);
-        }
-    }
-
-    public void SaveBuild()
-    {
-        if (currentBuild != null) currentBuild.Save(this);
-    }  
 
     public float GetTone(float pressureLevel, float slideTone) => GetTone(RoundToPressureIndex(pressureLevel), slideTone);
 
@@ -180,6 +169,5 @@ public class TromboneCore : MonoBehaviour,
     {
         if (tromboneAuto != null) tromboneAuto.enabled = true;
         if (tromboneDisplay != null) tromboneDisplay.enabled = true;
-
     }
 }

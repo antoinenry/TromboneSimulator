@@ -7,7 +7,6 @@ public class NoteGrid : MonoBehaviour
     [Serializable] public struct Margin { public float left, right, bottom, top; }
 
     [Header("Components")]
-    public TromboneCore trombone;
     public SpriteRenderer verticalLines;
     public SpriteRenderer horizontalLines;
     [Header("Dimensions")]
@@ -22,16 +21,20 @@ public class NoteGrid : MonoBehaviour
     public bool flattenX = false;
     public bool flattenY = false;
 
-    private void Update()
+    private TromboneCore trombone;
+
+    private void OnEnable()
     {
-        if (Application.isPlaying == false)
-            UpdateGrid();
+        trombone = FindObjectOfType<TromboneCore>(true);
+        if (trombone) trombone.onChangeBuild.AddListener(UpdateGrid);
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        UpdateGrid();
+        if (trombone) trombone.onChangeBuild.RemoveListener(UpdateGrid);
     }
+
+    private void Start() => UpdateGrid();
 
     public void UpdateGrid()
     {
