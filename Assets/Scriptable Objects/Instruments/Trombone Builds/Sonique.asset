@@ -34,3 +34,6 @@ MonoBehaviour:
     pressureControl: 0
     pressureLock: 0
   tempoStrecher: 0.75
+  timeStrecher: 1
+  scoreMultiplier: 1
+  maxHealth: 2

@@ -7,6 +7,7 @@ public class PerformanceJudge : MonoBehaviour
     [Header("Difficulty")]
     public float scoringRate = 10f;
     public float damageRate = .2f;
+    public float maxHealth = 1f;
     public float accuracyRounding = 10f;
     public int danceLength = 16;
     public int danceBuffer = 2;
@@ -18,7 +19,7 @@ public class PerformanceJudge : MonoBehaviour
     public int dance;
     [Header("Events")]
     public UnityEvent<float> onScore;
-    public UnityEvent<float,float> onHealth;
+    public UnityEvent<float,float,float> onHealth;
     public UnityEvent<int> onDance;
     public UnityEvent<NoteInstance, float, float> onCorrectNote;
     public UnityEvent<NoteInstance> onWrongNote;
@@ -29,7 +30,7 @@ public class PerformanceJudge : MonoBehaviour
     private NoteCrasher noteCrasher;
     private DanceDetector danceDetector;
     private PerformanceGUI GUI;
-
+    
     private int danceBufferCounter;
 
     private void Awake()
@@ -106,19 +107,21 @@ public class PerformanceJudge : MonoBehaviour
         // Reset values
         performanceDetail = new List<NotePerformance>();
         score = 0f;
-        health = 1f;
+        health = maxHealth;
         dance = 0;
         combo = 0;
         // Reset GUI
-        if (GUI) GUI.ResetDisplay();
+        if (GUI) GUI.ResetDisplay(maxHealth);
     }
 
-    public void LevelSetup(SheetMusic lvl, SamplerInstrument playedInstrument)
+    public void LevelSetup(SheetMusic lvl, TromboneCore trombone)
     {
+        // Prepare level
+        if (lvl != null) performanceDetail = new List<NotePerformance>(lvl.GetPartLength(trombone?.Sampler?.name));
+        TromboneBuild build = trombone?.CurrentBuild;
+        if (build != null) maxHealth = build.maxHealth;
         // Reset
         ResetPerformance();
-        // Prepare level
-        if (lvl != null && playedInstrument != null) performanceDetail = new List<NotePerformance>(lvl.GetPartLength(playedInstrument.name));
     }  
 
     public void AddNotePerformance(NoteInstance instance)
@@ -140,13 +143,13 @@ public class PerformanceJudge : MonoBehaviour
     public void TakeDamage(float damagePoints)
     {
         health = Mathf.Max(health - damagePoints, 0f);
-        onHealth.Invoke(health, -damagePoints);
+        onHealth.Invoke(health, maxHealth, -damagePoints);
     }
 
     public void HealDamage(float healPoints)
     {
-        health = Mathf.Min(health + healPoints, 1f);
-        onHealth.Invoke(health, healPoints);
+        health = Mathf.Min(health + healPoints, maxHealth);
+        onHealth.Invoke(health, maxHealth, healPoints);
     }
 
     public float GetNoteAccuracy(NotePerformance notePerformance, bool rounded = true)

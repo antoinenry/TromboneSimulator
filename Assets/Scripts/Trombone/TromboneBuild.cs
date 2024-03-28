@@ -15,8 +15,37 @@ public class TromboneBuild : ScriptableObject
     public bool verticalMovements = true;
     public TromboneAutoSettings autoSettings;
     //public List<TromboneControlWiring.Wire> controlWiring;
-    [Header("Music Modifiers")]
+    [Header("Level Modifiers")]
     public float tempoStrecher = 1f;
+    public float timeStrecher = 1f;
+    public float scoreMultiplier = 1f;
+    public float maxHealth = 1f;
+
+    public void CopyFrom(TromboneBuild other)
+    {
+        // Copy settings from other build
+        if (other != null)
+        {
+            name = other.name + " (Clone)";
+            // Core
+            pressureStepTones = other.pressureStepTones;
+            slideTones = other.slideTones;
+            // Aspect
+            color = other.color;
+            bodyLength = other.bodyLength;
+            slideLength = other.slideLength;
+            // Controls
+            horizontalMovements = other.horizontalMovements;
+            verticalMovements = other.verticalMovements;
+            // Auto settings
+            autoSettings = other.autoSettings;
+            // Music modifiers
+            tempoStrecher = other.tempoStrecher;
+            timeStrecher = other.timeStrecher;
+            scoreMultiplier = other.scoreMultiplier;
+            maxHealth = other.maxHealth;
+        }
+    }
 
     public void LoadTo(TromboneCore trombone)
     {
@@ -78,29 +107,6 @@ public class TromboneBuild : ScriptableObject
                 // Auto settings
                 autoSettings = auto.settings;
             }
-        }
-    }
-
-    public void CopyFrom(TromboneBuild other)
-    {
-        // Copy settings from other build
-        if (other != null)
-        {
-            name = other.name + " (Clone)";
-            // Core
-            pressureStepTones = other.pressureStepTones;
-            slideTones = other.slideTones;
-            // Aspect
-            color = other.color;
-            bodyLength = other.bodyLength;
-            slideLength = other.slideLength;
-            // Controls
-            horizontalMovements = other.horizontalMovements;
-            verticalMovements = other.verticalMovements;
-            // Auto settings
-            autoSettings = other.autoSettings;
-            // Music modifiers
-            tempoStrecher = other.tempoStrecher;
         }
     }
 }

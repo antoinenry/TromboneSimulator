@@ -84,18 +84,20 @@ public class LevelLoader : MonoBehaviour
     private IEnumerator LoadLevelCoroutine()
     {
         // Trombone setup
+        TromboneBuild tromboneBuild = null;
         if (trombone)
         {
             trombone.ApplyBuild();
             trombone.ResetTrombone();
             trombone.Unfreeze();
+            tromboneBuild = trombone.CurrentBuild;
         }
         // Music setup
         if (musicPlayer)
         {
             musicPlayer.Stop();
             musicPlayer.loop = false;
-            musicPlayer.tempoStretch = trombone.CurrentBuild != null ? trombone.CurrentBuild.tempoStrecher : 1f;
+            musicPlayer.tempoStretch = tromboneBuild != null ? tromboneBuild.tempoStrecher : 1f;
             musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler); 
             musicPlayer.onPlayerUpdate.AddListener(OnMusicPlayerUpdate);
         }
@@ -111,7 +113,7 @@ public class LevelLoader : MonoBehaviour
         if (perfJudge)
         {
             perfJudge.enabled = true;
-            if (trombone.Sampler != null) perfJudge.LevelSetup(LoadedLevel.music, trombone.Sampler);
+            perfJudge.LevelSetup(LoadedLevel.music, trombone);
             perfJudge.onHealth.AddListener(OnHealthChange);
         }
         // GUI Setup
@@ -291,7 +293,7 @@ public class LevelLoader : MonoBehaviour
     #endregion
 
     #region GAMEOVER/CONTINUE
-    private void OnHealthChange(float healthValue, float healthDelta)
+    private void OnHealthChange(float healthValue, float maxHealth, float healthDelta)
     {
         if (healthValue <= 0f) StartCoroutine(GameOverCoroutine());
     }

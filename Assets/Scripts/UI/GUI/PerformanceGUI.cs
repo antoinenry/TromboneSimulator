@@ -15,6 +15,7 @@ public class PerformanceGUI : GameUI
     [Header("Content")]
     public string[] wrongNoteMessages;
     public Color wrongNoteMessageColor = Color.red;
+    public float healthBarScale = 64f;
 
     private PerformanceJudge judge;
     private string wrongNoteMessage;
@@ -35,18 +36,25 @@ public class PerformanceGUI : GameUI
         }
     }
 
-    public void ResetDisplay()
+    public void ResetDisplay(float maxHealth = float.NaN)
     {
-        DisplayHealth(1f);
+        if (float.IsNaN(maxHealth)) DisplayHealth(healthBar.maxValue, healthBar.maxValue);
+        else DisplayHealth(maxHealth, maxHealth);
         DisplayScore(0f);
         DisplayNoteAccuracy(1f);
         DisplayNoteCombo(0);
         DisplayNotePointsEnd();
     }
 
-    public void DisplayHealth(float healthValue, float healthChange = 0f)
+    public void DisplayHealth(float healthValue, float maxHealth = float.NaN, float healthChange = 0f)
     {
-        if (healthBar) healthBar.value = healthValue * healthBar.maxValue;
+        if (healthBar)
+        {
+            if (float.IsNaN(maxHealth) == false) healthBar.maxValue = maxHealth * healthBarScale;
+            RectTransform rect = healthBar.GetComponent<RectTransform>();
+            rect.sizeDelta = new(healthBar.maxValue, rect.sizeDelta.y);
+            healthBar.value = healthValue * healthBarScale;
+        }
         if (frameTint)
         {
             if (healthChange < 0f) frameTint.Tint();

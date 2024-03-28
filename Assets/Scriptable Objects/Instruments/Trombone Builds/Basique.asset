@@ -21,16 +21,19 @@ MonoBehaviour:
   - 3
   - 2
   - 2
-  color: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
+  color: {r: 1, g: 0.882353, b: 0.34509805, a: 1}
   bodyLength: 108
   slideLength: 100
   horizontalMovements: 1
   verticalMovements: 1
   autoSettings:
-    blowControl: 0
+    blowControl: 13
     slideControl: 0
     slideLegatoSpeed: 0
     maxLegatoDistance: 0
     pressureControl: 0
     pressureLock: 0
   tempoStrecher: 1
+  timeStrecher: 1
+  scoreMultiplier: 1
+  maxHealth: 1

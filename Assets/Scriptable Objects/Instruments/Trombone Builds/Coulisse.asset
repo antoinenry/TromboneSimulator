@@ -33,3 +33,7 @@ MonoBehaviour:
     maxLegatoDistance: 0
     pressureControl: 13
     pressureLock: 0
+  tempoStrecher: 1
+  timeStrecher: 1
+  scoreMultiplier: 1
+  maxHealth: 1
