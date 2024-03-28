@@ -14,10 +14,10 @@ public class MusicPlayer : MonoBehaviour
     public SheetMusic music;
     public Orchestra orchestra;
     public InstrumentDictionary instrumentDictionary;
+    public float tempoStretch;
     [Header("Timing")]
     public Metronome metronome;
     public float playTime = 0f;
-    public float tempoStretch = 1f;
     public float playingSpeed = 1f;
     public float playStateTransitionDuration = .5f;
     public bool loop = false;
@@ -280,6 +280,7 @@ public class MusicPlayer : MonoBehaviour
 
     public void LoadMusic(SheetMusic sheetMusic, AudioClip preGeneratedAudio = null, SamplerInstrument playedInstrument = null, int voiceIndex = 1)
     {
+        if (showDebug) Debug.Log("Loading Music " + sheetMusic?.name);
         // Unload previous music
         if (LoadedAudio != preGeneratedAudio) UnloadMusic();
         // Load new music

@@ -20,20 +20,33 @@ public class MenuMusic : MonoBehaviour
 
     private void OnEnable()
     {
+        AddListeners();
+    }
+
+    private void OnDisable()
+    {
+        RemoveListeners();
+    }
+
+    private void AddListeners()
+    {
         foreach (MenuUI m in playInMenus)
         {
             m.onShowUI.AddListener(OnUIShown);
             m.onHideUI.AddListener(OnUIHidden);
         }
+        trombone?.onChangeBuild.AddListener(OnTromboneChange);
     }
 
-    private void OnDisable()
+    private void RemoveListeners()
     {
         foreach (MenuUI m in playInMenus)
         {
             m.onShowUI.RemoveListener(OnUIShown);
             m.onHideUI.RemoveListener(OnUIHidden);
         }
+        trombone?.onChangeBuild.RemoveListener(OnTromboneChange);
+
     }
 
     private void OnUIShown()
@@ -84,6 +97,16 @@ public class MenuMusic : MonoBehaviour
         if (!IsPlaying) return;
         musicPlayer.Stop();
         IsPlaying = false;
+    }
+
+    public void OnTromboneChange()
+    {
+        if (trombone?.CurrentBuild?.tempoStrecher != musicPlayer?.tempoStretch)
+        {            
+            Stop();
+            pregeneratedAudio = null;
+            Play();
+        }
     }
 
     private IEnumerator PregenerateAudioCoroutine()

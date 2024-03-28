@@ -3663,7 +3663,6 @@ GameObject:
   - component: {fileID: 277338449}
   - component: {fileID: 277338448}
   - component: {fileID: 277338447}
-  - component: {fileID: 277338451}
   m_Layer: 5
   m_Name: Menu UI
   m_TagString: Untagged
@@ -3762,31 +3761,6 @@ RectTransform:
   m_AnchoredPosition: {x: 144, y: 81}
   m_SizeDelta: {x: 288, y: 162}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &277338451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277338446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f81c8bc2d588346b5096561a522aef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicPlayer: {fileID: 650345739}
-  trombone: {fileID: 64880549}
-  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
-  loop: 1
-  playInMenus:
-  - {fileID: 1609945150}
-  - {fileID: 768790476}
-  - {fileID: 1531055321}
-  - {fileID: 1712308057}
-  - {fileID: 156611402}
-  - {fileID: 1697015276}
-  enableTrombone: 1
-  pressureLock: 1
 --- !u!1 &281858542
 GameObject:
   m_ObjectHideFlags: 0
@@ -5792,7 +5766,6 @@ GameObject:
   m_Component:
   - component: {fileID: 409629775}
   - component: {fileID: 409629776}
-  - component: {fileID: 409629777}
   m_Layer: 5
   m_Name: NewHighScore Screen
   m_TagString: Untagged
@@ -5854,26 +5827,6 @@ MonoBehaviour:
   onSubmitName:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &409629777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 409629774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f81c8bc2d588346b5096561a522aef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicPlayer: {fileID: 650345739}
-  trombone: {fileID: 64880549}
-  music: {fileID: 0}
-  loop: 0
-  playInMenus:
-  - {fileID: 409629776}
-  enableTrombone: 1
-  pressureLock: 1
 --- !u!1 &415789910
 GameObject:
   m_ObjectHideFlags: 0
@@ -7833,7 +7786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9573,6 +9526,7 @@ GameObject:
   m_Component:
   - component: {fileID: 650345737}
   - component: {fileID: 650345739}
+  - component: {fileID: 650345740}
   m_Layer: 0
   m_Name: MusicPlayer
   m_TagString: Untagged
@@ -9615,9 +9569,9 @@ MonoBehaviour:
   music: {fileID: 0}
   orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
   instrumentDictionary: {fileID: 11400000, guid: 783db9433904c0b4c962588891b020a9, type: 2}
+  tempoStretch: 1
   metronome: {fileID: 1300806622}
   playTime: 0
-  tempoStretch: 1
   playingSpeed: 1
   playStateTransitionDuration: 0.5
   loop: 1
@@ -9630,6 +9584,31 @@ MonoBehaviour:
   onPlayerUpdate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &650345740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650345735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f81c8bc2d588346b5096561a522aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicPlayer: {fileID: 650345739}
+  trombone: {fileID: 64880549}
+  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
+  loop: 1
+  playInMenus:
+  - {fileID: 1609945150}
+  - {fileID: 768790476}
+  - {fileID: 1531055321}
+  - {fileID: 1712308057}
+  - {fileID: 156611402}
+  - {fileID: 1697015276}
+  enableTrombone: 1
+  pressureLock: 1
 --- !u!1 &680383715
 GameObject:
   m_ObjectHideFlags: 0
@@ -15334,7 +15313,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018350543}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20, y: -0, z: 0}
+  m_LocalPosition: {x: -18, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15384,11 +15363,11 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0b3e55a80d1c77641b62fc04e2a75e66, type: 3}
-  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
+  m_Color: {r: 0.34901962, g: 0.610951, b: 0.98039216, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 100, y: 32}
+  m_Size: {x: 70, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -15710,11 +15689,11 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: fa99ca4e09bff9c4c8ce6aec920bc02d, type: 3}
-  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
+  m_Color: {r: 0.34901962, g: 0.610951, b: 0.98039216, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 100, y: 32}
+  m_Size: {x: 70, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -16768,11 +16747,11 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bb5fa9037856072489bd0292630df698, type: 3}
-  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
+  m_Color: {r: 0.34901962, g: 0.610951, b: 0.98039216, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 108, y: 32}
+  m_Size: {x: 110, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -21545,9 +21524,9 @@ MonoBehaviour:
   slidebar: {fileID: 1018350545}
   bell: {fileID: 1539497750}
   grabArrow: {fileID: 1889132680}
-  color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
-  bodyLength: 108
-  slideLength: 100
+  color: {r: 0.34901962, g: 0.610951, b: 0.98039216, a: 1}
+  bodyLength: 110
+  slideLength: 70
   grabArrowDelay: -1
   roundedPosition: 1
   enableSlideMovement: 1
@@ -22215,11 +22194,11 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d712299c3c533644c86a0c9eed973d4a, type: 3}
-  m_Color: {r: 0.9811321, g: 0.86356825, b: 0.34709862, a: 1}
+  m_Color: {r: 0.34901962, g: 0.610951, b: 0.98039216, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 108, y: 32}
+  m_Size: {x: 110, y: 32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -25879,7 +25858,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MORCEAUX
+  m_text: TROMBONES
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3f95086caedccc941a05acaeb30169f9, type: 2}
   m_sharedMaterial: {fileID: -7873930991938731865, guid: 3f95086caedccc941a05acaeb30169f9, type: 2}
@@ -27634,7 +27613,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969521389}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 79, y: 19, z: 0}
+  m_LocalPosition: {x: 51, y: 19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28727,7 +28706,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067895445}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -49, y: -6, z: 0}
+  m_LocalPosition: {x: -21, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
