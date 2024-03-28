@@ -29,7 +29,6 @@ public class LoadingScreen : MenuUI
 
     private void OnEnable()
     {
-        Debug.Log("OnEnable LoadingScreen");
         if (trackGenerator != null) trackGenerator.OnGenerationProgress.AddListener(OnLoadMusic);
     }
 

@@ -22,8 +22,8 @@ MonoBehaviour:
   - 2
   - 2
   color: {r: 0.34901962, g: 0.610951, b: 0.98039216, a: 1}
-  bodyLength: 100
-  slideLength: 85
+  bodyLength: 110
+  slideLength: 75
   horizontalMovements: 1
   verticalMovements: 1
   autoSettings:

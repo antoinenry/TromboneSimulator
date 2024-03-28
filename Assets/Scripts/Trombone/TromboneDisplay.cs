@@ -52,6 +52,7 @@ public class TromboneDisplay : MonoBehaviour,
     private float mouseSlideTone;
     private float mousePressureLevel;
     private float grabArrowTimer;
+    private bool mouseButtonUpAfterGrab;
 
     private bool? blowInput;
     private float? slideToneInput;
@@ -120,7 +121,6 @@ public class TromboneDisplay : MonoBehaviour,
         // Clear internal inputs (mouse)
         mouseGrab = false;
         mouseBlow = false;
-
     }
 
     private void Update()
@@ -270,7 +270,10 @@ public class TromboneDisplay : MonoBehaviour,
                 mouseHover = true;
                 // Grab
                 if (grabMode.HasFlag(GrabMode.ClickToGrab) == false || Input.GetMouseButtonDown(grabButtonNumber) == true)
+                {
                     mouseGrab = true;
+                    mouseButtonUpAfterGrab = false;
+                }
             }
             else
                 mouseHover = false;
@@ -286,7 +289,8 @@ public class TromboneDisplay : MonoBehaviour,
         if (Grab.Value == true)
         {
             // Get mouse blow control
-            mouseBlow = Input.GetMouseButton(blowButtonNumber);
+            if (mouseButtonUpAfterGrab == true) mouseBlow = Input.GetMouseButton(blowButtonNumber);
+            else if (Input.GetMouseButtonUp(blowButtonNumber)) mouseButtonUpAfterGrab = true;
             // Get mouse tone control
             Vector2 relativeMousePosition = mouseWorldPosition - GrabPositionOrigin;
             mouseSlideTone = relativeMousePosition.x / toneWidth;

@@ -103,7 +103,7 @@ public class SheetMusic : ScriptableObject
                 if (lastBarStartTime != duration) duration = lastBarStartTime + rythmTrack.GetBarDuration(lastBarIndex); ;
             }
         }
-        return duration * timeStretch;
+        return Mathf.Abs(duration * timeStretch);
     }
 
     public TempoInfo[] GetTempo(float timeStretch = 1f)

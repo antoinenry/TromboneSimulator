@@ -20,11 +20,12 @@ public class TromboneCore : MonoBehaviour,
     [Tone] public float baseTone;
     public float[] pressureStepTones;
     public float slideTones = 6f;
-
-    public TromboneBuild CurrentBuild { get; private set; }
-
+    [Header("Build")]
     public UnityEvent onChangeBuild;
 
+    [SerializeField] private TromboneBuild tromboneBuild;
+
+    public TromboneBuild CurrentBuild => tromboneBuild;
     public int PressureIndex => RoundToPressureIndex(pressureLevel);
     public float Tone => GetTone(PressureIndex, slideTone);
     public float[] PressureTones
@@ -50,7 +51,12 @@ public class TromboneCore : MonoBehaviour,
     
     private void Awake()
     {
-        SaveCurrentBuild();
+        if (tromboneBuild != null)
+        {
+            TromboneBuild startingBuild = tromboneBuild;
+            tromboneBuild = null;
+            SetCurrentBuild(startingBuild);
+        }
     }
 
     private void OnEnable()
@@ -183,19 +189,19 @@ public class TromboneCore : MonoBehaviour,
 
     public void SetCurrentBuild(TromboneBuild build)
     {
-        if (CurrentBuild == null) CurrentBuild = ScriptableObject.CreateInstance<TromboneBuild>();
-        CurrentBuild.CopyFrom(build);
-        LoadCurrentBuild();
+        if (tromboneBuild == null) tromboneBuild = ScriptableObject.CreateInstance<TromboneBuild>();
+        tromboneBuild.CopyFrom(build);
+        ApplyBuild();
     }
 
     public void SaveCurrentBuild()
     {
-        if (CurrentBuild == null) CurrentBuild = ScriptableObject.CreateInstance<TromboneBuild>();
-        CurrentBuild.SaveFrom(this);
+        if (tromboneBuild == null) tromboneBuild = ScriptableObject.CreateInstance<TromboneBuild>();
+        tromboneBuild.SaveFrom(this);
     }
 
-    public void LoadCurrentBuild()
+    public void ApplyBuild()
     {
-        CurrentBuild?.LoadTo(this);
+        tromboneBuild?.LoadTo(this);
     }
 }

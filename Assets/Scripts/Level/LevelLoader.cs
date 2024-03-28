@@ -86,7 +86,7 @@ public class LevelLoader : MonoBehaviour
         // Trombone setup
         if (trombone)
         {
-            trombone.LoadCurrentBuild();
+            trombone.ApplyBuild();
             trombone.ResetTrombone();
             trombone.Unfreeze();
         }

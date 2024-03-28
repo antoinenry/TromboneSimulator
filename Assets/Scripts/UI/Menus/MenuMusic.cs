@@ -36,6 +36,7 @@ public class MenuMusic : MonoBehaviour
             m.onHideUI.AddListener(OnUIHidden);
         }
         trombone?.onChangeBuild.AddListener(OnTromboneChange);
+        OnTromboneChange();
     }
 
     private void RemoveListeners()

@@ -86,6 +86,7 @@ public class TromboneBuild : ScriptableObject
         // Copy settings from other build
         if (other != null)
         {
+            name = other.name + " (Clone)";
             // Core
             pressureStepTones = other.pressureStepTones;
             slideTones = other.slideTones;
