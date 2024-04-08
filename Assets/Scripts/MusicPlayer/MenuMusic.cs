@@ -20,60 +20,49 @@ public class MenuMusic : MonoBehaviour
 
     private void OnEnable()
     {
-        AddListeners();
+        AddMenuListeners();
     }
 
     private void OnDisable()
     {
-        RemoveListeners();
+        RemoveMenuListeners();
     }
 
-    private void AddListeners()
+    private void AddMenuListeners()
     {
         foreach (MenuUI m in playInMenus)
         {
             m.onShowUI.AddListener(OnUIShown);
             m.onHideUI.AddListener(OnUIHidden);
         }
-        trombone?.onChangeBuild.AddListener(OnTromboneChange);
-        OnTromboneChange();
     }
 
-    private void RemoveListeners()
+    private void RemoveMenuListeners()
     {
         foreach (MenuUI m in playInMenus)
         {
             m.onShowUI.RemoveListener(OnUIShown);
             m.onHideUI.RemoveListener(OnUIHidden);
         }
-        trombone?.onChangeBuild.RemoveListener(OnTromboneChange);
-
     }
 
     private void OnUIShown()
     {
-        Play();
+        TromboneSetup();
+        PlayMusic();
+        trombone?.onChangeBuild.AddListener(OnTromboneChange);
     }
 
     private void OnUIHidden()
     {
-        foreach (MenuUI m in playInMenus)
-            if (m.IsVisible) return;
-        Stop();
+        foreach (MenuUI m in playInMenus) if (m.IsVisible) return;
+        trombone?.onChangeBuild.RemoveListener(OnTromboneChange);
+        StopMusic();
     }
 
-    public void Play()
+    public void PlayMusic()
     {
         if (IsPlaying) return;
-        float tempoStretch = 1f;
-        // Setup trombone
-        if (trombone != null)
-        {
-            if (enableTrombone) trombone.Unfreeze();
-            else trombone.Freeze();
-            if (pressureLock) LockTrombonePressure();
-            if (trombone.CurrentBuild != null) tempoStretch = trombone.CurrentBuild.tempoStrecher;
-        }
         // Setup background music
         if (musicPlayer != null)
         {
@@ -84,16 +73,22 @@ public class MenuMusic : MonoBehaviour
             musicPlayer.playingSpeed = 1f;
             // Turn off metronome
             musicPlayer.metronome.click = false;
-            // Play menu music
-            musicPlayer.tempoStretch = tempoStretch;
-            if (pregeneratedAudio == null) StartCoroutine(PregenerateAudioCoroutine());
+            // Generate menu music if needed
+            float tempoStretch = trombone?.CurrentBuild != null ? trombone.CurrentBuild.tempoStrecher : 1f;
+            if (pregeneratedAudio == null || musicPlayer.tempoStretch != tempoStretch)
+            {
+                musicPlayer.tempoStretch = tempoStretch;
+                StartCoroutine(PregenerateAudioCoroutine());
+            }
             else musicPlayer.LoadMusic(music, pregeneratedAudio, trombone.Sampler);
+            // Play
             musicPlayer.Play();
+            IsPlaying = true;
         }
-        IsPlaying = true;
+        else IsPlaying = false;
     }
 
-    public void Stop()
+    public void StopMusic()
     {
         if (!IsPlaying) return;
         musicPlayer.Stop();
@@ -102,12 +97,14 @@ public class MenuMusic : MonoBehaviour
 
     public void OnTromboneChange()
     {
+        // Reload music if needed (changes in tempo, orchestra...)
         if (trombone?.CurrentBuild?.tempoStrecher != musicPlayer?.tempoStretch)
         {            
-            Stop();
-            pregeneratedAudio = null;
-            Play();
+            StopMusic();
+            PlayMusic();
         }
+        // Setup trombone
+        TromboneSetup();
     }
 
     private IEnumerator PregenerateAudioCoroutine()
@@ -117,11 +114,16 @@ public class MenuMusic : MonoBehaviour
         pregeneratedAudio = AudioSampling.CloneAudioClip(musicPlayer.LoadedAudio, musicPlayer.LoadedAudio.name);
     }
 
-    private void LockTrombonePressure()
+    private void TromboneSetup()
     {
-        if (trombone?.tromboneAuto == null) return;
-        TromboneAutoSettings autoSettings = trombone.tromboneAuto.settings;
-        autoSettings.pressureLock = TromboneAutoSettings.LockConditions.AutoBlows;
-        trombone.tromboneAuto.settings = autoSettings;
+        if (trombone == null) return;
+        if (enableTrombone) trombone.Unfreeze();
+        else trombone.Freeze();
+        if (trombone.tromboneAuto != null && pressureLock)
+        {
+            TromboneAutoSettings autoSettings = trombone.tromboneAuto.settings;
+            autoSettings.pressureLock = TromboneAutoSettings.LockConditions.AutoBlows;
+            trombone.tromboneAuto.settings = autoSettings;
+        }
     }
 }
