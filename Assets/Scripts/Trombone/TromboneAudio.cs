@@ -81,7 +81,7 @@ public class TromboneAudio : MonoBehaviour,
                     // Smooth volume up
                     if (source.volume < fullVolume) source.volume += deltaTime * smoothInSpeed;                    
                     sampler.PlayTone(pressureTone, source);
-                    source.pitch *= Mathf.Pow(SamplerInstrument.PerTonePitchMultiplier, -slideTone);
+                    source.pitch = pitch * Mathf.Pow(SamplerInstrument.PerTonePitchMultiplier, -slideTone);
                 }
             }
             else
@@ -90,8 +90,6 @@ public class TromboneAudio : MonoBehaviour,
                 if (source.volume > 0) source.volume -= deltaTime * smoothOutSpeed;
                 else source.Stop();
             }
-            // Sound effects on all sources
-            source.pitch *= pitch;
         }
     }
 

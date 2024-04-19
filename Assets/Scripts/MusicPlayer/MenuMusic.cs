@@ -48,19 +48,31 @@ public class MenuMusic : MonoBehaviour
 
     private void OnUIShown()
     {
+        musicPlayer?.backingGenerator?.OnGenerationProgress.AddListener(OnLoadMusic);
         TromboneSetup();
-        PlayMusic();
-        trombone?.onChangeBuild.AddListener(OnTromboneChange);
+        StartPlaying();
     }
 
     private void OnUIHidden()
     {
+        musicPlayer?.backingGenerator?.OnGenerationProgress.RemoveListener(OnLoadMusic);
         foreach (MenuUI m in playInMenus) if (m.IsVisible) return;
-        trombone?.onChangeBuild.RemoveListener(OnTromboneChange);
-        StopMusic();
+        StopPlaying();
     }
 
-    public void PlayMusic()
+    private void OnLoadMusic(float progress)
+    {
+        if (progress < 1f) StopPlaying();
+        else
+        {
+            AudioClip originalAudio = musicPlayer.backingGenerator?.generatedAudio;
+            pregeneratedAudio = AudioSampling.CloneAudioClip(originalAudio, originalAudio?.name);
+            TromboneSetup();
+            StartPlaying();
+        }
+    }
+
+    public void StartPlaying()
     {
         if (IsPlaying) return;
         // Setup background music
@@ -70,17 +82,10 @@ public class MenuMusic : MonoBehaviour
             musicPlayer.enabled = true;
             musicPlayer.Stop();
             musicPlayer.loop = loop;
-            musicPlayer.playingSpeed = 1f;
             // Turn off metronome
             musicPlayer.metronome.click = false;
-            // Generate menu music if needed
-            float tempoStretch = trombone?.CurrentBuild != null ? trombone.CurrentBuild.tempoStrecher : 1f;
-            if (pregeneratedAudio == null || musicPlayer.tempoStretch != tempoStretch)
-            {
-                musicPlayer.tempoStretch = tempoStretch;
-                StartCoroutine(PregenerateAudioCoroutine());
-            }
-            else musicPlayer.LoadMusic(music, pregeneratedAudio, trombone.Sampler);
+            // Load music
+            musicPlayer.LoadMusic(music, pregeneratedAudio, playedInstrument:trombone.Sampler);
             // Play
             musicPlayer.Play();
             IsPlaying = true;
@@ -88,30 +93,18 @@ public class MenuMusic : MonoBehaviour
         else IsPlaying = false;
     }
 
-    public void StopMusic()
+    public void StopPlaying()
     {
         if (!IsPlaying) return;
         musicPlayer.Stop();
         IsPlaying = false;
     }
 
-    public void OnTromboneChange()
-    {
-        // Reload music if needed (changes in tempo, orchestra...)
-        if (trombone?.CurrentBuild?.tempoStrecher != musicPlayer?.tempoStretch)
-        {            
-            StopMusic();
-            PlayMusic();
-        }
-        // Setup trombone
-        TromboneSetup();
-    }
-
     private IEnumerator PregenerateAudioCoroutine()
     {
-        musicPlayer.LoadMusic(music, playedInstrument:trombone.Sampler);
+        
         yield return new WaitWhile(() => musicPlayer.IsLoading);
-        pregeneratedAudio = AudioSampling.CloneAudioClip(musicPlayer.LoadedAudio, musicPlayer.LoadedAudio.name);
+        //pregeneratedAudio = AudioSampling.CloneAudioClip(musicPlayer.LoadedAudio, musicPlayer.LoadedAudio.name);
     }
 
     private void TromboneSetup()
@@ -121,9 +114,9 @@ public class MenuMusic : MonoBehaviour
         else trombone.Freeze();
         if (trombone.tromboneAuto != null && pressureLock)
         {
-            TromboneAutoSettings autoSettings = trombone.tromboneAuto.settings;
+            TromboneAutoSettings autoSettings = trombone.tromboneAuto.autoSettings;
             autoSettings.pressureLock = TromboneAutoSettings.LockConditions.AutoBlows;
-            trombone.tromboneAuto.settings = autoSettings;
+            trombone.tromboneAuto.autoSettings = autoSettings;
         }
     }
 }

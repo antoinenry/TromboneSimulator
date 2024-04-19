@@ -12,28 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3b9729a948bfc44a19eef88457aa5a, type: 3}
   m_Name: Pepere
   m_EditorClassIdentifier: 
-  slideTones: 6
-  pressureStepTones:
-  - 0
-  - 7
-  - 5
-  - 4
-  - 3
-  - 2
-  - 2
-  color: {r: 0.98039216, g: 0.45745623, b: 0.34901962, a: 1}
-  bodyLength: 120
-  slideLength: 110
-  horizontalMovements: 1
-  verticalMovements: 1
-  autoSettings:
-    blowControl: 13
-    slideControl: 0
-    slideLegatoSpeed: 0
-    maxLegatoDistance: 0
-    pressureControl: 0
-    pressureLock: 0
-  tempoStrecher: 1.25
-  timeStrecher: 1
-  scoreMultiplier: 1
-  maxHealth: 1.5
+  tromboneCore:
+    baseTone: 46
+    pressureToneSteps:
+    - 7
+    - 5
+    - 4
+    - 3
+    - 3
+    - 2
+    slideToneLength: 6
+  tromboneDisplay:
+    color: {r: 0.764151, g: 0.6658301, b: 0.4000979, a: 1}
+    bodyLength: 105
+    slideLength: 95
+    enableSlideMovement: 1
+    enablePressureMovement: 1
+  tromboneAudio:
+    sampler: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
+    pitch: 1

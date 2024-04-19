@@ -9,12 +9,12 @@ public class AudioTrackGenerator : MonoBehaviour
     [Flags]
     public enum ErrorType { NoError = 0, NullInstrument = 1, NullAudio = 2, Frequency = 4, Channels = 8, Tone = 16, Duration = 32, InstrumentName = 64 }
     [Serializable]
-    public struct PartVoicesIdentifier { public string partName; public bool mainVoice; public int[] alternativeVoiceIndices; }
+    public struct PartIdentifier { public string partName; public bool mainVoice; public int[] alternativeVoiceIndices; }
 
     [Header("Input")]
     public SheetMusic music;
     public Orchestra orchestra;
-    public PartVoicesIdentifier[] ignoredParts;
+    public PartIdentifier[] ignoredParts;
     public float tempoStretch = 1f;
     [Header("Encoding")]
     public int frequency = 48000;
@@ -68,12 +68,14 @@ public class AudioTrackGenerator : MonoBehaviour
         return ErrorType.NoError;
     }
 
+    public void PlayAllVoices() => ignoredParts = new PartIdentifier[0];
+
     public void IgnoreVoice(string part, bool ignoreMainVoice, params int[] ignoreAlternativeVoices)
     {
         int ignoredCount = ignoredParts != null ? ignoredParts.Length : 0;
-        if (ignoredCount == 0) ignoredParts = new PartVoicesIdentifier[1];
+        if (ignoredCount == 0) ignoredParts = new PartIdentifier[1];
         else Array.Resize(ref ignoredParts, ignoredCount + 1);
-        ignoredParts[ignoredCount] = new PartVoicesIdentifier()
+        ignoredParts[ignoredCount] = new PartIdentifier()
         {
             partName = part,
             mainVoice = ignoreMainVoice,
@@ -115,7 +117,7 @@ public class AudioTrackGenerator : MonoBehaviour
                     bool ignoreMainVoice = false;
                     if (ignoredParts != null)
                     {
-                        PartVoicesIdentifier ignored = Array.Find(ignoredParts, x => InstrumentDictionary.SameCurrentInstruments(x.partName, partOfficialName));
+                        PartIdentifier ignored = Array.Find(ignoredParts, x => InstrumentDictionary.SameCurrentInstruments(x.partName, partOfficialName));
                         ignoredVoices = ignored.alternativeVoiceIndices;
                         ignoreMainVoice = ignored.mainVoice;
                     }
@@ -176,7 +178,7 @@ public class AudioTrackGenerator : MonoBehaviour
                                 error |= SamplePart(notes, n, sampleNotes, partInstrument, ref partSamples);
                                 GeneratedNoteCount += sampleNotes;
                                 CurrentPartGeneratedNotes += sampleNotes;
-                                OnGenerationProgress.Invoke((float)GeneratedNoteCount / TotalNoteCount);
+                                if (GeneratedNoteCount < TotalNoteCount) OnGenerationProgress.Invoke((float)GeneratedNoteCount / TotalNoteCount);
                                 yield return null;
                             }
                         }
@@ -215,6 +217,8 @@ public class AudioTrackGenerator : MonoBehaviour
             generatedAudio = AudioClip.Create(music.name, durationSamples / channels, channels, frequency, false);
             // Transfer samples to audio clip
             generatedAudio.SetData(samples, 0);
+            // Generation complete
+            OnGenerationProgress.Invoke(1f);
         }
     }
 

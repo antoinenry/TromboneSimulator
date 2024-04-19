@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class TromboneSelectionScreen : MenuUI
@@ -10,8 +9,6 @@ public class TromboneSelectionScreen : MenuUI
     public Button backButton;
     [Header("Contents")]
     public string[] tromboneNames;
-    [Header("Events")]
-    public UnityEvent<TromboneBuild> onTromboneSelect;
 
     public override void ShowUI()
     {
@@ -69,7 +66,9 @@ public class TromboneSelectionScreen : MenuUI
 
     private void SelectTrombone(int index)
     {
-        TromboneBuild getTrombone = GameContentLibrary.Current?.trombones[index];
-        onTromboneSelect.Invoke(getTrombone);
+        TromboneBuild build = GameContentLibrary.Current?.trombones[index];
+        build?.SetBuildToScene();
+        TromboneCore trombone = FindObjectOfType<TromboneCore>(true);
+        trombone.Build = build;
     }
 }

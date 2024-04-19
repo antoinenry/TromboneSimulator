@@ -118,8 +118,6 @@ public class PerformanceJudge : MonoBehaviour
     {
         // Prepare level
         if (lvl != null) performanceDetail = new List<NotePerformance>(lvl.GetPartLength(trombone?.Sampler?.name));
-        TromboneBuild build = trombone?.CurrentBuild;
-        if (build != null) maxHealth = build.maxHealth;
         // Reset
         ResetPerformance();
     }  

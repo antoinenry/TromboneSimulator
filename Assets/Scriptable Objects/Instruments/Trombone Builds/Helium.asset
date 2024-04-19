@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d3b9729a948bfc44a19eef88457aa5a, type: 3}
-  m_Name: Classique
+  m_Name: Helium
   m_EditorClassIdentifier: 
   tromboneCore:
     baseTone: 46
@@ -23,8 +23,8 @@ MonoBehaviour:
     - 2
     slideToneLength: 6
   tromboneDisplay:
-    color: {r: 1, g: 1, b: 1, a: 1}
-    bodyLength: 110
+    color: {r: 0.36405307, g: 0.764151, b: 0.73992527, a: 1}
+    bodyLength: 105
     slideLength: 95
     enableSlideMovement: 1
     enablePressureMovement: 1

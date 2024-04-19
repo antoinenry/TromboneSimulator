@@ -125,8 +125,7 @@ public class SheetMusic : ScriptableObject
 
     public NotePlay[] GetVoiceNotes(SamplerInstrument instrument, int voiceIndex, float timeStretch = 1f)
     {
-        if (instrument == null) return null;
-        int partIndex = GetPartIndex(instrument.instrumentName);
+        int partIndex = GetPartIndex(instrument.name);
         NoteInfo[] notes = GetPartNotes(partIndex, timeStretch);
         int voices = SplitPartVoices(partIndex, out int[] mainNoteIndices, out List<int[]> alternativeNoteIndices);
         if (voices < 1) return new NotePlay[0];

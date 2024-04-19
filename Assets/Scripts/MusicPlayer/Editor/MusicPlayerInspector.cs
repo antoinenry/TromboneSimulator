@@ -19,10 +19,14 @@ public class MusicPlayerInspector : Editor
         EditorGUILayout.LabelField("Control Panel", EditorStyles.boldLabel);
         EditorGUILayout.BeginVertical("box");
         EditorGUILayout.BeginHorizontal();
+        bool GUIEnabled = GUI.enabled;
+        GUI.enabled = (musicPlayer.State == MusicPlayer.PlayState.Play) ? false : GUIEnabled;
         if (GUILayout.Button("Play")) musicPlayer.Play(transitionEffects);
+        GUI.enabled = (musicPlayer.State != MusicPlayer.PlayState.Play) ? false : GUIEnabled;
         if (GUILayout.Button("Pause")) musicPlayer.Pause(transitionEffects);
+        GUI.enabled = (musicPlayer.State == MusicPlayer.PlayState.Stop) ? false : GUIEnabled;
         if (GUILayout.Button("Stop")) musicPlayer.Stop(transitionEffects);
-        //GUI.enabled = GUIEnabled;
+        GUI.enabled = GUIEnabled;
         EditorGUILayout.EndHorizontal();
         transitionEffects = EditorGUILayout.Toggle("Transition effects", transitionEffects);
         EditorGUILayout.LabelField("Playing state", musicPlayer.State.ToString());

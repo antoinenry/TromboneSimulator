@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(GameState_old))]
-public class GameStateInspector : Editor
+public class GameStateInspector_old : Editor
 {
     GameState_old state;
 

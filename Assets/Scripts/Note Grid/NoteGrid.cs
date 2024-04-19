@@ -20,29 +20,27 @@ public class NoteGrid : MonoBehaviour
     public Vector2Int cellSpacing;
     public bool flattenX = false;
     public bool flattenY = false;
-
-    private TromboneCore trombone;
+    [Header("Sync With")]
+    public TromboneCore trombone;
 
     private void OnEnable()
     {
-        trombone = FindObjectOfType<TromboneCore>(true);
-        if (trombone) trombone.onChangeBuild.AddListener(UpdateGrid);
+        if (trombone == null) trombone = FindObjectOfType<TromboneCore>();
     }
 
-    private void OnDisable()
+    private void Update()
     {
-        if (trombone) trombone.onChangeBuild.RemoveListener(UpdateGrid);
+        SyncDimensionsWithTrombone();
+        UpdateAspect();
     }
 
-    private void Start() => UpdateGrid();
-
-    public void UpdateGrid()
+    public void SyncDimensionsWithTrombone()
     {
         // Synchronize with trombone
         if (trombone != null)
         {
             // Cell count
-            dimensions.columns = Mathf.CeilToInt(trombone.slideTones) + 1;
+            dimensions.columns = Mathf.CeilToInt(trombone.slideToneLength) + 1;
             dimensions.lineTones = trombone.PressureTones;
             // Dimensions
             if (trombone.tromboneDisplay != null)
@@ -60,6 +58,10 @@ public class NoteGrid : MonoBehaviour
                 flattenY = !trombone.tromboneDisplay.enablePressureMovement;
             }
         }
+    }
+
+    public void UpdateAspect()
+    {        
         // Get screen size from camera
         if (cameraConstrained == true && Camera.main != null) 
             gridSize = new Vector2(Camera.main.aspect, 1f) * 2f * Camera.main.orthographicSize;

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
-using System;
 
 public class NoteSpawner : MonoBehaviour
 {

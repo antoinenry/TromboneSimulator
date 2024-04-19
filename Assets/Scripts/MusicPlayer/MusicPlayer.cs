@@ -13,8 +13,7 @@ public class MusicPlayer : MonoBehaviour
     [Header("Music")]
     public SheetMusic music;
     public Orchestra orchestra;
-    public InstrumentDictionary instrumentDictionary;
-    public float tempoStretch;
+    public float tempoModifier = 1f;
     [Header("Timing")]
     public Metronome metronome;
     public float playTime = 0f;
@@ -35,12 +34,13 @@ public class MusicPlayer : MonoBehaviour
     public AudioClip LoadedAudio => backingSource.clip;
     public PlayState State { get; private set; }
     public float CurrentPlayTime { get; private set; }
-    public float MusicDuration => LoadedMusic != null ? LoadedMusic.GetDuration(tempoStretch) : 0f;
+    public float MusicDuration => LoadedMusic != null ? LoadedMusic.GetDuration(TempoStretch) : 0f;
     public float CurrentPlayingSpeed { get; private set; }
     public float LoopedPlayTime { get; private set; }
     public bool IsReversePlaying { get; private set; }
     public int ConsecutiveAudioSyncs { get; private set; }
     public bool IsLoading => backingGenerator != null && backingGenerator.AudioIsReady == false;
+    public float TempoStretch => tempoModifier != 0f ? 1f / tempoModifier : 0f;
 
     private bool hasLooped;
     private float playHeadsTime;
@@ -150,7 +150,7 @@ public class MusicPlayer : MonoBehaviour
                 CurrentPlayTime += deltaPlayTime;
                 playTime = CurrentPlayTime;
                 LoopedPlayTime += deltaPlayTime;
-                float musicDuration = LoadedMusic != null ? LoadedMusic.GetDuration(tempoStretch) : 0f;
+                float musicDuration = LoadedMusic != null ? LoadedMusic.GetDuration(TempoStretch) : 0f;
                 // Out of music
                 if ((!IsReversePlaying && LoopedPlayTime > musicDuration)
                 || (IsReversePlaying && LoopedPlayTime < 0f))
@@ -242,6 +242,8 @@ public class MusicPlayer : MonoBehaviour
                     backingSource.Stop();
             }
         }
+        // Metronome speed
+        if (metronome) metronome.playSpeed = playingSpeed;
     }
 
     private void UpdatePlayheads()
@@ -254,7 +256,7 @@ public class MusicPlayer : MonoBehaviour
         // Make playhead read notes
         if (playHeads != null && LoadedMusic != null)
         {
-            float musicDuration = LoadedMusic != null ? LoadedMusic.GetDuration(tempoStretch) : 0f;
+            float musicDuration = LoadedMusic != null ? LoadedMusic.GetDuration(TempoStretch) : 0f;
             foreach (Playhead p in playHeads)
             {
                 if (p != null)
@@ -291,7 +293,7 @@ public class MusicPlayer : MonoBehaviour
             if (playedInstrument != null)
             {
                 // Get notes to play
-                LoadedNotes = music.GetVoiceNotes(playedInstrument, voiceIndex, tempoStretch);
+                LoadedNotes = music.GetVoiceNotes(playedInstrument, voiceIndex, TempoStretch);
                 playedInstrument.ApplyStyle(LoadedNotes);
             }
             else
@@ -312,7 +314,7 @@ public class MusicPlayer : MonoBehaviour
                     {
                         backingGenerator.orchestra = orchestra;
                         backingGenerator.music = LoadedMusic;
-                        backingGenerator.tempoStretch = tempoStretch;
+                        backingGenerator.tempoStretch = TempoStretch;
                         // Don't generate playable voices (main voice and played alternative)
                         backingGenerator.ignoredParts = null;
                         if (playedInstrument != null) backingGenerator.IgnoreVoice(playedInstrument.instrumentName, true, voiceIndex);
@@ -323,7 +325,8 @@ public class MusicPlayer : MonoBehaviour
                 }
             }
             // Metronome setup
-            metronome.SetRythm(music.GetTempo(tempoStretch), music.GetMeasure());
+            metronome.playSpeed = playingSpeed;
+            metronome.SetRythm(music.GetTempo(TempoStretch), music.GetMeasure());
         }
         else
         {
@@ -355,6 +358,12 @@ public class MusicPlayer : MonoBehaviour
             if (showDebug) Debug.Log("...unloading complete: " + audio.name);
         }
     }
+
+    //public void ReloadMusic(string playedInstrument = null, int voiceIndex = 1)
+    //{
+    //    UnloadMusic();
+    //    LoadMusic(music, null, playedInstrument, voiceIndex);
+    //}
 
     public void SetPlaytimeSamples(int timeSamples)
     {

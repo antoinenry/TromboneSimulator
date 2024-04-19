@@ -3,7 +3,7 @@ using UnityEngine;
 
 [CustomEditor(typeof(SamplerInstrument))]
 [CanEditMultipleObjects]
-public class AudioInstrumentInspector : Editor
+public class SamplerInstrumentInspector : Editor
 {
     private SamplerInstrument instrument;
     private AudioClip instrumentAudio;

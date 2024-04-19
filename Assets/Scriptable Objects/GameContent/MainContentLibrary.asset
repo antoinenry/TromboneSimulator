@@ -25,6 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64e4846b8f7ca4a4bb1075d355f97764, type: 2}
   - {fileID: 11400000, guid: da1bf434337f4194fa69b115174ae109, type: 2}
   - {fileID: 11400000, guid: befd4290bc5963f4bbd5de2e37f76108, type: 2}
+  - {fileID: 11400000, guid: 4331e0f6416a73342bb28bbfc6f1b8e9, type: 2}
+  - {fileID: 11400000, guid: f7f626370edb1a34a891ed979d568731, type: 2}
   orchestras:
   - {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
   - {fileID: 11400000, guid: b2ad0760834ae6444a0f2d81079112a1, type: 2}

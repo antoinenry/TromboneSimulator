@@ -84,20 +84,16 @@ public class LevelLoader : MonoBehaviour
     private IEnumerator LoadLevelCoroutine()
     {
         // Trombone setup
-        TromboneBuild tromboneBuild = null;
         if (trombone)
         {
-            trombone.ApplyBuild();
             trombone.ResetTrombone();
             trombone.Unfreeze();
-            tromboneBuild = trombone.CurrentBuild;
         }
         // Music setup
         if (musicPlayer)
         {
             musicPlayer.Stop();
             musicPlayer.loop = false;
-            musicPlayer.tempoStretch = tromboneBuild != null ? tromboneBuild.tempoStrecher : 1f;
             musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler); 
             musicPlayer.onPlayerUpdate.AddListener(OnMusicPlayerUpdate);
         }

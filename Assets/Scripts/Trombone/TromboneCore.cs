@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class TromboneCore : MonoBehaviour,
     ITromboneGrabInput, ITromboneBlowInput, ITromboneSlideToneInput, ITrombonePressureLevelInput, ITrombonePressureToneInput,
@@ -15,27 +14,23 @@ public class TromboneCore : MonoBehaviour,
     public bool blow;
     public float slideTone;
     public float pressureLevel;
-    //public TromboneControlWiring controlWiring;
     [Header("Tone")]
     [Tone] public float baseTone;
-    public float[] pressureStepTones;
-    public float slideTones = 6f;
-    [Header("Build")]
-    public UnityEvent onChangeBuild;
+    public float[] pressureToneSteps;
+    public float slideToneLength = 6f;
 
-    [SerializeField] private TromboneBuild tromboneBuild;
+    private TromboneBuild runtimeBuild;
 
-    public TromboneBuild CurrentBuild => tromboneBuild;
     public int PressureIndex => RoundToPressureIndex(pressureLevel);
     public float Tone => GetTone(PressureIndex, slideTone);
     public float[] PressureTones
     {
         get
         {
-            int stepCount = pressureStepTones == null ? 0 : pressureStepTones.Length;
+            int stepCount = pressureToneSteps == null ? 0 : pressureToneSteps.Length;
             float[] tones = new float[stepCount + 1];
             tones[0] = baseTone;
-            for (int p = 0; p < stepCount; p++) tones[p + 1] = tones[p] + pressureStepTones[p];
+            for (int p = 0; p < stepCount; p++) tones[p + 1] = tones[p] + pressureToneSteps[p];
             return tones;
         }
     }
@@ -47,16 +42,12 @@ public class TromboneCore : MonoBehaviour,
     public float? SlideTone { get => slideTone; set { if (value != null) slideTone = value.Value; } }
     public float? PressureLevel { get => pressureLevel; set { if (value != null) pressureLevel = value.Value; } }
     public float? PressureTone { get => GetTone(PressureIndex, 0f); set { if (value != null) TryGetPressureLevel(value.Value, out pressureLevel); } }
-    #endregion
-    
+    #endregion    
+
     private void Awake()
     {
-        if (tromboneBuild != null)
-        {
-            TromboneBuild startingBuild = tromboneBuild;
-            tromboneBuild = null;
-            SetCurrentBuild(startingBuild);
-        }
+        runtimeBuild = ScriptableObject.CreateInstance<TromboneBuild>();
+        runtimeBuild.GetBuildFromScene();
     }
 
     private void OnEnable()
@@ -66,8 +57,6 @@ public class TromboneCore : MonoBehaviour,
         tromboneDisplay.enabled = true;
         tromboneAuto.enabled = true;
         tromboneAudio.enabled = true;
-        // Listen to trombone build changes
-        MenuUI.Get<TromboneSelectionScreen>()?.onTromboneSelect?.AddListener(SetCurrentBuild);
     }
 
     private void OnDisable()
@@ -78,8 +67,6 @@ public class TromboneCore : MonoBehaviour,
         tromboneDisplay.enabled = false;
         tromboneAuto.enabled = false;
         tromboneAudio.enabled = false;
-        // Stop listening to trombone build changes
-        MenuUI.Get<TromboneSelectionScreen>()?.onTromboneSelect?.RemoveListener(SetCurrentBuild);
     }
 
     public void ClearInputs()
@@ -93,6 +80,7 @@ public class TromboneCore : MonoBehaviour,
     public void ResetTrombone()
     {
         ClearInputs();
+        runtimeBuild.SetBuildToScene();
         tromboneDisplay.ResetDisplay();
     }
 
@@ -101,16 +89,16 @@ public class TromboneCore : MonoBehaviour,
     public float GetTone(int pressureIndex, float slideTone)
     {
         float tone = baseTone;
-        int stepCount = pressureStepTones == null ? 0 : pressureStepTones.Length;
+        int stepCount = pressureToneSteps == null ? 0 : pressureToneSteps.Length;
         if (stepCount > 0)
         {
-            if (pressureIndex < 0) tone += pressureStepTones[0] * pressureIndex;
+            if (pressureIndex < 0) tone += pressureToneSteps[0] * pressureIndex;
             else
             {
                 for (int p = 0; p < pressureIndex; p++)
                 {
-                    if (p < stepCount) tone += pressureStepTones[p];
-                    else tone += pressureStepTones[stepCount - 1];
+                    if (p < stepCount) tone += pressureToneSteps[p];
+                    else tone += pressureToneSteps[stepCount - 1];
                 }
             }
         }
@@ -123,7 +111,7 @@ public class TromboneCore : MonoBehaviour,
     {
         pressure = 0;
         float pressureTone = baseTone;
-        int stepCount = pressureStepTones == null ? 0 : pressureStepTones.Length;
+        int stepCount = pressureToneSteps == null ? 0 : pressureToneSteps.Length;
         // Look for positive pressure index
         if (pressureTone < tone)
         {
@@ -131,12 +119,12 @@ public class TromboneCore : MonoBehaviour,
             {
                 if (pressure < stepCount)
                 {
-                    pressureTone += pressureStepTones[pressure];
+                    pressureTone += pressureToneSteps[pressure];
                     pressure++;
                 }
                 else
                 {
-                    float highStep = pressureStepTones[stepCount - 1];
+                    float highStep = pressureToneSteps[stepCount - 1];
                     if (highStep > 0)
                     {
                         int missingSteps = Mathf.CeilToInt((tone - pressureTone) / highStep);
@@ -149,7 +137,7 @@ public class TromboneCore : MonoBehaviour,
         // Look for negative pressure index
         else
         {
-            float lowStep = stepCount > 0 ? pressureStepTones[0] : 0f;
+            float lowStep = stepCount > 0 ? pressureToneSteps[0] : 0f;
             if (lowStep > 0)
             {
                 int missingSteps = Mathf.CeilToInt((tone - pressureTone) / lowStep);
@@ -158,7 +146,7 @@ public class TromboneCore : MonoBehaviour,
             }
         }
         // Check if tone is within slide reach
-        return pressureTone - tone <= slideTones;
+        return pressureTone - tone <= slideToneLength;
     }
     public bool TryGetPressureLevel(float tone, out float pressure)
     {
@@ -172,7 +160,7 @@ public class TromboneCore : MonoBehaviour,
     public bool TryGetSlideTone(float tone, float pressureTone, out float slide)
     {
         slide = pressureTone - tone;
-        return slide >= 0f && slide <= slideTones;
+        return slide >= 0f && slide <= slideToneLength;
     }
 
     public void Freeze()
@@ -187,21 +175,8 @@ public class TromboneCore : MonoBehaviour,
         if (tromboneDisplay != null) tromboneDisplay.enabled = true;
     }
 
-    public void SetCurrentBuild(TromboneBuild build)
+    public TromboneBuild Build
     {
-        if (tromboneBuild == null) tromboneBuild = ScriptableObject.CreateInstance<TromboneBuild>();
-        tromboneBuild.CopyFrom(build);
-        ApplyBuild();
-    }
-
-    public void SaveCurrentBuild()
-    {
-        if (tromboneBuild == null) tromboneBuild = ScriptableObject.CreateInstance<TromboneBuild>();
-        tromboneBuild.SaveFrom(this);
-    }
-
-    public void ApplyBuild()
-    {
-        tromboneBuild?.LoadTo(this);
+        set => TromboneBuild.Copy(value, runtimeBuild);
     }
 }

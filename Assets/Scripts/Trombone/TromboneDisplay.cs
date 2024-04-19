@@ -81,6 +81,7 @@ public class TromboneDisplay : MonoBehaviour,
         get => pressureLevelInput == null ? (float.IsNaN(mousePressureLevel) ? null : mousePressureLevel) : pressureLevelInput;
     }
     #endregion
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -125,10 +126,10 @@ public class TromboneDisplay : MonoBehaviour,
 
     private void Update()
     {
+        // Update aspect (dimensions, color...)
+        UpdateAspect();
         // Cursor input
         UpdateMouseInput();
-        // Update aspect in editor mode (dimensions, color...)
-        if (Application.isPlaying == false) UpdateAspect();
         // Position (vertical movement and slide)
         UpdatePosition();
         // Animations

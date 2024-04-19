@@ -12,28 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3b9729a948bfc44a19eef88457aa5a, type: 3}
   m_Name: Coulisse
   m_EditorClassIdentifier: 
-  slideTones: 6
-  pressureStepTones:
-  - 7
-  - 5
-  - 4
-  - 3
-  - 2
-  - 2
-  - 2
-  color: {r: 0.90588236, g: 0.34509802, b: 0.8221342, a: 1}
-  bodyLength: 108
-  slideLength: 100
-  horizontalMovements: 1
-  verticalMovements: 0
-  autoSettings:
-    blowControl: 13
-    slideControl: 0
-    slideLegatoSpeed: 0
-    maxLegatoDistance: 0
-    pressureControl: 13
-    pressureLock: 0
-  tempoStrecher: 1
-  timeStrecher: 1
-  scoreMultiplier: 1
-  maxHealth: 1
+  tromboneCore:
+    baseTone: 46
+    pressureToneSteps:
+    - 7
+    - 5
+    - 4
+    - 3
+    - 3
+    - 2
+    slideToneLength: 6
+  tromboneDisplay:
+    color: {r: 0.8450616, g: 0.6863207, b: 0.9150943, a: 1}
+    bodyLength: 110
+    slideLength: 110
+    enableSlideMovement: 1
+    enablePressureMovement: 0
+  tromboneAudio:
+    sampler: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
+    pitch: 1

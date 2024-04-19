@@ -1,112 +1,49 @@
 using UnityEngine;
+using System;
+using System.Reflection;
 
 [CreateAssetMenu(fileName = "NewTrombone", menuName = "Trombone Hero/Instruments/Trombone Build")]
 public class TromboneBuild : ScriptableObject
 {
-    [Header("Tones")]
-    public float slideTones;
-    public float[] pressureStepTones;
-    [Header("Aspect")]
-    public Color color = Color.white;
-    public int bodyLength = 128;
-    public int slideLength = 128;
-    [Header("Controls")]
-    public bool horizontalMovements = true;
-    public bool verticalMovements = true;
-    public TromboneAutoSettings autoSettings;
-    //public List<TromboneControlWiring.Wire> controlWiring;
-    [Header("Level Modifiers")]
-    public float tempoStrecher = 1f;
-    public float timeStrecher = 1f;
-    public float scoreMultiplier = 1f;
-    public float maxHealth = 1f;
+    public TromboneCoreCustomizer tromboneCore = new();
+    public TromboneDisplayCustomizer tromboneDisplay = new();
+    public TromboneAudioCustomizer tromboneAudio = new();
+    public TromboneAutoCustomizer tromboneAuto = new();
+    public MusicPlayerCustomizer musicPlayer = new();
+    public PerformanceJudgeCustomizer performanceJudge = new();
 
-    public void CopyFrom(TromboneBuild other)
+    public static void Copy(TromboneBuild source, TromboneBuild destination)
     {
-        // Copy settings from other build
-        if (other != null)
+        if (destination == null || source == null) return;
+        FieldInfo[] customizers = typeof(TromboneBuild).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetField);
+        foreach (FieldInfo customizer in customizers)
         {
-            name = other.name + " (Clone)";
-            // Core
-            pressureStepTones = other.pressureStepTones;
-            slideTones = other.slideTones;
-            // Aspect
-            color = other.color;
-            bodyLength = other.bodyLength;
-            slideLength = other.slideLength;
-            // Controls
-            horizontalMovements = other.horizontalMovements;
-            verticalMovements = other.verticalMovements;
-            // Auto settings
-            autoSettings = other.autoSettings;
-            // Music modifiers
-            tempoStrecher = other.tempoStrecher;
-            timeStrecher = other.timeStrecher;
-            scoreMultiplier = other.scoreMultiplier;
-            maxHealth = other.maxHealth;
+            object sourceCustomizer = customizer.GetValue(source);
+            object destinationCustomizer = customizer.GetValue(destination);
+            Type cutomizerType = sourceCustomizer.GetType();
+            ValueCopier.CopyValuesByName(cutomizerType, sourceCustomizer, destinationCustomizer);
         }
     }
 
-    public void LoadTo(TromboneCore trombone)
+    public void SetBuildToScene()
     {
-        // Copy settings to trombone components
-        if (trombone != null)
+        FieldInfo[] customizers = typeof(TromboneBuild).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetField);
+        foreach (FieldInfo customizer in customizers)
         {
-            // Trombone component
-            trombone.pressureStepTones = pressureStepTones;
-            trombone.slideTones = slideTones;
-            // TromboneDisplay component
-            TromboneDisplay visual = trombone.tromboneDisplay;
-            if (visual != null)
-            {
-                // Aspect
-                visual.color = color;
-                visual.bodyLength = bodyLength;
-                visual.slideLength = slideLength;
-                visual.UpdateAspect();
-                // Controls
-                visual.enableSlideMovement = horizontalMovements;
-                visual.enablePressureMovement = verticalMovements;
-            }
-            // TromboneAuto component
-            TromboneAuto auto = trombone.tromboneAuto;
-            if (auto != null)
-            {
-                // Auto settings
-                auto.settings = autoSettings;
-            }
-            // Signal changes
-            trombone.onChangeBuild.Invoke();
+            object sourceCustomizer = customizer.GetValue(this);
+            Type componentType = ((ComponentCustomizer)sourceCustomizer).GetComponentType();
+            ValueCopier.CopyValuesByName(componentType, sourceCustomizer, FindObjectOfType(componentType, true));
         }
     }
 
-    public void SaveFrom(TromboneCore trombone)
+    public void GetBuildFromScene()
     {
-        // Copy settings from trombone components
-        if (trombone != null)
+        FieldInfo[] customizers = typeof(TromboneBuild).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetField);
+        foreach (FieldInfo customizer in customizers)
         {
-            // Trombone component
-            pressureStepTones = trombone.pressureStepTones;
-            slideTones = trombone.slideTones;
-            // TromboneDisplay component
-            TromboneDisplay visual = trombone.tromboneDisplay;
-            if (visual != null)
-            {
-                // Aspect
-                color = visual.color;
-                bodyLength = visual.bodyLength;
-                slideLength = visual.slideLength;
-                // Controls
-                horizontalMovements = visual.enableSlideMovement;
-                verticalMovements = visual.enablePressureMovement;
-            }
-            // TromboneAuto component
-            TromboneAuto auto = trombone.tromboneAuto;
-            if (auto != null)
-            {
-                // Auto settings
-                autoSettings = auto.settings;
-            }
+            object destinationCustomizer = customizer.GetValue(this);
+            Type componentType = ((ComponentCustomizer)destinationCustomizer).GetComponentType();
+            ValueCopier.CopyValuesByName(componentType, FindObjectOfType(componentType, true), destinationCustomizer);
         }
     }
 }
