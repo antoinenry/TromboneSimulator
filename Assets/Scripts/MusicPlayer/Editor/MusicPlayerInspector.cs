@@ -32,5 +32,12 @@ public class MusicPlayerInspector : Editor
         EditorGUILayout.LabelField("Playing state", musicPlayer.State.ToString());
         EditorGUILayout.LabelField("Playing speed", musicPlayer.CurrentPlayingSpeed.ToString());
         EditorGUILayout.EndVertical();
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Load music")) musicPlayer.LoadMusic();
+        GUI.enabled = false;
+        EditorGUILayout.ObjectField(musicPlayer.LoadedMusic, typeof(SheetMusic), false);
+        GUI.enabled = GUIEnabled;
+        EditorGUILayout.EndHorizontal();
+        if (musicPlayer.NeedsReload()) EditorGUILayout.HelpBox("Loaded music doesn't match input sheet music and parameters. Need to reload.", MessageType.Info);
     }
 }

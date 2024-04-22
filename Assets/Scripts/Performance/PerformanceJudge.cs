@@ -21,10 +21,10 @@ public class PerformanceJudge : MonoBehaviour
     public UnityEvent<float> onScore;
     public UnityEvent<float,float,float> onHealth;
     public UnityEvent<int> onDance;
-    public UnityEvent<NoteInstance, float, float> onCorrectNote;
-    public UnityEvent<NoteInstance> onWrongNote;
-    public UnityEvent<NoteInstance> onMissNote;
-    public UnityEvent<NoteInstance, float, int> onNotePerformanceEnd;
+    public UnityEvent<NoteSpawn, float, float> onCorrectNote;
+    public UnityEvent<NoteSpawn> onWrongNote;
+    public UnityEvent<NoteSpawn> onMissNote;
+    public UnityEvent<NoteSpawn, float, int> onNotePerformanceEnd;
 
     private NoteCatcher noteCatcher;
     private NoteCrasher noteCrasher;
@@ -122,7 +122,7 @@ public class PerformanceJudge : MonoBehaviour
         ResetPerformance();
     }  
 
-    public void AddNotePerformance(NoteInstance instance)
+    public void AddNotePerformance(NoteSpawn instance)
     {
         // Add note performance
         performanceDetail.Add(instance.performance);
@@ -204,22 +204,22 @@ public class PerformanceJudge : MonoBehaviour
         return scoreInfo;
     }
 
-    private void OnPlayCorrectNote(NoteInstance note)
+    private void OnPlayCorrectNote(NoteSpawn note)
     {
         if (note != null) onCorrectNote.Invoke(note, GetNoteAccuracy(note.performance), GetNoteScore(note.performance));
     }
 
-    private void OnPlayWrongNote(NoteInstance note)
+    private void OnPlayWrongNote(NoteSpawn note)
     {
         if (note != null) onWrongNote.Invoke(note);
     }
 
-    private void OnMissNote(NoteInstance note)
+    private void OnMissNote(NoteSpawn note)
     {
         if (note != null) onMissNote.Invoke(note);
     }
 
-    private void OnNoteExit(NoteInstance note)
+    private void OnNoteExit(NoteSpawn note)
     {
         if (note != null) AddNotePerformance(note);
     }

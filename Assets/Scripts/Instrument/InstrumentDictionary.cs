@@ -176,6 +176,7 @@ public class InstrumentDictionary : ScriptableObject
 
     private int FindInstrumentIndex(string instrumentName)
     {
+        if (instrumentName == null) return -1;
         int instrumentCount = instruments != null ? instruments.Length : 0;
         for (int i = 0; i < instrumentCount; i++)
         {

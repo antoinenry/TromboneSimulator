@@ -13,35 +13,35 @@ MonoBehaviour:
   m_Name: FullSax
   m_EditorClassIdentifier: 
   instrumentInfo:
-  - name: Alto
+  - partName: AltoSax
     instrument: {fileID: 11400000, guid: 70c960cf1ee35fd46b2e05ca43af0400, type: 2}
     volume: 1
     pan: 0.299
-  - name: Tenor
+  - partName: TenorSax
     instrument: {fileID: 11400000, guid: 840bba917887279419fd4b2b55f2f57a, type: 2}
     volume: 1
     pan: 0.34
-  - name: Baryton
+  - partName: BarytonSax
     instrument: {fileID: 11400000, guid: 48b3be68a3da94c488bdf2aed622062a, type: 2}
     volume: 1
     pan: 1
-  - name: Trumpet
+  - partName: Trumpet
     instrument: {fileID: 11400000, guid: 70c960cf1ee35fd46b2e05ca43af0400, type: 2}
     volume: 1
     pan: -0.526
-  - name: Tuba
+  - partName: Trombone
     instrument: {fileID: 11400000, guid: 840bba917887279419fd4b2b55f2f57a, type: 2}
     volume: 1
     pan: -1
-  - name: Trombone
+  - partName: Tuba
     instrument: {fileID: 11400000, guid: 840bba917887279419fd4b2b55f2f57a, type: 2}
     volume: 1
     pan: 0
-  - name: Sousa
+  - partName: Souba
     instrument: {fileID: 11400000, guid: 48b3be68a3da94c488bdf2aed622062a, type: 2}
     volume: 1
     pan: 0
-  - name: Drums
+  - partName: Drums
     instrument: {fileID: 11400000, guid: 03c24e8fc3e0c274ababb8e4a5df02ee, type: 2}
     volume: 1
     pan: 0

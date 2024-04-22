@@ -32,7 +32,16 @@ public class TromboneBuild : ScriptableObject
         {
             object sourceCustomizer = customizer.GetValue(this);
             Type componentType = ((ComponentCustomizer)sourceCustomizer).GetComponentType();
-            ValueCopier.CopyValuesByName(componentType, sourceCustomizer, FindObjectOfType(componentType, true));
+            UnityEngine.Object destinationComponent = FindObjectOfType(componentType, true);
+            if (destinationComponent == null)
+            {
+                Debug.LogWarning("Couldn't find " + componentType);
+                continue;
+            }
+            ValueCopier.CopyValuesByName(componentType, sourceCustomizer, destinationComponent);
+            typeof(ComponentCustomizer).InvokeMember("OnApplyToComponent", 
+                BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.Public, 
+                null, sourceCustomizer, new object[1] {destinationComponent});
         }
     }
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class MenuMusic : MonoBehaviour
 {   
@@ -12,11 +11,8 @@ public class MenuMusic : MonoBehaviour
     [Header("Execution")]
     public MenuUI[] playInMenus;
     public bool enableTrombone = true;
-    public bool pressureLock = true;
 
     public bool IsPlaying { get; private set; }
-
-    private AudioClip pregeneratedAudio;
 
     private void OnEnable()
     {
@@ -26,6 +22,11 @@ public class MenuMusic : MonoBehaviour
     private void OnDisable()
     {
         RemoveMenuListeners();
+    }
+
+    private void Update()
+    {
+        TromboneSetup();
     }
 
     private void AddMenuListeners()
@@ -48,14 +49,14 @@ public class MenuMusic : MonoBehaviour
 
     private void OnUIShown()
     {
-        musicPlayer?.backingGenerator?.OnGenerationProgress.AddListener(OnLoadMusic);
+        musicPlayer?.audioGenerator?.OnGenerationProgress.AddListener(OnLoadMusic);
         TromboneSetup();
         StartPlaying();
     }
 
     private void OnUIHidden()
     {
-        musicPlayer?.backingGenerator?.OnGenerationProgress.RemoveListener(OnLoadMusic);
+        musicPlayer?.audioGenerator?.OnGenerationProgress.RemoveListener(OnLoadMusic);
         foreach (MenuUI m in playInMenus) if (m.IsVisible) return;
         StopPlaying();
     }
@@ -65,8 +66,6 @@ public class MenuMusic : MonoBehaviour
         if (progress < 1f) StopPlaying();
         else
         {
-            AudioClip originalAudio = musicPlayer.backingGenerator?.generatedAudio;
-            pregeneratedAudio = AudioSampling.CloneAudioClip(originalAudio, originalAudio?.name);
             TromboneSetup();
             StartPlaying();
         }
@@ -85,7 +84,7 @@ public class MenuMusic : MonoBehaviour
             // Turn off metronome
             musicPlayer.metronome.click = false;
             // Load music
-            musicPlayer.LoadMusic(music, pregeneratedAudio, playedInstrument:trombone.Sampler);
+            musicPlayer.LoadMusic(music, playedInstrument:trombone.Sampler);
             // Play
             musicPlayer.Play();
             IsPlaying = true;
@@ -100,19 +99,13 @@ public class MenuMusic : MonoBehaviour
         IsPlaying = false;
     }
 
-    private IEnumerator PregenerateAudioCoroutine()
-    {
-        
-        yield return new WaitWhile(() => musicPlayer.IsLoading);
-        //pregeneratedAudio = AudioSampling.CloneAudioClip(musicPlayer.LoadedAudio, musicPlayer.LoadedAudio.name);
-    }
-
     private void TromboneSetup()
     {
         if (trombone == null) return;
         if (enableTrombone) trombone.Unfreeze();
         else trombone.Freeze();
-        if (trombone.tromboneAuto != null && pressureLock)
+        // Special auto setting (lock pressure) for prettier autoplay in menu music
+        if (trombone.tromboneAuto != null && trombone.tromboneAuto.autoSettings.blowControl != TromboneAutoSettings.ControlConditions.Never)
         {
             TromboneAutoSettings autoSettings = trombone.tromboneAuto.autoSettings;
             autoSettings.pressureLock = TromboneAutoSettings.LockConditions.AutoBlows;

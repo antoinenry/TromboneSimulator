@@ -97,6 +97,22 @@ public struct NoteInfo
         return newNote;
     }
 
+    public static NoteInfo[] ScaleTime(NoteInfo[] notes, float scale)
+        => notes != null ? Array.ConvertAll(notes, n => n.ScaleTime(scale)) : null;
+
+    public NoteInfo Transpose(float byTones)
+    {
+        NoteInfo newNote = new NoteInfo();
+        newNote.tone = tone + byTones;
+        newNote.velocity = velocity;
+        newNote.startTime = startTime;
+        newNote.duration = duration;
+        return newNote;
+    }
+
+    public static NoteInfo[] Transpose(NoteInfo[] notes, float byTones)
+        => notes != null ? Array.ConvertAll(notes, n => n.Transpose(byTones)) : null;
+
     static public float GetTotalDuration(NoteInfo[] notes)
     {
         float duration = 0f;

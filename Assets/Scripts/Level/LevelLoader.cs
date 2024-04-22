@@ -28,7 +28,6 @@ public class LevelLoader : MonoBehaviour
     // Load state
     public Mode LoadedMode { get; private set; }
     public Level LoadedLevel { get; private set; }
-    public float MusicProgress => musicPlayer ? musicPlayer.CurrentPlayTime / musicPlayer.MusicDuration : 0f;
 
     #region INIT
     private void Awake()

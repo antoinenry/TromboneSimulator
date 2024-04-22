@@ -177,6 +177,9 @@ public class Metronome : MonoBehaviour
         SetRythm();
     }
 
+    public void SetRythm(SheetMusic sheet)
+        => SetRythm(sheet?.GetTempo(), sheet?.GetMeasure());
+
     private void SetRythm()
     {
         // Generate rythm track

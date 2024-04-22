@@ -66,19 +66,19 @@ public class PerformanceGUI : GameUI
         if (scoreDisplay) scoreDisplay.value = Mathf.FloorToInt(score);
     }
 
-    public void DisplayCorrectlyPlayedNote(NoteInstance note, float accuracy, float points)
+    public void DisplayCorrectlyPlayedNote(NoteSpawn note, float accuracy, float points)
     {
         DisplayNoteAccuracy(accuracy);
         if (note) DisplayNotePoints(points, note.DisplayColor);
     }
 
-    public void DisplayWronglyPlayedNote(NoteInstance note)
+    public void DisplayWronglyPlayedNote(NoteSpawn note)
     {
         DisplayNoteAccuracy(0f);
         DisplayMissedMessage();
     }
 
-    public void DisplayPlayedNoteEnd(NoteInstance note, float points, int combo)
+    public void DisplayPlayedNoteEnd(NoteSpawn note, float points, int combo)
     {
         if (note) DisplayNotePointsEnd(points, note.DisplayColor);
         else DisplayNotePointsEnd();

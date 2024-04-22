@@ -13,18 +13,18 @@ public class NoteSpawner : MonoBehaviour
     public float spawnDistance;
     public float destroyDistance;
     [Header("Note aspect")]
-    public NoteInstance notePrefab;
+    public NoteSpawn notePrefab;
     public Color[] colorWheel = new Color[] { Color.blue, Color.red, Color.green, Color.cyan, Color.yellow, Color.magenta };
     public int colorIndex;
     public float incomingTime;
     public float minimumIncomingTime;
     [Header("Events")]
-    public UnityEvent<NoteInstance> onSpawnNote;
-    public UnityEvent<NoteInstance> onDestroyNote;
-    public UnityEvent<NoteInstance[], float, float> onMoveNotes;
+    public UnityEvent<NoteSpawn> onSpawnNote;
+    public UnityEvent<NoteSpawn> onDestroyNote;
+    public UnityEvent<NoteSpawn[], float, float> onMoveNotes;
 
     private NoteGrid grid;
-    private List<NoteInstance> noteInstances;
+    private List<NoteSpawn> noteInstances;
     private NotePlacement notePlacement;
     private float previousTime;
 
@@ -88,7 +88,7 @@ public class NoteSpawner : MonoBehaviour
 
     public void UpdateNoteInstances()
     {
-        foreach (NoteInstance instance in noteInstances)
+        foreach (NoteSpawn instance in noteInstances)
         {
             if (instance != null)
             {
@@ -136,9 +136,9 @@ public class NoteSpawner : MonoBehaviour
     {
         // Destroy note instances
         if (noteInstances != null)
-            foreach (NoteInstance n in noteInstances)
+            foreach (NoteSpawn n in noteInstances)
                 DestroyNote(n);
-        noteInstances = new List<NoteInstance>();
+        noteInstances = new List<NoteSpawn>();
     }
 
     private void OnPlayheadEntersNote(int noteIndex, INote note)
@@ -146,12 +146,12 @@ public class NoteSpawner : MonoBehaviour
         if (note != null) SpawnNote(note);
     }
 
-    public NoteInstance SpawnNote(INote note)
+    public NoteSpawn SpawnNote(INote note)
     {
         if (note == null) return null;
         NoteInfo noteInfo = NoteInfo.GetInfo(note);
         if (showDebug) Debug.Log("Spawning " + noteInfo);
-        NoteInstance spawnedNote = null;
+        NoteSpawn spawnedNote = null;
         if (noteInfo.duration > 0f)
         {
             // Don't spawn if out of bounds
@@ -222,7 +222,7 @@ public class NoteSpawner : MonoBehaviour
         return noteCoordinate;
     }
 
-    private void DestroyNote(NoteInstance note)
+    private void DestroyNote(NoteSpawn note)
     {
         if (note != null)
         {

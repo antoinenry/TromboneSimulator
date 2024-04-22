@@ -71,7 +71,7 @@ public class SheetMusicInspector : Editor
             if (transposeInstrumentIndex < partNames.Count - 1) 
                 sheetMusic.TransposePart(transposeInstrumentIndex, transposeTones);
             else
-                sheetMusic.Transpose(transposeTones);
+                sheetMusic.TransposeBy(transposeTones);
             EditorUtility.SetDirty(target);
         }
         EditorGUILayout.EndHorizontal();

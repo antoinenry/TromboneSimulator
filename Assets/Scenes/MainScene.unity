@@ -9733,20 +9733,25 @@ MonoBehaviour:
   playOnStart: 0
   fixedUpdate: 1
   music: {fileID: 0}
-  orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
-  instrumentDictionary: {fileID: 11400000, guid: 783db9433904c0b4c962588891b020a9, type: 2}
-  tempoModifier: 1
+  tempoMutiplier: 1
+  keyModifier: 0
   metronome: {fileID: 1300806622}
   playTime: 0
   playingSpeed: 1
   playStateTransitionDuration: 0.5
   loop: 1
-  backingGenerator: {fileID: 1888059635}
-  backingSource: {fileID: 1888059636}
+  audioTrack: {fileID: 0}
+  audioGenerator: {fileID: 1888059635}
+  audioSource: {fileID: 1888059636}
   audioSyncTolerance: 0.05
   playHeads:
   - {fileID: 11400000, guid: 8d955882cbde3424081524adaa02c690, type: 2}
   - {fileID: 11400000, guid: ef3d292b6c82a494bb1972c07ed4bb08, type: 2}
+  playheadPart:
+    partName: trombone
+    mainVoice: 1
+    alternativeVoiceIndices: 00000000
+  playheadStyle: {fileID: 11400000, guid: 820d39334e222714ca0b5a8be7137be7, type: 2}
   onPlayerUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -26457,11 +26462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music: {fileID: 0}
   orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
-  ignoredParts:
-  - partName: Trombone
-    mainVoice: 0
-    alternativeVoiceIndices: 01000000
-  tempoStretch: 1
+  mutedParts: []
   frequency: 48000
   stereo: 1
   sampleSmoothIn: 48

@@ -1,23 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewSheetMusic", menuName = "Trombone Hero/Music/Sheet Music")]
 public class SheetMusic : ScriptableObject
 {
-    [Serializable]
-    public struct Part
-    {
-        public string instrumentName;
-        public NoteInfo[] notes;
-
-        public int NoteCount => notes != null ? notes.Length : 0;
-    }
-
     [SerializeField] private TempoInfo[] tempo;
     [SerializeField] private MeasureInfo[] measure;
-    [SerializeField] private Part[] parts;
+    [SerializeField] private SheetMusicPart[] parts;
     [SerializeField] private bool completeLastBar = true;
+
+    public bool CreatedAtRuntime { get; private set; }
+
+    private void Awake()
+    {
+        CreatedAtRuntime = Application.isPlaying;
+    }
 
     #region Write music
     public void SetTempo(TempoInfo[] t)
@@ -34,45 +33,42 @@ public class SheetMusic : ScriptableObject
         Array.Copy(m, measure, length);
     }
 
+    public void MultiplyTempoBy(float tempoModifier)
+    {
+        if (tempoModifier == 0f || tempoModifier == 1f) return;
+        float timeScale = 1f / tempoModifier;
+        if (tempo != null) tempo = Array.ConvertAll(tempo, t => t.ScaleTime(timeScale));
+        if (parts != null) parts = Array.ConvertAll(parts, p => p.ScaleTime(timeScale));
+    }
+
     public void SetPart(int index, string instrumentName, NoteInfo[] notes)
     {
-        Part part = parts[index];
+        SheetMusicPart part = parts[index];
         int noteCount = notes != null ? notes.Length : 0;
-        part.instrumentName = instrumentName;
+        part.name = instrumentName;
         part.notes = new NoteInfo[noteCount];
         Array.Copy(notes, part.notes, noteCount);
         parts[index] = part;
     }
 
-    public void TransposePart(int partIndex, float tones)
+    public void TransposePart(int partIndex, float byTones)
     {
         if (partIndex >= 0 && partIndex < PartCount)
-        {
-            int noteCount = parts[partIndex].notes != null ? parts[partIndex].notes.Length : 0;
-            for (int n = 0; n < noteCount; n++)
-            {
-                NoteInfo note = parts[partIndex].notes[n];
-                note.tone += tones;
-                parts[partIndex].notes[n] = note;
-            }
-        }
+            parts[partIndex] = parts[partIndex].Transpose(byTones);
     }
 
     public void TransposePart(string instrumentName, float tones)
     {
-        if (parts != null)
-        {
-            int partIndex = Array.FindIndex(parts, p => p.instrumentName == instrumentName);
-            if (partIndex != -1) TransposePart(partIndex, tones);
-        }
+        int partIndex = parts != null ? Array.FindIndex(parts, p => p.name == instrumentName) : -1;
+        if (partIndex != -1) TransposePart(partIndex, tones);
     }
 
-    public void Transpose(float tones)
+    public void TransposeBy(float tones)
     {
         // Transpose every part (except drums)
         for (int p = 0; p < PartCount; p++)
         {
-            if (InstrumentDictionary.IsCurrentDrums(parts[p].instrumentName) == false)
+            if (InstrumentDictionary.IsCurrentDrums(parts[p].name) == false)
                 TransposePart(p, tones);
         }
     }
@@ -83,15 +79,15 @@ public class SheetMusic : ScriptableObject
     {
         int count = 0;
         if (parts != null)
-            foreach (Part p in parts) count += p.NoteCount;
+            foreach (SheetMusicPart p in parts) count += p.NoteCount;
         return count;
     }
 
-    public float GetDuration(float timeStretch = 1f)
+    public float GetDuration()
     {
         float duration = 0f;
         if (parts != null)
-            foreach (Part p in parts)
+            foreach (SheetMusicPart p in parts)
                 duration = Mathf.Max(duration, NoteInfo.GetTotalDuration(p.notes));
         if (completeLastBar)
         {
@@ -103,49 +99,84 @@ public class SheetMusic : ScriptableObject
                 if (lastBarStartTime != duration) duration = lastBarStartTime + rythmTrack.GetBarDuration(lastBarIndex); ;
             }
         }
-        return Mathf.Abs(duration * timeStretch);
+        return Mathf.Abs(duration);
     }
 
-    public TempoInfo[] GetTempo(float timeStretch = 1f)
-        => tempo != null ? Array.ConvertAll(tempo, t => t * timeStretch) : new TempoInfo[0];
+    public TempoInfo[] GetTempo()
+        => tempo != null ? (TempoInfo[])tempo.Clone() : new TempoInfo[0];
 
     public MeasureInfo[] GetMeasure()
         => (MeasureInfo[])measure?.Clone();
 
-    public NoteInfo[] GetPartNotes(int partIndex, float timeStretch = 1f)
+    public NoteInfo[] GetPartNotes(int partIndex)
     {
         if (parts != null && partIndex >= 0 && partIndex < parts.Length && parts[partIndex].notes != null)
-            return Array.ConvertAll(parts[partIndex].notes, n => n.ScaleTime(timeStretch));
+            return (NoteInfo[])parts[partIndex].notes.Clone();
         else
             return null;
     }
 
-    public NoteInfo[] GetPartNotes(string partName, float timeStretch = 1f)
-        => GetPartNotes(GetPartIndex(partName), timeStretch);    
+    public NoteInfo[] GetPartNotes(string partName)
+        => GetPartNotes(GetPartIndex(partName));
 
-    public NotePlay[] GetVoiceNotes(SamplerInstrument instrument, int voiceIndex, float timeStretch = 1f)
+    public NoteInfo[] GetPartNotes(int partIndex, bool includeMainVoice, params int[] voiceIndices)
     {
-        int partIndex = GetPartIndex(instrument.name);
-        NoteInfo[] notes = GetPartNotes(partIndex, timeStretch);
-        int voices = SplitPartVoices(partIndex, out int[] mainNoteIndices, out List<int[]> alternativeNoteIndices);
-        if (voices < 1) return new NotePlay[0];
-        else
-        {
-            // Get notes
-            int[] getNoteIndices = voices == 1 ? mainNoteIndices : NoteInfo.Assemble(notes, mainNoteIndices, alternativeNoteIndices[voiceIndex]);
-            int noteCount = getNoteIndices != null ? getNoteIndices.Length : 0;
-            if (noteCount == 0) return new NotePlay[0];
-            // Process style
-            NoteInfo[] getNoteInfos = Array.ConvertAll(getNoteIndices, i => notes[i]);
-            if (instrument.style != null) instrument.style.ProcessNotes(getNoteInfos);
-            // Return notes
-            NotePlay[] getNotes = new NotePlay[noteCount];
-            for (int i = 0; i < noteCount; i++) getNotes[i] = new NotePlay(getNoteInfos[i], getNoteIndices[i]);
-            return getNotes;
-        }
+        if (includeMainVoice == false && (voiceIndices == null || voiceIndices.Length == 0)) return new NoteInfo[0];
+        NoteInfo[] notes = GetPartNotes(partIndex);
+        int voiceCount = SplitPartVoices(partIndex, out int[] mainNoteIndices, out List<int[]> alternativeNoteIndices);
+        if (voiceCount < 1) return new NoteInfo[0];
+        // Get notes by assembling selected voices
+        List<int> selectedNoteIndices = includeMainVoice ? new List<int>(mainNoteIndices) : new List<int>();
+        if (alternativeNoteIndices != null)
+            foreach (int selectedVoiceIndex in voiceIndices)
+            {
+                if (selectedVoiceIndex < 0 || selectedVoiceIndex >= voiceCount) continue;
+                selectedNoteIndices.AddRange(alternativeNoteIndices[selectedVoiceIndex]);
+            }
+        return selectedNoteIndices.ConvertAll(i => notes[i]).ToArray();
+    }
+
+    public NoteInfo[] GetPartNotes(string partName, bool includeMainVoice, params int[] voiceIndices)
+        => GetPartNotes(GetPartIndex(partName), includeMainVoice, voiceIndices);
+
+    public NoteInfo[] GetPartNotes(MusicPartIdentifier part)
+        => GetPartNotes(part.partName, part.mainVoice, part.alternativeVoiceIndices);
+
+    //public NotePlay[] GetVoiceNotes(SamplerInstrument instrument, int voiceIndex)
+    //{
+    //    int partIndex = GetPartIndex(instrument.name);
+    //    NoteInfo[] notes = GetPartNotes(partIndex);
+    //    int voices = SplitPartVoices(partIndex, out int[] mainNoteIndices, out List<int[]> alternativeNoteIndices);
+    //    if (voices < 1) return new NotePlay[0];
+    //    else
+    //    {
+    //        // Get notes
+    //        int[] getNoteIndices = voices == 1 ? mainNoteIndices : NoteInfo.Assemble(notes, mainNoteIndices, alternativeNoteIndices[voiceIndex]);
+    //        int noteCount = getNoteIndices != null ? getNoteIndices.Length : 0;
+    //        if (noteCount == 0) return new NotePlay[0];
+    //        // Process style
+    //        NoteInfo[] getNoteInfos = Array.ConvertAll(getNoteIndices, i => notes[i]);
+    //        if (instrument.style != null) instrument.style.ProcessNotes(getNoteInfos);
+    //        // Return notes
+    //        NotePlay[] getNotes = new NotePlay[noteCount];
+    //        for (int i = 0; i < noteCount; i++) getNotes[i] = new NotePlay(getNoteInfos[i], getNoteIndices[i]);
+    //        return getNotes;
+    //    }
+    //}
+
+    public bool MusicEquals(SheetMusic other, float tempoRatio = 1f, float transposition = 0f)
+    {
+        if (other == null) return false;
+        float timeScale = tempoRatio != 0f ? 1f / tempoRatio : 0f;
+        if (!Enumerable.SequenceEqual(measure, other.measure)) return false;
+        TempoInfo[] modifiedTempo = TempoInfo.ScaleTime(other.tempo, timeScale);
+        if (!Enumerable.SequenceEqual(tempo, modifiedTempo)) return false;
+        SheetMusicPart[] modifiedParts = Array.ConvertAll(other.parts, p => p.Transpose(transposition).ScaleTime(timeScale));
+        if (!Enumerable.SequenceEqual(parts, modifiedParts)) return false;
+        return true;
     }
     #endregion
-    
+
     #region Parts
     public int PartCount
     {
@@ -155,14 +186,14 @@ public class SheetMusic : ScriptableObject
 
     public string[] PartNames
     {
-        get => parts != null ? Array.ConvertAll(parts, p => p.instrumentName) : null;
+        get => parts != null ? Array.ConvertAll(parts, p => p.name) : null;
     }
 
     public int GetPartIndex(string partName)
     {
         if (parts != null && InstrumentDictionary.FindCurrentOfficalName(partName, out string searchedOfficalName))
         {
-            int partIndex = Array.FindIndex(parts, p => InstrumentDictionary.FindCurrentOfficalName(p.instrumentName, out string partOfficialName) && partOfficialName == searchedOfficalName);
+            int partIndex = Array.FindIndex(parts, p => InstrumentDictionary.FindCurrentOfficalName(p.name, out string partOfficialName) && partOfficialName == searchedOfficalName);
             if (partIndex != -1) return partIndex;
         }
         return -1;
@@ -170,7 +201,7 @@ public class SheetMusic : ScriptableObject
 
     public string GetPartInstrument(int partIndex)
     {
-        if (parts != null && partIndex >= 0 && partIndex < parts.Length) return parts[partIndex].instrumentName;
+        if (parts != null && partIndex >= 0 && partIndex < parts.Length) return parts[partIndex].name;
         else return null;
     }
 
@@ -253,13 +284,13 @@ public class SheetMusic : ScriptableObject
         else return alternativeNotes.Count;
     }
 
-    public int SplitPartVoices(int partIndex, out NoteInfo[] mainNotes, out List<NoteInfo[]> alternativeNotes, float timeStretch = 1f)
+    public int SplitPartVoices(int partIndex, out NoteInfo[] mainNotes, out List<NoteInfo[]> alternativeNotes)
     {
         mainNotes = null;
         alternativeNotes = null;
         int voiceCount = SplitPartVoices(partIndex, out int[] mainNoteIndices, out List<int[]> alternativeNoteIndices);
         if (voiceCount == 0) return 0;
-        NoteInfo[] notes = GetPartNotes(partIndex, timeStretch);
+        NoteInfo[] notes = GetPartNotes(partIndex);
         mainNotes = Array.ConvertAll(mainNoteIndices, n => notes[n]);
         if (voiceCount > 1)
         {
@@ -279,25 +310,25 @@ public class SheetMusic : ScriptableObject
         int totalOutOfRangeCount = 0;
         List<float> toneList = new List<float>();
         List<string> instrumentList = new List<string>();
-        foreach (Part p in parts)
+        foreach (SheetMusicPart p in parts)
         {
-            if (InstrumentDictionary.IsCurrentDrums(p.instrumentName)) continue;
+            if (InstrumentDictionary.IsCurrentDrums(p.name)) continue;
             int outOfRangeCount = FindOutOfRangeTones(p, ref toneList);
             totalOutOfRangeCount += outOfRangeCount;
-            for (int i = 0; i < outOfRangeCount; i++) instrumentList.Add(p.instrumentName);
+            for (int i = 0; i < outOfRangeCount; i++) instrumentList.Add(p.name);
         }
         outOfRangeTones = toneList.ToArray();
         instrumentNames = instrumentList.ToArray();
         return totalOutOfRangeCount;
     }
 
-    public int FindOutOfRangeTones(Part part, ref List<float> outOfRangeTones)
+    public int FindOutOfRangeTones(SheetMusicPart part, ref List<float> outOfRangeTones)
     {
         int outOfRangeCount = 0;
         foreach (NoteInfo note in part.notes)
         {
             float tone = note.tone;
-            if (InstrumentDictionary.CheckCurrentToneRange(tone, part.instrumentName) == false)
+            if (InstrumentDictionary.CheckCurrentToneRange(tone, part.name) == false)
             {
                 outOfRangeCount++;
                 if (outOfRangeTones.Contains(tone) == false) outOfRangeTones.Add(tone);
@@ -310,8 +341,8 @@ public class SheetMusic : ScriptableObject
     {
         int undefinedCount = 0;
         List<float> toneList = new List<float>();
-        Part[] drumParts = Array.FindAll(parts, p => InstrumentDictionary.IsCurrentDrums(p.instrumentName));
-        foreach (Part part in drumParts)
+        SheetMusicPart[] drumParts = Array.FindAll(parts, p => InstrumentDictionary.IsCurrentDrums(p.name));
+        foreach (SheetMusicPart part in drumParts)
         {
             undefinedCount += FindUnknownDrumHits(part, ref toneList);
         }
@@ -319,7 +350,7 @@ public class SheetMusic : ScriptableObject
         return undefinedCount;
     }
 
-    public int FindUnknownDrumHits(Part part, ref List<float> undefinedTones)
+    public int FindUnknownDrumHits(SheetMusicPart part, ref List<float> undefinedTones)
     {
         int undefinedCount = 0;
         foreach (NoteInfo note in part.notes)
