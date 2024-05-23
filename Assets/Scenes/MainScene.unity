@@ -14326,6 +14326,8 @@ MonoBehaviour:
   slideTone: 0
   pressureTone: 0
   sampler: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
+  pitch: 1
+  setPitchFromMusicPlayer: 1
   audioSourceCapacity: 16
   mixerGroup: {fileID: 6950387309436328587, guid: f68f9a66afc981e45aeab3515c546139, type: 2}
   smoothInSpeed: 200
@@ -28402,7 +28404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalLines: {fileID: 2008865792}
   horizontalLines: {fileID: 2067895447}
-  timeScale: 150
+  timeScale: 500
   dimensions:
     lineTones:
     - 46

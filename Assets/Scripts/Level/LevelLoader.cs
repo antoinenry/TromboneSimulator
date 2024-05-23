@@ -371,7 +371,7 @@ public class LevelLoader : MonoBehaviour
 
     public void QuitLevel()
     {
-        //UnloadLevel();
+        UnloadLevel();
         // Back to menu screen
         switch (LoadedMode)
         {
