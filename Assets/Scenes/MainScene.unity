@@ -886,6 +886,7 @@ MonoBehaviour:
   - 3
   - 2
   slideToneLength: 6
+  tromboneBuild: {fileID: 11400000, guid: 64e4846b8f7ca4a4bb1075d355f97764, type: 2}
 --- !u!4 &64880550
 Transform:
   m_ObjectHideFlags: 0
@@ -2774,6 +2775,316 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keys: 1b000000
+--- !u!114 &242972877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
+  m_Name: Test_miniMii (copy)
+  m_EditorClassIdentifier: 
+  tempo: []
+  measure: []
+  parts:
+  - name: Alto
+    notes:
+    - tone: 67
+      velocity: 0.859375
+      startTime: 0
+      duration: 0.24479167
+    - tone: 70
+      velocity: 0.859375
+      startTime: 0.5
+      duration: 0.24479169
+    - tone: 74
+      velocity: 0.859375
+      startTime: 0.75
+      duration: 0.24479169
+    - tone: 70
+      velocity: 0.859375
+      startTime: 1.25
+      duration: 0.24479163
+    - tone: 67
+      velocity: 0.859375
+      startTime: 1.75
+      duration: 0.24479163
+    - tone: 63
+      velocity: 0.859375
+      startTime: 2
+      duration: 0.083333254
+    - tone: 63
+      velocity: 0.859375
+      startTime: 2.25
+      duration: 0.083333254
+    - tone: 63
+      velocity: 0.859375
+      startTime: 2.5
+      duration: 0.125
+    - tone: 67
+      velocity: 0.859375
+      startTime: 4.25
+      duration: 0.24479151
+    - tone: 70
+      velocity: 0.859375
+      startTime: 4.5
+      duration: 0.24479151
+  - name: Tenor
+    notes:
+    - tone: 63
+      velocity: 0.859375
+      startTime: 0
+      duration: 0.24479167
+    - tone: 67
+      velocity: 0.859375
+      startTime: 0.5
+      duration: 0.24479169
+    - tone: 70
+      velocity: 0.859375
+      startTime: 0.75
+      duration: 0.24479169
+    - tone: 67
+      velocity: 0.859375
+      startTime: 1.25
+      duration: 0.24479163
+    - tone: 63
+      velocity: 0.859375
+      startTime: 1.75
+      duration: 0.24479163
+    - tone: 60
+      velocity: 0.859375
+      startTime: 2
+      duration: 0.083333254
+    - tone: 60
+      velocity: 0.859375
+      startTime: 2.25
+      duration: 0.083333254
+    - tone: 60
+      velocity: 0.859375
+      startTime: 2.5
+      duration: 0.125
+    - tone: 63
+      velocity: 0.859375
+      startTime: 4.25
+      duration: 0.24479151
+    - tone: 67
+      velocity: 0.859375
+      startTime: 4.5
+      duration: 0.24479151
+  - name: Baryton
+    notes:
+    - tone: 62
+      velocity: 0.859375
+      startTime: 3.75
+      duration: 0.25
+    - tone: 63
+      velocity: 0.859375
+      startTime: 4
+      duration: 0.125
+    - tone: 74
+      velocity: 0.859375
+      startTime: 6
+      duration: 0.75
+    - tone: 73
+      velocity: 0.859375
+      startTime: 6.75
+      duration: 0.25
+    - tone: 72
+      velocity: 0.859375
+      startTime: 7
+      duration: 0.125
+    - tone: 65
+      velocity: 0.859375
+      startTime: 8.5
+      duration: 0.125
+    - tone: 65
+      velocity: 0.859375
+      startTime: 10.5
+      duration: 0.125
+    - tone: 53
+      velocity: 0.859375
+      startTime: 11.5
+      duration: 0.125
+    - tone: 56
+      velocity: 0.859375
+      startTime: 12
+      duration: 0.083333015
+    - tone: 56
+      velocity: 0.859375
+      startTime: 12.25
+      duration: 0.083333015
+  - name: Trumpet
+    notes:
+    - tone: 38
+      velocity: 0.859375
+      startTime: 3.75
+      duration: 0.25
+    - tone: 39
+      velocity: 0.859375
+      startTime: 4
+      duration: 0.125
+    - tone: 46
+      velocity: 0.859375
+      startTime: 8
+      duration: 0.125
+    - tone: 39
+      velocity: 0.859375
+      startTime: 12
+      duration: 0.083333015
+    - tone: 39
+      velocity: 0.859375
+      startTime: 12.25
+      duration: 0.083333015
+    - tone: 39
+      velocity: 0.859375
+      startTime: 12.5
+      duration: 0.125
+    - tone: 39
+      velocity: 0.859375
+      startTime: 13.5
+      duration: 0.083333015
+    - tone: 39
+      velocity: 0.859375
+      startTime: 13.75
+      duration: 0.083333015
+    - tone: 39
+      velocity: 0.859375
+      startTime: 14
+      duration: 0.125
+    - tone: 38
+      velocity: 0.859375
+      startTime: 15
+      duration: 0.5
+  - name: Tuba
+    notes:
+    - tone: 48
+      velocity: 0.859375
+      startTime: 0
+      duration: 0.24479167
+    - tone: 57
+      velocity: 0.859375
+      startTime: 2
+      duration: 0.083333254
+    - tone: 57
+      velocity: 0.859375
+      startTime: 2.25
+      duration: 0.083333254
+    - tone: 57
+      velocity: 0.859375
+      startTime: 2.5
+      duration: 0.125
+    - tone: 48
+      velocity: 0.859375
+      startTime: 4
+      duration: 0.24479151
+    - tone: 57
+      velocity: 0.859375
+      startTime: 6
+      duration: 0.75
+    - tone: 56
+      velocity: 0.859375
+      startTime: 6.75
+      duration: 0.25
+    - tone: 55
+      velocity: 0.859375
+      startTime: 7
+      duration: 0.125
+    - tone: 58
+      velocity: 0.859375
+      startTime: 8
+      duration: 0.24479198
+    - tone: 55
+      velocity: 0.859375
+      startTime: 11.5
+      duration: 0.24479198
+  - name: Trombone
+    notes:
+    - tone: 54
+      velocity: 0.859375
+      startTime: 3.75
+      duration: 0.24479175
+    - tone: 55
+      velocity: 0.859375
+      startTime: 4
+      duration: 0.24479151
+    - tone: 57
+      velocity: 0.859375
+      startTime: 6
+      duration: 0.75
+    - tone: 56
+      velocity: 0.859375
+      startTime: 6.75
+      duration: 0.25
+    - tone: 55
+      velocity: 0.859375
+      startTime: 7
+      duration: 0.125
+    - tone: 46
+      velocity: 0.859375
+      startTime: 8
+      duration: 0.24479198
+    - tone: 53
+      velocity: 0.859375
+      startTime: 9.25
+      duration: 0.24479198
+    - tone: 58
+      velocity: 0.859375
+      startTime: 9.75
+      duration: 0.24479198
+    - tone: 56
+      velocity: 0.859375
+      startTime: 10.75
+      duration: 0.25
+    - tone: 55
+      velocity: 0.859375
+      startTime: 11
+      duration: 0.125
+  - name: Souba
+    notes:
+    - tone: 48
+      velocity: 0.859375
+      startTime: 0
+      duration: 0.24479167
+    - tone: 48
+      velocity: 0.859375
+      startTime: 4
+      duration: 0.24479151
+    - tone: 46
+      velocity: 0.859375
+      startTime: 8
+      duration: 0.24479198
+    - tone: 39
+      velocity: 0.859375
+      startTime: 12
+      duration: 0.083333015
+    - tone: 39
+      velocity: 0.859375
+      startTime: 12.25
+      duration: 0.083333015
+    - tone: 39
+      velocity: 0.859375
+      startTime: 12.5
+      duration: 0.125
+    - tone: 39
+      velocity: 0.859375
+      startTime: 13.5
+      duration: 0.083333015
+    - tone: 39
+      velocity: 0.859375
+      startTime: 13.75
+      duration: 0.083333015
+    - tone: 39
+      velocity: 0.859375
+      startTime: 14
+      duration: 0.125
+    - tone: 50
+      velocity: 0.859375
+      startTime: 15
+      duration: 0.5
+  completeLastBar: 1
 --- !u!1 &244486051
 GameObject:
   m_ObjectHideFlags: 0
@@ -9692,7 +10003,6 @@ GameObject:
   m_Component:
   - component: {fileID: 650345737}
   - component: {fileID: 650345739}
-  - component: {fileID: 650345740}
   m_Layer: 0
   m_Name: MusicPlayer
   m_TagString: Untagged
@@ -9733,14 +10043,13 @@ MonoBehaviour:
   playOnStart: 0
   fixedUpdate: 1
   music: {fileID: 0}
-  tempoMutiplier: 1
+  tempoModifier: 1
   keyModifier: 0
   metronome: {fileID: 1300806622}
   playTime: 0
   playingSpeed: 1
   playStateTransitionDuration: 0.5
   loop: 1
-  audioTrack: {fileID: 0}
   audioGenerator: {fileID: 1888059635}
   audioSource: {fileID: 1888059636}
   audioSyncTolerance: 0.05
@@ -9755,31 +10064,6 @@ MonoBehaviour:
   onPlayerUpdate:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &650345740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 650345735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f81c8bc2d588346b5096561a522aef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicPlayer: {fileID: 650345739}
-  trombone: {fileID: 64880549}
-  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
-  loop: 1
-  playInMenus:
-  - {fileID: 1609945150}
-  - {fileID: 768790476}
-  - {fileID: 1531055321}
-  - {fileID: 1712308057}
-  - {fileID: 156611402}
-  - {fileID: 1697015276}
-  enableTrombone: 1
-  pressureLock: 1
 --- !u!1 &680383715
 GameObject:
   m_ObjectHideFlags: 0
@@ -10925,7 +11209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoringRate: 100
   damageRate: 0.3
-  maxHealth: 64
+  maxHealth: 1
   accuracyRounding: 10
   danceLength: 8
   danceBuffer: 2
@@ -11363,6 +11647,7 @@ GameObject:
   - component: {fileID: 768790475}
   - component: {fileID: 768790477}
   - component: {fileID: 768790476}
+  - component: {fileID: 768790478}
   m_Layer: 5
   m_Name: Level Selection
   m_TagString: Untagged
@@ -11434,6 +11719,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768790474}
   m_CullTransparentMesh: 1
+--- !u!114 &768790478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768790474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f81c8bc2d588346b5096561a522aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
+  loop: 1
+  trombonePlay: 1
 --- !u!1 &772797612
 GameObject:
   m_ObjectHideFlags: 0
@@ -14026,7 +14326,6 @@ MonoBehaviour:
   slideTone: 0
   pressureTone: 0
   sampler: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
-  pitch: 1
   audioSourceCapacity: 16
   mixerGroup: {fileID: 6950387309436328587, guid: f68f9a66afc981e45aeab3515c546139, type: 2}
   smoothInSpeed: 200
@@ -15685,7 +15984,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0b3e55a80d1c77641b62fc04e2a75e66, type: 3}
-  m_Color: {r: 1, g: 0.8876334, b: 0.33333337, a: 1}
+  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -16011,7 +16310,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: fa99ca4e09bff9c4c8ce6aec920bc02d, type: 3}
-  m_Color: {r: 1, g: 0.8876334, b: 0.33333337, a: 1}
+  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -16927,7 +17226,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bb5fa9037856072489bd0292630df698, type: 3}
-  m_Color: {r: 1, g: 0.8876334, b: 0.33333337, a: 1}
+  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -21376,6 +21675,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1495960137}
   m_CullTransparentMesh: 1
+--- !u!83 &1497139259
+AudioClip:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Test_miniMii (copy)
+  m_LoadType: 0
+  m_Channels: 2
+  m_Frequency: 48000
+  m_BitsPerSample: 32
+  m_Length: 0
+  m_IsTrackerFormat: 0
+  m_Ambisonic: 0
+  m_SubsoundIndex: 0
+  m_PreloadAudioData: 1
+  m_LoadInBackground: 0
+  m_Legacy3D: 0
+  m_Resource:
+    m_Source: 
+    m_Offset: 0
+    m_Size: 0
+  m_CompressionFormat: 0
+  m_EditorResource:
+    m_Source: 
+    m_Offset: 0
+    m_Size: 0
+  m_EditorCompressionFormat: 0
 --- !u!1 &1498881220
 GameObject:
   m_ObjectHideFlags: 0
@@ -21570,7 +21897,7 @@ MonoBehaviour:
   slidebar: {fileID: 1018350545}
   bell: {fileID: 1539497750}
   grabArrow: {fileID: 1889132680}
-  color: {r: 1, g: 0.8876334, b: 0.33333337, a: 1}
+  color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
   bodyLength: 110
   slideLength: 95
   grabArrowDelay: -1
@@ -22240,7 +22567,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d712299c3c533644c86a0c9eed973d4a, type: 3}
-  m_Color: {r: 1, g: 0.8876334, b: 0.33333337, a: 1}
+  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -23163,6 +23490,7 @@ GameObject:
   - component: {fileID: 1609945149}
   - component: {fileID: 1609945151}
   - component: {fileID: 1609945150}
+  - component: {fileID: 1609945152}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -23220,6 +23548,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609945148}
   m_CullTransparentMesh: 1
+--- !u!114 &1609945152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1609945148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f81c8bc2d588346b5096561a522aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
+  loop: 1
+  trombonePlay: 1
 --- !u!1 &1611169634
 GameObject:
   m_ObjectHideFlags: 0
@@ -24004,6 +24347,7 @@ GameObject:
   - component: {fileID: 1697015274}
   - component: {fileID: 1697015275}
   - component: {fileID: 1697015276}
+  - component: {fileID: 1697015277}
   m_Layer: 5
   m_Name: Trombone Selection
   m_TagString: Untagged
@@ -24072,6 +24416,21 @@ MonoBehaviour:
   - Classique
   - Sonique
   - Helium
+--- !u!114 &1697015277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697015273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f81c8bc2d588346b5096561a522aef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 11400000, guid: 7431a56a6e64d414093f8916c30d4722, type: 2}
+  loop: 1
+  trombonePlay: 1
 --- !u!1 &1704931143
 GameObject:
   m_ObjectHideFlags: 0
@@ -26460,15 +26819,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2b47c337dc06e4d93a5764357115b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 0}
+  music: {fileID: 242972877}
   orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
-  mutedParts: []
+  mutedParts:
+  - partName: trombone
+    mainVoice: 1
+    alternativeVoiceIndices: 00000000
   frequency: 48000
   stereo: 1
   sampleSmoothIn: 48
   sampleSmoothOut: 480
   normalize: 1
-  generatedAudio: {fileID: 0}
+  generatedAudio: {fileID: 1497139259}
   maintainFPS: 30
   minimumNotesPerFrames: 10
   OnGenerationProgress:
@@ -26484,7 +26846,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8496067993420674785, guid: f68f9a66afc981e45aeab3515c546139, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 1497139259}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -27132,7 +27494,7 @@ MonoBehaviour:
     slideLegatoSpeed: 0
     maxLegatoDistance: 0
     pressureControl: 0
-    pressureLock: 24
+    pressureLock: 0
 --- !u!1 &1920729533
 GameObject:
   m_ObjectHideFlags: 0
@@ -28080,9 +28442,9 @@ MonoBehaviour:
   spawner: {fileID: 1969521392}
   boundaries:
     serializedVersion: 2
-    x: -0.08779907
+    x: 0.014602661
     y: 0
-    width: 288.1756
+    width: 287.9708
     height: 162
   onHorizontalCrash:
     m_PersistentCalls:

@@ -28,7 +28,7 @@ public class MusicPlayer : MonoBehaviour
     public float audioSyncTolerance = .5f;
     [Header("Notes")]
     public Playhead[] playHeads;
-    public MusicPartIdentifier playheadPart = new("trombone");
+    public SheetMusicVoiceIdentifier playheadPart = new("trombone");
     public PerformanceStyle playheadStyle = PerformanceStyle.Default;
     [Header("Events")]
     public UnityEvent onPlayerUpdate;
@@ -106,7 +106,7 @@ public class MusicPlayer : MonoBehaviour
         LoadedNotes = Array.ConvertAll(loadedNoteInfos, n => new NoteInstance(n));
         // Generate audio
         audioGenerator.music = LoadedMusic;
-        audioGenerator.mutedParts = new MusicPartIdentifier[1] { playheadPart };
+        audioGenerator.mutedParts = new SheetMusicVoiceIdentifier[1] { playheadPart };
         audioGenerator.SampleTrack();
         StartCoroutine(WaitForGeneratedAudio());
         // Metronome setup
@@ -118,15 +118,17 @@ public class MusicPlayer : MonoBehaviour
     {
         music = sheetMusic;
         playheadPart = new(playedInstrument?.instrumentName, true, voiceIndex);
-        LoadMusic();
+        if(NeedsReload()) LoadMusic();
     }
 
-    public bool NeedsReload()
+    public bool IsLoadedMusic(SheetMusic sheetMusic)
     {
-        if (LoadedMusic == null) return music != null;
-        if (music == null) return LoadedMusic != null;
-        return LoadedMusic.MusicEquals(music, tempoModifier, keyModifier) == false;
+        if (LoadedMusic == null) return sheetMusic != null;
+        if (sheetMusic == null) return LoadedMusic != null;
+        return LoadedMusic.MusicEquals(sheetMusic, tempoModifier, keyModifier) == false;
     }
+
+    public bool NeedsReload() => IsLoadedMusic(music);
 
     //public void LoadMusic(SheetMusic sheetMusic, AudioClip preGeneratedAudio = null, SamplerInstrument playedInstrument = null, int voiceIndex = 1)
     //{

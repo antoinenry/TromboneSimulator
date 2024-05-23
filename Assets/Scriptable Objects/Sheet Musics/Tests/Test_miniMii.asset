@@ -12,14 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
   m_Name: Test_miniMii
   m_EditorClassIdentifier: 
-  tempoChanges:
-  - time: 0
-    secondsPerQuarterNote: 0.5
-    quarterNotePerBeat: 1
-    timeSignatureNumerator: 4
-    timeSignatureDenominator: 4
+  tempo: []
+  measure: []
   parts:
-  - instrumentName: Trompette
+  - name: Alto
     notes:
     - tone: 67
       velocity: 0.859375
@@ -61,7 +57,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 4.5
       duration: 0.24479151
-  - instrumentName: Sax Alto
+  - name: Tenor
     notes:
     - tone: 63
       velocity: 0.859375
@@ -103,7 +99,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 4.5
       duration: 0.24479151
-  - instrumentName: Sax Tenor
+  - name: Baryton
     notes:
     - tone: 62
       velocity: 0.859375
@@ -145,7 +141,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 12.25
       duration: 0.083333015
-  - instrumentName: Sax Bar
+  - name: Trumpet
     notes:
     - tone: 38
       velocity: 0.859375
@@ -187,7 +183,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 15
       duration: 0.5
-  - instrumentName: Basse
+  - name: Tuba
     notes:
     - tone: 48
       velocity: 0.859375
@@ -229,7 +225,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 11.5
       duration: 0.24479198
-  - instrumentName: Trombone Sib
+  - name: Trombone
     notes:
     - tone: 54
       velocity: 0.859375
@@ -271,7 +267,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 11
       duration: 0.125
-  - instrumentName: Souba
+  - name: Souba
     notes:
     - tone: 48
       velocity: 0.859375
@@ -313,3 +309,4 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 15
       duration: 0.5
+  completeLastBar: 1

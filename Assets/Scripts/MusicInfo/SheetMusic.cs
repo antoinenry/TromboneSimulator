@@ -139,7 +139,7 @@ public class SheetMusic : ScriptableObject
     public NoteInfo[] GetPartNotes(string partName, bool includeMainVoice, params int[] voiceIndices)
         => GetPartNotes(GetPartIndex(partName), includeMainVoice, voiceIndices);
 
-    public NoteInfo[] GetPartNotes(MusicPartIdentifier part)
+    public NoteInfo[] GetPartNotes(SheetMusicVoiceIdentifier part)
         => GetPartNotes(part.partName, part.mainVoice, part.alternativeVoiceIndices);
 
     //public NotePlay[] GetVoiceNotes(SamplerInstrument instrument, int voiceIndex)
@@ -191,12 +191,32 @@ public class SheetMusic : ScriptableObject
 
     public int GetPartIndex(string partName)
     {
-        if (parts != null && InstrumentDictionary.FindCurrentOfficalName(partName, out string searchedOfficalName))
+        if (parts == null || !InstrumentDictionary.FindCurrentOfficalName(partName, out string searchedOfficalName)) return -1;
+        return Array.FindIndex(parts, p => InstrumentDictionary.FindCurrentOfficalName(p.name, out string partOfficialName) && partOfficialName == searchedOfficalName);
+    }
+
+    public int[] FindPartIndices(string partName)
+    {
+        if (parts == null || !InstrumentDictionary.FindCurrentOfficalName(partName, out string officialName1)) return new int[0];
+        List<int> partIndices = new List<int>();
+        for (int i = 0; i < PartCount; i++)
         {
-            int partIndex = Array.FindIndex(parts, p => InstrumentDictionary.FindCurrentOfficalName(p.name, out string partOfficialName) && partOfficialName == searchedOfficalName);
-            if (partIndex != -1) return partIndex;
+            if (parts[i].name == partName 
+                || (InstrumentDictionary.FindCurrentOfficalName(parts[i].name, out string officialName2) && officialName1 == officialName2))
+                partIndices.Add(i);
         }
-        return -1;
+        return partIndices.ToArray();
+    }
+
+    public string FindPartsWithSameName(out int[] partIndices)
+    {
+        foreach(string partName in PartNames)
+        {
+            partIndices = FindPartIndices(partName);
+            if (partIndices.Length > 1) return partName;
+        }
+        partIndices = null;
+        return null;
     }
 
     public string GetPartInstrument(int partIndex)
@@ -216,6 +236,7 @@ public class SheetMusic : ScriptableObject
 
     #region Voices
     public int GetVoiceCount(int partIndex) => SplitPartVoices(partIndex, out int[] main, out List<int[]> alternatives);
+
     public int SplitPartVoices(int partIndex, out int[] mainNotes, out List<int[]> alternativeNotes)
     {
         mainNotes = null;
@@ -299,6 +320,28 @@ public class SheetMusic : ScriptableObject
                 alternativeNotes.Add(Array.ConvertAll(alternativeVoice, n => notes[n]));
         }
         return voiceCount;
+    }
+    public void RemovePart(int partIndex)
+    {
+        if (parts == null || partIndex < 0 || partIndex >= parts.Length) return;
+        for (int i = partIndex; i < PartCount - 1; i++) parts[i] = parts[i + 1];
+        Array.Resize(ref parts, PartCount - 1);
+    }
+
+    public void MergeParts(params int[] partIndices)
+    {
+        int mergedPartsCount = partIndices != null ? partIndices.Length : 0;
+        if (mergedPartsCount <= 1) return;
+        int partIndex1 = partIndices[0];
+        if (parts == null || partIndex1 < 0 || partIndex1 >= parts.Length) return;
+        for (int i = 1; i < mergedPartsCount; i++)
+        {
+            int partIndex2 = partIndices[i];
+            if (partIndex2 < 0 || partIndex2 >= parts.Length) continue;
+            parts[partIndex1] = SheetMusicPart.Merge(parts[partIndex1], parts[partIndex2]);
+        }
+        for (int i = 1; i < mergedPartsCount; i++)
+            RemovePart(partIndices[i]);
     }
     #endregion
 

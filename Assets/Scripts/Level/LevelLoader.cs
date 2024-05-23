@@ -124,7 +124,6 @@ public class LevelLoader : MonoBehaviour
 
     public void UnloadLevel()
     {
-        LoadedLevel = null;
         // Stop GUI
         if (GUI)
         {
@@ -132,11 +131,14 @@ public class LevelLoader : MonoBehaviour
             GUI.SetPauseButtonActive(false);
             GUI.onPauseRequest.RemoveListener(PauseLevel);
         }
-        // Stop music
+        // Stop level music
         if (musicPlayer)
         {
-            musicPlayer.Stop();
-            musicPlayer.UnloadMusic();
+            if (musicPlayer.IsLoadedMusic(LoadedLevel?.music))
+            {
+                musicPlayer.Stop();
+                musicPlayer.UnloadMusic();
+            }
             musicPlayer.onPlayerUpdate.RemoveListener(OnMusicPlayerUpdate);
         }
         // Stop performance judge
@@ -369,7 +371,7 @@ public class LevelLoader : MonoBehaviour
 
     public void QuitLevel()
     {
-        UnloadLevel();
+        //UnloadLevel();
         // Back to menu screen
         switch (LoadedMode)
         {

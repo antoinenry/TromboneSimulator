@@ -33,7 +33,7 @@ MonoBehaviour:
     pitch: 1
   tromboneAuto:
     autoSettings:
-      blowControl: 0
+      blowControl: 13
       slideControl: 0
       slideLegatoSpeed: 0
       maxLegatoDistance: 0
@@ -41,5 +41,7 @@ MonoBehaviour:
       pressureLock: 0
   musicPlayer:
     tempoModifier: 0.75
+    keyModifier: 0
+    playingSpeed: 1
   performanceJudge:
     maxHealth: 1

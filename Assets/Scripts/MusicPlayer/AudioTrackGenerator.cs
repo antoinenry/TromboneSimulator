@@ -12,7 +12,7 @@ public class AudioTrackGenerator : MonoBehaviour
     [Header("Input")]
     public SheetMusic music;
     public Orchestra orchestra;
-    public MusicPartIdentifier[] mutedParts;
+    public SheetMusicVoiceIdentifier[] mutedParts;
     //public float tempoStretch = 1f;
     [Header("Encoding")]
     public int frequency = 48000;
@@ -66,7 +66,7 @@ public class AudioTrackGenerator : MonoBehaviour
         return ErrorType.NoError;
     }
 
-    public void PlayAllVoices() => mutedParts = new MusicPartIdentifier[0];
+    public void PlayAllVoices() => mutedParts = new SheetMusicVoiceIdentifier[0];
 
     private IEnumerator SampleTrackCoroutine()
     {
@@ -102,7 +102,7 @@ public class AudioTrackGenerator : MonoBehaviour
                     bool ignoreMainVoice = false;
                     if (mutedParts != null)
                     {
-                        MusicPartIdentifier ignored = Array.Find(mutedParts, x => InstrumentDictionary.SameCurrentInstruments(x.partName, partOfficialName));
+                        SheetMusicVoiceIdentifier ignored = Array.Find(mutedParts, x => InstrumentDictionary.SameCurrentInstruments(x.partName, partOfficialName));
                         ignoredVoices = ignored.alternativeVoiceIndices;
                         ignoreMainVoice = ignored.mainVoice;
                     }

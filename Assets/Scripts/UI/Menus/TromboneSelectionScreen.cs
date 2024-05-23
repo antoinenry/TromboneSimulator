@@ -67,8 +67,10 @@ public class TromboneSelectionScreen : MenuUI
     private void SelectTrombone(int index)
     {
         TromboneBuild build = GameContentLibrary.Current?.trombones[index];
-        build?.SetBuildToScene();
+        if (build) build.SetBuildToScene();
         TromboneCore trombone = FindObjectOfType<TromboneCore>(true);
-        trombone.Build = build;
+        if (trombone) trombone.Build = build;
+        MenuMusic menuMusic = GetComponent<MenuMusic>();
+        if (menuMusic) menuMusic.TromboneSetup();
     }
 }

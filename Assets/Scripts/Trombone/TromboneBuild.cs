@@ -11,6 +11,12 @@ public class TromboneBuild : ScriptableObject
     public TromboneAutoCustomizer tromboneAuto = new();
     public MusicPlayerCustomizer musicPlayer = new();
     public PerformanceJudgeCustomizer performanceJudge = new();
+    public bool CreatedAtRuntime { get; private set; }
+
+    private void Awake()
+    {
+        CreatedAtRuntime = Application.isPlaying;
+    }
 
     public static void Copy(TromboneBuild source, TromboneBuild destination)
     {
@@ -33,11 +39,7 @@ public class TromboneBuild : ScriptableObject
             object sourceCustomizer = customizer.GetValue(this);
             Type componentType = ((ComponentCustomizer)sourceCustomizer).GetComponentType();
             UnityEngine.Object destinationComponent = FindObjectOfType(componentType, true);
-            if (destinationComponent == null)
-            {
-                Debug.LogWarning("Couldn't find " + componentType);
-                continue;
-            }
+            if (destinationComponent == null) continue;
             ValueCopier.CopyValuesByName(componentType, sourceCustomizer, destinationComponent);
             typeof(ComponentCustomizer).InvokeMember("OnApplyToComponent", 
                 BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.Public, 

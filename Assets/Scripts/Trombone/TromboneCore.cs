@@ -18,8 +18,8 @@ public class TromboneCore : MonoBehaviour,
     [Tone] public float baseTone;
     public float[] pressureToneSteps;
     public float slideToneLength = 6f;
-
-    private TromboneBuild runtimeBuild;
+    [Header("Build")]
+    [SerializeField] private TromboneBuild tromboneBuild;
 
     public int PressureIndex => RoundToPressureIndex(pressureLevel);
     public float Tone => GetTone(PressureIndex, slideTone);
@@ -46,8 +46,7 @@ public class TromboneCore : MonoBehaviour,
 
     private void Awake()
     {
-        runtimeBuild = ScriptableObject.CreateInstance<TromboneBuild>();
-        runtimeBuild.GetBuildFromScene();
+        Build = tromboneBuild;
     }
 
     private void OnEnable()
@@ -80,7 +79,7 @@ public class TromboneCore : MonoBehaviour,
     public void ResetTrombone()
     {
         ClearInputs();
-        runtimeBuild.SetBuildToScene();
+        tromboneBuild.SetBuildToScene();
         tromboneDisplay.ResetDisplay();
     }
 
@@ -177,6 +176,20 @@ public class TromboneCore : MonoBehaviour,
 
     public TromboneBuild Build
     {
-        set => TromboneBuild.Copy(value, runtimeBuild);
+        set
+        {
+            tromboneBuild = value;
+            if (tromboneBuild == null)
+            {
+                tromboneBuild = ScriptableObject.CreateInstance<TromboneBuild>();
+                tromboneBuild.GetBuildFromScene();
+                tromboneBuild.name = "RuntimeBuild";
+            }
+            else if (tromboneBuild.CreatedAtRuntime == false)
+            {
+                tromboneBuild = Instantiate(tromboneBuild);
+                tromboneBuild.SetBuildToScene();
+            }
+        }
     }
 }

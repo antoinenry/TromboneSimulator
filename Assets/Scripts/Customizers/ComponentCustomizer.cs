@@ -4,9 +4,7 @@ using UnityEngine;
 public interface ComponentCustomizer
 {
     public Type GetComponentType();
-    public void OnApplyToComponent(UnityEngine.Object component)
-    { 
-    }
+    public void OnApplyToComponent(UnityEngine.Object component) { }
 }
 
 [Serializable]
@@ -26,6 +24,8 @@ public class TromboneDisplayCustomizer : ComponentCustomizer
     public int bodyLength = 110;
     public int slideLength = 90;
     public bool enableSlideMovement = true;
+    public float minSlideTone = 0f;
+    public float maxSlideTone = 6f;
     public bool enablePressureMovement = true;
 
     public Type GetComponentType() => typeof(TromboneDisplay);
@@ -35,7 +35,6 @@ public class TromboneDisplayCustomizer : ComponentCustomizer
 public class TromboneAudioCustomizer : ComponentCustomizer
 {
     public SamplerInstrument sampler;
-    public float pitch = 1f;
 
     public Type GetComponentType() => typeof(TromboneAudio);
 }

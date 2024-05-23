@@ -28,4 +28,14 @@ public struct SheetMusicPart : IEquatable<SheetMusicPart>
     public bool Equals(SheetMusicPart other)
         => name == other.name 
         && ((notes == null && other.notes == null) || Enumerable.SequenceEqual(notes, other.notes));
+
+    public static SheetMusicPart Merge(params SheetMusicPart[] parts)
+    {
+        SheetMusicPart newPart = new();
+        if (parts == null || parts.Length == 0) return newPart;
+        newPart.name = parts[0].name;
+        NoteInfo[][] partNotes = Array.ConvertAll(parts, p => p.notes);
+        newPart.notes = NoteInfo.Assemble(partNotes);
+        return newPart;
+    }
 }

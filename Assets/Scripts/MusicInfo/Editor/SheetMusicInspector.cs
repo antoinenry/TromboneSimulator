@@ -76,8 +76,8 @@ public class SheetMusicInspector : Editor
         }
         EditorGUILayout.EndHorizontal();
         // Check tools
-        EditorGUILayout.LabelField("Check notes", EditorStyles.boldLabel);
-        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Clean up", EditorStyles.boldLabel);
+        EditorGUILayout.BeginVertical("box");
         // Instrument tone check
         if (GUILayout.Button("Check instrument ranges"))
         {
@@ -98,7 +98,13 @@ public class SheetMusicInspector : Editor
             for (int p = 0; p < sheetMusic.PartCount; p++)
                 voiceCount[p] = sheetMusic.GetVoiceCount(p);
         }
-        EditorGUILayout.EndHorizontal();
+        // Merge parts
+        string partName = sheetMusic.FindPartsWithSameName(out int[] sameNamePartIndices);
+        if (GUILayout.Button("Merge parts by name (" + (partName != null ? partName : "none") + ")"))
+        {
+            sheetMusic.MergeParts(sameNamePartIndices);
+        }
+        EditorGUILayout.EndVertical();
         // Results from checks
         if (displayCheckResult)
         {
