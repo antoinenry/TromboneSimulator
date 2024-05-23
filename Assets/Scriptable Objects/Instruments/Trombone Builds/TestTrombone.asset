@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d3b9729a948bfc44a19eef88457aa5a, type: 3}
-  m_Name: TestTombone
+  m_Name: TestTrombone
   m_EditorClassIdentifier: 
   tromboneCore:
     baseTone: 46
@@ -21,20 +21,17 @@ MonoBehaviour:
     - 3
     - 3
     - 2
-    - 2
-    - 2
-    - 2
-    - 2
     slideToneLength: 6
   tromboneDisplay:
-    color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+    color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
     bodyLength: 110
     slideLength: 95
     enableSlideMovement: 1
+    minSlideTone: 0
+    maxSlideTone: 6
     enablePressureMovement: 1
   tromboneAudio:
     sampler: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
-    pitch: 1
   tromboneAuto:
     autoSettings:
       blowControl: 13
@@ -45,7 +42,7 @@ MonoBehaviour:
       pressureLock: 0
   musicPlayer:
     tempoModifier: 1
-    keyModifier: 0
+    keyModifier: 5
     playingSpeed: 1
   performanceJudge:
     maxHealth: 1

@@ -10044,7 +10044,7 @@ MonoBehaviour:
   fixedUpdate: 1
   music: {fileID: 0}
   tempoModifier: 1
-  keyModifier: 0
+  keyModifier: 5
   metronome: {fileID: 1300806622}
   playTime: 0
   playingSpeed: 1
@@ -15986,7 +15986,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0b3e55a80d1c77641b62fc04e2a75e66, type: 3}
-  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -16312,7 +16312,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: fa99ca4e09bff9c4c8ce6aec920bc02d, type: 3}
-  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -17228,7 +17228,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bb5fa9037856072489bd0292630df698, type: 3}
-  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -21899,7 +21899,7 @@ MonoBehaviour:
   slidebar: {fileID: 1018350545}
   bell: {fileID: 1539497750}
   grabArrow: {fileID: 1889132680}
-  color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   bodyLength: 110
   slideLength: 95
   grabArrowDelay: -1
@@ -22569,7 +22569,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d712299c3c533644c86a0c9eed973d4a, type: 3}
-  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  m_Color: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -28404,7 +28404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalLines: {fileID: 2008865792}
   horizontalLines: {fileID: 2067895447}
-  timeScale: 500
+  timeScale: 100
   dimensions:
     lineTones:
     - 46

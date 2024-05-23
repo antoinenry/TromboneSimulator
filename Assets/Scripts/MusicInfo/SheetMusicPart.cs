@@ -9,11 +9,14 @@ public struct SheetMusicPart : IEquatable<SheetMusicPart>
 
     public int NoteCount => notes != null ? notes.Length : 0;
 
-    public SheetMusicPart Transpose(float byTones)
+    public SheetMusicPart Transpose(float byTones, bool transposeDrums = false)
     {
         SheetMusicPart newPart = new();
         newPart.name = name;
-        newPart.notes = NoteInfo.Transpose(notes, byTones);
+        if (InstrumentDictionary.IsCurrentDrums(name) && transposeDrums == false)
+            newPart.notes = NoteInfo.Transpose(notes, 0f);
+        else
+            newPart.notes = NoteInfo.Transpose(notes, byTones);
         return newPart;
     }
 
