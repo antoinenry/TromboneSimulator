@@ -103,12 +103,12 @@ public class NoteCatcher : MonoBehaviour
             // Catch note
             else if (catchNotes)
             {
-                float toneError = Mathf.Abs(catchTone - info.tone);
+                float accuracy = toneTolerance > 0f ? 1f - Mathf.Abs(catchTone - info.tone) / toneTolerance : 0f;
                 // Correct tone
-                if (toneError <= toneTolerance)
+                if (accuracy > 0f)
                 {
                     if (showDebug) Debug.Log("-> Catching");
-                    instance.PlayCorrectly(playhead.PreviousTime + CatchStartTime, playhead.CurrentTime + CatchEndTime, toneError);
+                    instance.PlayCorrectly(playhead.PreviousTime + CatchStartTime, playhead.CurrentTime + CatchEndTime, accuracy);
                     onCorrectNote.Invoke(instance);
                 }
                 // Wrong tone
@@ -118,7 +118,7 @@ public class NoteCatcher : MonoBehaviour
                     if (playhead.PreviousTime > info.startTime)
                     {
                         if (showDebug) Debug.Log("-> Wrong tone: " + catchTone + " / " + info.tone);
-                        instance.PlayWrong(playhead.PreviousTime + CatchStartTime, playhead.CurrentTime, toneError);
+                        instance.PlayWrong(playhead.PreviousTime + CatchStartTime, playhead.CurrentTime, accuracy);
                         onWrongNote.Invoke(instance);
                     }
                 }

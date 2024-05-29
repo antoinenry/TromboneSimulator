@@ -12,6 +12,8 @@ public class NoteSpawner : MonoBehaviour
     [Header("Spawning")]
     public float spawnDistance;
     public float destroyDistance;
+    public int yMin = 0;
+    public int yMax = 10;
     [Header("Note aspect")]
     public NoteSpawn notePrefab;
     public Color[] colorWheel = new Color[] { Color.blue, Color.red, Color.green, Color.cyan, Color.yellow, Color.magenta };
@@ -60,6 +62,11 @@ public class NoteSpawner : MonoBehaviour
             playHead.onStartEnterNote.AddListener(OnPlayheadEntersNote);
             playHead.onStop.AddListener(ClearNotes);
         }
+        if (grid?.trombone?.tromboneDisplay != null)
+        {
+            yMin = (int)grid.trombone.tromboneDisplay.minPressureLevel;
+            yMax = (int)grid.trombone.tromboneDisplay.maxPressureLevel;
+        }
     }
 
     private void OnDisable()
@@ -94,7 +101,7 @@ public class NoteSpawner : MonoBehaviour
             {
                 NoteInfo note = NoteInfo.GetInfo(instance);
                 // Destroy note
-                if (IsNoteOutOfBounds(note))
+                if (IsOutOfTimeBounds(note))
                 {
                     if (showDebug)
                     {
@@ -155,7 +162,7 @@ public class NoteSpawner : MonoBehaviour
         if (noteInfo.duration > 0f)
         {
             // Don't spawn if out of bounds
-            if (IsNoteOutOfBounds(noteInfo))
+            if (IsOutOfTimeBounds(noteInfo))
             {
                 if (showDebug)
                 {
@@ -169,7 +176,7 @@ public class NoteSpawner : MonoBehaviour
                 // Get note position on grid
                 Vector2 noteCoordinate = GetNotePlacement(note);
                 // Spawn note if position is valid
-                if (grid.dimensions.Contains(noteCoordinate))
+                if (!float.IsNaN(noteCoordinate.x) && !float.IsNaN(noteCoordinate.y) && grid.dimensions.Contains(noteCoordinate, yMin, yMax))
                 {
                     spawnedNote = Instantiate(notePrefab, transform);
                     //bool linkToPreviousNote = noteInfo.previousTone != -1 && grid.ToneToCoordinates(noteInfo.previousTone).y == grid.ToneToCoordinates(noteInfo.tone).y;
@@ -217,7 +224,7 @@ public class NoteSpawner : MonoBehaviour
             // Get position from custom note placement
             if (notePlacement != null) noteCoordinate = notePlacement.GetPlacement(note);
             // Or get a default position from grid
-            if (grid.dimensions.Contains(noteCoordinate) == false) noteCoordinate = grid.dimensions.ToneToCoordinate(note.Tone);
+            else noteCoordinate = grid.dimensions.ToneToCoordinate(note.Tone);
         }
         return noteCoordinate;
     }
@@ -237,13 +244,13 @@ public class NoteSpawner : MonoBehaviour
         noteLength = noteInfo.duration * TimeScale;
     }
 
-    private bool IsNoteOutOfBounds(NoteInfo noteInfo)
+    private bool IsOutOfTimeBounds(NoteInfo noteInfo)
     {
         GetNoteDimensions(noteInfo, out float noteStartDistance, out float noteLength);
-        return IsNoteOutOfBounds(noteStartDistance, noteLength);
+        return IsOutOfTimeBounds(noteStartDistance, noteLength);
     }
 
-    private bool IsNoteOutOfBounds(float noteStartDistance, float noteLength)
+    private bool IsOutOfTimeBounds(float noteStartDistance, float noteLength)
     {
         if (Mathf.Approximately(noteStartDistance, spawnDistance)) return false;
         if (Mathf.Approximately(noteStartDistance + noteLength, -destroyDistance)) return false;

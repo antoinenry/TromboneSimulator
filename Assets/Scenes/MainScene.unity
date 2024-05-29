@@ -28336,11 +28336,11 @@ MonoBehaviour:
   spawner: {fileID: 1969521392}
   trombone: {fileID: 64880549}
   playhead: {fileID: 11400000, guid: 7bfcb8b14bd3f1445b1b1f170f3e9559, type: 2}
-  catchNotes: 0
-  catchTone: 0
+  catchNotes: 1
+  catchTone: 66
   advanceTolerance: 0.1
-  delayTolerance: 0.1
-  toneTolerance: 0.75
+  delayTolerance: 0.2
+  toneTolerance: 0.9
   onCorrectNote:
     m_PersistentCalls:
       m_Calls: []
@@ -28374,6 +28374,8 @@ MonoBehaviour:
   reverse: 0
   spawnDistance: 300
   destroyDistance: 200
+  yMin: -2
+  yMax: 12
   notePrefab: {fileID: 5068534347288138984, guid: 9ba68c46d9994d643b62157ea75c77a4, type: 3}
   colorWheel:
   - {r: 0.3255162, g: 0.5188679, b: 0.35641426, a: 1}
@@ -28404,7 +28406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalLines: {fileID: 2008865792}
   horizontalLines: {fileID: 2067895447}
-  timeScale: 100
+  timeScale: 75
   dimensions:
     lineTones:
     - 46

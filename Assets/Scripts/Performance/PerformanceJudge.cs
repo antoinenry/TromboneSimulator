@@ -153,8 +153,8 @@ public class PerformanceJudge : MonoBehaviour
     public float GetNoteAccuracy(NotePerformance notePerformance, bool rounded = true)
     {
         if (notePerformance.CorrectTime == 0f) return 0f;
-        float averageError = NotePerformance.PerformanceSegment.ToneErrorAverage(notePerformance.CorrectSegments);
-        float accuracy = noteCatcher.toneTolerance != 0f ? 1f - averageError / noteCatcher.toneTolerance : 1f;
+        float accuracy = NotePerformance.PerformanceSegment.AccuracyAverage(notePerformance.CorrectSegments);
+        //float accuracy = noteCatcher.toneTolerance != 0f ? 1f - averageError / noteCatcher.toneTolerance : 1f;
         if (rounded == true && accuracyRounding > 1f) accuracy = Mathf.Ceil(accuracy * accuracyRounding) / accuracyRounding;
         return accuracy;
     }

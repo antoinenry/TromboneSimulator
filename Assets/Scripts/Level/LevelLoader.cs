@@ -117,7 +117,6 @@ public class LevelLoader : MonoBehaviour
             if (musicPlayer) yield return new WaitWhile(() => musicPlayer.IsLoading);
             GUI.GUIActive = true;
             GUI.onPauseRequest.AddListener(PauseLevel);
-            GUI.SetPauseButtonActive(true);
         }
         loadLevelCoroutine = null;
     }
@@ -128,7 +127,6 @@ public class LevelLoader : MonoBehaviour
         if (GUI)
         {
             GUI.GUIActive = false;
-            GUI.SetPauseButtonActive(false);
             GUI.onPauseRequest.RemoveListener(PauseLevel);
         }
         // Stop level music
@@ -165,6 +163,8 @@ public class LevelLoader : MonoBehaviour
     {
         // Wait for music to finish loading
         while (musicPlayer.IsLoading) yield return null;
+        // Reactivate pause button
+        GUI?.SetPauseButtonActive(true);
         // Initialize note spawn: display first notes
         noteSpawner.SpawnNotes(musicPlayer.LoadedNotes, -noteSpawner.SpawnDelay, 0f);
         // Play metronome click

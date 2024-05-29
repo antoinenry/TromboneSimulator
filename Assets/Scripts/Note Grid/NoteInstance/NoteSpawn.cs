@@ -50,7 +50,7 @@ public class NoteSpawn : MonoBehaviour, INote
             // Display played segments
             if (perfSegment.playsState == NotePerformance.PlayState.PLAYED_CORRECTLY)
             {
-                display.Play((perfSegment.time.start - toTime) * timeScale, (perfSegment.time.end - toTime) * timeScale);
+                display.Play((perfSegment.time.start - toTime) * timeScale, (perfSegment.time.end - toTime) * timeScale, perfSegment.toneAccuracy);
             }
             // Display missed segments
             else
@@ -60,23 +60,23 @@ public class NoteSpawn : MonoBehaviour, INote
         }
     }
 
-    public void PlayCorrectly(float fromTime, float toTime, float toneError)
+    public void PlayCorrectly(float fromTime, float toTime, float toneAccurcay)
     {
         // Clamp times to note time
         fromTime = Mathf.Clamp(fromTime, StartTime, StartTime + Duration);
         toTime = Mathf.Clamp(toTime, StartTime, StartTime + Duration);
         // Update performance
-        performance.PlayCorrectly(fromTime, toTime, toneError);
+        performance.PlayCorrectly(fromTime, toTime, toneAccurcay);
         catchState |= CatchState.Mixed;
     }
 
-    public void PlayWrong(float fromTime, float toTime, float toneError)
+    public void PlayWrong(float fromTime, float toTime, float toneAccuracy)
     {
         // Clamp times to note time
         fromTime = Mathf.Clamp(fromTime, StartTime, StartTime + Duration);
         toTime = Mathf.Clamp(toTime, StartTime, StartTime + Duration);
         // Update performance
-        performance.PlayWrong(fromTime, toTime, toneError);
+        performance.PlayWrong(fromTime, toTime, toneAccuracy);
     }
 
     public void Miss(float fromTime, float toTime, out FloatSegment missedSegment)

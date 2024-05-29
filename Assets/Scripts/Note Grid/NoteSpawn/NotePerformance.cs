@@ -12,13 +12,13 @@ public struct NotePerformance
     {
         public FloatSegment time;
         public PlayState playsState;
-        public float toneError;
+        public float toneAccuracy;
 
-        public PerformanceSegment(float from, float to, PlayState state, float error = 0f)
+        public PerformanceSegment(float from, float to, PlayState state, float accuracy = 1f)
         {
             time = new FloatSegment(from, to);
             playsState = state;
-            toneError = error;
+            toneAccuracy = accuracy;
         }
 
         static public float TotalTime(IEnumerable<PerformanceSegment> segments)
@@ -30,23 +30,24 @@ public struct NotePerformance
             return totalTime;
         }
 
-        static public float ToneErrorAverage(IEnumerable<PerformanceSegment> segments)
+        static public float AccuracyAverage(IEnumerable<PerformanceSegment> segments)
         {
             float timeSum = 0f;
-            float errorSum = 0f;
+            float accuracySum = 0f;
             {
                 foreach (PerformanceSegment s in segments)
                 {
                     float timeLength = s.time.Length;
                     timeSum += timeLength;
-                    errorSum += timeLength * s.toneError;
+                    accuracySum += timeLength * s.toneAccuracy;
                 }
             }
-            return timeSum != 0f ? errorSum / timeSum : 0f;
+            return timeSum != 0f ? accuracySum / timeSum : 0f;
         }
     }
 
     public List<PerformanceSegment> segments;
+    public float toneTolerance;
 
     public float TotalPerformanceTime => PerformanceSegment.TotalTime(segments);
     public List<PerformanceSegment> CorrectSegments => segments != null ? segments.FindAll(s => s.playsState == PlayState.PLAYED_CORRECTLY) : new List<PerformanceSegment>(0);
@@ -67,14 +68,14 @@ public struct NotePerformance
         return false;
     }
 
-    public PerformanceSegment PlayCorrectly(float fromTime, float toTime, float toneError)
+    public PerformanceSegment PlayCorrectly(float fromTime, float toTime, float toneAccuracy)
     {
-        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.PLAYED_CORRECTLY, toneError), true);
+        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.PLAYED_CORRECTLY, toneAccuracy), true);
     }
 
-    public PerformanceSegment PlayWrong(float fromTime, float toTime, float toneError)
+    public PerformanceSegment PlayWrong(float fromTime, float toTime, float toneAccuracy)
     {
-        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.PLAYED_WRONG, toneError), false);
+        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.PLAYED_WRONG, toneAccuracy), false);
     }
 
     public PerformanceSegment Miss(float fromTime, float toTime)
@@ -117,7 +118,7 @@ public struct NotePerformance
                                 PerformanceSegment joinedSegment = new PerformanceSegment();
                                 joinedSegment.time = joinedTime[0];
                                 joinedSegment.playsState = addedSegment.playsState;
-                                joinedSegment.toneError = PerformanceSegment.ToneErrorAverage(new PerformanceSegment[2] { lastSegment, addedSegment });
+                                joinedSegment.toneAccuracy = PerformanceSegment.AccuracyAverage(new PerformanceSegment[2] { lastSegment, addedSegment });
                                 addedSegment = joinedSegment;
                             }
                             else Debug.LogError("Add performance segment error.");
@@ -188,17 +189,6 @@ public struct NotePerformance
                 addSegmentAt--;
             }
         }
-
-        if (segmentToAdd.playsState == PlayState.PLAYED_CORRECTLY && segmentToAdd.toneError > .75f)
-        {
-
-        }
-
-        if (addedSegment.playsState == PlayState.PLAYED_CORRECTLY && addedSegment.toneError > .75f)
-        {
-
-        }
-
         // Remove replaced segments
         if (addSegmentAt < segmentCount) segments.RemoveRange(addSegmentAt, segmentCount - addSegmentAt);
         // Add new segment if needed

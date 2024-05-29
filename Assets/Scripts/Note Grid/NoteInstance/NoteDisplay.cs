@@ -43,15 +43,13 @@ public class NoteDisplay : MonoBehaviour
     public bool roundValues = true;
     [Header("Colors")]
     public Color baseColor = Color.green;
-    public Color farColor = Color.gray;
+    public Color farTint = Color.gray;
     public Color incomingTint = Color.white;
     public Color playedTint = Color.white;
-    public Color missedColor = Color.red;
-    public Color fullCatchColor = Color.white;
+    public Color missedTint = Color.red;
     public Color targetTint = Color.white;
     public float farDistance = 60f;
     public float incomingDistance = 30f;
-    public bool fullCatchIsBaseColor = true;
 
     private void Start()
     {
@@ -107,12 +105,12 @@ public class NoteDisplay : MonoBehaviour
             if (distance <= incomingDistance)
             {
                 // Color
-                Color incomingColor = ((incomingTint * distanceRatio) + baseColor * (2f - distanceRatio)) / 2f;
+                Color incomingColor = TintColor(baseColor, incomingTint, distanceRatio);
                 SetColor(incomingColor, 0f, float.PositiveInfinity);
                 // Set target alpha
                 if (distanceRatio > 0f && target != null)
                 {
-                    Color targetColor = baseColor * targetTint;
+                    Color targetColor = TintColor(baseColor, targetTint);
                     targetColor.a *= distanceRatio < 1f ? distanceRatio : 0f;
                     target.color = targetColor;
                 }
@@ -120,7 +118,8 @@ public class NoteDisplay : MonoBehaviour
             else if (distance <= farDistance)
             {
                 // Fade color
-                Color fadeColor = farColor * (1f - (distance - incomingDistance) / (farDistance - incomingDistance));
+                float farRatio = 1f - (distance - incomingDistance) / (farDistance - incomingDistance);
+                Color fadeColor = TintColor(baseColor, farTint, farRatio);
                 SetColor(fadeColor, 0f, float.PositiveInfinity);
                 // Hide target
                 target.color = Color.clear;
@@ -137,15 +136,16 @@ public class NoteDisplay : MonoBehaviour
     public void Miss(float fromPosition, float toPosition)
     {
         // Set color
+        Color missedColor = TintColor(baseColor, missedTint);
         SetColor(missedColor, fromPosition, toPosition);
     }
 
-    public void Play(float fromPosition, float toPosition)
+    public void Play(float fromPosition, float toPosition, float accuracy)
     {
         // Cut played bits at negative positions (past part of note)
         Cut(Mathf.Min(fromPosition, 0f), Mathf.Min(toPosition, 0f));
         // Set played color at positive positions (upcoming part of note)
-        Color playColor = (baseColor + playedTint) / 2f;
+        Color playColor = TintColor(baseColor, Color.Lerp(missedTint, playedTint, accuracy));
         SetColor(playColor, Mathf.Max(fromPosition, 0f), Mathf.Max(toPosition, 0f));
     }
 
@@ -153,7 +153,6 @@ public class NoteDisplay : MonoBehaviour
     {
         if (target != null)
         {
-            target.color = fullCatchIsBaseColor ? baseColor : fullCatchColor;
             Animation anim = target.GetComponent<Animation>();
             if (anim != null) anim.Play();
         }
@@ -196,5 +195,14 @@ public class NoteDisplay : MonoBehaviour
         }
         if (hRenderer != null) hRenderer.SetColorFromToPosition(c, fromPosition, toPosition, false, true);
         if (vRenderer != null) vRenderer.SetColorFromToPosition(c, fromPosition, toPosition, false, true);
+    }
+
+    private Color TintColor(Color c, Color tint, float blend = 1f)
+    {
+        float alpha = c.a;
+        float ratio = blend * tint.a;
+        Color tintColor = (1f - ratio) * c + ratio * tint;
+        tintColor.a = alpha;
+        return tintColor;
     }
 }
