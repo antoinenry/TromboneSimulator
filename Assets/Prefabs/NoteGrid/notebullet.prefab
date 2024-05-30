@@ -124,7 +124,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 2bf9db32032348b439f72db1b318ce46, type: 3}
-  m_Color: {r: 0.46699074, g: 0.69007957, b: 0.8195095, a: 1}
+  m_Color: {r: 0.25931755, g: 0.37838948, b: 0.4474717, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -209,7 +209,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f7a734e7aa5a8c64e8254ddb6decd817, type: 3}
-  m_Color: {r: 0.23274244, g: 0.49097702, b: 0.64079744, a: 0.35482353}
+  m_Color: {r: 0.26796308, g: 0.351826, b: 0.40048093, a: 0.696}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -359,7 +359,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 7d234536f895ac045a415fed0a72681a, type: 3}
-  m_Color: {r: 0.46699074, g: 0.69007957, b: 0.8195095, a: 1}
+  m_Color: {r: 0.25931755, g: 0.37838948, b: 0.4474717, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -436,12 +436,11 @@ MonoBehaviour:
   length: 3.6
   roundValues: 1
   baseColor: {r: 0.30838373, g: 0.6505445, b: 0.8490566, a: 1}
-  farColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  incomingTint: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
-  playedTint: {r: 1, g: 1, b: 1, a: 1}
-  missedColor: {r: 0.5377358, g: 0.1496529, b: 0.1496529, a: 1}
-  fullCatchColor: {r: 0.8705883, g: 0.7725491, b: 0.33333334, a: 1}
-  targetTint: {r: 0.754717, g: 0.754717, b: 0.754717, a: 0.50980395}
+  farTint: {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0.74509805}
+  incomingTint: {r: 1, g: 1, b: 1, a: 0.5882353}
+  playedTint: {r: 1, g: 0.8787273, b: 0.2971698, a: 1}
+  missedTint: {r: 0.5188679, g: 0.10034709, b: 0.10034709, a: 1}
+  targetTint: {r: 1, g: 1, b: 1, a: 0.50980395}
   farDistance: 200
   incomingDistance: 100
   fullCatchIsBaseColor: 0
@@ -464,5 +463,6 @@ MonoBehaviour:
     duration: 0
   performance:
     segments: []
+    toneTolerance: 0
   catchState: 0
   display: {fileID: 1873605086258921586}

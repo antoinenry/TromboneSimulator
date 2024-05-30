@@ -16,6 +16,7 @@ public class Metronome : MonoBehaviour
     public TimeMode timeMode;
     public Playhead playhead;
     public float playTime = 0f;
+    public float playSpeed = 1f;
     [Header("Audio")]
     public bool click = false;
     public int sampleFrequency = 48000;
@@ -88,7 +89,7 @@ public class Metronome : MonoBehaviour
                 break;
             case TimeMode.FixedUpdate:
                 SetPlayhead(null);
-                MoveTime(playTime + Time.fixedDeltaTime);
+                MoveTime(playTime + Time.fixedDeltaTime * playSpeed);
                 break;
             case TimeMode.FollowAudio:
                 SetPlayhead(null);
@@ -176,6 +177,9 @@ public class Metronome : MonoBehaviour
         SetRythm();
     }
 
+    public void SetRythm(SheetMusic sheet)
+        => SetRythm(sheet?.GetTempo(), sheet?.GetMeasure());
+
     private void SetRythm()
     {
         // Generate rythm track
@@ -260,6 +264,7 @@ public class Metronome : MonoBehaviour
         if (timeMode == TimeMode.FollowAudio) SyncPlaytimeOnAudio();
         else SyncAudioOnPlaytime();
         // Play audio
+        clickSource.pitch = playSpeed;
         if (clickSource.isPlaying == false) clickSource.Play();
     }
 

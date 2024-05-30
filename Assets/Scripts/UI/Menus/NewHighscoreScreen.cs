@@ -19,12 +19,6 @@ public class NewHighscoreScreen : MenuUI
 
     public UnityEvent<string> onSubmitName;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        UIHighScore = this;
-    }
-
     protected override void Update()
     {
         base.Update();

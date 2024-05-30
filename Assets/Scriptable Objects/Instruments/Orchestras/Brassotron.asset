@@ -13,35 +13,35 @@ MonoBehaviour:
   m_Name: Brassotron
   m_EditorClassIdentifier: 
   instrumentInfo:
-  - name: Alto
+  - partName: AltoSax
     instrument: {fileID: 11400000, guid: 70c960cf1ee35fd46b2e05ca43af0400, type: 2}
     volume: 1
     pan: 0
-  - name: Tenor
+  - partName: TenorSax
     instrument: {fileID: 11400000, guid: 840bba917887279419fd4b2b55f2f57a, type: 2}
     volume: 1
     pan: 0
-  - name: Baryton
+  - partName: BarytonSax
     instrument: {fileID: 11400000, guid: 48b3be68a3da94c488bdf2aed622062a, type: 2}
     volume: 1
     pan: 0
-  - name: Trumpet
+  - partName: Trumpet
     instrument: {fileID: 11400000, guid: 5a5a59656fe702e428c48be07f58d39e, type: 2}
     volume: 1
     pan: 0
-  - name: Tuba
+  - partName: Tuba
     instrument: {fileID: 11400000, guid: 1a3048f25f31aca4d944e6395a120d51, type: 2}
     volume: 1
     pan: 0
-  - name: Trombone
+  - partName: Trombone
     instrument: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
     volume: 1
     pan: 0
-  - name: Sousa
+  - partName: Souba
     instrument: {fileID: 11400000, guid: 0769424f1d2bc3845b16027b2d352c3d, type: 2}
     volume: 1
     pan: 0
-  - name: Drums
+  - partName: Drums
     instrument: {fileID: 11400000, guid: 03c24e8fc3e0c274ababb8e4a5df02ee, type: 2}
     volume: 0.724
     pan: 0

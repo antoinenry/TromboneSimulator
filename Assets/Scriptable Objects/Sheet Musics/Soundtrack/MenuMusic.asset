@@ -21,7 +21,7 @@ MonoBehaviour:
     timeSignatureDenominator: 4
     quarterNotesPerBeat: 1
   parts:
-  - instrumentName: 1st Trombone
+  - name: 1st Trombone
     notes:
     - tone: 48
       velocity: 0.625
@@ -499,7 +499,7 @@ MonoBehaviour:
       velocity: 0.625
       startTime: 40.434765
       duration: 0.16168594
-  - instrumentName: Batterie
+  - name: Batterie
     notes:
     - tone: 42
       velocity: 0.625
@@ -1309,3 +1309,4 @@ MonoBehaviour:
       velocity: 0.625
       startTime: 40.434772
       duration: 0.65081406
+  completeLastBar: 1

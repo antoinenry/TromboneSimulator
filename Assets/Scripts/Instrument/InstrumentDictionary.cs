@@ -22,20 +22,11 @@ public class InstrumentDictionary : ScriptableObject
         [Tone] public float[] tones;
     }
 
-    public bool isCurrent;
+    [CurrentToggle] public bool isCurrent;
     public InstrumentInfo[] instruments;
     public DrumHitInfo[] drumHits;
 
-    static public InstrumentDictionary Current { get; private set; }
-
-    private void OnEnable()
-    {
-        if (isCurrent)
-        {
-            if (Current != null) Debug.LogWarning("Several InstrumentDictionnaries are set as current. Ignoring " + this + ".");
-            else Current = this;
-        }
-    }
+    static public InstrumentDictionary Current => CurrentAssetsManager.GetCurrent<InstrumentDictionary>();
 
     static public bool FindCurrentOfficalName(string instrumentName, out string officialName)
     {
@@ -176,6 +167,7 @@ public class InstrumentDictionary : ScriptableObject
 
     private int FindInstrumentIndex(string instrumentName)
     {
+        if (instrumentName == null) return -1;
         int instrumentCount = instruments != null ? instruments.Length : 0;
         for (int i = 0; i < instrumentCount; i++)
         {

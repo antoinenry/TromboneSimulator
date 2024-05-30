@@ -6,7 +6,7 @@ public class NoteCatcher : MonoBehaviour
     public bool showDebug;
     [Header("Components")]
     public NoteSpawner spawner;
-    public Trombone trombone;
+    public TromboneCore trombone;
     public Playhead playhead;
     [Header("Activation")]
     public bool catchNotes;
@@ -15,11 +15,11 @@ public class NoteCatcher : MonoBehaviour
     public float delayTolerance;
     public float toneTolerance;
     [Header("Events")]
-    public UnityEvent<NoteInstance> onCorrectNote;
-    public UnityEvent<NoteInstance> onFullCorrectNote;
-    public UnityEvent<NoteInstance> onWrongNote;
-    public UnityEvent<NoteInstance> onMissNote;
-    public UnityEvent<NoteInstance> onNoteCatchEnd;
+    public UnityEvent<NoteSpawn> onCorrectNote;
+    public UnityEvent<NoteSpawn> onFullCorrectNote;
+    public UnityEvent<NoteSpawn> onWrongNote;
+    public UnityEvent<NoteSpawn> onMissNote;
+    public UnityEvent<NoteSpawn> onNoteCatchEnd;
 
     public float CatchStartTime { get; private set; }
     public float CatchEndTime { get; private set; }
@@ -63,7 +63,7 @@ public class NoteCatcher : MonoBehaviour
         }
     }
 
-    private void OnNotesMoved(NoteInstance[] notes, float fromTime, float toTime)
+    private void OnNotesMoved(NoteSpawn[] notes, float fromTime, float toTime)
     {
         if (notes == null || playhead == null) return;
         // Trombone controls catcher
@@ -85,13 +85,13 @@ public class NoteCatcher : MonoBehaviour
 
     private void OnNoteIsInCatchTimeRange(int noteIndex, INote note)
     {
-        if (note != null && note is NoteInstance)
+        if (note != null && note is NoteSpawn)
         {
-            NoteInstance instance = note as NoteInstance;
+            NoteSpawn instance = note as NoteSpawn;
             NoteInfo info = NoteInfo.GetInfo(note);
             if (showDebug) Debug.Log(instance + " is in catch range");
             // Full catch
-            if (instance.catchState != NoteInstance.CatchState.All && info.EndTime <= playhead.PreviousTime)
+            if (instance.catchState != NoteSpawn.CatchState.All && info.EndTime <= playhead.PreviousTime)
             {
                 if (instance.performance.CorrectTime == info.duration)
                 {
@@ -103,12 +103,12 @@ public class NoteCatcher : MonoBehaviour
             // Catch note
             else if (catchNotes)
             {
-                float toneError = Mathf.Abs(catchTone - info.tone);
+                float accuracy = toneTolerance > 0f ? 1f - Mathf.Abs(catchTone - info.tone) / toneTolerance : 0f;
                 // Correct tone
-                if (toneError <= toneTolerance)
+                if (accuracy > 0f)
                 {
                     if (showDebug) Debug.Log("-> Catching");
-                    instance.PlayCorrectly(playhead.PreviousTime + CatchStartTime, playhead.CurrentTime + CatchEndTime, toneError);
+                    instance.PlayCorrectly(playhead.PreviousTime + CatchStartTime, playhead.CurrentTime + CatchEndTime, accuracy);
                     onCorrectNote.Invoke(instance);
                 }
                 // Wrong tone
@@ -118,7 +118,7 @@ public class NoteCatcher : MonoBehaviour
                     if (playhead.PreviousTime > info.startTime)
                     {
                         if (showDebug) Debug.Log("-> Wrong tone: " + catchTone + " / " + info.tone);
-                        instance.PlayWrong(playhead.PreviousTime + CatchStartTime, playhead.CurrentTime, toneError);
+                        instance.PlayWrong(playhead.PreviousTime + CatchStartTime, playhead.CurrentTime, accuracy);
                         onWrongNote.Invoke(instance);
                     }
                 }
@@ -128,7 +128,7 @@ public class NoteCatcher : MonoBehaviour
 
     private void OnNoteExitsCatchRange(int noteIndex, INote note)
     {
-        if (note != null && note is NoteInstance)
+        if (note != null && note is NoteSpawn)
         {
             //// Miss parts of note that haven't been caught
             //note.Miss(playhead.PreviousTime, playhead.CurrentTime + CatchEndTime, out FloatSegment missedSegment);
@@ -147,9 +147,9 @@ public class NoteCatcher : MonoBehaviour
 
     private void OnNoteEndExitsCatchRange(int noteIndex, INote note)
     {
-        if (note != null && note is NoteInstance)
+        if (note != null && note is NoteSpawn)
         {
-            onNoteCatchEnd.Invoke(note as NoteInstance);
+            onNoteCatchEnd.Invoke(note as NoteSpawn);
         }
     }
 }

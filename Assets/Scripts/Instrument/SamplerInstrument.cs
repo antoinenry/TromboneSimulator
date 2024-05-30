@@ -25,7 +25,7 @@ public class SamplerInstrument : ScriptableObject
     public AudioClip fullAudio;
     public AudioClip audioWithoutAttacks;
     public ToneInfo[] tones;
-    public bool allowPitching = true;
+    public bool allowPitchForTone = true;
     [Header("Performance")]
     public PerformanceStyle style;
 
@@ -40,9 +40,8 @@ public class SamplerInstrument : ScriptableObject
         {
             if (tones != null && tones.Length > 0)
             {
-                float lowestTone = tones[0].tone;
-                foreach (ToneInfo t in tones) lowestTone = Mathf.Min(t.tone, lowestTone);
-                return lowestTone;
+                float[] toneValues = Array.ConvertAll(tones, t => t.tone);
+                return Mathf.Min(toneValues);
             }
             else
                 return float.NaN;
@@ -55,9 +54,8 @@ public class SamplerInstrument : ScriptableObject
         {
             if (tones != null && tones.Length > 0)
             {
-                float highestTone = tones[0].tone;
-                foreach (ToneInfo t in tones) highestTone = Mathf.Max(t.tone, highestTone);
-                return highestTone;
+                float[] toneValues = Array.ConvertAll(tones, t => t.tone);
+                return Mathf.Max(toneValues);
             }
             else
                 return float.NaN;
@@ -156,7 +154,7 @@ public class SamplerInstrument : ScriptableObject
                 toneIndex = Array.FindIndex(tones, t => t.tone == note.tone);
             }
             // If tone is missing, try to find closest tone to pitch
-            if (toneIndex == -1 && allowPitching) toneIndex = FindClosestToneIndex(note.tone);
+            if (toneIndex == -1 && allowPitchForTone) toneIndex = FindClosestToneIndex(note.tone);
             // Sample tone audio
             if (toneIndex != -1)
             {
@@ -249,7 +247,7 @@ public class SamplerInstrument : ScriptableObject
         }
     }
 
-    public void PlayTone(float tone, AudioSource audioSource, bool removeAttack = false, bool preventToneJump = false)
+    public void PlayTone(float tone, AudioSource audioSource, bool removeAttack = false, bool preventToneJump = false, float pitchByTones = 0f, float pitchMultiplier = 1f)
     {
         // Play a certain note on an audioSource
         if (audioSource != null)
@@ -271,19 +269,18 @@ public class SamplerInstrument : ScriptableObject
             }
             // If no tone info were found, look for closest one
             if (toneIndex == -1) toneIndex = FindClosestToneIndex(tone);
-            // 
             if (toneIndex != -1)
             {
                 ToneInfo toneInfo = tones[toneIndex];
                 float tonePitch = tone - toneInfo.tone;
-                if (tonePitch != 0f && allowPitching == false)
+                if (tonePitch != 0f && allowPitchForTone == false)
                 {
                     if (showDebug) Debug.LogWarning(name + " can't play tone " + tone + " on " + instrumentName + " without pitching audio (not allowed).");
                 }
                 else
                 {
                     // Set audiosource pitch
-                    audioSource.pitch = Mathf.Pow(PerTonePitchMultiplier, tonePitch);
+                    audioSource.pitch = pitchMultiplier * Mathf.Pow(PerTonePitchMultiplier, tonePitch + pitchByTones);
                     // Set audiosource time
                     if (removeAttack)
                     {

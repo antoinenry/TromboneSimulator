@@ -8,13 +8,12 @@ public class AudioTrackGenerator : MonoBehaviour
 {
     [Flags]
     public enum ErrorType { NoError = 0, NullInstrument = 1, NullAudio = 2, Frequency = 4, Channels = 8, Tone = 16, Duration = 32, InstrumentName = 64 }
-    [Serializable]
-    public struct PartVoicesIdentifier { public string partName; public bool mainVoice; public int[] alternativeVoiceIndices; }
 
     [Header("Input")]
-    public SheetMusic trackInfo;
+    public SheetMusic music;
     public Orchestra orchestra;
-    public PartVoicesIdentifier[] ignoredParts;
+    public SheetMusicVoiceIdentifier[] mutedParts;
+    //public float tempoStretch = 1f;
     [Header("Encoding")]
     public int frequency = 48000;
     public bool stereo = true;
@@ -67,33 +66,22 @@ public class AudioTrackGenerator : MonoBehaviour
         return ErrorType.NoError;
     }
 
-    public void IgnoreVoice(string part, bool ignoreMainVoice, params int[] ignoreAlternativeVoices)
-    {
-        int ignoredCount = ignoredParts != null ? ignoredParts.Length : 0;
-        if (ignoredCount == 0) ignoredParts = new PartVoicesIdentifier[1];
-        else Array.Resize(ref ignoredParts, ignoredCount + 1);
-        ignoredParts[ignoredCount] = new PartVoicesIdentifier()
-        {
-            partName = part,
-            mainVoice = ignoreMainVoice,
-            alternativeVoiceIndices = ignoreAlternativeVoices
-        };
-    }
+    public void PlayAllVoices() => mutedParts = new SheetMusicVoiceIdentifier[0];
 
     private IEnumerator SampleTrackCoroutine()
     {
         // Coroutine with timeouts to avoid freezing (eg display a loading screen)
         generatedAudio = null;
         ErrorType error = ErrorType.NoError;
-        if (trackInfo != null)
+        if (music != null && music.GetDuration() > 0f)
         {
             // Get track length
             int channels = stereo ? 2 : 1;
-            int durationSamples = Mathf.CeilToInt(trackInfo.DurationSeconds * frequency) * channels;
+            int durationSamples = Mathf.CeilToInt(music.GetDuration(/*tempoStretch*/) * frequency) * channels;
             float[] samples = new float[durationSamples];
             // Initialize progress
-            TotalNoteCount = trackInfo.TotalNoteCount;
-            PartCount = trackInfo.PartCount;
+            TotalNoteCount = music.GetTotalNoteCount();
+            PartCount = music.PartCount;
             GeneratedNoteCount = 0;
             GeneratedPartCount = 0;
             NotesPerFrame = 0;
@@ -103,8 +91,8 @@ public class AudioTrackGenerator : MonoBehaviour
             // Generate track
             for (int p = 0; p < PartCount; p++)
             {
-                CurrentPart = trackInfo.parts[p].instrumentName;
-                CurrentPartLength = trackInfo.parts[p].NoteCount;
+                CurrentPart = music.GetPartInstrument(p);
+                CurrentPartLength = music.GetPartLength(p);
                 CurrentPartGeneratedNotes = 0;
                 bool checkPartName = InstrumentDictionary.Current.FindOfficalName(CurrentPart, out string partOfficialName);
                 if (checkPartName)
@@ -112,21 +100,21 @@ public class AudioTrackGenerator : MonoBehaviour
                     // Check if part is ignored
                     int[] ignoredVoices = null;
                     bool ignoreMainVoice = false;
-                    if (ignoredParts != null)
+                    if (mutedParts != null)
                     {
-                        PartVoicesIdentifier ignored = Array.Find(ignoredParts, x => InstrumentDictionary.SameCurrentInstruments(x.partName, partOfficialName));
+                        SheetMusicVoiceIdentifier ignored = Array.Find(mutedParts, x => InstrumentDictionary.SameCurrentInstruments(x.partName, partOfficialName));
                         ignoredVoices = ignored.alternativeVoiceIndices;
                         ignoreMainVoice = ignored.mainVoice;
                     }
                     // Get part notes, removing ignored voices
                     NoteInfo[] notes;
                     if (ignoreMainVoice == false && (ignoredVoices == null || ignoredVoices.Length == 0))
-                    {
-                        notes = trackInfo.parts[p].notes;
+                    {                        
+                        notes = music.GetPartNotes(p/*, tempoStretch*/);
                     }
                     else
                     {
-                        int voiceCount = trackInfo.SplitPartVoices(p, out NoteInfo[] mainVoice, out List<NoteInfo[]> otherVoices);
+                        int voiceCount = music.SplitPartVoices(p, out NoteInfo[] mainVoice, out List<NoteInfo[]> otherVoices/*, tempoStretch*/);
                         List<NoteInfo> noteList = new List<NoteInfo>(CurrentPartLength);
                         // Check if main voice is ignored
                         if (ignoreMainVoice == false) noteList.AddRange(mainVoice);
@@ -153,7 +141,7 @@ public class AudioTrackGenerator : MonoBehaviour
                         CurrentPartLength = notes.Length;
                     }
                     // Sample part with corresponding instrument
-                    InstrumentMixInfo instrumentMix = Array.Find(orchestra.instrumentInfo, instrument => InstrumentDictionary.SameCurrentInstruments(instrument.name, partOfficialName));
+                    InstrumentMixInfo instrumentMix = Array.Find(orchestra.instrumentInfo, instrument => InstrumentDictionary.SameCurrentInstruments(instrument.partName, partOfficialName));
                     SamplerInstrument partInstrument = instrumentMix.instrument;
                     if (partInstrument != null)
                     {
@@ -175,7 +163,7 @@ public class AudioTrackGenerator : MonoBehaviour
                                 error |= SamplePart(notes, n, sampleNotes, partInstrument, ref partSamples);
                                 GeneratedNoteCount += sampleNotes;
                                 CurrentPartGeneratedNotes += sampleNotes;
-                                OnGenerationProgress.Invoke((float)GeneratedNoteCount / TotalNoteCount);
+                                if (GeneratedNoteCount < TotalNoteCount) OnGenerationProgress.Invoke((float)GeneratedNoteCount / TotalNoteCount);
                                 yield return null;
                             }
                         }
@@ -211,9 +199,11 @@ public class AudioTrackGenerator : MonoBehaviour
             // Ensure audio levels are between -1f and 1f
             if (normalize) AudioSampling.Normalize(ref samples);
             // Create new clip
-            generatedAudio = AudioClip.Create(trackInfo.name, durationSamples / channels, channels, frequency, false);
+            generatedAudio = AudioClip.Create(music.name, durationSamples / channels, channels, frequency, false);
             // Transfer samples to audio clip
             generatedAudio.SetData(samples, 0);
+            // Generation complete
+            OnGenerationProgress.Invoke(1f);
         }
     }
 

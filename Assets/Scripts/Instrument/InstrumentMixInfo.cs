@@ -4,7 +4,7 @@ using System;
 [Serializable]
 public struct InstrumentMixInfo
 {
-    public string name;
+    public string partName;
     public SamplerInstrument instrument;
     [Range(0f, 1f)] public float volume;
     [Range(-1f, 1f)] public float pan;

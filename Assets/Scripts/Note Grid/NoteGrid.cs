@@ -7,7 +7,6 @@ public class NoteGrid : MonoBehaviour
     [Serializable] public struct Margin { public float left, right, bottom, top; }
 
     [Header("Components")]
-    public Trombone trombone;
     public SpriteRenderer verticalLines;
     public SpriteRenderer horizontalLines;
     [Header("Dimensions")]
@@ -21,25 +20,27 @@ public class NoteGrid : MonoBehaviour
     public Vector2Int cellSpacing;
     public bool flattenX = false;
     public bool flattenY = false;
+    [Header("Sync With")]
+    public TromboneCore trombone;
+
+    private void OnEnable()
+    {
+        if (trombone == null) trombone = FindObjectOfType<TromboneCore>();
+    }
 
     private void Update()
     {
-        if (Application.isPlaying == false)
-            UpdateGrid();
+        SyncDimensionsWithTrombone();
+        UpdateAspect();
     }
 
-    private void Start()
-    {
-        UpdateGrid();
-    }
-
-    public void UpdateGrid()
+    public void SyncDimensionsWithTrombone()
     {
         // Synchronize with trombone
         if (trombone != null)
         {
             // Cell count
-            dimensions.columns = Mathf.CeilToInt(trombone.slideTones) + 1;
+            dimensions.columns = Mathf.CeilToInt(trombone.slideToneLength) + 1;
             dimensions.lineTones = trombone.PressureTones;
             // Dimensions
             if (trombone.tromboneDisplay != null)
@@ -57,6 +58,10 @@ public class NoteGrid : MonoBehaviour
                 flattenY = !trombone.tromboneDisplay.enablePressureMovement;
             }
         }
+    }
+
+    public void UpdateAspect()
+    {        
         // Get screen size from camera
         if (cameraConstrained == true && Camera.main != null) 
             gridSize = new Vector2(Camera.main.aspect, 1f) * 2f * Camera.main.orthographicSize;

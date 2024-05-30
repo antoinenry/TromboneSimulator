@@ -8,7 +8,7 @@ public class TromboneAuto : MonoBehaviour,
     public Playhead playhead;
     public NoteSpawner spawner;
     [Header("Controls")]
-    public TromboneAutoSettings settings;
+    public TromboneAutoSettings autoSettings;
 
     private float autoTone;
     private bool autoBlow;
@@ -34,13 +34,13 @@ public class TromboneAuto : MonoBehaviour,
         {
             // Grab/Release contitions
             bool grabConditions = 
-                (grabInput == true && settings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed))
-                || (grabInput == false && settings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Released));
+                (grabInput == true && autoSettings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed))
+                || (grabInput == false && autoSettings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Released));
             // Control blows
-            if (settings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
+            if (autoSettings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
                 return grabConditions ? true : null;
             // Control silences
-            if (settings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false)
+            if (autoSettings.blowControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false)
                 return grabConditions ? false : null;
             // No control
             return blowInput;
@@ -54,18 +54,18 @@ public class TromboneAuto : MonoBehaviour,
         {
             // Slide control
             bool grabConditions, blowConditions;
-            if (settings.slideControl != TromboneAutoSettings.ControlConditions.Never)
+            if (autoSettings.slideControl != TromboneAutoSettings.ControlConditions.Never)
             {
                 grabConditions =
-                    ((settings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed) && grabInput == true)
-                        || (settings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Released) && grabInput == false));
+                    ((autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed) && grabInput == true)
+                        || (autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Released) && grabInput == false));
                 blowConditions =
-                    ((settings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
-                        || (settings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false));
+                    ((autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
+                        || (autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false));
                 if (grabConditions == true && blowConditions == true)
                 {
                     // Set slide to automatic value
-                    if (settings.slideLegatoSpeed <= 0f)
+                    if (autoSettings.slideLegatoSpeed <= 0f)
                     {
                         return autoSlideTone;
                     }
@@ -73,10 +73,10 @@ public class TromboneAuto : MonoBehaviour,
                     else
                     {
                         float distance = Mathf.Abs(legatoSlideTone - autoSlideTone);
-                        if (distance > settings.maxLegatoDistance)
-                            legatoSlideTone = legatoSlideTone < autoSlideTone ? autoSlideTone - settings.maxLegatoDistance : autoSlideTone + settings.maxLegatoDistance;
+                        if (distance > autoSettings.maxLegatoDistance)
+                            legatoSlideTone = legatoSlideTone < autoSlideTone ? autoSlideTone - autoSettings.maxLegatoDistance : autoSlideTone + autoSettings.maxLegatoDistance;
                         else
-                            legatoSlideTone = Mathf.MoveTowards(legatoSlideTone, autoSlideTone, Time.deltaTime * settings.slideLegatoSpeed);
+                            legatoSlideTone = Mathf.MoveTowards(legatoSlideTone, autoSlideTone, Time.deltaTime * autoSettings.slideLegatoSpeed);
                         return legatoSlideTone;
                     }
                 }
@@ -93,14 +93,14 @@ public class TromboneAuto : MonoBehaviour,
         {
             // Pressure control
             bool grabConditions, blowConditions;
-            if (settings.pressureControl != TromboneAutoSettings.ControlConditions.Never)
+            if (autoSettings.pressureControl != TromboneAutoSettings.ControlConditions.Never)
             {
                 grabConditions =
-                    ((settings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed) && grabInput == true)
-                        || (settings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Released) && grabInput == false));
+                    ((autoSettings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed) && grabInput == true)
+                        || (autoSettings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Released) && grabInput == false));
                 blowConditions =
-                    ((settings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
-                        || (settings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false));
+                    ((autoSettings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
+                        || (autoSettings.pressureControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false));
                 if (grabConditions == true && blowConditions == true)
                 {
                     // Set pressure to automatic value
@@ -109,13 +109,13 @@ public class TromboneAuto : MonoBehaviour,
             }
             // Pressure lock
             bool toneCondition;
-            if (settings.pressureLock != TromboneAutoSettings.LockConditions.Never)
+            if (autoSettings.pressureLock != TromboneAutoSettings.LockConditions.Never)
             {
                 blowConditions =
-                    ((settings.pressureLock.HasFlag(TromboneAutoSettings.LockConditions.InputBlows) && blowInput == true)
-                        || (settings.pressureLock.HasFlag(TromboneAutoSettings.LockConditions.AutoBlows) && autoBlow == true));
+                    ((autoSettings.pressureLock.HasFlag(TromboneAutoSettings.LockConditions.InputBlows) && blowInput == true)
+                        || (autoSettings.pressureLock.HasFlag(TromboneAutoSettings.LockConditions.AutoBlows) && autoBlow == true));
                 toneCondition =
-                    (settings.pressureLock.HasFlag(TromboneAutoSettings.LockConditions.CorrectPressure) == false
+                    (autoSettings.pressureLock.HasFlag(TromboneAutoSettings.LockConditions.CorrectPressure) == false
                         || Mathf.RoundToInt(lockedPressureLevel) == Mathf.RoundToInt(autoPressureLevel));
                 if (blowConditions && toneCondition)
                 {
@@ -123,7 +123,7 @@ public class TromboneAuto : MonoBehaviour,
                     return lockedPressureLevel;
                 }
                 // When pressure is "unlocked", registered value follows the input value
-                else if (pressureLevelInput != null) lockedPressureLevel = pressureLevelInput.Value;
+                else if (pressureLevelInput != null) lockedPressureLevel = Mathf.Round(pressureLevelInput.Value);
             }
             // No controls or lock
             return pressureLevelInput;

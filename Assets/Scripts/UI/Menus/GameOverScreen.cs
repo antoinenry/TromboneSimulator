@@ -15,12 +15,6 @@ public class GameOverScreen : MenuUI
     [Header("Events")]
     public UnityEvent<bool> onContinue;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        UIGameOver = this;
-    }
-
     public override void ShowUI()
     {
         if (Application.isPlaying)

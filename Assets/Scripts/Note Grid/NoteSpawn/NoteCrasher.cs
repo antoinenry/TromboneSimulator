@@ -47,9 +47,9 @@ public class NoteCrasher : MonoBehaviour
         boundaries.center = cam.transform.position;
     }
 
-    private void OnNotesMove(NoteInstance[] instances, float fromTime, float toTime)
+    private void OnNotesMove(NoteSpawn[] instances, float fromTime, float toTime)
     {
-        foreach (NoteInstance note in instances)
+        foreach (NoteSpawn note in instances)
         {
             if (IsNoteCrashing(note, out bool hCrash, out bool vCrash))
             {
@@ -59,7 +59,7 @@ public class NoteCrasher : MonoBehaviour
         }
     }
 
-    private bool IsNoteCrashing(NoteInstance instance, out bool horizontalCrash, out bool verticalCrash)
+    private bool IsNoteCrashing(NoteSpawn instance, out bool horizontalCrash, out bool verticalCrash)
     {
         horizontalCrash = false;
         verticalCrash = false;

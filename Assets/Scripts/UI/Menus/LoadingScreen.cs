@@ -22,7 +22,6 @@ public class LoadingScreen : MenuUI
     protected override void Awake()
     {
         base.Awake();
-        UILoading = this;
         trackGenerator = FindObjectOfType<AudioTrackGenerator>(true);
         //cursor = FindObjectOfType<HandCursor>(true);
         if (loadingOrchestraLayout != null) loadingOrchestra = loadingOrchestraLayout.GetComponentsInChildren<Image>(true);
@@ -46,7 +45,7 @@ public class LoadingScreen : MenuUI
             showOrchestra = VisibleMenuCount == 1;
             if (IsVisible == false)
             {
-                SetOrchestraLayout(trackGenerator.trackInfo.PartNames);
+                SetOrchestraLayout(trackGenerator.music.PartNames);
                 ResetOrchestraLoadProgress();
                 if (cursor != null) cursor.cursorState &= ~HandCursor.CursorState.Visible;
                 ShowUI();

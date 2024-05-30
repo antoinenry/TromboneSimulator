@@ -19,12 +19,6 @@ public class PauseScreen : MenuUI
     //private LevelLoader levelLoader;
     //private MusicPlayer musicPlayer;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        UIPause = this;
-    }
-
     override protected void Start()
     {
         //UISettingsScreen = FindObjectOfType<SettingsScreen>(true);

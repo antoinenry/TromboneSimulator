@@ -102,5 +102,5 @@ MonoBehaviour:
     audioDurationSamples: 48000
     attackSamples: 0
     letRing: 1
-  allowPitching: 0
+  allowPitchForTone: 0
   style: {fileID: 11400000, guid: 820d39334e222714ca0b5a8be7137be7, type: 2}

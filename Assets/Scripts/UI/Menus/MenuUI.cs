@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using System;
+using System.Reflection;
 using System.Collections.Generic;
+using System.Linq;
 
 [ExecuteAlways]
 public abstract class MenuUI : MonoBehaviour
@@ -12,17 +15,21 @@ public abstract class MenuUI : MonoBehaviour
     public UnityEvent onShowUI;
     public UnityEvent onHideUI;
 
-    static public HandCursor cursor;
     static public List<MenuUI> visibleMenuUis;
-    static public MainMenu UIMainMenu;
-    static public LevelSelectionScreen UILevelSelection;
-    static public LeaderBoardScreen UILeaderboard;
-    static public PauseScreen UIPause;
-    static public ScoreScreen UIScore;
-    static public GameOverScreen UIGameOver;
-    static public NewHighscoreScreen UIHighScore;
-    static public SettingsScreen UISettings;
-    static public LoadingScreen UILoading;
+    static public HandCursor cursor;
+
+    static private Dictionary<Type, MenuUI> MenuUIs;
+
+    //static public MainMenu UIMainMenu;
+    //static public LevelSelectionScreen UILevelSelection;
+    //static public TromboneSelectionScreen UITromboneSelection;
+    //static public LeaderBoardScreen UILeaderboard;
+    //static public PauseScreen UIPause;
+    //static public ScoreScreen UIScore;
+    //static public GameOverScreen UIGameOver;
+    //static public NewHighscoreScreen UIHighScore;
+    //static public SettingsScreen UISettings;
+    //static public LoadingScreen UILoading;
 
     public MenuUI PreviousUI { get; protected set; }
 
@@ -39,6 +46,7 @@ public abstract class MenuUI : MonoBehaviour
     {
         if (cursor == null) cursor = FindObjectOfType<HandCursor>(true);
         if (visibleMenuUis == null) visibleMenuUis = new List<MenuUI>();
+        if (MenuUIs == null) MenuUIs = FindAllMenuUIs();
     }
 
     protected virtual void Start()
@@ -81,6 +89,23 @@ public abstract class MenuUI : MonoBehaviour
         {
             visibleMenuUis.RemoveAll(m => m == this);
         }
+    }
+
+    static public Type[] GetAllMenuUITypes()
+        => Array.FindAll(Assembly.GetExecutingAssembly().GetTypes(), t => typeof(MenuUI).IsAssignableFrom(t));
+
+    static public Dictionary<Type, MenuUI> FindAllMenuUIs()
+    {
+        Dictionary<Type, MenuUI> uis = new Dictionary<Type, MenuUI>();
+        Type[] UITypes = GetAllMenuUITypes();
+        foreach(Type t in UITypes) uis.Add(t, FindObjectOfType(t) as MenuUI);
+        return uis;
+    }
+
+    static public T Get<T>() where T : MenuUI
+    {
+        if (MenuUIs == null) MenuUIs = FindAllMenuUIs();
+        return MenuUIs[typeof(T)] as T;
     }
 
     public virtual void GoTo(MenuUI nextUI)

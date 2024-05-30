@@ -18,6 +18,7 @@ public class TromboneAudio : MonoBehaviour,
     [Header("Sound")]
     public SamplerInstrument sampler;
     public float pitch = 1f;
+    public bool setPitchFromMusicPlayer = true;
     [Header("Audio")]
     [Range(1, 16)] public int audioSourceCapacity = 1;
     public AudioMixerGroup mixerGroup;
@@ -29,6 +30,7 @@ public class TromboneAudio : MonoBehaviour,
     private AudioSource[] audioSources;
     private bool activeBlow;
     private float activePressureTone;
+    private MusicPlayer musicPlayer;
 
     public bool? Blow { set { if (value != null) blow = value.Value; } }
     public float? SlideTone { set { if (value != null) slideTone = value.Value; } }
@@ -37,12 +39,14 @@ public class TromboneAudio : MonoBehaviour,
     private void Awake()
     {
         SetAudioSources(audioSourceCapacity);
+        musicPlayer = FindObjectOfType<MusicPlayer>(true);
     }
 
     private void Update()
     {
         if (audioSources == null || audioSources.Length != audioSourceCapacity) SetAudioSources(audioSourceCapacity);
         if (update.HasFlag(UpdateMode.Regular)) UpdateAudio(Time.deltaTime);
+        if (setPitchFromMusicPlayer && musicPlayer) pitch = musicPlayer.playingSpeed;
     }
 
     private void FixedUpdate()
@@ -79,9 +83,10 @@ public class TromboneAudio : MonoBehaviour,
                 if (sampler != null)
                 {
                     // Smooth volume up
-                    if (source.volume < fullVolume) source.volume += deltaTime * smoothInSpeed;                    
-                    sampler.PlayTone(pressureTone, source);
-                    source.pitch *= Mathf.Pow(SamplerInstrument.PerTonePitchMultiplier, -slideTone);
+                    if (source.volume < fullVolume) source.volume += deltaTime * smoothInSpeed;   
+                    // Play tone with right pitch, combining slide position and music playing speed
+                    sampler.PlayTone(pressureTone, source, pitchByTones: -slideTone, pitchMultiplier:pitch);
+                    //source.pitch = pitch * Mathf.Pow(SamplerInstrument.PerTonePitchMultiplier, -slideTone);
                 }
             }
             else
@@ -90,8 +95,6 @@ public class TromboneAudio : MonoBehaviour,
                 if (source.volume > 0) source.volume -= deltaTime * smoothOutSpeed;
                 else source.Stop();
             }
-            // Sound effects on all sources
-            source.pitch *= pitch;
         }
     }
 

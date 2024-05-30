@@ -19,4 +19,5 @@ public class GameContentLibrary : ScriptableObject
     public Orchestra[] orchestras;
 
     public string[] GetLevelNames => Array.ConvertAll(levels, l => l != null ? l.name : null);
+    public string[] GetTromboneNames => Array.ConvertAll(trombones, l => l != null ? l.name : null);
 }

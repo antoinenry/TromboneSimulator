@@ -21,7 +21,7 @@ MonoBehaviour:
     timeSignatureDenominator: 4
     quarterNotesPerBeat: 1
   parts:
-  - instrumentName: Trompette
+  - name: Trompette
     notes:
     - tone: 67
       velocity: 0.859375
@@ -791,7 +791,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 99.5
       duration: 0.125
-  - instrumentName: Sax Alto
+  - name: Sax Alto
     notes:
     - tone: 63
       velocity: 0.859375
@@ -1401,7 +1401,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 99.5
       duration: 0.125
-  - instrumentName: Sax Tenor
+  - name: Sax Tenor
     notes:
     - tone: 62
       velocity: 0.859375
@@ -2011,7 +2011,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 99.5
       duration: 0.125
-  - instrumentName: Sax Bar
+  - name: Sax Bar
     notes:
     - tone: 38
       velocity: 0.859375
@@ -2325,7 +2325,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 99.5
       duration: 0.125
-  - instrumentName: Basse
+  - name: Basse
     notes:
     - tone: 48
       velocity: 0.859375
@@ -2799,7 +2799,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 99.5
       duration: 0.125
-  - instrumentName: Trombone Sib
+  - name: Trombone Sib
     notes:
     - tone: 54
       velocity: 0.859375
@@ -3289,7 +3289,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 97
       duration: 1.875
-  - instrumentName: Souba
+  - name: Souba
     notes:
     - tone: 48
       velocity: 0.859375
@@ -3603,3 +3603,4 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 99.5
       duration: 0.125
+  completeLastBar: 1

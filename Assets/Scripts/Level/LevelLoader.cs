@@ -19,7 +19,7 @@ public class LevelLoader : MonoBehaviour
     private Coroutine startLevelCoroutine;
     private Coroutine unpauseLevelCoroutine;
     // Component references
-    private Trombone trombone;
+    private TromboneCore trombone;
     private MusicPlayer musicPlayer;
     private NoteCatcher noteCatcher;
     private NoteSpawner noteSpawner;
@@ -28,13 +28,12 @@ public class LevelLoader : MonoBehaviour
     // Load state
     public Mode LoadedMode { get; private set; }
     public Level LoadedLevel { get; private set; }
-    public float MusicProgress => musicPlayer ? musicPlayer.CurrentPlayTime / musicPlayer.MusicDuration : 0f;
 
     #region INIT
     private void Awake()
     {
         // Find components
-        trombone = FindObjectOfType<Trombone>(true);
+        trombone = FindObjectOfType<TromboneCore>(true);
         musicPlayer = FindObjectOfType<MusicPlayer>(true);
         noteCatcher = FindObjectOfType<NoteCatcher>(true);
         noteSpawner = FindObjectOfType<NoteSpawner>(true);
@@ -46,12 +45,12 @@ public class LevelLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        if (MenuUI.UILevelSelection) MenuUI.UILevelSelection.onSelectLevel.AddListener(LaunchOneLevelMode);
+        MenuUI.Get<LevelSelectionScreen>()?.onSelectLevel?.AddListener(LaunchOneLevelMode);
     }
 
     private void OnDisable()
     {
-        if (MenuUI.UILevelSelection) MenuUI.UILevelSelection.onSelectLevel.RemoveListener(LaunchOneLevelMode);
+        MenuUI.Get<LevelSelectionScreen>()?.onSelectLevel?.RemoveListener(LaunchOneLevelMode);
     }
     #endregion
 
@@ -83,20 +82,19 @@ public class LevelLoader : MonoBehaviour
 
     private IEnumerator LoadLevelCoroutine()
     {
+        // Trombone setup
+        if (trombone)
+        {
+            trombone.ResetTrombone();
+            trombone.Unfreeze();
+        }
         // Music setup
         if (musicPlayer)
         {
             musicPlayer.Stop();
-            musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler);            
             musicPlayer.loop = false;
+            musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler); 
             musicPlayer.onPlayerUpdate.AddListener(OnMusicPlayerUpdate);
-        }
-        // Trombone setup
-        if (trombone)
-        {
-            trombone.LoadBuild();
-            trombone.ResetTrombone();
-            trombone.Unfreeze();
         }
         // NoteSpawner setup
         if (noteSpawner) noteSpawner.enabled = true;
@@ -110,7 +108,7 @@ public class LevelLoader : MonoBehaviour
         if (perfJudge)
         {
             perfJudge.enabled = true;
-            if (trombone.Sampler != null) perfJudge.LevelSetup(LoadedLevel.music, trombone.Sampler);
+            perfJudge.LevelSetup(LoadedLevel.music, trombone);
             perfJudge.onHealth.AddListener(OnHealthChange);
         }
         // GUI Setup
@@ -119,26 +117,26 @@ public class LevelLoader : MonoBehaviour
             if (musicPlayer) yield return new WaitWhile(() => musicPlayer.IsLoading);
             GUI.GUIActive = true;
             GUI.onPauseRequest.AddListener(PauseLevel);
-            GUI.SetPauseButtonActive(true);
         }
         loadLevelCoroutine = null;
     }
 
     public void UnloadLevel()
     {
-        LoadedLevel = null;
         // Stop GUI
         if (GUI)
         {
             GUI.GUIActive = false;
-            GUI.SetPauseButtonActive(false);
             GUI.onPauseRequest.RemoveListener(PauseLevel);
         }
-        // Stop music
+        // Stop level music
         if (musicPlayer)
         {
-            musicPlayer.Stop();
-            musicPlayer.UnloadMusic();
+            if (musicPlayer.IsLoadedMusic(LoadedLevel?.music))
+            {
+                musicPlayer.Stop();
+                musicPlayer.UnloadMusic();
+            }
             musicPlayer.onPlayerUpdate.RemoveListener(OnMusicPlayerUpdate);
         }
         // Stop performance judge
@@ -165,6 +163,8 @@ public class LevelLoader : MonoBehaviour
     {
         // Wait for music to finish loading
         while (musicPlayer.IsLoading) yield return null;
+        // Reactivate pause button
+        GUI?.SetPauseButtonActive(true);
         // Initialize note spawn: display first notes
         noteSpawner.SpawnNotes(musicPlayer.LoadedNotes, -noteSpawner.SpawnDelay, 0f);
         // Play metronome click
@@ -237,11 +237,12 @@ public class LevelLoader : MonoBehaviour
     public void PauseLevel()
     {
         // Show pause screen
-        if (MenuUI.UIPause)
+        PauseScreen UIPause = MenuUI.Get<PauseScreen>();
+        if (UIPause)
         {
-            MenuUI.UIPause.ShowUI();
-            MenuUI.UIPause.onUnpause.AddListener(UnpauseLevel);
-            MenuUI.UIPause.onQuit.AddListener(QuitLevel);
+            UIPause.ShowUI();
+            UIPause.onUnpause.AddListener(UnpauseLevel);
+            UIPause.onQuit.AddListener(QuitLevel);
         }
         // Toggle pause button behaviour
         if (GUI)
@@ -259,11 +260,12 @@ public class LevelLoader : MonoBehaviour
     public void UnpauseLevel()
     {
         // Hide pause screen
-        if (MenuUI.UIPause)
+        PauseScreen UIPause = MenuUI.Get<PauseScreen>();
+        if (UIPause)
         {
-            MenuUI.UIPause.HideUI();
-            MenuUI.UIPause.onUnpause.RemoveListener(UnpauseLevel);
-            MenuUI.UIPause.onQuit.RemoveListener(QuitLevel);
+            UIPause.HideUI();
+            UIPause.onUnpause.RemoveListener(UnpauseLevel);
+            UIPause.onQuit.RemoveListener(QuitLevel);
         }
         // Toggle pause button behaviour
         if (GUI)
@@ -288,7 +290,7 @@ public class LevelLoader : MonoBehaviour
     #endregion
 
     #region GAMEOVER/CONTINUE
-    private void OnHealthChange(float healthValue, float healthDelta)
+    private void OnHealthChange(float healthValue, float maxHealth, float healthDelta)
     {
         if (healthValue <= 0f) StartCoroutine(GameOverCoroutine());
     }
@@ -312,10 +314,11 @@ public class LevelLoader : MonoBehaviour
                 //MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
                 break;
             case Mode.ONE_LEVEL:
-                if (MenuUI.UIGameOver)
+                GameOverScreen UIGameOver = MenuUI.Get<GameOverScreen>();
+                if (UIGameOver)
                 {
-                    MenuUI.UIGameOver.DisplayGameOver();
-                    MenuUI.UIGameOver.onContinue.AddListener(OnContinue);
+                    UIGameOver.DisplayGameOver();
+                    UIGameOver.onContinue.AddListener(OnContinue);
                 }
                 break;
         }
@@ -323,7 +326,7 @@ public class LevelLoader : MonoBehaviour
 
     private void OnContinue(bool useContinue)
     {
-        MenuUI.UIGameOver.onContinue.RemoveListener(OnContinue);
+        MenuUI.Get<GameOverScreen>()?.onContinue?.RemoveListener(OnContinue);
         if (useContinue)
         {
             //if (currentMode == Mode.ARCADE) gameState.continues--;
@@ -355,12 +358,13 @@ public class LevelLoader : MonoBehaviour
         // Unload level
         UnloadLevel();
         LevelScoreInfo scoreInfo = perfJudge.GetLevelScore();
-        if (MenuUI.UIScore)
+        ScoreScreen UIScore = MenuUI.Get<ScoreScreen>();
+        if (UIScore)
         {
             // Show score screen
-            if (LoadedLevel) MenuUI.UIScore.DisplayScore(LoadedLevel.name, scoreInfo);
-            else MenuUI.UIScore.DisplayScore("", scoreInfo);
-            yield return new WaitWhile(() => MenuUI.UIScore.IsVisible);
+            if (LoadedLevel) UIScore.DisplayScore(LoadedLevel.name, scoreInfo);
+            else UIScore.DisplayScore("", scoreInfo);
+            yield return new WaitWhile(() => UIScore.IsVisible);
         }
         QuitLevel();
     }
@@ -380,7 +384,7 @@ public class LevelLoader : MonoBehaviour
                 //    MenuUI.UIMainMenu.ShowUI();
                 //break;
             case Mode.ONE_LEVEL:
-                MenuUI.UILevelSelection.ShowUI();
+                MenuUI.Get<LevelSelectionScreen>()?.ShowUI();
                 break;
         }
     }
