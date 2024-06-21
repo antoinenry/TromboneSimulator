@@ -66,7 +66,18 @@ public class MusicPlayerCustomizer : ComponentCustomizer
 [Serializable]
 public class PerformanceJudgeCustomizer : ComponentCustomizer
 {
+    public float scoringRate = 10f;
     public float maxHealth = 1f;
 
     public Type GetComponentType() => typeof(PerformanceJudge);
+}
+
+[Serializable]
+public class NoteCatcherCustomizer : ComponentCustomizer
+{
+    public float advanceTolerance = .1f;
+    public float delayTolerance= .1f;
+    public float toneTolerance = .1f;
+
+    public Type GetComponentType() => typeof(NoteCatcher);
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[ExecuteAlways]
 public class TromboneCore : MonoBehaviour,
     ITromboneGrabInput, ITromboneBlowInput, ITromboneSlideToneInput, ITrombonePressureLevelInput, ITrombonePressureToneInput,
     ITromboneGrabOutput, ITromboneBlowOutput, ITromboneSlideToneOutput, ITrombonePressureLevelOutput, ITrombonePressureToneOutput
@@ -18,8 +19,6 @@ public class TromboneCore : MonoBehaviour,
     [Tone] public float baseTone;
     public float[] pressureToneSteps;
     public float slideToneLength = 6f;
-    [Header("Build")]
-    [SerializeField] private TromboneCustomizer tromboneBuild;
 
     public int PressureIndex => RoundToPressureIndex(pressureLevel);
     public float Tone => GetTone(PressureIndex, slideTone);
@@ -43,11 +42,6 @@ public class TromboneCore : MonoBehaviour,
     public float? PressureLevel { get => pressureLevel; set { if (value != null) pressureLevel = value.Value; } }
     public float? PressureTone { get => GetTone(PressureIndex, 0f); set { if (value != null) TryGetPressureLevel(value.Value, out pressureLevel); } }
     #endregion    
-
-    private void Awake()
-    {
-        Build = tromboneBuild;
-    }
 
     private void OnEnable()
     {
@@ -79,7 +73,6 @@ public class TromboneCore : MonoBehaviour,
     public void ResetTrombone()
     {
         ClearInputs();
-        tromboneBuild.SetBuildToScene();
         tromboneDisplay.ResetDisplay();
     }
 
@@ -172,24 +165,5 @@ public class TromboneCore : MonoBehaviour,
     {
         if (tromboneAuto != null) tromboneAuto.enabled = true;
         if (tromboneDisplay != null) tromboneDisplay.enabled = true;
-    }
-
-    public TromboneCustomizer Build
-    {
-        set
-        {
-            tromboneBuild = value;
-            if (tromboneBuild == null)
-            {
-                tromboneBuild = ScriptableObject.CreateInstance<TromboneCustomizer>();
-                tromboneBuild.GetBuildFromScene();
-                tromboneBuild.name = "RuntimeBuild";
-            }
-            else if (tromboneBuild.CreatedAtRuntime == false)
-            {
-                tromboneBuild = Instantiate(tromboneBuild);
-                tromboneBuild.SetBuildToScene();
-            }
-        }
     }
 }

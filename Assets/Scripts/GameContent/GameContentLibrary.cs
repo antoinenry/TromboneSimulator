@@ -15,7 +15,7 @@ public class GameContentLibrary : ScriptableObject
     }
 
     public Level[] levels;
-    public TromboneCustomizer[] trombones;
+    public TromboneBuild[] trombones;
     public Orchestra[] orchestras;
 
     public string[] GetLevelNames => Array.ConvertAll(levels, l => l != null ? l.name : null);

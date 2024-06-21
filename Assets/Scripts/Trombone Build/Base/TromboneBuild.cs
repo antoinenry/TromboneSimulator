@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 
 [CreateAssetMenu(fileName = "NewTrombone", menuName = "Trombone Hero/Instruments/Trombone Customizer")]
-public class TromboneCustomizer : ScriptableObject
+public class TromboneBuild : ScriptableObject
 {
     public TromboneCoreCustomizer tromboneCore = new();
     public TromboneDisplayCustomizer tromboneDisplay = new();
@@ -11,18 +11,19 @@ public class TromboneCustomizer : ScriptableObject
     public TromboneAutoCustomizer tromboneAuto = new();
     public MusicPlayerCustomizer musicPlayer = new();
     public PerformanceJudgeCustomizer performanceJudge = new();
+    public NoteCatcherCustomizer noteCatcher = new();
 
     public bool CreatedAtRuntime { get; private set; }
 
     private void Awake()
     {
-        CreatedAtRuntime = Application.isPlaying;
+        if (Application.isPlaying) CreatedAtRuntime = true;
     }
 
-    public static void Copy(TromboneCustomizer source, TromboneCustomizer destination)
+    public static void Copy(TromboneBuild source, TromboneBuild destination)
     {
         if (destination == null || source == null) return;
-        FieldInfo[] customizers = typeof(TromboneCustomizer).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetField);
+        FieldInfo[] customizers = typeof(TromboneBuild).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetField);
         foreach (FieldInfo customizer in customizers)
         {
             object sourceCustomizer = customizer.GetValue(source);
@@ -34,7 +35,7 @@ public class TromboneCustomizer : ScriptableObject
 
     public void SetBuildToScene()
     {
-        FieldInfo[] customizers = typeof(TromboneCustomizer).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetField);
+        FieldInfo[] customizers = typeof(TromboneBuild).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetField);
         foreach (FieldInfo customizer in customizers)
         {
             object sourceCustomizer = customizer.GetValue(this);
@@ -50,7 +51,7 @@ public class TromboneCustomizer : ScriptableObject
 
     public void GetBuildFromScene()
     {
-        FieldInfo[] customizers = typeof(TromboneCustomizer).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetField);
+        FieldInfo[] customizers = typeof(TromboneBuild).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetField);
         foreach (FieldInfo customizer in customizers)
         {
             object destinationCustomizer = customizer.GetValue(this);

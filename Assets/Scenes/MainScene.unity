@@ -1262,6 +1262,7 @@ GameObject:
   - component: {fileID: 64880550}
   - component: {fileID: 64880549}
   - component: {fileID: 64880551}
+  - component: {fileID: 64880552}
   m_Layer: 0
   m_Name: Trombone
   m_TagString: Untagged
@@ -1290,15 +1291,8 @@ MonoBehaviour:
   slideTone: 0
   pressureLevel: 0
   baseTone: 46
-  pressureToneSteps:
-  - 7
-  - 5
-  - 4
-  - 3
-  - 3
-  - 2
+  pressureToneSteps: []
   slideToneLength: 7
-  tromboneBuild: {fileID: 11400000, guid: 64e4846b8f7ca4a4bb1075d355f97764, type: 2}
 --- !u!4 &64880550
 Transform:
   m_ObjectHideFlags: 0
@@ -1367,6 +1361,27 @@ MonoBehaviour:
   - valueType: SlideTone
     from: {fileID: 64880549}
     to: {fileID: 1012859072}
+--- !u!114 &64880552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64880548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4bd3d62ccd4fb41a5b65835f6aab04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseBuild: {fileID: 11400000, guid: 64e4846b8f7ca4a4bb1075d355f97764, type: 2}
+  enableModifiers: 1
+  mods:
+  - {fileID: 11400000, guid: 19795275c1104bd41b3d84201e3f3a67, type: 2}
+  - {fileID: 11400000, guid: 49199cf4c148e804fb8d5fa8dd955bee, type: 2}
+  - {fileID: 11400000, guid: a70e4fbd37c90344692e15c8af9123c3, type: 2}
+  - {fileID: 11400000, guid: 8edc3e15dcb3f564eaf2306f1c8e6ff3, type: 2}
+  - {fileID: 11400000, guid: 1947772b140207b489d9674e39deeead, type: 2}
+  - {fileID: 11400000, guid: d1e8be9e4b4663541b51d7f5f7cbbf26, type: 2}
 --- !u!1 &73332986
 GameObject:
   m_ObjectHideFlags: 0
@@ -11363,7 +11378,7 @@ MonoBehaviour:
   playOnStart: 0
   fixedUpdate: 1
   music: {fileID: 0}
-  tempoModifier: 1
+  tempoModifier: 0.8
   keyModifier: 0
   metronome: {fileID: 1300806622}
   playTime: 0
@@ -13213,8 +13228,8 @@ MonoBehaviour:
   noteCatcher: {fileID: 1969521391}
   noteCrasher: {fileID: 1969521394}
   gui: {fileID: 907637874}
-  maxHealth: 1
-  scoringRate: 100
+  maxHealth: 1.5
+  scoringRate: 2.25
   damageRate: 0.05
   accuracyRounding: 10
   performanceDetail: []
@@ -19509,7 +19524,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 0b3e55a80d1c77641b62fc04e2a75e66, type: 3}
-  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -20234,7 +20249,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: fa99ca4e09bff9c4c8ce6aec920bc02d, type: 3}
-  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -26904,7 +26919,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bb5fa9037856072489bd0292630df698, type: 3}
-  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -38453,7 +38468,7 @@ MonoBehaviour:
   slidebar: {fileID: 1018350545}
   bell: {fileID: 1539497750}
   grabArrow: {fileID: 1889132680}
-  color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
   bodyLength: 110
   slideLength: 95
   grabArrowDelay: -1
@@ -38462,7 +38477,7 @@ MonoBehaviour:
   toneWidth: 10
   minSlideTone: 0
   maxSlideTone: 7
-  enablePressureMovement: 1
+  enablePressureMovement: 0
   stepHeight: 11
   minPressureLevel: -2
   maxPressureLevel: 12
@@ -39511,7 +39526,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d712299c3c533644c86a0c9eed973d4a, type: 3}
-  m_Color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -48014,9 +48029,9 @@ MonoBehaviour:
   playhead: {fileID: 11400000, guid: 7bfcb8b14bd3f1445b1b1f170f3e9559, type: 2}
   catchNotes: 1
   catchTone: 66
-  advanceTolerance: 0.1
-  delayTolerance: 0.1
-  toneTolerance: 1
+  advanceTolerance: 0.2
+  delayTolerance: 0.2
+  toneTolerance: 0.1
   catchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   missColor: {r: 1, g: 0, b: 0, a: 1}
   onCorrectNote:
@@ -48093,12 +48108,6 @@ MonoBehaviour:
   dimensions:
     lineTones:
     - 46
-    - 53
-    - 58
-    - 62
-    - 65
-    - 68
-    - 70
     columns: 8
     tonePerColumn: 1
   gridSize: {x: 288, y: 162}
@@ -48111,7 +48120,7 @@ MonoBehaviour:
   cellSize: {x: 10, y: 10}
   cellSpacing: {x: 0, y: 1}
   flattenX: 0
-  flattenY: 0
+  flattenY: 1
   trombone: {fileID: 64880549}
 --- !u!114 &1969521394
 MonoBehaviour:
@@ -49468,7 +49477,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067895445}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
