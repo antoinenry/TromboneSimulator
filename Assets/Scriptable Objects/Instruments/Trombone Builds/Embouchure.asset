@@ -27,10 +27,11 @@ MonoBehaviour:
     bodyLength: 105
     slideLength: 75
     enableSlideMovement: 0
+    minSlideTone: 0
+    maxSlideTone: 7
     enablePressureMovement: 1
   tromboneAudio:
     sampler: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
-    pitch: 1
   tromboneAuto:
     autoSettings:
       blowControl: 13

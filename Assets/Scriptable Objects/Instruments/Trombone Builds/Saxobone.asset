@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Saxobone
   m_EditorClassIdentifier: 
   tromboneCore:
-    baseTone: 39
+    baseTone: 48
     pressureToneSteps:
     - 5
     - 5
@@ -24,14 +24,14 @@ MonoBehaviour:
     - 5
     - 5
     - 5
-    slideToneLength: 6
+    slideToneLength: 5
   tromboneDisplay:
     color: {r: 0.98039216, g: 0.91293824, b: 0.031372555, a: 1}
     bodyLength: 110
     slideLength: 80
     enableSlideMovement: 1
     minSlideTone: 0
-    maxSlideTone: 10
+    maxSlideTone: 5
     enablePressureMovement: 1
   tromboneAudio:
     sampler: {fileID: 11400000, guid: 840bba917887279419fd4b2b55f2f57a, type: 2}

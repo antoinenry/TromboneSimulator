@@ -1,16 +1,16 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(TromboneBuild))]
+[CustomEditor(typeof(TromboneCustomizer))]
 [CanEditMultipleObjects]
 public class TromboneBuildInspector : Editor
 {
-    private TromboneBuild targetBuild;
+    private TromboneCustomizer targetBuild;
 
     private void OnEnable()
     {
         if (targets.Length == 1)
-            targetBuild = target as TromboneBuild;
+            targetBuild = target as TromboneCustomizer;
     }
 
     public override void OnInspectorGUI()

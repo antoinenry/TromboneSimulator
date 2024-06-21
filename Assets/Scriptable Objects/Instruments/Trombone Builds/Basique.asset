@@ -21,16 +21,17 @@ MonoBehaviour:
     - 3
     - 3
     - 2
-    slideToneLength: 6
+    slideToneLength: 7
   tromboneDisplay:
     color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
     bodyLength: 110
     slideLength: 95
     enableSlideMovement: 1
+    minSlideTone: 0
+    maxSlideTone: 7
     enablePressureMovement: 1
   tromboneAudio:
     sampler: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
-    pitch: 1
   tromboneAuto:
     autoSettings:
       blowControl: 13

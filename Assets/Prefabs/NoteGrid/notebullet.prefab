@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793655895738931146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 71.29, z: 0}
+  m_LocalPosition: {x: 0, y: 1.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -124,11 +124,11 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 2bf9db32032348b439f72db1b318ce46, type: 3}
-  m_Color: {r: 0.25931755, g: 0.37838948, b: 0.4474717, a: 1}
+  m_Color: {r: 0.30838373, g: 0.6505445, b: 0.8490566, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 16, y: 14}
+  m_Size: {x: 16, y: 39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -209,7 +209,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: f7a734e7aa5a8c64e8254ddb6decd817, type: 3}
-  m_Color: {r: 0.26796308, g: 0.351826, b: 0.40048093, a: 0.696}
+  m_Color: {r: 0.6609724, g: 0.8286983, b: 0.9260081, a: 0.0002}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -259,15 +259,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5068534345441544869}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 71.29, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 1.29, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5068534345984942158}
   m_Father: {fileID: 5068534347288138985}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &5068534345441544890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +283,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5068534345984942153}
   spriteEndLength: 10
   minSliceLength: 2
-  horizontalSprite: 1
+  horizontalSprite: 0
   roundValues: 1
 --- !u!1 &5068534345984942152
 GameObject:
@@ -358,12 +358,12 @@ SpriteRenderer:
   m_SortingLayerID: 384203341
   m_SortingLayer: 1
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 7d234536f895ac045a415fed0a72681a, type: 3}
-  m_Color: {r: 0.25931755, g: 0.37838948, b: 0.4474717, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 2bf9db32032348b439f72db1b318ce46, type: 3}
+  m_Color: {r: 0.30838373, g: 0.6505445, b: 0.8490566, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 14, y: 16}
+  m_Size: {x: 16, y: 39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -420,21 +420,14 @@ MonoBehaviour:
   hRenderer: {fileID: 5068534345441544890}
   vRenderer: {fileID: 1793655895738931149}
   target: {fileID: 2260919995599123588}
-  hSprites:
-    single: {fileID: 21300000, guid: 7d234536f895ac045a415fed0a72681a, type: 3}
-    linkedToNext: {fileID: 21300000, guid: 019b889f08e1c5f46bc4dbe3ac81db75, type: 3}
-    linkedToPrevious: {fileID: 21300000, guid: be16f0f423ffd834bad769d957479bee, type: 3}
-    linkedToBoth: {fileID: 21300000, guid: 2485b602428e04042a7b0424278a502d, type: 3}
-  vSprites:
-    single: {fileID: 21300000, guid: 2bf9db32032348b439f72db1b318ce46, type: 3}
-    linkedToNext: {fileID: 21300000, guid: b7a16d3bf31cdd847ae360da67202ff7, type: 3}
-    linkedToPrevious: {fileID: 21300000, guid: 8281428f0b0a04c40bc3ff62104f0c90, type: 3}
-    linkedToBoth: {fileID: 21300000, guid: 43af0bdb3fa7076428bc06e43ee23ab7, type: 3}
-  noteLink: 0
-  distance: 69.6
+  spriteUnlinked: {fileID: 21300000, guid: 2bf9db32032348b439f72db1b318ce46, type: 3}
+  spriteLinkedStraight: {fileID: 21300000, guid: 7118d12ed8dc7f0459e191113e22255f, type: 3}
+  spriteLinkedTurn: {fileID: 21300000, guid: b7a16d3bf31cdd847ae360da67202ff7, type: 3}
+  distance: 0
   distanceOffset: 1.29
-  length: 3.6
+  length: 28.3
   roundValues: 1
+  linkedMaxDistance: 0.01
   baseColor: {r: 0.30838373, g: 0.6505445, b: 0.8490566, a: 1}
   farTint: {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0.74509805}
   incomingTint: {r: 1, g: 1, b: 1, a: 0.5882353}
@@ -443,7 +436,6 @@ MonoBehaviour:
   targetTint: {r: 1, g: 1, b: 1, a: 0.50980395}
   farDistance: 200
   incomingDistance: 100
-  fullCatchIsBaseColor: 0
 --- !u!114 &5068534347288138984
 MonoBehaviour:
   m_ObjectHideFlags: 0

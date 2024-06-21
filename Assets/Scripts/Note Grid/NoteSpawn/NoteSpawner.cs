@@ -95,6 +95,7 @@ public class NoteSpawner : MonoBehaviour
 
     public void UpdateNoteInstances()
     {
+        NoteSpawn previousNoteInstance = null;
         foreach (NoteSpawn instance in noteInstances)
         {
             if (instance != null)
@@ -118,6 +119,9 @@ public class NoteSpawner : MonoBehaviour
                     // Flat mode
                     instance.SetVisible(!grid.flattenY, !grid.flattenX);
                 }
+                // Link/Unlink notes
+                previousNoteInstance?.TryLinkToNextNote(instance);
+                previousNoteInstance = instance;
             }
         }
         // Forget destroyed notes
@@ -179,6 +183,7 @@ public class NoteSpawner : MonoBehaviour
                 if (!float.IsNaN(noteCoordinate.x) && !float.IsNaN(noteCoordinate.y) && grid.dimensions.Contains(noteCoordinate, yMin, yMax))
                 {
                     spawnedNote = Instantiate(notePrefab, transform);
+                    spawnedNote.name = ToneAttribute.GetNoteName(note.Tone);
                     //bool linkToPreviousNote = noteInfo.previousTone != -1 && grid.ToneToCoordinates(noteInfo.previousTone).y == grid.ToneToCoordinates(noteInfo.tone).y;
                     //bool linkToNextNote = noteInfo.nextTone != -1 && grid.ToneToCoordinates(noteInfo.nextTone).y == grid.ToneToCoordinates(noteInfo.tone).y;
                     spawnedNote.transform.localPosition = grid.CoordinatesToLocalPosition(noteCoordinate);

@@ -426,7 +426,7 @@ public class MusicPlayer : MonoBehaviour
         // Play from stop state
         if (State == PlayState.Stop)
         {
-            MovePlayheads(0f, 0f, false, true);
+            MovePlayheads(0f, 0f);//, false, true);
         }
         // Play from any state
         if (speedUpEffect) Play(playStateTransitionDuration);

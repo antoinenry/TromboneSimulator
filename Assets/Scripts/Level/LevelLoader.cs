@@ -116,6 +116,7 @@ public class LevelLoader : MonoBehaviour
         {
             if (musicPlayer) yield return new WaitWhile(() => musicPlayer.IsLoading);
             GUI.GUIActive = true;
+            GUI.SetPauseButtonActive(true);
             GUI.onPauseRequest.AddListener(PauseLevel);
         }
         loadLevelCoroutine = null;
@@ -127,6 +128,7 @@ public class LevelLoader : MonoBehaviour
         if (GUI)
         {
             GUI.GUIActive = false;
+            GUI.SetPauseButtonActive(false);
             GUI.onPauseRequest.RemoveListener(PauseLevel);
         }
         // Stop level music
@@ -159,6 +161,7 @@ public class LevelLoader : MonoBehaviour
         if (startLevelCoroutine != null) StopCoroutine(LevelStartCoroutine());
         startLevelCoroutine = StartCoroutine(LevelStartCoroutine());
     }
+
     private IEnumerator LevelStartCoroutine()
     {
         // Wait for music to finish loading

@@ -57,6 +57,12 @@ public class TintFlash : MonoBehaviour
         holdTimer = 0f;
     }
 
+    public void Tint(Color t)
+    {
+        tintColor = t;
+        Tint();
+    }
+
     public void Stop()
     {
         StopAllCoroutines();

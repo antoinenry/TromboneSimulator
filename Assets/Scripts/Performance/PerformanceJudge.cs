@@ -4,42 +4,29 @@ using System.Collections.Generic;
 
 public class PerformanceJudge : MonoBehaviour
 {
+    public bool showDebug;
+    [Header("Components")]
+    public NoteCatcher noteCatcher;
+    public NoteCrasher noteCrasher;
+    public PerformanceGUI gui;
     [Header("Difficulty")]
+    public float maxHealth = 1f;
     public float scoringRate = 10f;
     public float damageRate = .2f;
-    public float maxHealth = 1f;
     public float accuracyRounding = 10f;
-    public int danceLength = 16;
-    public int danceBuffer = 2;
     [Header("Performance")]
     public List<NotePerformance> performanceDetail;
     public float score;
     public int combo;
     public float health;
-    public int dance;
     [Header("Events")]
     public UnityEvent<float> onScore;
     public UnityEvent<float,float,float> onHealth;
-    public UnityEvent<int> onDance;
     public UnityEvent<NoteSpawn, float, float> onCorrectNote;
     public UnityEvent<NoteSpawn> onWrongNote;
     public UnityEvent<NoteSpawn> onMissNote;
-    public UnityEvent<NoteSpawn, float, int> onNotePerformanceEnd;
-
-    private NoteCatcher noteCatcher;
-    private NoteCrasher noteCrasher;
-    private DanceDetector danceDetector;
-    private PerformanceGUI GUI;
-    
-    private int danceBufferCounter;
-
-    private void Awake()
-    {
-        noteCatcher = FindObjectOfType<NoteCatcher>(true);
-        noteCrasher = FindObjectOfType<NoteCrasher>(true);
-        danceDetector = FindObjectOfType<DanceDetector>(true);
-        GUI = FindObjectOfType<PerformanceGUI>(true);
-    }
+    public UnityEvent<NoteSpawn, float> onNotePerformanceEnd;
+    public UnityEvent<int> onNoteCombo;
 
     private void OnEnable()
     {
@@ -55,12 +42,12 @@ public class PerformanceJudge : MonoBehaviour
 
     public void EnableGUI()
     {
-        if (GUI) GUI.Judge = this;
+        if (gui) gui.Judge = this;
     }
 
     public void DisableGUI()
     {
-        if (GUI && GUI.Judge == this) GUI.Judge = null;
+        if (gui && gui.Judge == this) gui.Judge = null;
     }
 
     public void EnableDetection()
@@ -75,11 +62,7 @@ public class PerformanceJudge : MonoBehaviour
         if (noteCrasher)
         {
             noteCrasher.onHorizontalCrash.AddListener(OnNoteCrash);
-        }
-        if (danceDetector)
-        {
-            danceDetector.onDanceBeat.AddListener(OnDanceBeat);
-            danceDetector.onMissBeat.AddListener(OnMissDanceBeat);
+            noteCrasher.onVerticalCrash.AddListener(OnNoteCrash);
         }
     }
 
@@ -95,11 +78,7 @@ public class PerformanceJudge : MonoBehaviour
         if (noteCrasher != null)
         {
             noteCrasher.onHorizontalCrash.RemoveListener(OnNoteCrash);
-        }
-        if (danceDetector != null)
-        {
-            danceDetector.onDanceBeat.RemoveListener(OnDanceBeat);
-            danceDetector.onMissBeat.RemoveListener(OnMissDanceBeat);
+            noteCrasher.onVerticalCrash.RemoveListener(OnNoteCrash);
         }
     }
     public void ResetPerformance()
@@ -108,10 +87,9 @@ public class PerformanceJudge : MonoBehaviour
         performanceDetail = new List<NotePerformance>();
         score = 0f;
         health = maxHealth;
-        dance = 0;
         combo = 0;
         // Reset GUI
-        if (GUI) GUI.ResetDisplay(maxHealth);
+        if (gui) gui.ResetDisplay(maxHealth);
     }
 
     public void LevelSetup(SheetMusic lvl, TromboneCore trombone)
@@ -120,7 +98,13 @@ public class PerformanceJudge : MonoBehaviour
         if (lvl != null) performanceDetail = new List<NotePerformance>(lvl.GetPartLength(trombone?.Sampler?.name));
         // Reset
         ResetPerformance();
-    }  
+    }
+
+    public void SetScore(float value)
+    {
+        score = value;
+        onScore.Invoke(score);
+    }
 
     public void AddNotePerformance(NoteSpawn instance)
     {
@@ -128,24 +112,31 @@ public class PerformanceJudge : MonoBehaviour
         performanceDetail.Add(instance.performance);
         // Add points to score
         float noteScore = GetNoteScore(instance.performance);
-        score += noteScore * combo;
-        onScore.Invoke(score);
+        SetScore(score + noteScore * combo);
         // Increase combo if note was fully played
         bool fullPlay = instance.performance.CorrectTime == instance.Duration;
-        if (fullPlay) combo++;
+        if (fullPlay) SetCombo(combo + 1);
         // Else break combo
-        else combo = 0;
-        onNotePerformanceEnd.Invoke(instance, noteScore, combo);
+        else SetCombo(0);
+        onNotePerformanceEnd.Invoke(instance, noteScore);
+    }
+
+    public void SetCombo(int value)
+    {
+        combo = value;
+        onNoteCombo.Invoke(combo);
     }
 
     public void TakeDamage(float damagePoints)
     {
+        if (showDebug) Debug.Log("Take " + damagePoints + " damage");
         health = Mathf.Max(health - damagePoints, 0f);
         onHealth.Invoke(health, maxHealth, -damagePoints);
     }
 
     public void HealDamage(float healPoints)
     {
+        if (showDebug) Debug.Log("Heal " + healPoints + " hp");
         health = Mathf.Min(health + healPoints, maxHealth);
         onHealth.Invoke(health, maxHealth, healPoints);
     }
@@ -227,25 +218,5 @@ public class PerformanceJudge : MonoBehaviour
     private void OnNoteCrash(float deltaTime)
     {
         TakeDamage(deltaTime * damageRate);
-    }
-
-    private void OnDanceBeat()
-    {
-        if (dance == 0 && danceBufferCounter < danceBuffer) danceBufferCounter++;
-        else
-        {
-            dance = Mathf.Clamp(dance + 1, 0, danceLength);
-            onDance.Invoke(dance);
-        }
-    }
-
-    private void OnMissDanceBeat()
-    {
-        if (danceBufferCounter > 0) danceBufferCounter--;
-        else
-        {
-            dance = Mathf.Clamp(dance - 1, 0, danceLength);
-            onDance.Invoke(dance);
-        }
     }
 }

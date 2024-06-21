@@ -5100,7 +5100,7 @@ MonoBehaviour:
     - tone: 55
       velocity: 0.234375
       startTime: 1.6363621
-      duration: 0.45454502
+      duration: 0.545454
     - tone: 57
       velocity: 0.3515625
       startTime: 2.181816
@@ -6751,7 +6751,7 @@ MonoBehaviour:
       velocity: 0.84375
       startTime: 126.388954
       duration: 1.1785736
-  - name: Drums
+  - name: Cymbales etc
     notes:
     - tone: 36
       velocity: 0.859375

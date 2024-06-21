@@ -6,7 +6,7 @@ public class SpriteCutter : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public float spriteEndLength;
     public float minSliceLength;
-    public bool horizontalSprite;
+    public bool horizontalSlice;
     public bool roundValues = true;
 
     private List<SpriteRenderer> sliceRenderers;
@@ -29,7 +29,7 @@ public class SpriteCutter : MonoBehaviour
         float lastSliceEnd = 0f;
         foreach (SpriteRenderer slice in sliceRenderers)
         {
-            float thisSliceEnd = horizontalSprite ? slice.transform.localPosition.x + slice.size.x : slice.transform.localPosition.y + slice.size.y;
+            float thisSliceEnd = horizontalSlice ? slice.transform.localPosition.x + slice.size.x : slice.transform.localPosition.y + slice.size.y;
             if (thisSliceEnd > lastSliceEnd)
             {
                 lastSlice = slice;
@@ -41,7 +41,7 @@ public class SpriteCutter : MonoBehaviour
         // Augment length
         if (lastSliceEnd < length)
         {
-            float lastSliceStart = horizontalSprite ? lastSlice.transform.localPosition.x : lastSlice.transform.localPosition.y;
+            float lastSliceStart = horizontalSlice ? lastSlice.transform.localPosition.x : lastSlice.transform.localPosition.y;
             SetSpriteSlice(lastSlice, lastSliceStart, length);
         }
         // Reduce length
@@ -81,8 +81,8 @@ public class SpriteCutter : MonoBehaviour
                 slicesRemoved = true;
                 continue;
             }
-            float sliceStart = horizontalSprite ? sliceRenderer.transform.localPosition.x : sliceRenderer.transform.localPosition.y;
-            float sliceEnd = sliceStart - spriteEndLength + (horizontalSprite ? sliceRenderer.size.x : sliceRenderer.size.y);
+            float sliceStart = horizontalSlice ? sliceRenderer.transform.localPosition.x : sliceRenderer.transform.localPosition.y;
+            float sliceEnd = sliceStart - spriteEndLength + (horizontalSlice ? sliceRenderer.size.x : sliceRenderer.size.y);
             // If the slice is out of the cut, it is not affected
             if (sliceEnd <= cutStart || sliceStart >= cutEnd)
                 continue;
@@ -156,7 +156,7 @@ public class SpriteCutter : MonoBehaviour
         if (sliceRenderer == null) return;
         Vector3 pos = sliceRenderer.transform.localPosition;
         Vector2 size = sliceRenderer.size;
-        if (horizontalSprite)
+        if (horizontalSlice)
         {
             pos.x = start;
             size.x = end - start;
@@ -176,7 +176,7 @@ public class SpriteCutter : MonoBehaviour
     {
         int sliceCount = sliceRenderers.Count;
         float[] slices = new float[sliceCount * 2];
-        if (horizontalSprite)
+        if (horizontalSlice)
         {
             for (int i = 0; i < sliceCount; i++)
             {
@@ -236,8 +236,8 @@ public class SpriteCutter : MonoBehaviour
             {
                 if (s != null)
                 {
-                    float sliceStart = horizontalSprite ? s.transform.localPosition.x : s.transform.localPosition.y;
-                    float sliceEnd = sliceStart + (horizontalSprite ? s.size.x : s.size.y) - spriteEndLength;
+                    float sliceStart = horizontalSlice ? s.transform.localPosition.x : s.transform.localPosition.y;
+                    float sliceEnd = sliceStart + (horizontalSlice ? s.size.x : s.size.y) - spriteEndLength;
                     FloatSegment sliceSegment = new FloatSegment(sliceStart, sliceEnd);
                     if (exclusive)
                     {
@@ -262,5 +262,25 @@ public class SpriteCutter : MonoBehaviour
             foreach (SpriteRenderer s in sliceRenderers)
                 if (s != null)
                     s.enabled = visible;
+    }
+
+    public void SetFlipX(bool flip)
+    {
+        if (spriteRenderer != null)
+            spriteRenderer.flipX = flip;
+        if (sliceRenderers != null)
+            foreach (SpriteRenderer s in sliceRenderers)
+                if (s != null)
+                    s.flipX = flip;
+    }
+
+    public void SetFlipY(bool flip)
+    {
+        if (spriteRenderer != null)
+            spriteRenderer.flipY = flip;
+        if (sliceRenderers != null)
+            foreach (SpriteRenderer s in sliceRenderers)
+                if (s != null)
+                    s.flipY = flip;
     }
 }

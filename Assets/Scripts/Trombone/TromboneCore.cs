@@ -19,7 +19,7 @@ public class TromboneCore : MonoBehaviour,
     public float[] pressureToneSteps;
     public float slideToneLength = 6f;
     [Header("Build")]
-    [SerializeField] private TromboneBuild tromboneBuild;
+    [SerializeField] private TromboneCustomizer tromboneBuild;
 
     public int PressureIndex => RoundToPressureIndex(pressureLevel);
     public float Tone => GetTone(PressureIndex, slideTone);
@@ -174,14 +174,14 @@ public class TromboneCore : MonoBehaviour,
         if (tromboneDisplay != null) tromboneDisplay.enabled = true;
     }
 
-    public TromboneBuild Build
+    public TromboneCustomizer Build
     {
         set
         {
             tromboneBuild = value;
             if (tromboneBuild == null)
             {
-                tromboneBuild = ScriptableObject.CreateInstance<TromboneBuild>();
+                tromboneBuild = ScriptableObject.CreateInstance<TromboneCustomizer>();
                 tromboneBuild.GetBuildFromScene();
                 tromboneBuild.name = "RuntimeBuild";
             }
