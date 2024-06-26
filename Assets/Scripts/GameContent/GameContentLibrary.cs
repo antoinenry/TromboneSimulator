@@ -1,9 +1,6 @@
 using UnityEngine;
 using System;
 
-// Storing and updating game content informations
-// Including unlockables (levels, instruments, etc)
-
 [CreateAssetMenu(fileName = "NewContentLibrary", menuName = "Trombone Hero/Game Data/Game Content Library")]
 public class GameContentLibrary : ScriptableObject
 {
@@ -14,10 +11,21 @@ public class GameContentLibrary : ScriptableObject
         set => CurrentAssetsManager.SetCurrent(value);
     }
 
-    public UnlockableLevel[] levels;
+    public Level[] levels;
+    public TromboneBuildModifier[] modifiers;
     //public TromboneBuild[] trombones;
     //public Orchestra[] orchestras;
-    public UnlockableModifier[] modifiers;
 
-    public string[] GetLevelNames => Array.ConvertAll(levels, l => l?.levelAsset?.name);
+    public string[] GetLevelNames()
+        => Array.ConvertAll(levels, l => l?.name);
+
+    public ScriptableObject[] GetAllContent()
+    {
+        int levelCount = levels != null ? levels.Length : 0;
+        int modifierCount = modifiers != null ? modifiers.Length : 0;
+        ScriptableObject[] allContent = new ScriptableObject[levelCount + modifierCount];
+        Array.Copy(levels, allContent, levelCount);
+        Array.Copy(modifiers, 0, allContent, levelCount, modifierCount);
+        return allContent;
+    }
 }

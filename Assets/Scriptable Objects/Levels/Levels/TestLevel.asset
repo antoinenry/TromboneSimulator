@@ -19,3 +19,7 @@ MonoBehaviour:
     scores:
     - name: Super Score
       scoreGoal: 10
+    - name: "M\xE9ga Score"
+      scoreGoal: 20
+    - name: Ultra Score
+      scoreGoal: 30

@@ -49,7 +49,7 @@ public class LevelSelectionScreen : MenuUI
         // Get level list
         if (GameContentLibrary.Current != null)
         {
-            levelNames = GameContentLibrary.Current.GetLevelNames;
+            levelNames = GameContentLibrary.Current.GetLevelNames();
         }
         // Update UI
         if (levelListUI != null)
