@@ -5,6 +5,7 @@ public class Level : ScriptableObject
 {
     //public string levelName;
     public SheetMusic music;
+    public ObjectiveList objectives;
     //public NotePlacement[] notePlacement;
 
     //public string Name => music != null ? music.name : null;

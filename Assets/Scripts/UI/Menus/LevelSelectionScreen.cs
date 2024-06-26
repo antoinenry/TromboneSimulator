@@ -87,9 +87,9 @@ public class LevelSelectionScreen : MenuUI
 
     private void SelectLevel(int index)
     {
-        Level getLevel = GameContentLibrary.Current != null ? GameContentLibrary.Current.levels[index] : null;
-        HideUI();
-        onSelectLevel.Invoke(getLevel);
+        //Level getLevel = GameContentLibrary.Current != null ? GameContentLibrary.Current.levels[index] : null;
+        //HideUI();
+        //onSelectLevel.Invoke(getLevel);
     }
 
     private void EnterPassword(string word)

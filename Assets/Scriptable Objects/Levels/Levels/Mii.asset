@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
   m_Name: Mii
   m_EditorClassIdentifier: 
-  levelName: Mii
   music: {fileID: 11400000, guid: 74e8a4f689ebe774384177acf6ce8bbe, type: 2}
-  notePlacement:
-  - instrumentName: Trombone
-    grid:
-      lineTones: []
-      columns: 0
-      tonePerColumn: 0
-    noteCoordinates: []
+  objectives:
+    end:
+      enabled: 1
+    scores:
+    - name: Super Score
+      scoreGoal: 100
+    - name: "M\xE9ga Score"
+      scoreGoal: 1000
+    - name: Ultra Score
+      scoreGoal: 10000

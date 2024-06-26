@@ -36,44 +36,44 @@ public class TromboneSelectionScreen : MenuUI
     public void UpdateTromboneList()
     {
         // Get level list
-        if (GameContentLibrary.Current != null)
-        {
-            tromboneNames = GameContentLibrary.Current.GetTromboneNames;
-        }
+        //if (GameContentLibrary.Current != null)
+        //{
+        //    tromboneNames = GameContentLibrary.Current.GetTromboneNames;
+        //}
         // Update UI
-        if (tromboneListUI != null)
-        {
-            IndexedButton[] buttons = GetComponentsInChildren<IndexedButton>(true);
-            foreach (IndexedButton b in buttons)
-            {
-                if (Application.isPlaying) Destroy(b.gameObject);
-                else DestroyImmediate(b.gameObject);
-            }
-            if (tromboneButtonPrefab != null)
-            {
-                int levelCount = tromboneNames != null ? tromboneNames.Length : 0;
-                for (int i = 0; i < levelCount; i++)
-                {
-                    IndexedButton b = Instantiate(tromboneButtonPrefab, tromboneListUI);
-                    b.index = i;
-                    b.text = tromboneNames[i];
-                    // Ensure that buttons are displayed correctly in the same frame
-                    b.Update();
-                }
-            }
-        }
+        //if (tromboneListUI != null)
+        //{
+        //    IndexedButton[] buttons = GetComponentsInChildren<IndexedButton>(true);
+        //    foreach (IndexedButton b in buttons)
+        //    {
+        //        if (Application.isPlaying) Destroy(b.gameObject);
+        //        else DestroyImmediate(b.gameObject);
+        //    }
+        //    if (tromboneButtonPrefab != null)
+        //    {
+        //        int levelCount = tromboneNames != null ? tromboneNames.Length : 0;
+        //        for (int i = 0; i < levelCount; i++)
+        //        {
+        //            IndexedButton b = Instantiate(tromboneButtonPrefab, tromboneListUI);
+        //            b.index = i;
+        //            b.text = tromboneNames[i];
+        //             Ensure that buttons are displayed correctly in the same frame
+        //            b.Update();
+        //        }
+        //    }
+        //}
     }
 
     private void SelectTrombone(int index)
     {
-        TromboneBuild build = GameContentLibrary.Current?.trombones[index];
-        TromboneBuildStack stack = FindObjectOfType<TromboneBuildStack>(true);
-        if (stack)
-        {
-            stack.baseBuild = build;
-            stack.mods?.Clear();
-        }
-        MenuMusic menuMusic = GetComponent<MenuMusic>();
-        if (menuMusic) menuMusic.TromboneSetup();
+        //TromboneBuild build = GameContentLibrary.Current?.trombones[index];
+        //TromboneBuildStack stack = FindObjectOfType<TromboneBuildStack>(true);
+        //if (stack)
+        //{
+        //    stack.baseBuild = build;
+        //    stack.mods?.Clear();
+        //}
+        //MenuMusic menuMusic = GetComponent<MenuMusic>();
+        //if (menuMusic) menuMusic.TromboneSetup();
     }
 }

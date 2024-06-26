@@ -14,10 +14,10 @@ public class GameContentLibrary : ScriptableObject
         set => CurrentAssetsManager.SetCurrent(value);
     }
 
-    public Level[] levels;
-    public TromboneBuild[] trombones;
-    public Orchestra[] orchestras;
+    public UnlockableLevel[] levels;
+    //public TromboneBuild[] trombones;
+    //public Orchestra[] orchestras;
+    public UnlockableModifier[] modifiers;
 
-    public string[] GetLevelNames => Array.ConvertAll(levels, l => l != null ? l.name : null);
-    public string[] GetTromboneNames => Array.ConvertAll(trombones, l => l != null ? l.name : null);
+    public string[] GetLevelNames => Array.ConvertAll(levels, l => l?.levelAsset?.name);
 }

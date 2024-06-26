@@ -10,6 +10,7 @@ public class TromboneCore : MonoBehaviour,
     public TromboneDisplay tromboneDisplay;
     public TromboneAudio tromboneAudio;
     public TromboneAuto tromboneAuto;
+    public TromboneBuildStack tromboneBuild;
     [Header("Controls")]
     public bool grab;
     public bool blow;
@@ -50,6 +51,7 @@ public class TromboneCore : MonoBehaviour,
         tromboneDisplay.enabled = true;
         tromboneAuto.enabled = true;
         tromboneAudio.enabled = true;
+        tromboneBuild.enabled = true;
     }
 
     private void OnDisable()
@@ -60,6 +62,7 @@ public class TromboneCore : MonoBehaviour,
         tromboneDisplay.enabled = false;
         tromboneAuto.enabled = false;
         tromboneAudio.enabled = false;
+        tromboneBuild.enabled = false;
     }
 
     public void ClearInputs()
@@ -73,6 +76,7 @@ public class TromboneCore : MonoBehaviour,
     public void ResetTrombone()
     {
         ClearInputs();
+        tromboneBuild.ApplyStack();
         tromboneDisplay.ResetDisplay();
     }
 

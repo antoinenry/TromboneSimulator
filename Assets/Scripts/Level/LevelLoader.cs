@@ -23,7 +23,8 @@ public class LevelLoader : MonoBehaviour
     private MusicPlayer musicPlayer;
     private NoteCatcher noteCatcher;
     private NoteSpawner noteSpawner;
-    private PerformanceJudge perfJudge;
+    private PerformanceJudge performanceJudge;
+    private ObjectiveJudge objectiveJudge;
     private LevelGUI GUI;
     // Load state
     public Mode LoadedMode { get; private set; }
@@ -37,7 +38,8 @@ public class LevelLoader : MonoBehaviour
         musicPlayer = FindObjectOfType<MusicPlayer>(true);
         noteCatcher = FindObjectOfType<NoteCatcher>(true);
         noteSpawner = FindObjectOfType<NoteSpawner>(true);
-        perfJudge = FindObjectOfType<PerformanceJudge>(true);
+        performanceJudge = FindObjectOfType<PerformanceJudge>(true);
+        objectiveJudge = FindObjectOfType<ObjectiveJudge>(true);
         GUI = FindObjectOfType<LevelGUI>(true);
         // Clear level load
         UnloadLevel();
@@ -104,12 +106,17 @@ public class LevelLoader : MonoBehaviour
             noteCatcher.enabled = true;
             noteCatcher.trombone = trombone;
         }
-        // Judge setup
-        if (perfJudge)
+        // Judges setup
+        if (performanceJudge)
         {
-            perfJudge.enabled = true;
-            perfJudge.LevelSetup(LoadedLevel.music, trombone);
-            perfJudge.onHealth.AddListener(OnHealthChange);
+            performanceJudge.enabled = true;
+            performanceJudge.LevelSetup(LoadedLevel?.music, trombone);
+            performanceJudge.onHealth.AddListener(OnHealthChange);
+        }
+        if (objectiveJudge)
+        {
+            objectiveJudge.enabled = true;
+            objectiveJudge.LoadObjectiveList(LoadedLevel?.objectives);
         }
         // GUI Setup
         if (GUI)
@@ -141,11 +148,16 @@ public class LevelLoader : MonoBehaviour
             }
             musicPlayer.onPlayerUpdate.RemoveListener(OnMusicPlayerUpdate);
         }
-        // Stop performance judge
-        if (perfJudge)
+        // Stop judging
+        if (performanceJudge)
         {
-            perfJudge.onHealth.RemoveListener(OnHealthChange);
-            perfJudge.enabled = false;
+            performanceJudge.onHealth.RemoveListener(OnHealthChange);
+            performanceJudge.enabled = false;
+        }
+        if (objectiveJudge)
+        {
+            //objectiveJudge.UnloadObjectiveList();
+            //objectiveJudge.enabled = false;
         }
         // Stop note spawner
         if (noteSpawner) noteSpawner.enabled = false;
@@ -302,7 +314,7 @@ public class LevelLoader : MonoBehaviour
     {
         // Transition
         trombone.Freeze();
-        perfJudge.DisableDetection();
+        performanceJudge.DisableDetection();
         GUI.SetPauseButtonActive(false);
         musicPlayer.Stop(gameOverTransitionDuration);
         // Wait
@@ -334,8 +346,8 @@ public class LevelLoader : MonoBehaviour
         {
             //if (currentMode == Mode.ARCADE) gameState.continues--;
             trombone.ResetTrombone();
-            perfJudge.ResetPerformance();
-            perfJudge.EnableDetection();
+            performanceJudge.ResetPerformance();
+            performanceJudge.EnableDetection();
             StartLevel();
         }
         else
@@ -360,7 +372,7 @@ public class LevelLoader : MonoBehaviour
         yield return new WaitForSeconds(levelEndTransitionDuration);
         // Unload level
         UnloadLevel();
-        LevelScoreInfo scoreInfo = perfJudge.GetLevelScore();
+        LevelScoreInfo scoreInfo = performanceJudge.GetLevelScore();
         ScoreScreen UIScore = MenuUI.Get<ScoreScreen>();
         if (UIScore)
         {
