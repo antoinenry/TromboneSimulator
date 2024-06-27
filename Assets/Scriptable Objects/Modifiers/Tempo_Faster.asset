@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modName: 
   icon: {fileID: 0}
+  unlockTier: 2
   scoreMultiplier: 1.5
   tempoMultiplier: 2
-  multiplyScore: 1
+  multiplyScoreByTempo: 1

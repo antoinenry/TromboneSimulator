@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modName: 
   icon: {fileID: 0}
+  unlockTier: 2
   scoreMultiplier: 1.25
   rythmToleranceMultiplier: 0.5
   toneToleranceMultiplier: 1

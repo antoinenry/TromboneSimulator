@@ -13,53 +13,53 @@ MonoBehaviour:
   m_Name: GameProgress
   m_EditorClassIdentifier: 
   isCurrent: 0
-  levels:
+  levelProgress:
   - levelAsset: {fileID: 11400000, guid: e2642a3075ecb6840a13a217f0d2c60e, type: 2}
-    objectiveCompletions: 
+    objectiveCompletion: 
   - levelAsset: {fileID: 11400000, guid: 6c689a00d0e33c041814ee4286c08d62, type: 2}
-    objectiveCompletions: 
+    objectiveCompletion: 
   - levelAsset: {fileID: 11400000, guid: a6062b9873491bf419935d47531ba337, type: 2}
-    objectiveCompletions: 
+    objectiveCompletion: 
   - levelAsset: {fileID: 11400000, guid: 313d3bf8c0877ca4ca9c851b9f6050dd, type: 2}
-    objectiveCompletions: 00000000
+    objectiveCompletion: 00000000
   - levelAsset: {fileID: 11400000, guid: 5fc8ae34f32659c448435386161b33f0, type: 2}
-    objectiveCompletions: 
+    objectiveCompletion: 
   - levelAsset: {fileID: 11400000, guid: 227fa29b09a3dc247948dd29d7f0f22a, type: 2}
-    objectiveCompletions: 00000000
-  locks:
+    objectiveCompletion: 00000000
+  contentLocks:
   - contentAsset: {fileID: 11400000, guid: e2642a3075ecb6840a13a217f0d2c60e, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: 6c689a00d0e33c041814ee4286c08d62, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: a6062b9873491bf419935d47531ba337, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: 313d3bf8c0877ca4ca9c851b9f6050dd, type: 2}
-    unlocked: 0
+    locked: 0
   - contentAsset: {fileID: 11400000, guid: 5fc8ae34f32659c448435386161b33f0, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: 227fa29b09a3dc247948dd29d7f0f22a, type: 2}
-    unlocked: 0
+    locked: 0
   - contentAsset: {fileID: 11400000, guid: 19795275c1104bd41b3d84201e3f3a67, type: 2}
-    unlocked: 0
+    locked: 0
   - contentAsset: {fileID: 11400000, guid: d1e8be9e4b4663541b51d7f5f7cbbf26, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: eec8d87ecd1b5cc48b520e8b384a6133, type: 2}
-    unlocked: 0
+    locked: 0
   - contentAsset: {fileID: 11400000, guid: 5a8806bc60319d14598ca99412e0e1d0, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: 8edc3e15dcb3f564eaf2306f1c8e6ff3, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: c02ce09c9ddf365448904e95e4a55233, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: 49199cf4c148e804fb8d5fa8dd955bee, type: 2}
-    unlocked: 0
+    locked: 0
   - contentAsset: {fileID: 11400000, guid: 506db3d15fd5b8b49865f8c7510e3293, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: cbc41c789dce7f347b0d963a3dd8a490, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: a70e4fbd37c90344692e15c8af9123c3, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: 1947772b140207b489d9674e39deeead, type: 2}
-    unlocked: 0
+    locked: 1
   - contentAsset: {fileID: 11400000, guid: dbad7aa75977a40418d9615ed3b99260, type: 2}
-    unlocked: 0
+    locked: 1

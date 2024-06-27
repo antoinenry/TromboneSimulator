@@ -14,6 +14,18 @@ public class ObjectiveList
         if (scores != null) foreach(ScoreObjective o in scores) objectives.Add(o);
         return objectives.ToArray();
     }
+
+    public int Count
+    {
+        get
+        {
+            IObjective[] objectives = GetObjectives();
+            return objectives != null ? objectives.Length : 0;
+        }
+    }
+
+    public IObjective this[int index]
+        => GetObjectives()[index];
 }
 
 public interface IObjective

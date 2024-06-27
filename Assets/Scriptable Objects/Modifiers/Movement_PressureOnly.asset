@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modName: 
   icon: {fileID: 0}
+  unlockTier: 1
   scoreMultiplier: 1
   enabledMovements: 2
   toneOffset: 0

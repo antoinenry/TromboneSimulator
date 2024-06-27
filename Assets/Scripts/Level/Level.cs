@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewLevel", menuName = "Trombone Hero/Game Data/Level")]
-public class Level : ScriptableObject
+public class Level : ScriptableObject, IUnlockableContent
 {
     //public string levelName;
     public SheetMusic music;
     public ObjectiveList objectives;
+    public int unlockTier;
     //public NotePlacement[] notePlacement;
+
+    public int ObjectiveCount => objectives != null ? objectives.Count : 0;
+    public bool AutoUnlock => true;
+    public int UnlockTier => unlockTier;
 
     //public string Name => music != null ? music.name : null;
 

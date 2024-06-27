@@ -5,13 +5,13 @@ using UnityEngine;
 public struct GameContentLock
 {
     public ScriptableObject contentAsset;
-    public bool unlocked;
+    public bool locked;
 
     public GameContentLock(ScriptableObject content)
     {
         contentAsset = content;
-        unlocked = false;
+        locked = true;
     }
 
-    public void Unlock() => unlocked = true;
+    public void SetLocked(bool value) => locked = value;
 }

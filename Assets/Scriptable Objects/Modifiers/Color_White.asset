@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modName: 
   icon: {fileID: 0}
+  unlockTier: 1
   scoreMultiplier: 1
   color: {r: 1, g: 1, b: 1, a: 1}

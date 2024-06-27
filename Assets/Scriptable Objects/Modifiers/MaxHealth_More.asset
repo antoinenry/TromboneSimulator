@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modName: 
   icon: {fileID: 0}
+  unlockTier: 1
   scoreMultiplier: 0.75
   additionalMaxHealth: 0.5
