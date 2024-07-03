@@ -1,12 +1,8 @@
-using System;
-
-public abstract partial class Objective
+public abstract partial class ObjectiveInstance
 {
-    public class EndMusic : Objective
+    public class EndMusic : ObjectiveInstance
     {
-        public override void OnMusicEnd()
-        {
-            onComplete.Invoke();
-        }
+        public EndMusic() : base() { }
+        public override void OnMusicEnd() => Complete();
     }
 }

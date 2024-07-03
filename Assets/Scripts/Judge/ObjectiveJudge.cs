@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class ObjectiveJudge : MonoBehaviour
 {
@@ -8,7 +8,7 @@ public class ObjectiveJudge : MonoBehaviour
     public MusicPlayer musicPlayer;
     public PerformanceJudge performanceJudge;
 
-    private Objective[] objectives;
+    private ObjectiveInstance[] objectives;
 
     private void Reset()
     {
@@ -18,23 +18,64 @@ public class ObjectiveJudge : MonoBehaviour
 
     private void OnEnable()
     {
-        if (objectives == null) objectives = new Objective[0];
-        if (musicPlayer) foreach (Objective o in objectives) musicPlayer.onMusicEnd.AddListener(o.OnMusicEnd);
-        if (performanceJudge) foreach (Objective o in objectives) performanceJudge.onScore.AddListener(o.OnPerformanceJudgeScore);
+        AddListeners();
     }
 
     private void OnDisable()
     {
-        if (objectives == null) objectives = new Objective[0];
+        RemoveListeners();
     }
 
-    public void LoadObjectives(SerializableObjectiveInfo[] objectiveInfos)
+    public void LoadObjectives(ObjectiveInfo[] objectiveInfos)
     {
-        objectives = Array.ConvertAll(objectiveInfos, info => Objective.NewObjective(info));
+        RemoveListeners();
+        objectives = Array.ConvertAll(objectiveInfos, info => ObjectiveInstance.NewObjective(info));
+        AddListeners();
         if (showDebug)
         {
-            Debug.Log("Loaded objectives:");
+            Debug.Log("Loading objectives:");
             foreach (object o in objectives) Debug.Log(o != null ? o.GetType() : "null");
         }
+    }
+
+    public void UnloadObjectives()
+    {
+        RemoveListeners();
+        objectives = null;
+    }
+
+    public ObjectiveInfo[] GetCompletedObjectives()
+    {
+        ObjectiveInstance[] completedInstances = Array.FindAll(objectives, o => o != null && o.isComplete);
+        return Array.ConvertAll(completedInstances, o => o.GetInfo());
+    }
+
+    private void AddListeners()
+    {
+        if (objectives == null) return;
+        foreach (ObjectiveInstance o in objectives)
+        {
+            if (o == null) continue;
+            o.onComplete.AddListener(OnCompleteObjective);
+            if (musicPlayer) musicPlayer.onMusicEnd.AddListener(o.OnMusicEnd);
+            if (performanceJudge) performanceJudge.onScore.AddListener(o.OnPerformanceJudgeScore);
+        }
+    }
+
+    private void RemoveListeners()
+    {
+        if (objectives == null) return;
+        foreach (ObjectiveInstance o in objectives)
+        {
+            if (o == null) continue;
+            o.onComplete.RemoveListener(OnCompleteObjective);
+            if (musicPlayer) musicPlayer.onMusicEnd.RemoveListener(o.OnMusicEnd);
+            if (performanceJudge) performanceJudge.onScore.RemoveListener(o.OnPerformanceJudgeScore);
+        }
+    }
+
+    private void OnCompleteObjective(ObjectiveInfo objectiveInfo)
+    {
+        if (showDebug) Debug.Log("Completed objective: " + objectiveInfo.type);
     }
 }

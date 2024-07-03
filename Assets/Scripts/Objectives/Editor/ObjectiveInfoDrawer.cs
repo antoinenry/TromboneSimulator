@@ -2,12 +2,12 @@ using UnityEditor;
 using System;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(SerializableObjectiveInfo))]
+[CustomPropertyDrawer(typeof(ObjectiveInfo))]
 public class ObjectiveInfoDrawer : PropertyDrawer
 {
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        SerializableObjectiveInfo target = GetDescriptor(property);
+        ObjectiveInfo target = GetDescriptor(property);
         int parameterCount = target.parameters != null ? target.parameters.Length : 0;
         return base.GetPropertyHeight(property, label) + parameterCount * (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing);
     }
@@ -16,15 +16,15 @@ public class ObjectiveInfoDrawer : PropertyDrawer
     {
         Rect drawingRect = position;
         drawingRect.height = EditorGUIUtility.singleLineHeight;
-        SerializableObjectiveInfo target = GetDescriptor(property);
+        ObjectiveInfo target = GetDescriptor(property);
         // Edit objective type
-        string[] typeNames = Objective.GetAllTypeNames();
+        string[] typeNames = ObjectiveInstance.GetAllTypeNames();
         int selectedIndex = Array.IndexOf(typeNames, target.type);
         EditorGUI.BeginChangeCheck();
         selectedIndex = EditorGUI.Popup(drawingRect, "", selectedIndex, typeNames);
         if (EditorGUI.EndChangeCheck())
         {
-            target = SerializableObjectiveInfo.New(typeNames[selectedIndex]);
+            target = ObjectiveInfo.New(typeNames[selectedIndex]);
             property.FindPropertyRelative("type").stringValue = target.type;
             property.FindPropertyRelative("parameters").arraySize = target.parameters.Length;
         }
@@ -43,16 +43,16 @@ public class ObjectiveInfoDrawer : PropertyDrawer
         EditorGUI.indentLevel--;
     }
 
-    private SerializableObjectiveInfo GetDescriptor(SerializedProperty property)
+    private ObjectiveInfo GetDescriptor(SerializedProperty property)
     {
         string type = property.FindPropertyRelative("type").stringValue;
-        SerializableObjectiveInfo o = SerializableObjectiveInfo.New(type);
+        ObjectiveInfo o = ObjectiveInfo.New(type);
         SerializedProperty serializedParameters = property.FindPropertyRelative("parameters");
         int parameterCount = serializedParameters != null ? serializedParameters.arraySize : 0;
         string[] parameterValues = new string[parameterCount];
         for (int i = 0; i < parameterCount; i++) parameterValues[i] = serializedParameters.GetArrayElementAtIndex(i).stringValue;
         o.parameters = parameterValues;        
-        return o.IsValid() ? o : SerializableObjectiveInfo.New(type);
+        return o.IsValid() ? o : ObjectiveInfo.New(type);
     }
 
     private string ParameterFieldGUI(Rect position, string label, string value, Type type)

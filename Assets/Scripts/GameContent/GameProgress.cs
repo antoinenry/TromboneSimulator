@@ -4,6 +4,8 @@ using System;
 [CreateAssetMenu(fileName = "NewGameProgress", menuName = "Trombone Hero/Game Data/Progress")]
 public class GameProgress : ScriptableObject
 {
+    public static GameProgress Current => CurrentAssetsManager.GetCurrent<GameProgress>();
+
     public LevelProgress[] levelProgress;
     public GameContentLock[] contentLocks;
 
@@ -114,5 +116,13 @@ public class GameProgress : ScriptableObject
                 else if (canUnlock == false) contentLocks[i].SetLocked(true);
             }
         }
+    }
+
+    public void CompleteObjectives(Level level, ObjectiveInfo[] objectives)
+    {
+        if (level == null || objectives == null || levelProgress == null) return;
+        int levelIndex = Array.FindIndex(levelProgress, l => l.levelAsset == level);
+        if (levelIndex == -1) return;
+        foreach (ObjectiveInfo info in objectives) levelProgress[levelIndex].TryCheckObjective(info);
     }
 }

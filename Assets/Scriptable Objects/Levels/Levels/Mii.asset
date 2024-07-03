@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: Mii
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: 74e8a4f689ebe774384177acf6ce8bbe, type: 2}
+  unlockTier: 0
   objectives:
-    end:
-      enabled: 1
-    scores:
-    - name: Super Score
-      scoreGoal: 100
-    - name: "M\xE9ga Score"
-      scoreGoal: 1000
-    - name: Ultra Score
-      scoreGoal: 10000
+  - type: EndMusic
+    parameters: []
+  - type: Highscore
+    parameters:
+    - 20000
+  - type: Highscore
+    parameters:
+    - 50000
+  - type: Highscore
+    parameters:
+    - 100000

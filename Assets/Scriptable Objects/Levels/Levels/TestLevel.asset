@@ -21,7 +21,10 @@ MonoBehaviour:
     parameters: []
   - type: Highscore
     parameters:
-    - 100
+    - 10
+  - type: Highscore
+    parameters:
+    - 50
   - type: PlayPhrase
     parameters:
     - 6

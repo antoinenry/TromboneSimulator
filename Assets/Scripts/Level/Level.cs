@@ -5,10 +5,10 @@ public class Level : ScriptableObject, IUnlockableContent
 {
     //public string levelName;
     public SheetMusic music;
-    public ObjectiveList objectiveList;
+    //public ObjectiveList objectiveList;
     public int unlockTier;
     //public NotePlacement[] notePlacement;
-    public SerializableObjectiveInfo[] objectives;
+    public ObjectiveInfo[] objectives;
 
     public bool AutoUnlock => true;
     public int UnlockTier => unlockTier;

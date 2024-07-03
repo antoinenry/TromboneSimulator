@@ -2,82 +2,75 @@ using System;
 using System.Reflection;
 using UnityEngine.Events;
 
-public abstract partial class Objective
+public abstract partial class ObjectiveInstance
 {
     #region Types and parameters
     static public Type GetType(string name) => Array.Find(GetAllTypes(), t => t.Name == name);
 
     static public Type[] GetAllTypes()
     {
-        Type[] assemblyTypes = typeof(Objective).GetNestedTypes();
-        return Array.FindAll(assemblyTypes, t => typeof(Objective).IsAssignableFrom(t));
+        Type[] assemblyTypes = typeof(ObjectiveInstance).GetNestedTypes();
+        return Array.FindAll(assemblyTypes, t => typeof(ObjectiveInstance).IsAssignableFrom(t));
     }
     
     static public string[] GetAllTypeNames() => Array.ConvertAll(GetAllTypes(), t => t.Name);
 
+    static public FieldInfo[] GetParameterFileds(Type type)
+        => type != null && typeof(ObjectiveInstance).IsAssignableFrom(type) ? type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly) : new FieldInfo[0];
+
     static public string[] GetParameterNames(Type type)
-    {
-        if (type != null && typeof(Objective).IsAssignableFrom(type))
-        {
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            return Array.ConvertAll(fields, f => f.Name);
-        }
-        else
-            return null;
-    }
+        => Array.ConvertAll(GetParameterFileds(type), f => f.Name);
 
     static public string[] GetParameterNames(string type)
         => GetParameterNames(GetType(type));
 
-    static public string[] GetParameterNames<T>() where T : Objective
+    static public string[] GetParameterNames<T>() where T : ObjectiveInstance
         => GetParameterNames(typeof(T));
 
     static public Type[] GetParameterTypes(Type type)
-    {
-        if (type != null && typeof(Objective).IsAssignableFrom(type))
-        {
-            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            return Array.ConvertAll(fields, f => f.FieldType);
-        }
-        else
-            return null;
-    }
+        => Array.ConvertAll(GetParameterFileds(type), f => f.FieldType);
 
     static public Type[] GetParameterTypes(string type)
         => GetParameterTypes(GetType(type));
 
-    static public Type[] GetParameterTypes<T>() where T : Objective
+    static public Type[] GetParameterTypes<T>() where T : ObjectiveInstance
         => GetParameterTypes(typeof(T));
     #endregion
 
     #region Construction
-    public static Objective New<T>(SerializableObjectiveInfo objectiveInfo) where T : Objective, new()
+    public ObjectiveInstance()
+    {
+        onComplete = new UnityEvent<ObjectiveInfo>();
+    }
+
+    public static ObjectiveInstance New<T>(ObjectiveInfo objectiveInfo) where T : ObjectiveInstance, new()
     {
         Type objectiveType = GetType(objectiveInfo.type);
         if (objectiveType != typeof(T)) return null;
-        Objective o = new T();
+        ObjectiveInstance o = new T();
         o.SetInfo(objectiveInfo);
-        return new T();
+        return o;
     }
 
-    public static Objective NewObjective(SerializableObjectiveInfo objectiveInfo)
+    public static ObjectiveInstance NewObjective(ObjectiveInfo objectiveInfo)
     {
         Type objectiveType = GetType(objectiveInfo.type);
         if (objectiveType == null) return null;
-        MethodInfo constructionMethod =  typeof(Objective).GetMethod("New", BindingFlags.Static | BindingFlags.Public).MakeGenericMethod(objectiveType);
-        return constructionMethod.Invoke(null, new object[1] { objectiveInfo }) as Objective;
+        MethodInfo constructionMethod =  typeof(ObjectiveInstance).GetMethod("New", BindingFlags.Static | BindingFlags.Public).MakeGenericMethod(objectiveType);
+        return constructionMethod.Invoke(null, new object[1] { objectiveInfo }) as ObjectiveInstance;
     }
     #endregion
 
-    public UnityEvent onComplete;
+    public bool isComplete;
+    public UnityEvent<ObjectiveInfo> onComplete;
 
-    public virtual SerializableObjectiveInfo GetInfo()
+    public virtual ObjectiveInfo GetInfo()
     {
         Type thisType = GetType();
-        return SerializableObjectiveInfo.New(thisType);
+        return ObjectiveInfo.New(thisType);
     }
 
-    public virtual void SetInfo(SerializableObjectiveInfo value)
+    public virtual void SetInfo(ObjectiveInfo value)
     {
         Type thisType = GetType();
         if (value.type != thisType.Name)
@@ -89,4 +82,13 @@ public abstract partial class Objective
 
     public virtual void OnMusicEnd() { }
     public virtual void OnPerformanceJudgeScore(float score) { }
+
+    public void Complete(bool value = true)
+    {
+        if (isComplete != value)
+        {
+            isComplete = value;
+            onComplete.Invoke(GetInfo());
+        }
+    }
 }

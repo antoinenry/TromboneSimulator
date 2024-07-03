@@ -9,12 +9,12 @@ public struct LevelProgress
     public LevelProgress(Level level)
     {
         levelAsset = level;
-        int objectiveCount = level != null ? level.objectiveList.Count : 0;
+        int objectiveCount = level?.objectives != null ? level.objectives.Length : 0;
         checkList = new bool[objectiveCount];
     }
 
-    public int ObjectiveCount => levelAsset != null ? levelAsset.objectiveList.Count : 0;
-    public string[] ObjectiveNames => levelAsset?.objectiveList.ObjectiveNames;
+    public int ObjectiveCount => levelAsset?.objectives != null ? levelAsset.objectives.Length : 0;
+    public string[] ObjectiveNames => levelAsset?.objectives != null ? Array.ConvertAll(levelAsset.objectives, o => o.type) : new string[0];
 
     public int CompletedObjectivesCount
     {
@@ -31,6 +31,12 @@ public struct LevelProgress
         if (index < 0 || index >= CorrectChecklistLength()) return false;
         checkList[index] = value;
         return true;
+    }
+
+    public bool TryCheckObjective(ObjectiveInfo objective, bool value = true)
+    {
+        if (levelAsset == null) return false;
+        return TryCheckObjective(Array.IndexOf(levelAsset.objectives, objective), value);
     }
 
     private int CorrectChecklistLength()

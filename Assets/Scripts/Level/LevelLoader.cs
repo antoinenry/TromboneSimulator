@@ -368,19 +368,24 @@ public class LevelLoader : MonoBehaviour
     #region END/QUIT
     private IEnumerator LevelEndCoroutine()
     {
+        // Wait one frame to ensure other method called on LevelEnd are executed beforehand
+        yield return null;
         // Stop level
         GUI.SetPauseButtonActive(false);
         musicPlayer.Stop();
+        // Get level performance
+        LevelScoreInfo scoreInfo = performanceJudge.GetLevelScore();
+        ObjectiveInfo[] completedObjectives = objectiveJudge.GetCompletedObjectives();
+        GameProgress progress = GameProgress.Current;
+        if (progress) progress.CompleteObjectives(LoadedLevel, completedObjectives);
         // Transition
         yield return new WaitForSeconds(levelEndTransitionDuration);
         // Unload level
         UnloadLevel();
-        // Submit score and progress
-        LevelScoreInfo scoreInfo = performanceJudge.GetLevelScore();
+        // Show score screen
         ScoreScreen UIScore = MenuUI.Get<ScoreScreen>();
         if (UIScore)
         {
-            // Show score screen
             if (LoadedLevel) UIScore.DisplayScore(LoadedLevel.name, scoreInfo);
             else UIScore.DisplayScore("", scoreInfo);
             yield return new WaitWhile(() => UIScore.IsVisible);
