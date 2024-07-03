@@ -95,8 +95,9 @@ public class LevelLoader : MonoBehaviour
         {
             musicPlayer.Stop();
             musicPlayer.loop = false;
-            musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler); 
-            musicPlayer.onPlayerUpdate.AddListener(OnMusicPlayerUpdate);
+            musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler);
+            //musicPlayer.onPlayerUpdate.AddListener(OnMusicPlayerUpdate);
+            musicPlayer.onMusicEnd.AddListener(OnMusicEnd);
         }
         // NoteSpawner setup
         if (noteSpawner) noteSpawner.enabled = true;
@@ -110,13 +111,13 @@ public class LevelLoader : MonoBehaviour
         if (performanceJudge)
         {
             performanceJudge.enabled = true;
-            performanceJudge.LevelSetup(LoadedLevel?.music, trombone);
+            performanceJudge.Initialize(LoadedLevel?.music, trombone);
             performanceJudge.onHealth.AddListener(OnHealthChange);
         }
         if (objectiveJudge)
         {
             objectiveJudge.enabled = true;
-            objectiveJudge.LoadObjectiveList(LoadedLevel?.objectives);
+            objectiveJudge.LoadObjectives(LoadedLevel.objectives);
         }
         // GUI Setup
         if (GUI)
@@ -146,7 +147,8 @@ public class LevelLoader : MonoBehaviour
                 musicPlayer.Stop();
                 musicPlayer.UnloadMusic();
             }
-            musicPlayer.onPlayerUpdate.RemoveListener(OnMusicPlayerUpdate);
+            //musicPlayer.onPlayerUpdate.RemoveListener(OnMusicPlayerUpdate);
+            musicPlayer.onMusicEnd.RemoveListener(OnMusicEnd);
         }
         // Stop judging
         if (performanceJudge)
@@ -243,9 +245,15 @@ public class LevelLoader : MonoBehaviour
     private void OnMusicPlayerUpdate()
     {
         if (musicPlayer == null) return;
-        if (musicPlayer.CurrentPlayTime >= musicPlayer.MusicDuration) OnLevelEnd();
+        //if (musicPlayer.CurrentPlayTime >= musicPlayer.MusicDuration) OnLevelEnd();
         if (GUI) GUI.SetTimeBar(musicPlayer.LoopedPlayTime, musicPlayer.MusicDuration);
     }
+
+    private void OnMusicEnd()
+    {
+        StartCoroutine(LevelEndCoroutine());
+    }
+
     #endregion
 
     #region PAUSE/UNPAUSE
@@ -358,11 +366,6 @@ public class LevelLoader : MonoBehaviour
     #endregion
 
     #region END/QUIT
-    private void OnLevelEnd()
-    {
-        StartCoroutine(LevelEndCoroutine());
-    }
-
     private IEnumerator LevelEndCoroutine()
     {
         // Stop level
@@ -372,6 +375,7 @@ public class LevelLoader : MonoBehaviour
         yield return new WaitForSeconds(levelEndTransitionDuration);
         // Unload level
         UnloadLevel();
+        // Submit score and progress
         LevelScoreInfo scoreInfo = performanceJudge.GetLevelScore();
         ScoreScreen UIScore = MenuUI.Get<ScoreScreen>();
         if (UIScore)

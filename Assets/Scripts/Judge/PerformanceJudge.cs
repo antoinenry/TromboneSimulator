@@ -92,10 +92,10 @@ public class PerformanceJudge : MonoBehaviour
         if (gui) gui.ResetDisplay(maxHealth);
     }
 
-    public void LevelSetup(SheetMusic lvl, TromboneCore trombone)
+    public void Initialize(SheetMusic music, TromboneCore trombone)
     {
         // Prepare level
-        if (lvl != null) performanceDetail = new List<NotePerformance>(lvl.GetPartLength(trombone?.Sampler?.name));
+        if (music != null) performanceDetail = new List<NotePerformance>(music.GetPartLength(trombone?.Sampler?.name));
         // Reset
         ResetPerformance();
     }

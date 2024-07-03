@@ -4,13 +4,6 @@ using System;
 [CreateAssetMenu(fileName = "NewGameProgress", menuName = "Trombone Hero/Game Data/Progress")]
 public class GameProgress : ScriptableObject
 {
-    [CurrentToggle] public bool isCurrent;
-    static public GameProgress Current
-    {
-        get => CurrentAssetsManager.GetCurrent<GameProgress>();
-        set => CurrentAssetsManager.SetCurrent(value);
-    }
-
     public LevelProgress[] levelProgress;
     public GameContentLock[] contentLocks;
 
@@ -51,7 +44,7 @@ public class GameProgress : ScriptableObject
     public void Update()
     {
         if (!MatchesGameContent(GameContentLibrary.Current)) Reset();
-        UpdateLocks();
+        AutoUnlock();
     }
 
     public bool TrySetLock(ScriptableObject contentAsset, bool locked)
@@ -87,13 +80,26 @@ public class GameProgress : ScriptableObject
         int objectiveCount = 0;
         foreach (LevelProgress lvl in levelProgress)
         {
-            objectiveCount += lvl.GetObjectiveProgress(out int c);
-            completedCount += c;
+            objectiveCount += lvl.ObjectiveCount;
+            completedCount += lvl.CompletedObjectivesCount;
         }
         return contentLocks.Length;
     }
 
-    private void UpdateLocks()
+    public bool CanUnlock(ScriptableObject contentAsset)
+    {
+        GetObjectiveCount(out int completedObjectiveCount);
+        return CanUnlockWithObjectives(contentAsset, completedObjectiveCount);
+    }
+
+    public bool CanUnlockWithObjectives(ScriptableObject contentAsset, int completedObjectiveCount)
+    {
+        if (Array.Find(contentLocks, contentLock => contentLock.contentAsset == contentAsset).contentAsset == null) return false;
+        if (contentAsset is IUnlockableContent) return completedObjectiveCount >= (contentAsset as IUnlockableContent).UnlockTier;
+        else return true;
+    }
+
+    public void AutoUnlock()
     {
         if (contentLocks == null) return;
         int lockCount = contentLocks.Length;
@@ -108,18 +114,5 @@ public class GameProgress : ScriptableObject
                 else if (canUnlock == false) contentLocks[i].SetLocked(true);
             }
         }
-    }
-
-    public bool CanUnlock(ScriptableObject contentAsset)
-    {
-        GetObjectiveCount(out int completedObjectiveCount);
-        return CanUnlockWithObjectives(contentAsset, completedObjectiveCount);
-    }
-
-    public bool CanUnlockWithObjectives(ScriptableObject contentAsset, int completedObjectiveCount)
-    {
-        if (Array.Find(contentLocks, contentLock => contentLock.contentAsset == contentAsset).contentAsset == null) return false;
-        if (contentAsset is IUnlockableContent) return completedObjectiveCount >= (contentAsset as IUnlockableContent).UnlockTier;
-        else return true;
     }
 }

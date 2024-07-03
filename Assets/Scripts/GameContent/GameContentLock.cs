@@ -10,7 +10,8 @@ public struct GameContentLock
     public GameContentLock(ScriptableObject content)
     {
         contentAsset = content;
-        locked = true;
+        if (contentAsset is IUnlockableContent && (contentAsset as IUnlockableContent).UnlockTier <= 0) locked = false;
+        else locked = true;
     }
 
     public void SetLocked(bool value) => locked = value;

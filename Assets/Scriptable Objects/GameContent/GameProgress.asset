@@ -12,37 +12,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 036133242a3da194eafdc59bb7d91e23, type: 3}
   m_Name: GameProgress
   m_EditorClassIdentifier: 
-  isCurrent: 0
   levelProgress:
   - levelAsset: {fileID: 11400000, guid: e2642a3075ecb6840a13a217f0d2c60e, type: 2}
-    objectiveCompletion: 
+    checkList: 
   - levelAsset: {fileID: 11400000, guid: 6c689a00d0e33c041814ee4286c08d62, type: 2}
-    objectiveCompletion: 
+    checkList: 00
   - levelAsset: {fileID: 11400000, guid: a6062b9873491bf419935d47531ba337, type: 2}
-    objectiveCompletion: 
+    checkList: 
   - levelAsset: {fileID: 11400000, guid: 313d3bf8c0877ca4ca9c851b9f6050dd, type: 2}
-    objectiveCompletion: 00000000
+    checkList: 
   - levelAsset: {fileID: 11400000, guid: 5fc8ae34f32659c448435386161b33f0, type: 2}
-    objectiveCompletion: 
+    checkList: 00
   - levelAsset: {fileID: 11400000, guid: 227fa29b09a3dc247948dd29d7f0f22a, type: 2}
-    objectiveCompletion: 00000000
+    checkList: 01010000
   contentLocks:
   - contentAsset: {fileID: 11400000, guid: e2642a3075ecb6840a13a217f0d2c60e, type: 2}
     locked: 1
   - contentAsset: {fileID: 11400000, guid: 6c689a00d0e33c041814ee4286c08d62, type: 2}
-    locked: 1
+    locked: 0
   - contentAsset: {fileID: 11400000, guid: a6062b9873491bf419935d47531ba337, type: 2}
-    locked: 1
+    locked: 0
   - contentAsset: {fileID: 11400000, guid: 313d3bf8c0877ca4ca9c851b9f6050dd, type: 2}
     locked: 0
   - contentAsset: {fileID: 11400000, guid: 5fc8ae34f32659c448435386161b33f0, type: 2}
-    locked: 1
+    locked: 0
   - contentAsset: {fileID: 11400000, guid: 227fa29b09a3dc247948dd29d7f0f22a, type: 2}
     locked: 0
   - contentAsset: {fileID: 11400000, guid: 19795275c1104bd41b3d84201e3f3a67, type: 2}
     locked: 0
   - contentAsset: {fileID: 11400000, guid: d1e8be9e4b4663541b51d7f5f7cbbf26, type: 2}
-    locked: 1
+    locked: 0
   - contentAsset: {fileID: 11400000, guid: eec8d87ecd1b5cc48b520e8b384a6133, type: 2}
     locked: 0
   - contentAsset: {fileID: 11400000, guid: 5a8806bc60319d14598ca99412e0e1d0, type: 2}

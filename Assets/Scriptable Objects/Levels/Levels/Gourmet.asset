@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Gourmet
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: 4e7df8d3b5d25ed47b59e5df3dfe146d, type: 2}
-  objectives:
-    end:
-      enabled: 0
+  objectiveList:
     scores: []
   unlockTier: 2
+  objectives:
+  - type: 
+    parameters: []
+  - type: 
+    parameters: []
+  - type: 
+    parameters: []

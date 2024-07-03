@@ -32,6 +32,7 @@ public class MusicPlayer : MonoBehaviour
     public PerformanceStyle playheadStyle = PerformanceStyle.Default;
     [Header("Events")]
     public UnityEvent onPlayerUpdate;
+    public UnityEvent onMusicEnd;
 
     public SheetMusic LoadedMusic { get; private set; }
     public NoteInstance[] LoadedNotes { get; private set; }
@@ -291,10 +292,10 @@ public class MusicPlayer : MonoBehaviour
                         LoopedPlayTime = Mathf.Repeat(CurrentPlayTime, musicDuration);
                         hasLooped = true;
                     }
-                    //else
-                    //{
-                    //    Stop();
-                    //}
+                    else
+                    {
+                        onMusicEnd.Invoke();
+                    }
                 }
                 else
                 {

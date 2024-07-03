@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using System;
 
 [CustomEditor(typeof(GameProgress))]
 public class GameProgressInspector : Editor
@@ -16,10 +15,17 @@ public class GameProgressInspector : Editor
 
     public override void OnInspectorGUI()
     {
+        bool isCurrent = CurrentAssetsManager.IsCurrent(targetProgress);
+        if (EditorGUILayout.Toggle("IsCurrent", isCurrent))
+        {
+            if (!isCurrent) CurrentAssetsManager.SetCurrent(targetProgress);
+        }
+        else if(isCurrent) CurrentAssetsManager.ClearCurrent<GameProgress>();     
         targetProgress.Update();
         LevelProgressGUI();
         EditorGUILayout.Space();
         LockedContentGUI();
+        if (GUILayout.Button("Reset")) targetProgress.Reset();
     }
 
     private void LevelProgressGUI()
@@ -43,22 +49,22 @@ public class GameProgressInspector : Editor
         for (int i = 0; i < levelCount; i++)
         {
             LevelProgress l = targetProgress.levelProgress[i];
-            int objectiveCount = l.GetObjectiveProgress(out IObjective[] objectives, out bool[] completion);
-            int completedCount = Array.FindAll(completion, c => c == true).Length;
             levelProgressFoldouts[i] = EditorGUILayout.Foldout(levelProgressFoldouts[i], 
                 l.levelAsset.name 
-                + " (" + completedCount + "/" + objectiveCount + ")");
+                + " (" + l.CompletedObjectivesCount + "/" + l.ObjectiveCount + ")");
             if (levelProgressFoldouts[i])
             {
                 GUI.enabled = false;
                 EditorGUILayout.ObjectField("Level", l.levelAsset, typeof(Level), false);
                 GUI.enabled = GUIEnabled;
-                if (objectiveCount > 0)
+                if (l.ObjectiveCount > 0)
                 {
+                    string[] objectiveNames = l.ObjectiveNames;
+                    bool[] completion = l.checkList;
                     EditorGUILayout.BeginVertical("box");
-                    for (int j = 0; j < objectiveCount; j++)
+                    for (int j = 0; j < l.ObjectiveCount; j++)
                     {
-                        bool completed = EditorGUILayout.Toggle(objectives[j].DisplayName, completion[j]);
+                        bool completed = EditorGUILayout.Toggle(objectiveNames[j], completion[j]);
                         if (completed != completion[j]) targetProgress.levelProgress[i].TryCheckObjective(j, completed);
                     }
                     EditorGUILayout.EndVertical();

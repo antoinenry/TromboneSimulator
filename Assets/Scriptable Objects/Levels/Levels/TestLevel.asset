@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: TestLevel
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: 5638372add3a54947917eb3c17781454, type: 2}
+  objectiveList:
+    scores: []
+  unlockTier: 0
   objectives:
-    end:
-      enabled: 1
-    scores:
-    - name: Super Score
-      scoreGoal: 10
-    - name: "M\xE9ga Score"
-      scoreGoal: 20
-    - name: Ultra Score
-      scoreGoal: 30
+  - type: EndMusic
+    parameters: []
+  - type: Highscore
+    parameters:
+    - 100
+  - type: PlayPhrase
+    parameters:
+    - 6
+    - 16

@@ -12622,6 +12622,9 @@ MonoBehaviour:
   onPlayerUpdate:
     m_PersistentCalls:
       m_Calls: []
+  onMusicEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &680383715
 GameObject:
   m_ObjectHideFlags: 0
@@ -14081,7 +14084,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf00448a52c2d8459b5b3a3fa5c7424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: []
+  showDebug: 1
+  musicPlayer: {fileID: 650345739}
+  performanceJudge: {fileID: 753964856}
 --- !u!1 &756567590
 GameObject:
   m_ObjectHideFlags: 0
