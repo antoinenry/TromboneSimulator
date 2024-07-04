@@ -75,6 +75,8 @@ public class GameProgress : ScriptableObject
         return contentLocks.Length;
     }
 
+    public int GetLevelCount() => levelProgress != null ? levelProgress.Length : 0;
+
     public int GetObjectiveCount(out int completedCount)
     {
         completedCount = 0;
@@ -124,5 +126,17 @@ public class GameProgress : ScriptableObject
         int levelIndex = Array.FindIndex(levelProgress, l => l.levelAsset == level);
         if (levelIndex == -1) return;
         foreach (ObjectiveInfo info in objectives) levelProgress[levelIndex].TryCheckObjective(info);
+    }
+
+    public bool TryGetLevelProgress(Level level, out int completedObjectives, out int totalObjectives)
+    {
+        completedObjectives = 0;
+        totalObjectives = 0;
+        if (level == null || levelProgress == null) return false;
+        LevelProgress progress = Array.Find(levelProgress, l => l.levelAsset == level);
+        if (progress.levelAsset != level) return false;
+        completedObjectives = progress.CompletedObjectivesCount;
+        totalObjectives = progress.ObjectiveCount;
+        return true;
     }
 }

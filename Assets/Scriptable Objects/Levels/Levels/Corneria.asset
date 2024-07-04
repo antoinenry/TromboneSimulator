@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: Corneria
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: 8c035c0f7dad9664aa6e10b8b6eb87bf, type: 2}
-  objectives:
-    scores: []
   unlockTier: 3
-  objectiveInfo:
-  - intParameters: 
-  - intParameters: 
-  - intParameters: 
-  - intParameters: 
+  objectives:
+  - type: EndMusic
+    parameters: []

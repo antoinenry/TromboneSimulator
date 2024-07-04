@@ -1,19 +1,15 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using TMPro;
 
 public class LevelSelectionScreen : MenuUI
 {
     [Header("UI Components")]
-    public IndexedButton levelButtonPrefab;
-    public RectTransform levelListUI;
-    public TMP_InputField passwordInput;
-    public Button backButton;
+    public LevelSelectionButton buttonPrefab;
+    public VerticalScrollList levelList;
     [Header("Contents")]
     public string lockedLevelText = "?";
-    public string[] levelNames;
-    public int unlockedLevelCount;
+    public LevelProgress[] levels;
     [Header("Events")]
     public UnityEvent<Level> onSelectLevel;
 
@@ -23,11 +19,8 @@ public class LevelSelectionScreen : MenuUI
         UpdateLevelList();
         if (Application.isPlaying)
         {
-            IndexedButton[] buttons = GetComponentsInChildren<IndexedButton>(true);
-            if (buttons != null)
-                foreach (IndexedButton b in buttons) b.onClick.AddListener(SelectLevel);
-            passwordInput.onSubmit.AddListener(EnterPassword);
-            backButton.onClick.AddListener(GoBack);
+            LevelSelectionButton[] buttons = GetComponentsInChildren<LevelSelectionButton>(true);
+            if (buttons != null) foreach (LevelSelectionButton b in buttons) b.onClick.AddListener(SelectLevel);
         }
     }
 
@@ -36,60 +29,37 @@ public class LevelSelectionScreen : MenuUI
         base.HideUI();
         if (Application.isPlaying)
         {
-            IndexedButton[] buttons = GetComponentsInChildren<IndexedButton>(true);
-            if (buttons != null)
-                foreach (IndexedButton b in buttons) b.onClick.RemoveListener(SelectLevel);
-            passwordInput.onSubmit.RemoveListener(EnterPassword);
-            backButton.onClick.RemoveListener(GoBack);
+            LevelSelectionButton[] buttons = GetComponentsInChildren<LevelSelectionButton>(true);
+            if (buttons != null) foreach (LevelSelectionButton b in buttons) b.onClick.RemoveListener(SelectLevel);
         }
     }
 
     public void UpdateLevelList()
     {
+        if (GameProgress.Current == null) return;
         // Get level list
-        if (GameContentLibrary.Current != null)
-        {
-            levelNames = GameContentLibrary.Current.GetLevelNames();
-        }
+        int levelCount = GameProgress.Current.GetLevelCount();
+        levels = new LevelProgress[levelCount];
+        Array.Copy(GameProgress.Current.levelProgress, levels, levelCount);
         // Update UI
-        if (levelListUI != null)
+        if (levelList != null)
         {
-            IndexedButton[] buttons = GetComponentsInChildren<IndexedButton>(true);
-            foreach(IndexedButton b in buttons)
+            levelList.Clear();
+            foreach(LevelProgress level in levels)
             {
-                if (Application.isPlaying) Destroy(b.gameObject);
-                else DestroyImmediate(b.gameObject);
-            }
-            if (levelButtonPrefab != null)
-            {
-                int levelCount = levelNames != null ? levelNames.Length : 0;
-                for (int i = 0; i < levelCount; i++)
-                {
-                    IndexedButton b = Instantiate(levelButtonPrefab, levelListUI);
-                    b.index = i;
-                    //b.button.image.color = levelCollection.levels[i].color;
-                    if (i < unlockedLevelCount)
-                    {
-                        b.text = levelNames[i];
-                        b.button.interactable = true;
-                    }
-                    else
-                    {
-                        b.text = lockedLevelText;
-                        b.button.interactable = false;
-                    }
-                    // Ensure that buttons are displayed correctly in the same frame
-                    b.Update();
-                }    
+                if (buttonPrefab == null) break;
+                LevelSelectionButton b = Instantiate(buttonPrefab);
+                b.SetLevel(level);
+                levelList.Add(b.gameObject);
             }
         }
     }
 
-    private void SelectLevel(int index)
+    private void SelectLevel(Level l)
     {
-        Level getLevel = GameContentLibrary.Current != null ? GameContentLibrary.Current.levels[index] : null;
+        if (l == null) return;
         HideUI();
-        onSelectLevel.Invoke(getLevel);
+        onSelectLevel.Invoke(l);
     }
 
     private void EnterPassword(string word)

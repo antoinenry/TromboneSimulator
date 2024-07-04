@@ -12,23 +12,17 @@ public class Level : ScriptableObject, IUnlockableContent
 
     public bool AutoUnlock => true;
     public int UnlockTier => unlockTier;
+    public float MusicDuration => music != null ? music.GetDuration() : 0;
 
-    //public string Name => music != null ? music.name : null;
-
-    //public void FindResourcesByName()
-    //{
-    //    if (levelName != null)
-    //    {
-    //        List<NotePlacement> findNotePlacements = new List<NotePlacement>();
-    //        SheetMusic[] allSheetMusics = Resources.FindObjectsOfTypeAll<SheetMusic>();
-    //        music = Array.Find(allSheetMusics, m => m.name.Contains(levelName));
-    //        NotePlacementAsset[] allPlacementAssets = Resources.FindObjectsOfTypeAll<NotePlacementAsset>();
-    //        foreach(NotePlacementAsset asset in allPlacementAssets)
-    //        {
-    //            if (asset.notePlacements != null && asset.name.Contains(levelName)) 
-    //                findNotePlacements.AddRange(asset.notePlacements); 
-    //        }
-    //        notePlacement = findNotePlacements.ToArray();
-    //    }
-    //}
+    public bool TryGetCurrentProgress(out int completedObjectives, out int totalObjectives)
+    {
+        GameProgress currentProgress = GameProgress.Current;
+        if (currentProgress == null)
+        {
+            completedObjectives = 0;
+            totalObjectives = 0;
+            return false;
+        }
+        return currentProgress.TryGetLevelProgress(this, out completedObjectives, out totalObjectives);
+    }
 }
