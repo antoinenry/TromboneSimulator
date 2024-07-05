@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
   m_Name: Mii
   m_EditorClassIdentifier: 
+  title: Mii Channel
+  subtitle: 
+  composer: Kazumi Totaka
   tempo:
   - time: 0
     secondsPerQuarterNote: 0.5

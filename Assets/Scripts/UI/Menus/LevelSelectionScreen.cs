@@ -6,9 +6,12 @@ public class LevelSelectionScreen : MenuUI
 {
     [Header("UI Components")]
     public LevelSelectionButton buttonPrefab;
+    public LevelSelectionButton lockedPrefab;
     public VerticalScrollList levelList;
+    public LevelInfoPanel levelInfoPanel;
     [Header("Contents")]
-    public string lockedLevelText = "?";
+    public string lockedLevelPrefix = "Niveau";
+    public string lockedLevelSufix = "";
     public LevelProgress[] levels;
     [Header("Events")]
     public UnityEvent<Level> onSelectLevel;
@@ -19,8 +22,9 @@ public class LevelSelectionScreen : MenuUI
         UpdateLevelList();
         if (Application.isPlaying)
         {
+            if (levelInfoPanel != null) levelInfoPanel.levelInfo = new(null);
             LevelSelectionButton[] buttons = GetComponentsInChildren<LevelSelectionButton>(true);
-            if (buttons != null) foreach (LevelSelectionButton b in buttons) b.onClick.AddListener(SelectLevel);
+            if (buttons != null) foreach (LevelSelectionButton b in buttons) b.AddListeners(ShowLevelInfo, SelectLevel);
         }
     }
 
@@ -30,17 +34,18 @@ public class LevelSelectionScreen : MenuUI
         if (Application.isPlaying)
         {
             LevelSelectionButton[] buttons = GetComponentsInChildren<LevelSelectionButton>(true);
-            if (buttons != null) foreach (LevelSelectionButton b in buttons) b.onClick.RemoveListener(SelectLevel);
+            if (buttons != null) foreach (LevelSelectionButton b in buttons) b.RemoveListeners(ShowLevelInfo, SelectLevel);
         }
     }
 
     public void UpdateLevelList()
     {
-        if (GameProgress.Current == null) return;
+        GameProgress progress = GameProgress.Current;
+        if (progress == null) return;
         // Get level list
-        int levelCount = GameProgress.Current.GetLevelCount();
+        int levelCount = progress.GetLevelCount();
         levels = new LevelProgress[levelCount];
-        Array.Copy(GameProgress.Current.levelProgress, levels, levelCount);
+        Array.Copy(progress.levelProgress, levels, levelCount);
         // Update UI
         if (levelList != null)
         {
@@ -48,10 +53,29 @@ public class LevelSelectionScreen : MenuUI
             foreach(LevelProgress level in levels)
             {
                 if (buttonPrefab == null) break;
-                LevelSelectionButton b = Instantiate(buttonPrefab);
-                b.SetLevel(level);
+                bool unlocked = progress.IsUnlocked(level.levelAsset);
+                LevelSelectionButton b;
+                if (unlocked)
+                {
+                    b = Instantiate(buttonPrefab);
+                    b.SetLevel(level);
+                }
+                else
+                {
+                    b = Instantiate(lockedPrefab);
+                    b.SetTitle(lockedLevelPrefix + level.levelAsset?.UnlockTier + lockedLevelSufix);
+                }
                 levelList.Add(b.gameObject);
             }
+        }
+    }
+
+    private void ShowLevelInfo(LevelProgress info, bool show)
+    {
+        if (levelInfoPanel)
+        {
+            if (show) levelInfoPanel.levelInfo = info;
+            else if (levelInfoPanel.levelInfo.levelAsset == info.levelAsset) levelInfoPanel.levelInfo = new(null);
         }
     }
 

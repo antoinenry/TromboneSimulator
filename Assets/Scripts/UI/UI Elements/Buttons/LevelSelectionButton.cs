@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
-[RequireComponent(typeof(Button))]
 public class LevelSelectionButton : MonoBehaviour
 {
     [Header("Components")]
@@ -11,9 +10,10 @@ public class LevelSelectionButton : MonoBehaviour
     public TMP_Text durationField;
     public TMP_Text progressField;
 
+    public UnityEvent<LevelProgress,bool> onSelect;
     public UnityEvent<Level> onClick;
 
-    private Level levelAsset;
+    private LevelProgress levelInfo;
     private Button button;
 
     private void Awake()
@@ -21,40 +21,32 @@ public class LevelSelectionButton : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    private void OnEnable()
+    public void AddListeners(UnityAction<LevelProgress,bool> onSelectAction, UnityAction<Level> onClickAction)
     {
-        button?.onClick?.AddListener(OnClick);
+        if (onSelectAction != null) onSelect.AddListener(onSelectAction);
+        if (onClickAction != null) onClick.AddListener(onClickAction);
     }
 
-    private void OnDisable()
+    public void RemoveListeners(UnityAction<LevelProgress,bool> onSelectAction, UnityAction<Level> onClickAction)
     {
-        button?.onClick?.RemoveListener(OnClick);
+        if (onSelectAction != null) onSelect.RemoveListener(onSelectAction);
+        if (onClickAction != null) onClick.RemoveListener(onClickAction);
     }
 
-    public void SetLevel(Level l, int completedObjectives, int totalObjectives)
+    public void SetLevel(LevelProgress l)
     {
-        levelAsset = l;
-        if (l == null)
+        levelInfo = l;
+        if (l.levelAsset == null)
         {
             SetTitle(null);
             SetDuration(0f);
             SetProgress(0, 0);
             return;
         }
-        SetTitle(l.name);
-        SetDuration(l.MusicDuration);
-        SetProgress(completedObjectives, totalObjectives);
+        SetTitle(l.levelAsset.name);
+        SetDuration(l.levelAsset.MusicDuration);
+        SetProgress(l.CompletedObjectivesCount, l.ObjectiveCount);
     }
-
-    public void SetLevel(Level l)
-    {
-        if (l == null) SetLevel(l, 0, 0);
-        l.TryGetCurrentProgress(out int completed, out int total);
-        SetLevel(l, completed, total);
-    }
-
-    public void SetLevel(LevelProgress l)
-        => SetLevel(l.levelAsset, l.CompletedObjectivesCount, l.ObjectiveCount);
 
     public void SetTitle(string title)
     {
@@ -92,5 +84,9 @@ public class LevelSelectionButton : MonoBehaviour
         progressField.text = percentage + "%";
     }
 
-    private void OnClick() => onClick.Invoke(levelAsset);
+    public void OnSelect() => onSelect.Invoke(levelInfo, true);
+
+    public void OnUnselect() => onSelect.Invoke(levelInfo, false);
+
+    public void OnClick() => onClick.Invoke(levelInfo.levelAsset);
 }

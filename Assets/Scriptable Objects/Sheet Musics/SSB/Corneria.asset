@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
   m_Name: Corneria
   m_EditorClassIdentifier: 
+  title: Corneria
+  subtitle: StarFox
+  composer: Hajime Hirasawa
   tempo:
   - time: 0
     secondsPerQuarterNote: 0.333333

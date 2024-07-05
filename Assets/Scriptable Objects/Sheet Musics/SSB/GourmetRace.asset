@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
   m_Name: GourmetRace
   m_EditorClassIdentifier: 
+  title: Gourmet Race
+  subtitle: Kirby
+  composer: Jun Ishikawa
   tempo:
   - time: 0
     secondsPerQuarterNote: 0.333333

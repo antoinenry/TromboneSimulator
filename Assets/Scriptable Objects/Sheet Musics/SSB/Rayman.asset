@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
   m_Name: Rayman
   m_EditorClassIdentifier: 
+  title: The Great Escape
+  subtitle: Rayman 2
+  composer: Eric Chevalier
   tempo:
   - time: 0
     secondsPerQuarterNote: 0.375

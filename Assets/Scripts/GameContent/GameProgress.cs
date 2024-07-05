@@ -49,6 +49,41 @@ public class GameProgress : ScriptableObject
         AutoUnlock();
     }
 
+    public int GetLevelCount() => levelProgress != null ? levelProgress.Length : 0;
+
+    public void CompleteObjectives(Level level, ObjectiveInfo[] objectives)
+    {
+        if (level == null || objectives == null || levelProgress == null) return;
+        int levelIndex = Array.FindIndex(levelProgress, l => l.levelAsset == level);
+        if (levelIndex == -1) return;
+        foreach (ObjectiveInfo info in objectives) levelProgress[levelIndex].TryCheckObjective(info);
+    }
+
+    public int GetObjectiveCount(out int completedCount)
+    {
+        completedCount = 0;
+        if (levelProgress == null) return 0;
+        int objectiveCount = 0;
+        foreach (LevelProgress lvl in levelProgress)
+        {
+            objectiveCount += lvl.ObjectiveCount;
+            completedCount += lvl.CompletedObjectivesCount;
+        }
+        return contentLocks.Length;
+    }
+
+    public bool TryGetLevelProgress(Level level, out int completedObjectives, out int totalObjectives)
+    {
+        completedObjectives = 0;
+        totalObjectives = 0;
+        if (level == null || levelProgress == null) return false;
+        LevelProgress progress = Array.Find(levelProgress, l => l.levelAsset == level);
+        if (progress.levelAsset != level) return false;
+        completedObjectives = progress.CompletedObjectivesCount;
+        totalObjectives = progress.ObjectiveCount;
+        return true;
+    }
+
     public bool TrySetLock(ScriptableObject contentAsset, bool locked)
     {
         if (contentAsset == null) return false;
@@ -75,19 +110,11 @@ public class GameProgress : ScriptableObject
         return contentLocks.Length;
     }
 
-    public int GetLevelCount() => levelProgress != null ? levelProgress.Length : 0;
-
-    public int GetObjectiveCount(out int completedCount)
+    public bool IsUnlocked(ScriptableObject contentAsset)
     {
-        completedCount = 0;
-        if (levelProgress == null) return 0;
-        int objectiveCount = 0;
-        foreach (LevelProgress lvl in levelProgress)
-        {
-            objectiveCount += lvl.ObjectiveCount;
-            completedCount += lvl.CompletedObjectivesCount;
-        }
-        return contentLocks.Length;
+        if (contentAsset == null) return false;
+        GameContentLock contentLock = Array.Find(contentLocks, l => l.contentAsset == contentAsset);
+        return contentLock.contentAsset == contentAsset && contentLock.locked == false;
     }
 
     public bool CanUnlock(ScriptableObject contentAsset)
@@ -118,25 +145,5 @@ public class GameProgress : ScriptableObject
                 else if (canUnlock == false) contentLocks[i].SetLocked(true);
             }
         }
-    }
-
-    public void CompleteObjectives(Level level, ObjectiveInfo[] objectives)
-    {
-        if (level == null || objectives == null || levelProgress == null) return;
-        int levelIndex = Array.FindIndex(levelProgress, l => l.levelAsset == level);
-        if (levelIndex == -1) return;
-        foreach (ObjectiveInfo info in objectives) levelProgress[levelIndex].TryCheckObjective(info);
-    }
-
-    public bool TryGetLevelProgress(Level level, out int completedObjectives, out int totalObjectives)
-    {
-        completedObjectives = 0;
-        totalObjectives = 0;
-        if (level == null || levelProgress == null) return false;
-        LevelProgress progress = Array.Find(levelProgress, l => l.levelAsset == level);
-        if (progress.levelAsset != level) return false;
-        completedObjectives = progress.CompletedObjectivesCount;
-        totalObjectives = progress.ObjectiveCount;
-        return true;
-    }
+    }    
 }

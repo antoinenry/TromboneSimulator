@@ -13,8 +13,16 @@ MonoBehaviour:
   m_Name: Rayman
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: ca916547c25c4be44844bba13c27e95c, type: 2}
-  objectives:
-    end:
-      enabled: 0
-    scores: []
   unlockTier: 2
+  objectives:
+  - type: EndMusic
+    parameters: []
+  - type: Highscore
+    parameters:
+    - 100000
+  - type: Highscore
+    parameters:
+    - 300000
+  - type: Highscore
+    parameters:
+    - 600000

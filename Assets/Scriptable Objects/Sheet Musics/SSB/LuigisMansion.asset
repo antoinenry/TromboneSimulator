@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde19684f9c780349844ee31d83525c5, type: 3}
   m_Name: LuigisMansion
   m_EditorClassIdentifier: 
+  title: Luigi's Mansion
+  subtitle: 
+  composer: Shogo Sakai
   tempo:
   - time: 0
     secondsPerQuarterNote: 0.545454

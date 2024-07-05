@@ -158,8 +158,8 @@ public class LevelLoader : MonoBehaviour
         }
         if (objectiveJudge)
         {
-            //objectiveJudge.UnloadObjectiveList();
-            //objectiveJudge.enabled = false;
+            objectiveJudge.UnloadObjectives();
+            objectiveJudge.enabled = false;
         }
         // Stop note spawner
         if (noteSpawner) noteSpawner.enabled = false;

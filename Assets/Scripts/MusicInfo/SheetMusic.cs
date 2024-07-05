@@ -6,6 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewSheetMusic", menuName = "Trombone Hero/Music/Sheet Music")]
 public class SheetMusic : ScriptableObject
 {
+    [Header("Info")]
+    public string title;
+    public string subtitle;
+    public string composer;
+    [Header("Music")]
     [SerializeField] private TempoInfo[] tempo;
     [SerializeField] private MeasureInfo[] measure;
     [SerializeField] private SheetMusicPart[] parts;
