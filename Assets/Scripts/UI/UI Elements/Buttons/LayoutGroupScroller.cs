@@ -3,23 +3,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [ExecuteAlways]
-[RequireComponent(typeof(VerticalLayoutGroup))]
-public class VerticalScrollList : MonoBehaviour
+[RequireComponent(typeof(LayoutGroup))]
+public class LayoutGroupScroller : MonoBehaviour
 {
     [Header("Components")]
     public List<GameObject> elements;
-    public Button upButton;
-    public Button downButton;
+    public Button scrollPreviousButton;
+    public Button scrollNextButton;
     [Header("Navigation")]
     public int maxDisplayCount = 5;
+    public int scrollStep = 1;
     public int displayOffset = 0;
 
     private void OnEnable()
     {
         if (Application.isPlaying)
         {
-            upButton?.onClick?.AddListener(ScrollUp);
-            downButton?.onClick?.AddListener(ScrollDown);
+            scrollPreviousButton?.onClick?.AddListener(ScrollUp);
+            scrollNextButton?.onClick?.AddListener(ScrollDown);
         }
     }
 
@@ -27,8 +28,8 @@ public class VerticalScrollList : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            upButton?.onClick?.RemoveListener(ScrollUp);
-            downButton?.onClick?.RemoveListener(ScrollDown);
+            scrollPreviousButton?.onClick?.RemoveListener(ScrollUp);
+            scrollNextButton?.onClick?.RemoveListener(ScrollDown);
         }
     }
 
@@ -40,8 +41,8 @@ public class VerticalScrollList : MonoBehaviour
         if (elementCount <= maxDisplayCount)
         {
             displayOffset = 0;
-            upButton.gameObject.SetActive(false);
-            downButton.gameObject.SetActive(false);
+            scrollPreviousButton.gameObject.SetActive(false);
+            scrollNextButton.gameObject.SetActive(false);
             for (int i = 0; i < elementCount; i++) elements[i]?.SetActive(true);
             return;
         }
@@ -50,16 +51,16 @@ public class VerticalScrollList : MonoBehaviour
         displayOffset = Mathf.Clamp(displayOffset, 0, maxOffset);
         // Activate/deactivate scroll buttons
         bool canScrollDown = displayOffset > 0;
-        if (upButton)
+        if (scrollPreviousButton)
         {
-            upButton.transform.SetSiblingIndex(0);
-            upButton.gameObject.SetActive(canScrollDown);
+            scrollPreviousButton.transform.SetSiblingIndex(0);
+            scrollPreviousButton.gameObject.SetActive(canScrollDown);
         }
         bool canScrollUp = displayOffset < maxOffset;
-        if (downButton)
+        if (scrollNextButton)
         {
-            downButton.transform.SetSiblingIndex(elementCount + 2);
-            downButton.gameObject.SetActive(canScrollUp);
+            scrollNextButton.transform.SetSiblingIndex(elementCount + 2);
+            scrollNextButton.gameObject.SetActive(canScrollUp);
         }
         // Activate/deactivate displayed items and ensure display order is correct
         int firstActiveIndex = displayOffset + (canScrollDown ? 1 : 0);
@@ -74,13 +75,13 @@ public class VerticalScrollList : MonoBehaviour
 
     private bool RequireComponents()
     {
-        if (elements == null || upButton == null || downButton == null) return false;
+        if (elements == null || scrollPreviousButton == null || scrollNextButton == null) return false;
         return true;
     }
 
-    private void ScrollUp() => displayOffset++;
+    private void ScrollUp() => displayOffset += scrollStep;
 
-    private void ScrollDown() => displayOffset--;
+    private void ScrollDown() => displayOffset -= scrollStep;
 
     public void Clear()
     {

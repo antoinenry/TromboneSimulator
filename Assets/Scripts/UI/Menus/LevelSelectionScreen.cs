@@ -7,7 +7,7 @@ public class LevelSelectionScreen : MenuUI
     [Header("UI Components")]
     public LevelSelectionButton buttonPrefab;
     public GameObject lockedPrefab;
-    public VerticalScrollList levelList;
+    public LayoutGroupScroller levelList;
     public LevelInfoPanel levelInfoPanel;
     [Header("Contents")]
     public LevelProgress[] levels;

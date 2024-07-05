@@ -27,7 +27,7 @@ public class LevelSelectionButton : MonoBehaviour
         if (onClickAction != null) onClick.AddListener(onClickAction);
     }
 
-    public void RemoveListeners(UnityAction<LevelProgress,bool> onSelectAction, UnityAction<Level> onClickAction)
+    public void RemoveListeners(UnityAction<LevelProgress, bool> onSelectAction, UnityAction<Level> onClickAction)
     {
         if (onSelectAction != null) onSelect.RemoveListener(onSelectAction);
         if (onClickAction != null) onClick.RemoveListener(onClickAction);
