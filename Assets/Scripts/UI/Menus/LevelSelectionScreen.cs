@@ -6,12 +6,10 @@ public class LevelSelectionScreen : MenuUI
 {
     [Header("UI Components")]
     public LevelSelectionButton buttonPrefab;
-    public LevelSelectionButton lockedPrefab;
+    public GameObject lockedPrefab;
     public VerticalScrollList levelList;
     public LevelInfoPanel levelInfoPanel;
     [Header("Contents")]
-    public string lockedLevelPrefix = "Niveau";
-    public string lockedLevelSufix = "";
     public LevelProgress[] levels;
     [Header("Events")]
     public UnityEvent<Level> onSelectLevel;
@@ -59,13 +57,12 @@ public class LevelSelectionScreen : MenuUI
                 {
                     b = Instantiate(buttonPrefab);
                     b.SetLevel(level);
+                    levelList.Add(b.gameObject);
                 }
                 else
                 {
-                    b = Instantiate(lockedPrefab);
-                    b.SetTitle(lockedLevelPrefix + level.levelAsset?.UnlockTier + lockedLevelSufix);
+                    levelList.Add(Instantiate(lockedPrefab));
                 }
-                levelList.Add(b.gameObject);
             }
         }
     }
