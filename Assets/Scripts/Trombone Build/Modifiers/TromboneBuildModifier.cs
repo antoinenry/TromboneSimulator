@@ -4,6 +4,7 @@ public abstract class TromboneBuildModifier : ScriptableObject, IUnlockableConte
 {
     public string modName;
     public Sprite icon;
+    public bool replaceOnly;
     public int unlockTier;
     public float scoreMultiplier = 1f;
 

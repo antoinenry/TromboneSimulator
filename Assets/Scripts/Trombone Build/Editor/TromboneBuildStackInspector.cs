@@ -30,7 +30,7 @@ public class TromboneBuildStackInspector : Editor
                 {
                     string indicesString = "";
                     foreach (int index in indexGroup) indicesString += index + ", ";
-                    EditorGUILayout.HelpBox("Can't stack " + stack.mods[indexGroup[0]] + " : " + indicesString, MessageType.Warning);
+                    EditorGUILayout.HelpBox("Can't stack " + stack.Modifiers[indexGroup[0]] + " : " + indicesString, MessageType.Warning);
                 }
             }
             if (GUILayout.Button("Clean up")) stack.CleanUp();

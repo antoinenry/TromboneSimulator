@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class ModifierSelectionButton : MonoBehaviour
 {
     public Button button;
+    public Image icon;
+    [Header("Content")]
+    public TromboneBuildModifier modifierAsset;
     public bool active;
     [Header("Active colors")]
     public ColorBlock activeColors = ColorBlock.defaultColorBlock;
@@ -14,8 +17,6 @@ public class ModifierSelectionButton : MonoBehaviour
 
     public UnityEvent<TromboneBuildModifier,bool> onSelect;
     public UnityEvent<TromboneBuildModifier, bool> onToggle;
-
-    private TromboneBuildModifier modifierAsset;
 
     private void Update()
     {
@@ -37,10 +38,12 @@ public class ModifierSelectionButton : MonoBehaviour
     public void SetModifier(TromboneBuildModifier modifier)
     {
         modifierAsset = modifier;
+        if (icon) icon.sprite = modifier.icon;
     }
 
     public void OnClick()
     {
+        if (modifierAsset != null && modifierAsset.replaceOnly) return;
         active = !active;
         onToggle.Invoke(modifierAsset, active);
     }

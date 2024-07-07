@@ -6,13 +6,29 @@ public class TromboneBuildStack : MonoBehaviour
 {
     public TromboneBuild baseBuild;
     public bool enableModifiers = true;
-    public List<TromboneBuildModifier> mods;
 
-    private TromboneBuild modifiedBuild;
+    [SerializeField] private List<TromboneBuildModifier> mods;
+    [SerializeField] private TromboneBuild modifiedBuild;
 
     private void OnValidate()
     {
         ApplyStack();
+    }
+
+    public TromboneBuildModifier[] Modifiers =>  mods != null ? mods.ToArray() : new TromboneBuildModifier[0];
+
+    public bool TryAddModifier(TromboneBuildModifier mod)
+    {
+        if (mods == null || mod == null) return false;
+        mods.RemoveAll(m => m == null || m.CanStackWith(mod) == false);
+        mods.Add(mod);
+        return true;
+    }
+
+    public bool TryRemoveModifier(TromboneBuildModifier mod)
+    {
+        if (mods == null || mod == null || mod.replaceOnly) return false;
+        return mods.Remove(mod);
     }
 
     public void ApplyStack()
