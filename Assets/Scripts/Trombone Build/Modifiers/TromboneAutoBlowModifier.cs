@@ -8,7 +8,7 @@ public class TromboneAutoBlowModifier : TromboneBuildModifier
     public override void ApplyTo(TromboneBuild build)
     {
         base.ApplyTo(build);
-        if (build?.tromboneAuto == null)
+        if (build?.tromboneAuto != null)
         {
             TromboneAutoSettings settings = build.tromboneAuto.autoSettings;
             settings.blowControl = blowControl;
