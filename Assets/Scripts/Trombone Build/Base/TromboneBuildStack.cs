@@ -27,7 +27,7 @@ public class TromboneBuildStack : MonoBehaviour
 
     public bool TryRemoveModifier(TromboneBuildModifier mod)
     {
-        if (mods == null || mod == null || mod.replaceOnly) return false;
+        if (mods == null || mod == null) return false;
         return mods.Remove(mod);
     }
 
@@ -89,5 +89,14 @@ public class TromboneBuildStack : MonoBehaviour
         nullMods = nullIndices.ToArray();
         cantStack = cantStackIndices.ConvertAll(csi => csi.ToArray()).ToArray();
         return false;
+    }
+
+    public float GetScoreMultiplier()
+    {
+        if (mods == null) return 1f;
+        float multiplier = 1f;
+        foreach (TromboneBuildModifier m in mods)
+            if (m != null) multiplier *= m.ScoreMultiplier;
+        return multiplier;
     }
 }

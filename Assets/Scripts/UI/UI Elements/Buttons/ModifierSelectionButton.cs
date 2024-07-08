@@ -38,12 +38,16 @@ public class ModifierSelectionButton : MonoBehaviour
     public void SetModifier(TromboneBuildModifier modifier)
     {
         modifierAsset = modifier;
-        if (icon) icon.sprite = modifier.icon;
+        if (icon)
+        {
+            icon.sprite = modifier.icon;
+            icon.color = modifier.IconColor;
+        }
     }
 
     public void OnClick()
     {
-        if (modifierAsset != null && modifierAsset.replaceOnly) return;
+        if (modifierAsset == null) return;
         active = !active;
         onToggle.Invoke(modifierAsset, active);
     }

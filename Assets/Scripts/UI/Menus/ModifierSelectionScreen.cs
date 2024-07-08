@@ -8,7 +8,8 @@ public class ModifierSelectionScreen : MenuUI
     [Header("UI Components")]
     public ModifierSelectionButton buttonPrefab;
     public LayoutGroupScroller modifierGrid;
-    public LevelInfoPanel modifierInfoPanel;
+    public ModifierInfoPanel modifierInfoPanel;
+    public BuildStackInfoPanel stackInfoPanel;
     [Header("Contents")]
     public TromboneBuildModifier[] modifiers;
     [Header("Events")]
@@ -35,23 +36,33 @@ public class ModifierSelectionScreen : MenuUI
         modifiers = Array.ConvertAll(
             Array.FindAll(progress.contentLocks, c => c.locked == false && c.contentAsset is TromboneBuildModifier),
             c => c.contentAsset as TromboneBuildModifier);
-        int modifierCount = progress.GetLevelCount();
-        // Get active modifiers
-        TromboneBuildModifier[] activeMods = modifierStack != null ? modifierStack.Modifiers : new TromboneBuildModifier[0];
         // Update button grid
         if (modifierGrid != null)
         {
             ModifierSelectionButton[] buttons = modifierGrid.GetComponentsInChildren<ModifierSelectionButton>(true);
             // Check if there's a button for each mod, if not correct it
-            if (Array.FindIndex(modifiers, mod => Array.FindIndex(buttons, b => b.modifierAsset == mod) == -1) !=-1)
-                ResetButtonGrid(buttons, activeMods);
+            if (modifiers.Length != buttons.Length)
+            {
+                ResetModifierGrid();
+                return;
+            }
+            else for (int i = 0, iend = modifiers.Length; i < iend; i++)
+                    if (modifiers[i] != buttons[i].modifierAsset)
+                    {
+                        ResetModifierGrid();
+                        return;
+                    }
             // Update active/inactive states
-            foreach(ModifierSelectionButton b in buttons) b.active = Array.IndexOf(activeMods, b.modifierAsset) != -1;
+            TromboneBuildModifier[] activeMods = modifierStack != null ? modifierStack.Modifiers : new TromboneBuildModifier[0];
+            foreach (ModifierSelectionButton b in buttons) b.active = Array.IndexOf(activeMods, b.modifierAsset) != -1;
         }
     }
 
-    private void ResetButtonGrid(ModifierSelectionButton[] buttons, TromboneBuildModifier[] activeMods)
+    private void ResetModifierGrid()
     {
+        // Get active modifiers
+        TromboneBuildModifier[] activeMods = modifierStack != null ? modifierStack.Modifiers : new TromboneBuildModifier[0];
+        ModifierSelectionButton[] buttons = modifierGrid?.GetComponentsInChildren<ModifierSelectionButton>(true);
         RemoveButtonGridListeners(buttons);
         modifierGrid.Clear();
         foreach (TromboneBuildModifier mod in modifiers)
@@ -64,6 +75,7 @@ public class ModifierSelectionScreen : MenuUI
             modifierGrid.Add(b.gameObject);
         }
         AddButtonGridListeners(buttons);
+        ShowModifierInfo(null, true);
     }
 
     private void AddButtonGridListeners(ModifierSelectionButton[] buttons)
@@ -84,6 +96,25 @@ public class ModifierSelectionScreen : MenuUI
 
     private void ShowModifierInfo(TromboneBuildModifier modifier, bool show)
     {
+        // Show stack info when no modifier is selected
+        bool showModifierInfo = show || modifierInfoPanel.modifierAsset != modifier;
+        // Modifier info
+        if (showModifierInfo)
+        {
+            if (stackInfoPanel) stackInfoPanel.enabled = false;
+            if (modifierInfoPanel)
+            {
+                modifierInfoPanel.enabled = true;
+                if (show) modifierInfoPanel.modifierAsset = modifier;
+                else if (modifierInfoPanel.modifierAsset == modifier) modifierInfoPanel.modifierAsset = null;
+            }
+        }
+        // Stack info
+        else
+        {
+            if (modifierInfoPanel) modifierInfoPanel.enabled = false;
+            if (stackInfoPanel) stackInfoPanel.enabled = true;
+        }
     }
 
     private void SelectModifier(TromboneBuildModifier modifier, bool active)
@@ -92,5 +123,6 @@ public class ModifierSelectionScreen : MenuUI
         if (active) modifierStack.TryAddModifier(modifier);
         else modifierStack.TryRemoveModifier(modifier);
         modifierStack.ApplyStack();
+        UpdateModifierGrid();
     }
 }

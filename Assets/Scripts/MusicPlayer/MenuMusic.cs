@@ -31,6 +31,11 @@ public class MenuMusic : MonoBehaviour
         RemoveMenuListeners();
     }
 
+    private void Update()
+    {
+        TromboneSetup();
+    }
+
     private void AddMenuListeners()
     {
         menu.onShowUI.AddListener(OnUIShown);

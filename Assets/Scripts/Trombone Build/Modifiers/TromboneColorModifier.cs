@@ -5,6 +5,8 @@ public class TromboneColorModifier : TromboneBuildModifier
 {
     public Color color = Color.white;
 
+    public override Color IconColor => color;
+
     public override void ApplyTo(TromboneBuild build)
     {
         base.ApplyTo(build);

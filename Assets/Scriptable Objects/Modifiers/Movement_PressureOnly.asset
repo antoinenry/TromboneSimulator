@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a5871e87f894c4a980641579163858, type: 3}
   m_Name: Movement_PressureOnly
   m_EditorClassIdentifier: 
-  modName: 
-  icon: {fileID: 0}
+  modName: Coulisse Magique
+  icon: {fileID: -1147481566, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   unlockTier: 1
-  scoreMultiplier: 1
+  scoreMultiplier: 0.5
+  description: C'est un peu comme une grosse trompette sans pistons.
   enabledMovements: 2
   toneOffset: 0
   slideToneLength: 0

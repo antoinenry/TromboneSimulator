@@ -7,13 +7,29 @@ public class TromboneMovementModifier : TromboneBuildModifier
 
     public Axis enabledMovements = Axis.All;
     public float toneOffset = 0f;
-    public float slideToneLength;
-    public float[] pressureToneSteps;
+    public bool changeSlideLength = false;
+    public float slideToneLength = 0f;
+    public bool changePressureSteps = false;
+    public float[] pressureToneSteps = new float[0];
 
     public override void ApplyTo(TromboneBuild build)
     {
         base.ApplyTo(build);
-        if (build?.tromboneCore != null)
+        if (build?.tromboneAuto != null)
+        {
+            TromboneAutoSettings autoSettings = build.tromboneAuto.autoSettings;
+            switch (enabledMovements)
+            {
+                case Axis.PressureOnly:
+                    autoSettings.slideControl = TromboneAutoSettings.ControlConditions.Always;
+                    break;
+                case Axis.SlideOnly:
+                    autoSettings.pressureControl = TromboneAutoSettings.ControlConditions.Always;
+                    break;
+            }
+            build.tromboneAuto.autoSettings = autoSettings;
+        }
+        if (build?.tromboneDisplay != null)
         {
             switch (enabledMovements)
             {
@@ -30,14 +46,14 @@ public class TromboneMovementModifier : TromboneBuildModifier
                     build.tromboneDisplay.enableSlideMovement = true;
                     break;
             }
-            build.tromboneCore.baseTone += toneOffset;
-            build.tromboneCore.slideToneLength = slideToneLength;
-            build.tromboneCore.pressureToneSteps = pressureToneSteps;
-        }
-        if (build?.tromboneDisplay != null)
-        {
             build.tromboneDisplay.minSlideTone = 0f;
-            build.tromboneDisplay.maxSlideTone = slideToneLength;
+            if (changeSlideLength) build.tromboneDisplay.maxSlideTone = slideToneLength;
+        }
+        if (build?.tromboneCore != null)
+        {
+            build.tromboneCore.baseTone += toneOffset;
+            if (changeSlideLength) build.tromboneCore.slideToneLength = slideToneLength;
+            if (changePressureSteps) build.tromboneCore.pressureToneSteps = pressureToneSteps;
         }
     }
 }

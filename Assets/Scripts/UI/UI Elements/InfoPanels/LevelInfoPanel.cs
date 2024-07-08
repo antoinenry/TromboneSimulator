@@ -3,33 +3,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [ExecuteAlways]
-public class LevelInfoPanel : MonoBehaviour
+public class LevelInfoPanel : InfoPanel
 {
-    public TMP_Text textField;
     public TMP_Text overlay;
-    public Image background;
     public LevelProgress levelInfo;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        if (textField != null) textField.enabled = true;
+        base.OnEnable();
         if (overlay != null) overlay.enabled = true;
-        if (background != null) background.enabled = true;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        if (textField != null) textField.enabled = false;
+        base.OnDisable();
         if (overlay != null) overlay.enabled = false;
-        if (background != null) background.enabled = false;
     }
 
-    private void Update()
-    {
-        SetText();
-    }
-
-    private void SetText()
+    public override void UpdateText()
     {
         string text = "";
         string overlayText = "";

@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c722ce8973646f64391ec7c36ce09a72, type: 3}
   m_Name: AutoBlow
   m_EditorClassIdentifier: 
-  modName: 
-  icon: {fileID: 0}
-  scoreMultiplier: 1
+  modName: Autopouet
+  icon: {fileID: -470509015, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  unlockTier: 0
+  scoreMultiplier: 0.8
+  description: "Un bijou de technologie: les notes sortent toutes seules! Reste \xE0
+    jouer juste."
   blowControl: 13

@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5ab5266eb14df044900d6b58ceb8ff8, type: 3}
-  m_Name: Color_Yellow
+  m_Name: Color_Silver
   m_EditorClassIdentifier: 
-  modName: 
-  icon: {fileID: 0}
+  modName: "Argent\xE9"
+  icon: {fileID: 53210457, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  unlockTier: 0
   scoreMultiplier: 1
-  color: {r: 0.8588236, g: 0.76470596, b: 0.3137255, a: 1}
+  description: Classieux
+  color: {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
