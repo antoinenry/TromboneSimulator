@@ -15,6 +15,8 @@ public class ModifierSelectionScreen : MenuUI
     [Header("Events")]
     public UnityEvent<TromboneBuildModifier> onSelectModifier;
 
+    public ObjectMethodCaller caller = new("ResetModifierGrid");
+
     public override void ShowUI()
     {
         base.ShowUI();

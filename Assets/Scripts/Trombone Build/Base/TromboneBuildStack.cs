@@ -27,7 +27,7 @@ public class TromboneBuildStack : MonoBehaviour
 
     public bool TryRemoveModifier(TromboneBuildModifier mod)
     {
-        if (mods == null || mod == null) return false;
+        if (mods == null || mod == null || mod.ReplaceOnly) return false;
         return mods.Remove(mod);
     }
 

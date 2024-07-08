@@ -10,6 +10,7 @@ public abstract class TromboneBuildModifier : ScriptableObject, IUnlockableConte
 
     public bool AutoUnlock => false;
     public int UnlockTier => unlockTier;
+    public virtual bool ReplaceOnly => false;
     public virtual float ScoreMultiplier => scoreMultiplierBonus;
     public virtual Color IconColor => Color.white;
     public virtual string StatDescription => ScoreMultiplier != 1f ? "Score x" + ScoreMultiplier : null;
