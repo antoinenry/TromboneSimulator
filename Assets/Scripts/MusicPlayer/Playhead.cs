@@ -210,8 +210,8 @@ public class Playhead : ScriptableObject
         {
             if (showDebug)
             {
-                Debug.Log(name + " is on note " + nInfo);
-                Debug.Log("-> progess: " + progress);
+                Debug.Log(name + " (" + fromTime + "s - " + toTime + "s) is on note " + nInfo);
+                Debug.Log("-> progress: " + progress);
             }
             // Add to current notes (avoid doublons)
             if (currentNoteInfos.Contains(nInfo) == false) currentNoteInfos.Add(nInfo);

@@ -93,10 +93,10 @@ public class PerformanceGUI : GameUI
         if (scoreDisplay) scoreDisplay.value = Mathf.FloorToInt(score);
     }
 
-    public void DisplayCorrectlyPlayedNote(NoteSpawn note, float accuracy, float points)
+    public void DisplayCorrectlyPlayedNote(NoteSpawn note, float accuracy, float points, int comboMultiplier)
     {
         DisplayNoteAccuracy(accuracy);
-        if (note) DisplayNotePoints(points, note.DisplayColor);
+        if (note) DisplayNotePoints(Mathf.RoundToInt(points) * comboMultiplier, note.DisplayColor);
     }
 
     public void DisplayWronglyPlayedNote(NoteSpawn note)
@@ -107,7 +107,7 @@ public class PerformanceGUI : GameUI
 
     public void DisplayPlayedNoteEnd(NoteSpawn note, float points)
     {
-        if (note) DisplayNotePointsEnd(points, note.DisplayColor);
+        if (note) DisplayNotePointsEnd(Mathf.RoundToInt(points), note.DisplayColor);
         else DisplayNotePointsEnd();
         wrongNoteMessage = null;
     }

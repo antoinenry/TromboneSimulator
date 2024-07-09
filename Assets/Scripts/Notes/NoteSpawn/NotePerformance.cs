@@ -70,17 +70,17 @@ public struct NotePerformance
 
     public PerformanceSegment PlayCorrectly(float fromTime, float toTime, float toneAccuracy)
     {
-        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.PLAYED_CORRECTLY, toneAccuracy), true);
+        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.PLAYED_CORRECTLY, toneAccuracy), replace: true);
     }
 
     public PerformanceSegment PlayWrong(float fromTime, float toTime, float toneAccuracy)
     {
-        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.PLAYED_WRONG, toneAccuracy), false);
+        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.PLAYED_WRONG, toneAccuracy), replace: false);
     }
 
     public PerformanceSegment Miss(float fromTime, float toTime)
     {
-        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.MISSED), false);
+        return TryAddSegment(new PerformanceSegment(fromTime, toTime, PlayState.MISSED), replace: false);
     }
 
     private PerformanceSegment TryAddSegment(PerformanceSegment segmentToAdd, bool replace)

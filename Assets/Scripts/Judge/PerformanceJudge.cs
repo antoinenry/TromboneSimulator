@@ -14,6 +14,7 @@ public class PerformanceJudge : MonoBehaviour
     public float scoringRate = 10f;
     public float damageRate = .2f;
     public float accuracyRounding = 10f;
+    [Range(0f,1f)] public float fullPlayRounding = .01f;
     [Header("Performance")]
     public List<NotePerformance> performanceDetail;
     public float score;
@@ -22,11 +23,13 @@ public class PerformanceJudge : MonoBehaviour
     [Header("Events")]
     public UnityEvent<float> onScore;
     public UnityEvent<float,float,float> onHealth;
-    public UnityEvent<NoteSpawn, float, float> onCorrectNote;
+    public UnityEvent<NoteSpawn, float, float, int> onCorrectNote;
     public UnityEvent<NoteSpawn> onWrongNote;
     public UnityEvent<NoteSpawn> onMissNote;
     public UnityEvent<NoteSpawn, float> onNotePerformanceEnd;
     public UnityEvent<int> onNoteCombo;
+
+    public int RoundedScore => Mathf.CeilToInt(score);
 
     private void OnEnable()
     {
@@ -103,7 +106,7 @@ public class PerformanceJudge : MonoBehaviour
     public void SetScore(float value)
     {
         score = value;
-        onScore.Invoke(score);
+        onScore.Invoke(RoundedScore);
     }
 
     public void AddNotePerformance(NoteSpawn instance)
@@ -111,10 +114,10 @@ public class PerformanceJudge : MonoBehaviour
         // Add note performance
         performanceDetail.Add(instance.performance);
         // Add points to score
-        float noteScore = GetNoteScore(instance.performance);
-        SetScore(score + noteScore * combo);
+        float noteScore = GetNoteScore(instance.performance) * (combo + 1);
+        SetScore(score + noteScore);
         // Increase combo if note was fully played
-        bool fullPlay = instance.performance.CorrectTime == instance.Duration;
+        bool fullPlay = instance.Duration == 0f || instance.performance.CorrectTime / instance.Duration >= 1f - fullPlayRounding;
         if (fullPlay) SetCombo(combo + 1);
         // Else break combo
         else SetCombo(0);
@@ -159,7 +162,7 @@ public class PerformanceJudge : MonoBehaviour
     public LevelScoreInfo GetLevelScore()
     {
         LevelScoreInfo scoreInfo = new LevelScoreInfo();
-        scoreInfo.baseScore = Mathf.FloorToInt(score);
+        scoreInfo.baseScore = RoundedScore;
         int comboCounter = 0;
         float totalNoteTime = 0f;
         float accuracyTime = 0f;
@@ -197,7 +200,7 @@ public class PerformanceJudge : MonoBehaviour
 
     private void OnPlayCorrectNote(NoteSpawn note)
     {
-        if (note != null) onCorrectNote.Invoke(note, GetNoteAccuracy(note.performance), GetNoteScore(note.performance));
+        if (note != null) onCorrectNote.Invoke(note, GetNoteAccuracy(note.performance), GetNoteScore(note.performance), combo + 1);
     }
 
     private void OnPlayWrongNote(NoteSpawn note)
