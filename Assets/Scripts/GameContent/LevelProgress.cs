@@ -39,6 +39,16 @@ public struct LevelProgress
         return TryCheckObjective(Array.IndexOf(levelAsset.objectives, objective), value);
     }
 
+    public void CheckAllObjectives()
+    {
+        if (checkList != null) checkList = Array.ConvertAll(checkList, c => true);
+    }
+
+    public void UncheckAllObjectives()
+    {
+        if (checkList != null) checkList = Array.ConvertAll(checkList, c => false);
+    }
+
     private int CorrectChecklistLength()
     {
         int correctLength = ObjectiveCount;

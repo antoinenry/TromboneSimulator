@@ -29,12 +29,12 @@ public class LoadingScreen : MenuUI
 
     private void OnEnable()
     {
-        if (trackGenerator != null) trackGenerator.OnGenerationProgress.AddListener(OnLoadMusic);
+        if (trackGenerator != null) trackGenerator.onGenerationProgress.AddListener(OnLoadMusic);
     }
 
     private void OnDisable()
     {
-        if (trackGenerator != null) trackGenerator.OnGenerationProgress.RemoveListener(OnLoadMusic);
+        if (trackGenerator != null) trackGenerator.onGenerationProgress.RemoveListener(OnLoadMusic);
     }
 
     private void OnLoadMusic(float progress)

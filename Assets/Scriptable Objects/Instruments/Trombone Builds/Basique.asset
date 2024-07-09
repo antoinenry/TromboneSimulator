@@ -23,7 +23,7 @@ MonoBehaviour:
     - 2
     slideToneLength: 7
   tromboneDisplay:
-    color: {r: 0.9058824, g: 0.8078432, b: 0.32941177, a: 1}
+    color: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 0.50980395}
     bodyLength: 110
     slideLength: 95
     enableSlideMovement: 1

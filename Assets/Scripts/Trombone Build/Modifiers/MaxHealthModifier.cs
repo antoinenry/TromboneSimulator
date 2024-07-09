@@ -5,6 +5,15 @@ public class MaxHealthModifier : TromboneBuildModifier
 {
     public float additionalMaxHealth = 0f;
 
+    public override string StatDescription
+    {
+        get
+        {
+            string sign = additionalMaxHealth > 0f ? "+" : "";
+            return sign + additionalMaxHealth + " hp\n" + base.StatDescription;
+        }
+    }
+
     public override void ApplyTo(TromboneBuild build)
     {
         base.ApplyTo(build);

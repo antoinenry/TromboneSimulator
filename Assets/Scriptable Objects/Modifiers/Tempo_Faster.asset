@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b52941e3487344db51d6fa35afd358, type: 3}
   m_Name: Tempo_Faster
   m_EditorClassIdentifier: 
-  modName: 
-  icon: {fileID: 0}
+  modName: Supersonique
+  icon: {fileID: 755006580, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   unlockTier: 2
-  scoreMultiplier: 1.5
-  tempoMultiplier: 2
+  scoreMultiplierBonus: 1.1
+  description: "La m\xEAme en plus vite!"
+  tempoMultiplier: 1.75
   multiplyScoreByTempo: 1

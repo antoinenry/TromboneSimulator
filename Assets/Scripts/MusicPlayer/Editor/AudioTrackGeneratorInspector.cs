@@ -12,14 +12,14 @@ public class AudioTrackGeneratorInspector : Editor
     private void OnEnable()
     {
         generator = target as AudioTrackGenerator;
-        if (generator.OnGenerationProgress == null) generator.OnGenerationProgress = new UnityEvent<float>();
-        generator.OnGenerationProgress.AddListener(OnGenerate);
+        if (generator.onGenerationProgress == null) generator.onGenerationProgress = new UnityEvent<float>();
+        generator.onGenerationProgress.AddListener(OnGenerate);
         attachedAudioSource = generator.GetComponent<AudioSource>();
     }
 
     private void OnDisable()
     {
-        generator.OnGenerationProgress.RemoveListener(OnGenerate);
+        generator.onGenerationProgress.RemoveListener(OnGenerate);
     }
 
     public override void OnInspectorGUI()

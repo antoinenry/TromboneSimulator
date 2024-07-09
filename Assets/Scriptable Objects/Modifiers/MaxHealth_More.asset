@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0259dfbe41bac46b521e9239acb545, type: 3}
   m_Name: MaxHealth_More
   m_EditorClassIdentifier: 
-  modName: 
-  icon: {fileID: 1242161697, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
-  replaceOnly: 0
+  modName: Houblon
+  icon: {fileID: 284028231, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   unlockTier: 1
-  scoreMultiplier: 0.75
+  scoreMultiplierBonus: 0.85
+  description: "Boost de confiance (toujours avec mod\xE9ration)"
   additionalMaxHealth: 0.5

@@ -31,11 +31,6 @@ public class MenuMusic : MonoBehaviour
         RemoveMenuListeners();
     }
 
-    private void Update()
-    {
-        TromboneSetup();
-    }
-
     private void AddMenuListeners()
     {
         menu.onShowUI.AddListener(OnUIShown);
@@ -50,14 +45,16 @@ public class MenuMusic : MonoBehaviour
 
     private void OnUIShown()
     {
-        musicPlayer?.audioGenerator?.OnGenerationProgress.AddListener(OnLoadMusic);
         TromboneSetup();
         StartPlaying();
+        if (musicPlayer?.audioGenerator != null) musicPlayer.audioGenerator.onGenerationProgress.AddListener(OnLoadMusic);
+        if (trombone?.tromboneBuild != null) trombone.tromboneBuild.onApplyStack.AddListener(SetTomboneAuto);
     }
 
     private void OnUIHidden()
     {
-        musicPlayer?.audioGenerator?.OnGenerationProgress.RemoveListener(OnLoadMusic);
+        if (musicPlayer?.audioGenerator != null) musicPlayer.audioGenerator.onGenerationProgress.RemoveListener(OnLoadMusic);
+        if (trombone?.tromboneBuild != null) trombone.tromboneBuild.onApplyStack.RemoveListener(SetTomboneAuto);
         if (playingMenu == menu) StopPlaying();
     }
 
@@ -96,6 +93,11 @@ public class MenuMusic : MonoBehaviour
         if (trombone == null) return;
         if (trombonePlay) trombone.Unfreeze();
         else trombone.Freeze();
+        SetTomboneAuto();
+    }
+
+    private void SetTomboneAuto()
+    {
         // Special auto setting (lock pressure) for prettier autoplay in menu music
         if (trombone.tromboneAuto != null && trombone.tromboneAuto.autoSettings.blowControl != TromboneAutoSettings.ControlConditions.Never)
         {

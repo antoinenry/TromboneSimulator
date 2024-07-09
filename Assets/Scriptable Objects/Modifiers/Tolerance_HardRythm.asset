@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304fd74812f2fa84cb1840088e54f05d, type: 3}
   m_Name: Tolerance_HardRythm
   m_EditorClassIdentifier: 
-  modName: 
-  icon: {fileID: 0}
+  modName: Public critique
+  icon: {fileID: 755006580, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   unlockTier: 2
-  scoreMultiplier: 1.25
+  scoreMultiplierBonus: 1.25
+  description: "Vous vous \xEAtes accord\xE9s au moins?"
   rythmToleranceMultiplier: 0.5
   toneToleranceMultiplier: 1

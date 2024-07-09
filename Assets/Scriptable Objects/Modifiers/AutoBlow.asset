@@ -15,7 +15,6 @@ MonoBehaviour:
   modName: Autopouet
   icon: {fileID: -470509015, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   unlockTier: 0
-  scoreMultiplier: 0.8
-  description: "Un bijou de technologie: les notes sortent toutes seules! Reste \xE0
-    jouer juste."
+  scoreMultiplierBonus: 0.85
+  description: "Les notes sortent toutes seules. Reste \xE0 jouer juste."
   blowControl: 13

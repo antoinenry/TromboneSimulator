@@ -146,4 +146,12 @@ public class GameProgress : ScriptableObject
             }
         }
     }    
+
+    public void UnlockAll()
+    {
+        int levelCount = GetLevelCount();
+        for (int i = 0; i<levelCount; i++) levelProgress[i].CheckAllObjectives();
+        int lockCount = GetLockCount(out int unlocked);
+        for (int i = 0; i < lockCount; i++) contentLocks[i].SetLocked(false);
+    }
 }

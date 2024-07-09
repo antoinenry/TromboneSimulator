@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [ExecuteAlways]
 public class TromboneBuildStack : MonoBehaviour
 {
     public TromboneBuild baseBuild;
     public bool enableModifiers = true;
+
+    public UnityEvent onApplyStack;
 
     [SerializeField] private List<TromboneBuildModifier> mods;
     [SerializeField] private TromboneBuild modifiedBuild;
@@ -40,6 +43,7 @@ public class TromboneBuildStack : MonoBehaviour
             foreach (TromboneBuildModifier modifier in mods)
                 if (modifier != null) modifier.ApplyTo(modifiedBuild);
         modifiedBuild.SetBuildToScene();
+        onApplyStack.Invoke();
     }
 
     public void CleanUp()

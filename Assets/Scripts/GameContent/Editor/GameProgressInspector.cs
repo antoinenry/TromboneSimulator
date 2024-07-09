@@ -25,7 +25,10 @@ public class GameProgressInspector : Editor
         LevelProgressGUI();
         EditorGUILayout.Space();
         LockedContentGUI();
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("UnlockAll")) targetProgress.UnlockAll();
         if (GUILayout.Button("Reset")) targetProgress.Reset();
+        EditorGUILayout.EndHorizontal();
     }
 
     private void LevelProgressGUI()

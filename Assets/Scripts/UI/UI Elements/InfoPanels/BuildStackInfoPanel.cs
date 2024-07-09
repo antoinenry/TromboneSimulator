@@ -18,7 +18,7 @@ public class BuildStackInfoPanel : InfoPanel
         else
         {
             for (int i = 0; i < modCount; i++)
-                text += "- " + mods[i]?.modName + "\n";
+                text += mods[i]?.modName + "\n";
             float scoreMultliplier = stack ? stack.GetScoreMultiplier() : 1f;
             if (scoreMultliplier != 1f) text += "\nScore x" + scoreMultliplier.ToString("0.00");
         }

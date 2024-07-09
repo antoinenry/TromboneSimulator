@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b52941e3487344db51d6fa35afd358, type: 3}
   m_Name: Tempo_Fast
   m_EditorClassIdentifier: 
-  modName: 
+  modName: "Caf\xE9ine"
   icon: {fileID: 1242161697, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
-  replaceOnly: 0
   unlockTier: 1
-  scoreMultiplier: 1.25
-  tempoMultiplier: 1.5
+  scoreMultiplierBonus: 1.1
+  description: "La m\xEAme en plus vite."
+  tempoMultiplier: 1.25
   multiplyScoreByTempo: 1
