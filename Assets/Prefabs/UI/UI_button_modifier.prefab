@@ -71,7 +71,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 1
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -195,6 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 2040580305949621832}
   icon: {fileID: 2040580306135510160}
+  modifierAsset: {fileID: 0}
   active: 0
   activeColors:
     m_NormalColor: {r: 0.8588236, g: 0.76470596, b: 0.3137255, a: 1}

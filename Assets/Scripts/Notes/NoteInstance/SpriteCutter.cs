@@ -11,14 +11,20 @@ public class SpriteCutter : MonoBehaviour
 
     private List<SpriteRenderer> sliceRenderers;
 
+    public float TotalLength { get; private set; }
+
     private void Awake()
     {
         sliceRenderers = new List<SpriteRenderer>() { spriteRenderer };
+        if (spriteRenderer == null) TotalLength = 0;
+        else if (horizontalSlice) TotalLength = spriteRenderer.size.x;
+        else TotalLength = spriteRenderer.size.y;
     }
 
     public void SetTotalLength(float length)
     {
         if (roundValues) length = Mathf.Ceil(length);
+        TotalLength = length;
         if (sliceRenderers == null || sliceRenderers.Count == 0)
         {
             if (spriteRenderer != null) SetSpriteSlice(spriteRenderer, 0f, length);
@@ -141,7 +147,6 @@ public class SpriteCutter : MonoBehaviour
                 break;
             }
         }
-
         // Cleanup
         if (slicesRemoved) sliceRenderers.RemoveAll(s => s == null);
     }
@@ -282,5 +287,31 @@ public class SpriteCutter : MonoBehaviour
             foreach (SpriteRenderer s in sliceRenderers)
                 if (s != null)
                     s.flipY = flip;
+    }
+
+    public void GetTipColors(out Color frontColor, out Color backColor)
+    {
+        int sliceCount = sliceRenderers != null ? sliceRenderers.Count : 0;
+        if (sliceCount == 0)
+        {
+            frontColor = Color.clear;
+            backColor = Color.clear;
+            return;
+        }
+        frontColor = sliceRenderers[0].color;
+        backColor = sliceRenderers[sliceCount - 1].color;
+    }
+
+    public void GetTipCuts(out bool frontIsCut, out  bool backIsCut)
+    {
+        int sliceCount = sliceRenderers != null ? sliceRenderers.Count : 0;
+        if (sliceCount == 0)
+        {
+            frontIsCut = true;
+            backIsCut = true;
+            return;
+        }
+        frontIsCut = sliceRenderers[0].transform.localPosition.x > 0;
+        backIsCut = sliceRenderers[sliceCount - 1].transform.localPosition.x + sliceRenderers[sliceCount - 1].size.x < TotalLength;
     }
 }

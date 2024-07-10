@@ -17,7 +17,7 @@ MonoBehaviour:
   timeWidth: 0
   loop: 0
   loopStart: 0
-  loopEnd: 99.625
+  loopEnd: 100
   playedLoopCount: 0
   onMove:
     m_PersistentCalls:

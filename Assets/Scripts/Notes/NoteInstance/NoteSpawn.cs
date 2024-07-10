@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using UnityEngine.SocialPlatforms;
 
 [RequireComponent(typeof(NoteBullet))]
 public class NoteSpawn : MonoBehaviour, INote

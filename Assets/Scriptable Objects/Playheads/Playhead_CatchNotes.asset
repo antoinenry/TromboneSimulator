@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: Playhead_CatchNotes
   m_EditorClassIdentifier: 
   showDebug: 0
-  timeOffset: 0.075
-  timeWidth: 0.25
+  timeOffset: 0.049999997
+  timeWidth: 0.3
   loop: 0
   loopStart: 0
   loopEnd: 0
   playedLoopCount: 0
   onMove:
+    m_PersistentCalls:
+      m_Calls: []
+  onPause:
     m_PersistentCalls:
       m_Calls: []
   onStop:

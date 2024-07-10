@@ -29,7 +29,7 @@ public class NoteTarget : MonoBehaviour
     public void SetDistanceRatio(float d)
     {
         if (spriteRenderer == null || fullCatch) return;
-        float a = Mathf.Lerp(closeAlpha, farAlpha, d);
+        float a = Mathf.Lerp(farAlpha, closeAlpha, d);
         spriteRenderer.color = new Color(color.r, color.g, color.b, a);
     }
 
