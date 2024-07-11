@@ -17,12 +17,12 @@ public class NoteBullet : MonoBehaviour
     [Min(0f)] public float length = 16f;
     public bool isNext = false;
     public bool roundValues = true;
-    public Vector2 linkMaxDistance = new(1f,1f);
     [Header("Links")]
+    public Vector2 linkMaxDistance = new(1f, 1f);
     public LinkDirection topLink;
-    public float topLinkSpriteLength = 10f;
+    public float topLinkLength = 10f;
     public LinkDirection bottomLink;
-    public float bottomLinkSpriteLength = 10f;
+    public float bottomLinkLength = 10f;
     [Header("Colors")]
     public Color baseColor = Color.green;
     public Color farTint = Color.gray;
@@ -34,6 +34,7 @@ public class NoteBullet : MonoBehaviour
 
     private bool bottomCut;
     private bool topCut;
+    private float width;
 
     private void Start()
     {
@@ -52,29 +53,41 @@ public class NoteBullet : MonoBehaviour
         SetLinkSprites();
     }
 
-    public void SetLength(float l)
+    public void SetLength(float value)
     {
-        length = Mathf.Max(l, 0f);
-        Vector2 linkSpriteSize = Vector2.zero;
-        float _length = roundValues ? Mathf.Ceil(length) : length;
-        if (hRenderer != null) hRenderer.SetTotalLength(_length);
+        length = Mathf.Max(value, 0f);
+        float l = roundValues ? Mathf.Ceil(length) : length;
+        Vector2 linkPosition = Vector2.zero;
+        if (hRenderer != null) hRenderer.SetTotalLength(l);
         if (vRenderer != null)
         {
-            vRenderer.SetTotalLength(_length);
-            if (vRenderer.spriteRenderer != null) linkSpriteSize = vRenderer.spriteRenderer.size;
+            vRenderer.SetTotalLength(l);
+            if (vRenderer.spriteRenderer != null) width = vRenderer.spriteRenderer.size.x;
         }
-        if (topLinkRenderer != null) topLinkRenderer.size = linkSpriteSize;
-        if (bottomLinkRenderer != null) bottomLinkRenderer.size = linkSpriteSize;
+        if (topLinkRenderer != null)
+        {
+            topLinkRenderer.size = new(topLinkLength, topLinkRenderer.size.y);
+            linkPosition.x = topLink == LinkDirection.Left ? .5f * width : -.5f * width;
+            linkPosition.y = l;
+            topLinkRenderer.transform.localPosition = linkPosition;
+        }
+        if (bottomLinkRenderer != null)
+        {
+            bottomLinkRenderer.size = new(bottomLinkLength, bottomLinkRenderer.size.y);
+            linkPosition.x = bottomLink == LinkDirection.Left ? .5f * width : -.5f * width;
+            linkPosition.y = 0f;
+            bottomLinkRenderer.transform.localPosition = linkPosition;
+        }
     }
 
-    public void SetDistance(float d)
+    public void SetDistance(float value)
     {
         // Set distance value
-        distance = d;
-        float _distance = roundValues ? Mathf.Ceil(distance) : distance;
+        distance = value;
+        float d = roundValues ? Mathf.Ceil(distance) : distance;
         // Set sprite positions
-        if (hRenderer != null) hRenderer.transform.localPosition = (_distance + distanceOffset) * Vector3.right;
-        if (vRenderer != null) vRenderer.transform.localPosition = (_distance + distanceOffset) * Vector3.up;
+        if (hRenderer != null) hRenderer.transform.localPosition = new Vector3(d + distanceOffset, hRenderer.transform.localPosition.y);
+        if (vRenderer != null) vRenderer.transform.localPosition = new Vector3(vRenderer.transform.localPosition.x, d + distanceOffset);
         // Passed note
         if (distance < -length)
         {
@@ -228,8 +241,16 @@ public class NoteBullet : MonoBehaviour
                 // Exception for "straight" link
                 topLink = LinkDirection.NoLink;
             }
-            else if (x > xOther) topLink = LinkDirection.Left;
-            else topLink = LinkDirection.Right;
+            else if (x > xOther)
+            {
+                topLink = LinkDirection.Left;
+                topLinkLength = x - xOther;
+            }
+            else
+            {
+                topLink = LinkDirection.Right;
+                topLinkLength = xOther - x;
+            }
         }
         // Adapt next note link accordingly
         next.bottomLink = (LinkDirection)(-(int)topLink);
@@ -257,11 +278,11 @@ public class NoteBullet : MonoBehaviour
 
     private void SetLinkSprites()
     {
-        SetLinkSprite(topLinkRenderer, topLink);
-        SetLinkSprite(bottomLinkRenderer, bottomLink);
+        SetLinkSprite(topLinkRenderer, topLink, topLinkLength);
+        SetLinkSprite(bottomLinkRenderer, bottomLink, bottomLinkLength);
     }
 
-    private void SetLinkSprite(SpriteRenderer linkRenderer, LinkDirection direction)
+    private void SetLinkSprite(SpriteRenderer linkRenderer, LinkDirection direction, float linkLength)
     {
         if (linkRenderer == null) return;
         if (direction == LinkDirection.NoLink)
@@ -270,6 +291,9 @@ public class NoteBullet : MonoBehaviour
         {
             linkRenderer.enabled = true;
             linkRenderer.flipX = direction == LinkDirection.Left;
+            float xPosition = direction == LinkDirection.Left ? .5f * width : -.5f * width;
+            linkRenderer.transform.localPosition = new(xPosition, linkRenderer.transform.localPosition.y);
+            linkRenderer.size = new(linkLength, linkRenderer.size.y);
         }
     }
 }

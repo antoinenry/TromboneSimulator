@@ -291,6 +291,12 @@ public class SpriteCutter : MonoBehaviour
 
     public void GetTipColors(out Color frontColor, out Color backColor)
     {
+        if (Application.isPlaying == false && spriteRenderer != null)
+        {
+            frontColor = spriteRenderer.color;
+            backColor = spriteRenderer.color;
+            return;
+        }
         int sliceCount = sliceRenderers != null ? sliceRenderers.Count : 0;
         if (sliceCount == 0)
         {

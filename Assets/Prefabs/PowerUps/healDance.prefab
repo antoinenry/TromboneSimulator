@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particleEffect: {fileID: 5775602450191149500}
   beatsToStart: 0
-  frameTint: {r: 1, g: 0.882353, b: 0.34509805, a: 1}
+  frameTint: {r: 0.81568635, g: 0.7254902, b: 0.29803923, a: 1}
   healPerBeat: 0.01
 --- !u!1 &5775602450191149497
 GameObject:

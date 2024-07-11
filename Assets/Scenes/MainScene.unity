@@ -2068,7 +2068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b2b5b89d3b31c46b20f58b84a49ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: {fileID: 5775602449766627695, guid: 283a07f2f96d9dc4d997335447f617c4, type: 3}
+  power: {fileID: 5281509825358160566, guid: 89057f905060cb14087f82bacecffe94, type: 3}
 --- !u!1 &150989097
 GameObject:
   m_ObjectHideFlags: 0
@@ -25212,7 +25212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993aa0319fac96a4f8f41fc1de2316c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleColor: {r: 0.9056604, g: 0.89167935, b: 0.86721253, a: 1}
+  idleColor: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 1}
   tintColor: {r: 0.38823533, g: 0.15294118, b: 0.14509805, a: 1}
   holdDuration: 1
   tint: 0
@@ -25258,7 +25258,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 75ca5300237afa54cbb5055b3b0e7334, type: 3}
-  m_Color: {r: 0.9056604, g: 0.89167935, b: 0.86721253, a: 1}
+  m_Color: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2

@@ -9,6 +9,8 @@ public class GameProgress : ScriptableObject
     public LevelProgress[] levelProgress;
     public GameContentLock[] contentLocks;
 
+    private void Awake() => Reset();
+
     public void Reset()
     {
         GameContentLibrary content = GameContentLibrary.Current;
