@@ -35,6 +35,7 @@ public class NoteBullet : MonoBehaviour
     private bool bottomCut;
     private bool topCut;
     private float width;
+    private Color currentColor;
 
     private void Start()
     {
@@ -80,18 +81,23 @@ public class NoteBullet : MonoBehaviour
         }
     }
 
-    public void SetDistance(float value)
+    public void SetDistance(float value, bool ignoreLink = false)
     {
+        // When linked, some values can be set by the previous note
+        bool isLinkedToPreviousNote = !ignoreLink && bottomLink != LinkDirection.NoLink;
         // Set distance value
         distance = value;
         float d = roundValues ? Mathf.Ceil(distance) : distance;
         // Set sprite positions
-        if (hRenderer != null) hRenderer.transform.localPosition = new Vector3(d + distanceOffset, hRenderer.transform.localPosition.y);
-        if (vRenderer != null) vRenderer.transform.localPosition = new Vector3(vRenderer.transform.localPosition.x, d + distanceOffset);
+        if (isLinkedToPreviousNote == false)
+        {
+            if (hRenderer != null) hRenderer.transform.localPosition = new Vector3(d + distanceOffset, hRenderer.transform.localPosition.y);
+            if (vRenderer != null) vRenderer.transform.localPosition = new Vector3(vRenderer.transform.localPosition.x, d + distanceOffset);
+        }
         // Passed note
         if (distance < -length)
         {
-            // Bullet color depends on play/miss. We only set target here.
+            // Bullet color depends on play/miss. We only set the target here.
             target?.SetSprite(NoteTarget.DistanceState.Passed);
             target.SetDistanceRatio(0f);
         }
@@ -107,8 +113,11 @@ public class NoteBullet : MonoBehaviour
         {
             // Fading note bullet
             float incomingRatio = Mathf.Clamp01(distance / incomingDistance);
-            Color incomingColor = TintColor(baseColor, incomingTint, incomingRatio);
-            SetColor(incomingColor, 0f, float.PositiveInfinity);
+            if (isLinkedToPreviousNote == false)
+            {
+                currentColor = TintColor(baseColor, incomingTint, incomingRatio);
+                SetColor(currentColor, 0f, float.PositiveInfinity);
+            }
             // Fading target
             target?.SetSprite(isNext ? NoteTarget.DistanceState.Next : NoteTarget.DistanceState.Incoming);
             target?.SetColor(baseColor);
@@ -119,17 +128,31 @@ public class NoteBullet : MonoBehaviour
         {
             // Same with different value.
             float farRatio = 1f - (distance - incomingDistance) / (farDistance - incomingDistance);
-            Color fadeColor = TintColor(baseColor, farTint, farRatio);
-            SetColor(fadeColor, 0f, float.PositiveInfinity);
+            if (isLinkedToPreviousNote == false)
+            {
+                currentColor = TintColor(baseColor, farTint, farRatio);
+                SetColor(currentColor, 0f, float.PositiveInfinity);
+            }
             target?.SetSprite(NoteTarget.DistanceState.Far);
         }
         // Note is too far to be shown
         else
         {
             // Hide note
-            SetColor(Color.clear, 0f, float.PositiveInfinity);
+            if (isLinkedToPreviousNote == false)
+            {
+                currentColor = Color.clear;
+                SetColor(currentColor, 0f, float.PositiveInfinity);
+            }
             target?.SetSprite(NoteTarget.DistanceState.Far);
         }
+    }
+
+    private void SetDistanceRaw(float d)
+    {
+        distance = d;
+        if (hRenderer != null) hRenderer.transform.localPosition = new Vector3(d + distanceOffset, hRenderer.transform.localPosition.y);
+        if (vRenderer != null) vRenderer.transform.localPosition = new Vector3(vRenderer.transform.localPosition.x, d + distanceOffset);
     }
 
     public void Play(float fromPosition, float toPosition, float accuracy)
@@ -137,17 +160,17 @@ public class NoteBullet : MonoBehaviour
         // Cut played bits at negative positions (past part of note)
         Cut(Mathf.Min(fromPosition, 0f), Mathf.Min(toPosition, 0f));
         // Set played color at positive positions (upcoming part of note)
-        Color playColor = TintColor(baseColor, Color.Lerp(missedTint, playedTint, accuracy));
-        SetColor(playColor, Mathf.Max(fromPosition, 0f), Mathf.Max(toPosition, 0f));
-        target?.SetColor(playColor);
+        currentColor = TintColor(baseColor, Color.Lerp(missedTint, playedTint, accuracy));
+        SetColor(currentColor, Mathf.Max(fromPosition, 0f), Mathf.Max(toPosition, 0f));
+        target?.SetColor(currentColor);
     }
 
     public void Miss(float fromPosition, float toPosition)
     {
         // Set color
-        Color missedColor = TintColor(baseColor, missedTint);
-        SetColor(missedColor, fromPosition, toPosition);
-        target?.SetColor(missedColor);
+        currentColor = TintColor(baseColor, missedTint);
+        SetColor(currentColor, fromPosition, toPosition);
+        target?.SetColor(currentColor);
     }
 
     public void FullCatch()
@@ -174,7 +197,6 @@ public class NoteBullet : MonoBehaviour
             vRenderer.Cut(fromPosition, toPosition);
             vRenderer.GetTipCuts(out topCut, out bottomCut);
         }
-
     }
 
     public void SetVisible(bool horizontal, bool vertical)
@@ -227,7 +249,7 @@ public class NoteBullet : MonoBehaviour
             // Neighbour y
             || Mathf.Abs(next.transform.position.y - transform.position.y) > linkMaxDistance.y
             // Note ends when next note starts
-            || Mathf.Abs(next.distance - distance) > length + linkMaxDistance.y)
+            || next.distance > distance + length + linkMaxDistance.y)
         {
             // Notes are separated
             topLink = LinkDirection.NoLink;
@@ -254,12 +276,16 @@ public class NoteBullet : MonoBehaviour
         }
         // Adapt next note link accordingly
         next.bottomLink = (LinkDirection)(-(int)topLink);
-        // Set next note as next when this note is current
+        // Mark next note as next when this note is current
         next.isNext = distance < 0f;
-        // Match notes color and return true if linked
+        // If notes are link do additional matching operations and return true
         if (topLink != LinkDirection.NoLink)
         {
-            next.baseColor = baseColor;
+            // Match y positions (sometimes necessary due to position rounding)
+            next.SetDistanceRaw(distance + length);
+            // Match two notes' color
+            next.currentColor = currentColor;
+            next.SetColor(currentColor);
             return true;
         }
         else
