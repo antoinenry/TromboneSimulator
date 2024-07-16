@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 using System.Collections.Generic;
 
 public class NoteSpawner : MonoBehaviour
@@ -14,6 +15,7 @@ public class NoteSpawner : MonoBehaviour
     public float destroyDistance;
     public int yMin = 0;
     public int yMax = 10;
+    public Vector2[] notePlacement;
     [Header("Note aspect")]
     public NoteSpawn notePrefab;
     public Color[] colorWheel = new Color[] { Color.blue, Color.red, Color.green, Color.cyan, Color.yellow, Color.magenta };
@@ -26,8 +28,7 @@ public class NoteSpawner : MonoBehaviour
     public UnityEvent<NoteSpawn[], float, float> onMoveNotes;
 
     private NoteGrid grid;
-    private List<NoteSpawn> noteInstances;
-    private NotePlacement notePlacement;
+    private List<NoteSpawn> noteSpawns;
     private float previousTime;
 
     public float TimeScale => grid != null ? grid.timeScale : 0f;
@@ -40,6 +41,7 @@ public class NoteSpawner : MonoBehaviour
             else return -destroyDistance / TimeScale;
         }
     }
+    public NoteGridDimensions GridDimensions => grid != null ? grid.dimensions : new NoteGridDimensions();
 
     private void OnDrawGizmosSelected()
     {
@@ -96,7 +98,7 @@ public class NoteSpawner : MonoBehaviour
     public void UpdateNoteInstances()
     {
         NoteSpawn previousNoteInstance = null;
-        foreach (NoteSpawn instance in noteInstances)
+        foreach (NoteSpawn instance in noteSpawns)
         {
             if (instance != null)
             {
@@ -107,7 +109,7 @@ public class NoteSpawner : MonoBehaviour
                     if (showDebug)
                     {
                         GetNoteDimensions(note, out float noteStartDistance, out float noteLength);
-                        Debug.Log("Destoying " + instance);
+                        Debug.Log("Destroying " + instance);
                         Debug.Log("Out of bound at " + noteStartDistance + ", lenght " + noteLength);
                     }
                     DestroyNote(instance);
@@ -125,9 +127,9 @@ public class NoteSpawner : MonoBehaviour
             }
         }
         // Forget destroyed notes
-        noteInstances.RemoveAll(n => n == null);
+        noteSpawns.RemoveAll(n => n == null);
         // Signal note movement
-        onMoveNotes.Invoke(noteInstances.ToArray(), previousTime, time);
+        onMoveNotes.Invoke(noteSpawns.ToArray(), previousTime, time);
     }
 
     private void OnPlayheadMove(float from, float to)
@@ -146,18 +148,18 @@ public class NoteSpawner : MonoBehaviour
     public void ClearNotes()
     {
         // Destroy note instances
-        if (noteInstances != null)
-            foreach (NoteSpawn n in noteInstances)
+        if (noteSpawns != null)
+            foreach (NoteSpawn n in noteSpawns)
                 DestroyNote(n);
-        noteInstances = new List<NoteSpawn>();
+        noteSpawns = new List<NoteSpawn>();
     }
 
     private void OnPlayheadEntersNote(int noteIndex, INote note)
     {
-        if (note != null) SpawnNote(note);
+        if (note != null) SpawnNote(note, noteIndex);
     }
 
-    public NoteSpawn SpawnNote(INote note)
+    public NoteSpawn SpawnNote(INote note, int index = -1)
     {
         if (note == null) return null;
         NoteInfo noteInfo = NoteInfo.GetInfo(note);
@@ -178,19 +180,19 @@ public class NoteSpawner : MonoBehaviour
             // Spawn note
             {
                 // Get note position on grid
-                Vector2 noteCoordinate = GetNotePlacement(note);
+                Vector2 noteCoordinate = GetNotePlacement(note, index);
                 // Spawn note if position is valid
                 if (!float.IsNaN(noteCoordinate.x) && !float.IsNaN(noteCoordinate.y) && grid.dimensions.Contains(noteCoordinate, yMin, yMax))
                 {
                     spawnedNote = Instantiate(notePrefab, transform);
-                    spawnedNote.name = ToneAttribute.GetNoteName(note.Tone);
+                    spawnedNote.name = "Note " + index + " (" + ToneAttribute.GetNoteName(note.Tone) + ")";
                     //bool linkToPreviousNote = noteInfo.previousTone != -1 && grid.ToneToCoordinates(noteInfo.previousTone).y == grid.ToneToCoordinates(noteInfo.tone).y;
                     //bool linkToNextNote = noteInfo.nextTone != -1 && grid.ToneToCoordinates(noteInfo.nextTone).y == grid.ToneToCoordinates(noteInfo.tone).y;
                     spawnedNote.transform.localPosition = grid.CoordinatesToLocalPosition(noteCoordinate);
                     NoteInfo.SetInfo(spawnedNote, noteInfo);
                     while (incomingTime < minimumIncomingTime) incomingTime *= 2f;
                     spawnedNote.Init(time, TimeScale, colorWheel[(colorIndex++) % colorWheel.Length], incomingTime); //, linkToPreviousNote, linkToNextNote);
-                    noteInstances.Add(spawnedNote);
+                    noteSpawns.Add(spawnedNote);
                     onSpawnNote.Invoke(spawnedNote);
                     if (showDebug) Debug.Log("-> spawned " + spawnedNote);
                 }
@@ -201,38 +203,52 @@ public class NoteSpawner : MonoBehaviour
         return spawnedNote;
     }
 
-    public void SpawnNotes(INote[] notes, float fromTime, float toTime)
+    public void SpawnNotes(INote[] notes, float fromTime, float toTime, int startIndex = 0)
     {
         int noteCount = notes != null ? notes.Length : 0;
         if (noteCount == 0) return;
         // Remember time
-        float keep_previousTime = previousTime;
-        float keep_time = time;
-        previousTime = fromTime;
-        time = toTime;
+        //float keep_previousTime = previousTime;
+        //float keep_time = time;
+        //previousTime = fromTime;
+        //time = toTime;
         // Move playhead without triggering events
         Playhead.ProgressOnNote[] progressOnNotes = playHead.Move(notes, fromTime, toTime, true, true, false);
         // Spawn all notes detected by playhead
         for (int n = 0; n < noteCount; n++)
             if (progressOnNotes[n] != Playhead.ProgressOnNote.None)
-                SpawnNote(notes[n]);
+                SpawnNote(notes[n], startIndex + n);
         // Restore time
-        previousTime = keep_previousTime;
-        time = keep_time;
+        //previousTime = keep_previousTime;
+        //time = keep_time;
     }
 
-    public Vector2 GetNotePlacement(INote note)
+    public Vector2 GetNotePlacement(INote note, int index = -1)
     {
-        Vector2 noteCoordinate = new Vector2(float.NaN, float.NaN);
-        if (note != null)
+        Vector2[] possibleCoordinates = grid.dimensions.ToneToCoordinates(note.Tone);
+        // Exception 1: no possible coordinates, return undefined value
+        int possibleCoordinatesCount = possibleCoordinates != null ? possibleCoordinates.Length : 0;
+        if (possibleCoordinatesCount == 0)
         {
-            // Get position from custom note placement
-            if (notePlacement != null) noteCoordinate = notePlacement.GetPlacement(note);
-            // Or get a default position from grid
-            else noteCoordinate = grid.dimensions.ToneToCoordinate(note.Tone);
+            if (showDebug) Debug.LogWarning("No possible placement for note " + note.Tone);
+            return new Vector2(float.NaN, float.NaN);
         }
-        return noteCoordinate;
+        // Exception 2: no predefined placement, return a default value
+        int predefinedPlacementCount = notePlacement != null ? notePlacement.Length : 0;
+        if (index < 0 || index >= predefinedPlacementCount) return possibleCoordinates[0];
+        // Get predefined placement
+        Vector2 predefined = notePlacement[index];
+        // Exception 3: predefined placement doesn't match the note and grid, return a default value
+        if (note == null || grid == null || Array.IndexOf(possibleCoordinates, predefined) == -1)
+        {
+            if (showDebug) Debug.LogWarning("Placement mismatch for note " + note.Tone + ". Using default placement " + possibleCoordinates[0]);
+            return possibleCoordinates[0];
+        }
+        // Ok to use predefined value
+        return predefined;
     }
+
+    public NoteSpawn GetSpawn(NoteInfo noteInfo) => noteSpawns?.Find(n => n != null && n.noteInfo == noteInfo);
 
     private void DestroyNote(NoteSpawn note)
     {

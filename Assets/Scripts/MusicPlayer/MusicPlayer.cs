@@ -37,7 +37,7 @@ public class MusicPlayer : MonoBehaviour
     public SheetMusic LoadedMusic { get; private set; }
     public NoteInstance[] LoadedNotes { get; private set; }
     public AudioClip LoadedAudio => audioSource.clip;
-    public PlayState State { get; private set; }
+    public PlayState PlayingState { get; private set; }
     public float CurrentPlayTime { get; private set; }
     public float MusicDuration => LoadedMusic != null ? LoadedMusic.GetDuration(/*TempoStretch*/) : 0f;
     public float CurrentPlayingSpeed { get; private set; }
@@ -106,13 +106,19 @@ public class MusicPlayer : MonoBehaviour
         playheadStyle?.ProcessNotes(ref loadedNoteInfos);
         LoadedNotes = Array.ConvertAll(loadedNoteInfos, n => new NoteInstance(n));
         // Generate audio
-        audioGenerator.music = LoadedMusic;
-        audioGenerator.mutedParts = new SheetMusicVoiceIdentifier[1] { playheadPart };
-        audioGenerator.SampleTrack();
-        StartCoroutine(WaitForGeneratedAudio());
+        if (audioGenerator)
+        {
+            audioGenerator.music = LoadedMusic;
+            audioGenerator.mutedParts = new SheetMusicVoiceIdentifier[1] { playheadPart };
+            audioGenerator.SampleTrack();
+            StartCoroutine(WaitForGeneratedAudio());
+        }
         // Metronome setup
-        metronome.playSpeed = playingSpeed;
-        metronome.SetRythm(LoadedMusic);
+        if (metronome)
+        {
+            metronome.playSpeed = playingSpeed;
+            metronome.SetRythm(LoadedMusic);
+        }
     }
 
     public void LoadMusic(SheetMusic sheetMusic, AudioClip preGeneratedAudio = null, SamplerInstrument playedInstrument = null, int voiceIndex = 1)
@@ -225,7 +231,7 @@ public class MusicPlayer : MonoBehaviour
         // Check load state
         if (LoadedMusic == null)
         {
-            if (State != PlayState.Stop) Stop();
+            if (PlayingState != PlayState.Stop) Stop();
             return;
         }
         // Loading audio
@@ -250,7 +256,7 @@ public class MusicPlayer : MonoBehaviour
 
     private void UpdatePlayTime()
     {
-        if (State == PlayState.Stop)
+        if (PlayingState == PlayState.Stop)
         {
             playTime = 0f;
             CurrentPlayTime = 0f;
@@ -270,10 +276,10 @@ public class MusicPlayer : MonoBehaviour
             CurrentPlayTime = playTime;
         }
         // Regular time update
-        if (State == PlayState.Play || State == PlayState.Transition)
+        if (PlayingState == PlayState.Play || PlayingState == PlayState.Transition)
         {
             // Set playing speed
-            if (manualPlaytimeSet == false && State != PlayState.Transition) CurrentPlayingSpeed = playingSpeed;
+            if (manualPlaytimeSet == false && PlayingState != PlayState.Transition) CurrentPlayingSpeed = playingSpeed;
             if (CurrentPlayingSpeed != 0f)
             {
                 IsReversePlaying = CurrentPlayingSpeed < 0f;
@@ -314,7 +320,7 @@ public class MusicPlayer : MonoBehaviour
         float audioLength = audioSource.clip != null ? audioSource.clip.length : 0f;
         audioSource.loop = loop;
         // Playing
-        if (State == PlayState.Play || State == PlayState.Transition)
+        if (PlayingState == PlayState.Play || PlayingState == PlayState.Transition)
         {
             // Pre-audio
             if (LoopedPlayTime < 0f)
@@ -369,9 +375,9 @@ public class MusicPlayer : MonoBehaviour
         {
             if (audioSource.isPlaying)
             {
-                if (State == PlayState.Pause)
+                if (PlayingState == PlayState.Pause)
                     audioSource.Pause();
-                if (State == PlayState.Stop)
+                if (PlayingState == PlayState.Stop)
                     audioSource.Stop();
             }
         }
@@ -381,7 +387,7 @@ public class MusicPlayer : MonoBehaviour
 
     private void UpdatePlayheads()
     {
-        if (State != PlayState.Stop) MovePlayheads(playHeadsTime, CurrentPlayTime);
+        if (PlayingState != PlayState.Stop) MovePlayheads(playHeadsTime, CurrentPlayTime);
     }
 
     private void MovePlayheads(float fromTime, float toTime, bool offsetFromTime = true, bool offsetToTime = true)
@@ -425,7 +431,7 @@ public class MusicPlayer : MonoBehaviour
     {
         if (showDebug) Debug.Log("Play music");
         // Play from stop state
-        if (State == PlayState.Stop)
+        if (PlayingState == PlayState.Stop)
         {
             MovePlayheads(0f, 0f);//, false, true);
         }
@@ -434,7 +440,7 @@ public class MusicPlayer : MonoBehaviour
         else
         {
             CurrentPlayingSpeed = playingSpeed;
-            State = PlayState.Play;
+            PlayingState = PlayState.Play;
         }
     }
 
@@ -450,7 +456,7 @@ public class MusicPlayer : MonoBehaviour
             Stop(playStateTransitionDuration);
         else
         {
-            State = PlayState.Stop;
+            PlayingState = PlayState.Stop;
             CurrentPlayTime = 0f;
             LoopedPlayTime = 0f;
             playTime = 0f;
@@ -473,7 +479,7 @@ public class MusicPlayer : MonoBehaviour
             Pause(playStateTransitionDuration);
         else
         {
-            State = PlayState.Pause;
+            PlayingState = PlayState.Pause;
             audioSource.Pause();
             CurrentPlayingSpeed = 0f;
         }
@@ -494,7 +500,7 @@ public class MusicPlayer : MonoBehaviour
         float startSpeed = CurrentPlayingSpeed;
         Play();
         CurrentPlayingSpeed = startSpeed;
-        State = PlayState.Transition;
+        PlayingState = PlayState.Transition;
         float effectSpeed = playingSpeed / effectDuration;
         while (CurrentPlayingSpeed < playingSpeed)
         {
@@ -502,12 +508,12 @@ public class MusicPlayer : MonoBehaviour
                 CurrentPlayingSpeed = Mathf.MoveTowards(CurrentPlayingSpeed, playingSpeed, applicationDeltaTime * effectSpeed);
             yield return null;
         }
-        State = PlayState.Play;
+        PlayingState = PlayState.Play;
     }
 
     public IEnumerator SlowDownToStop(float effectDuration)
     {
-        State = PlayState.Transition;
+        PlayingState = PlayState.Transition;
         float effectSpeed = CurrentPlayingSpeed / effectDuration;
         while (CurrentPlayingSpeed > 0f)
         {
@@ -520,7 +526,7 @@ public class MusicPlayer : MonoBehaviour
 
     public IEnumerator SlowDownToPause(float effectDuration)
     {
-        State = PlayState.Transition;
+        PlayingState = PlayState.Transition;
         float effectSpeed = CurrentPlayingSpeed / effectDuration;
         while (CurrentPlayingSpeed > 0f)
         {

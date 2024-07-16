@@ -48,10 +48,10 @@ public class TromboneCore : MonoBehaviour,
     {
         if (showDebug) Debug.Log("Enabling " + name);
         // Enable trombone components
-        tromboneDisplay.enabled = true;
-        tromboneAuto.enabled = true;
-        tromboneAudio.enabled = true;
-        tromboneBuild.enabled = true;
+        if (tromboneDisplay) tromboneDisplay.enabled = true;
+        if (tromboneAuto) tromboneAuto.enabled = true;
+        if (tromboneAudio) tromboneAudio.enabled = true;
+        if (tromboneBuild) tromboneBuild.enabled = true;
     }
 
     private void OnDisable()
@@ -59,10 +59,10 @@ public class TromboneCore : MonoBehaviour,
         if (showDebug) Debug.Log("Disabling " + name);
         ResetTrombone();
         // Disable trombone components
-        tromboneDisplay.enabled = false;
-        tromboneAuto.enabled = false;
-        tromboneAudio.enabled = false;
-        tromboneBuild.enabled = false;
+        if (tromboneDisplay) tromboneDisplay.enabled = false;
+        if (tromboneAuto) tromboneAuto.enabled = false;
+        if (tromboneAudio) tromboneAudio.enabled = false;
+        if (tromboneBuild) tromboneBuild.enabled = false;
     }
 
     public void ClearInputs()
@@ -76,8 +76,8 @@ public class TromboneCore : MonoBehaviour,
     public void ResetTrombone()
     {
         ClearInputs();
-        tromboneBuild.ApplyStack();
-        tromboneDisplay.ResetDisplay();
+        tromboneBuild?.ApplyStack();
+        tromboneDisplay?.ResetDisplay();
     }
 
     public float GetTone(float pressureLevel, float slideTone) => GetTone(RoundToPressureIndex(pressureLevel), slideTone);

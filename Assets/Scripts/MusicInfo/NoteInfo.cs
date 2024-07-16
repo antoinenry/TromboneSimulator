@@ -12,7 +12,7 @@ public interface INote
 }
 
 [Serializable]
-public struct NoteInfo
+public struct NoteInfo : IEquatable<NoteInfo>
 {
     public class NoteComparer : IComparer<NoteInfo>
     {
@@ -78,6 +78,16 @@ public struct NoteInfo
             note.Duration = info.duration;
         }
     }
+
+    public override bool Equals(object obj) => Equals((NoteInfo)obj);
+
+    public override int GetHashCode() => base.GetHashCode();
+
+    public bool Equals(NoteInfo other)
+        => tone == other.tone && velocity == other.velocity && startTime == other.startTime && duration == other.duration;
+
+    public static bool operator ==(NoteInfo left, NoteInfo right) => left.Equals(right);
+    public static bool operator !=(NoteInfo left, NoteInfo right) => !left.Equals(right);
 
     public void Copy(NoteInfo copyFrom)
     {

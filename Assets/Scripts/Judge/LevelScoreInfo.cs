@@ -10,8 +10,8 @@ public struct LevelScoreInfo
     public float accuracyAverage;
     public int bestCombo;
 
-    public int PlayedNoteBonus => correctNoteCount * 10;
-    public int AccuracyBonus => Mathf.FloorToInt(baseScore * accuracyAverage * .1f);
+    public int PlayedNoteBonus => correctNoteCount * 100;
+    public int AccuracyBonus => Mathf.RoundToInt(accuracyAverage * 10000f);
     public int ComboBonus => bestCombo * 100;
     public int Total => baseScore + PlayedNoteBonus + AccuracyBonus + ComboBonus;
 

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TestLevel
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: 5638372add3a54947917eb3c17781454, type: 2}
-  objectiveList:
-    scores: []
   unlockTier: 0
+  notePlacement:
+  - {fileID: 11400000, guid: ae82a993813003149aea8a5ec29f7ead, type: 2}
   objectives:
   - type: EndMusic
     parameters: []

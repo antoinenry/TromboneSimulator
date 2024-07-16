@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public struct NoteGridDimensions
+public struct NoteGridDimensions : IEquatable<NoteGridDimensions>
 {
     public float[] lineTones;
     [Min(0)] public int columns;
@@ -26,6 +26,25 @@ public struct NoteGridDimensions
         columns = 7,
         tonePerColumn = 1f
     };
+
+    public override bool Equals(object obj) => Equals((NoteGridDimensions)obj);
+
+    public override int GetHashCode() => base.GetHashCode();
+
+    public bool Equals(NoteGridDimensions other)
+    {
+        if (columns != other.columns || tonePerColumn != other.tonePerColumn) return false;
+        if (lineTones == other.lineTones) return true;       
+        if (lineTones == null && other.lineTones != null) return false;
+        if (lineTones != null && other.lineTones == null) return false;
+        int l = lineTones.Length;
+        if (l != other.lineTones.Length) return false;
+        for (int i = 0; i < l; i++) if (lineTones[i] !=  other.lineTones[i]) return false;
+        return true;
+    }
+
+    public static bool operator ==(NoteGridDimensions left, NoteGridDimensions right) => left.Equals(right);
+    public static bool operator !=(NoteGridDimensions left, NoteGridDimensions right) => !left.Equals(right);
 
     public Vector2[] ToneToCoordinates(float tone) => ToneToCoordinates(tone, 0, LineCount);
 

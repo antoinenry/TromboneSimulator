@@ -41,10 +41,7 @@ public struct ObjectiveInfo : IEquatable<ObjectiveInfo>
 
     public override bool Equals(object obj) => Equals((ObjectiveInfo)obj);
 
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
-    }
+    public override int GetHashCode() => base.GetHashCode();
 
     public bool Equals(ObjectiveInfo other)
     {

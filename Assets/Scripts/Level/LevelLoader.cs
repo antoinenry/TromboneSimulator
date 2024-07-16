@@ -100,7 +100,11 @@ public class LevelLoader : MonoBehaviour
             musicPlayer.onMusicEnd.AddListener(OnMusicEnd);
         }
         // NoteSpawner setup
-        if (noteSpawner) noteSpawner.enabled = true;
+        if (noteSpawner)
+        {
+            noteSpawner.enabled = true;
+            noteSpawner.notePlacement = LoadedLevel.GetNoteCoordinates(noteSpawner.GridDimensions);
+        }
         // Note catcher setup
         if (noteCatcher)
         {
@@ -183,6 +187,7 @@ public class LevelLoader : MonoBehaviour
         // Reactivate pause button
         GUI?.SetPauseButtonActive(true);
         // Initialize note spawn: display first notes
+        noteSpawner.time = 0f;
         noteSpawner.SpawnNotes(musicPlayer.LoadedNotes, -noteSpawner.SpawnDelay, 0f);
         // Play metronome click
         Metronome metronome = musicPlayer.metronome;
