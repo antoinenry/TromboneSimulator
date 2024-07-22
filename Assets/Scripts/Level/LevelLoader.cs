@@ -26,6 +26,7 @@ public class LevelLoader : MonoBehaviour
     private PerformanceJudge performanceJudge;
     private ObjectiveJudge objectiveJudge;
     private LevelGUI GUI;
+
     // Load state
     public Mode LoadedMode { get; private set; }
     public Level LoadedLevel { get; private set; }
@@ -47,28 +48,27 @@ public class LevelLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        MenuUI.Get<LevelSelectionScreen>()?.onSelectLevel?.AddListener(LaunchOneLevelMode);
+        MenuUI.onSelectLevel.AddListener(OnMenuSelectLevel);
+        MenuUI.onStartLevel.AddListener(OnMenuStartLevel);
     }
 
     private void OnDisable()
     {
-        MenuUI.Get<LevelSelectionScreen>()?.onSelectLevel?.RemoveListener(LaunchOneLevelMode);
+        MenuUI.onSelectLevel.RemoveListener(OnMenuSelectLevel);
+        MenuUI.onStartLevel.RemoveListener(OnMenuStartLevel);
     }
     #endregion
 
-    #region LAUNCH
-    public void LaunchArcadeMode()
+    #region MENU CONTROLS
+    private void OnMenuSelectLevel(Level selectedLevel)
     {
-        //gameState.continues = startContinues;
-        //gameState.ClearCurrentScore();
-        //LoadLevel(Mode.ARCADE, 1);
-    }
 
-    public void LaunchOneLevelMode(Level level)
+    }
+        
+    private void OnMenuStartLevel()
     {
-        //gameState.continues = 0;
-        //gameState.ClearCurrentScore();
-        LoadLevel(Mode.ONE_LEVEL, level);
+        Level selectedLevel = MenuUI.Get<LevelSelectionScreen>()?.GetSelectedLevel();
+        LoadLevel(Mode.ONE_LEVEL, selectedLevel);
         StartLevel();
     }
 
@@ -379,8 +379,10 @@ public class LevelLoader : MonoBehaviour
         GUI.SetPauseButtonActive(false);
         musicPlayer.Stop();
         // Get level performance
-        LevelScoreInfo scoreInfo = performanceJudge.GetLevelScore();
+        LevelScoreInfo levelScore = performanceJudge.GetLevelScore();
         ObjectiveInfo[] completedObjectives = objectiveJudge.GetCompletedObjectives();
+        LevelProgress levelProgress = new LevelProgress(LoadedLevel, completedObjectives);
+        // Update general progress
         GameProgress progress = GameProgress.Current;
         if (progress) progress.CompleteObjectives(LoadedLevel, completedObjectives);
         // Transition
@@ -388,12 +390,13 @@ public class LevelLoader : MonoBehaviour
         // Unload level
         UnloadLevel();
         // Show score screen
-        ScoreScreen UIScore = MenuUI.Get<ScoreScreen>();
-        if (UIScore)
+        LevelCompleteScreen UILevelComplete = MenuUI.Get<LevelCompleteScreen>();
+        if (UILevelComplete)
         {
-            if (LoadedLevel) UIScore.DisplayScore(LoadedLevel.name, scoreInfo);
-            else UIScore.DisplayScore("", scoreInfo);
-            yield return new WaitWhile(() => UIScore.IsVisible);
+            UILevelComplete.levelProgress = levelProgress;
+            UILevelComplete.levelScore = levelScore;
+            UILevelComplete.ShowUI();
+            yield return new WaitWhile(() => UILevelComplete.IsVisible);
         }
         QuitLevel();
     }

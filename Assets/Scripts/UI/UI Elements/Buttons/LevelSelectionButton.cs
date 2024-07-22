@@ -88,5 +88,12 @@ public class LevelSelectionButton : MonoBehaviour
 
     public void OnUnselect() => onSelect.Invoke(levelInfo, false);
 
-    public void OnClick() => onClick.Invoke(levelInfo.levelAsset);
+    public void OnClick() => onClick.Invoke(LevelAsset);
+
+    public void Select()
+    {
+        button?.Select();
+    }
+
+    public Level LevelAsset => levelInfo.levelAsset;
 }

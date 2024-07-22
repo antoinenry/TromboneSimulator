@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 
 [Serializable]
@@ -6,11 +7,12 @@ public struct LevelProgress
     public Level levelAsset;
     public bool[] checkList;
 
-    public LevelProgress(Level level)
+    public LevelProgress(Level level, ObjectiveInfo[] completedObjectives = null)
     {
         levelAsset = level;
         int objectiveCount = level?.objectives != null ? level.objectives.Length : 0;
         checkList = new bool[objectiveCount];
+        if (completedObjectives != null) foreach (ObjectiveInfo o in completedObjectives) TryCheckObjective(o);
     }
 
     public int ObjectiveCount => levelAsset?.objectives != null ? levelAsset.objectives.Length : 0;

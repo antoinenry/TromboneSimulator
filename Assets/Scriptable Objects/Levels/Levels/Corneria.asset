@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: 8c035c0f7dad9664aa6e10b8b6eb87bf, type: 2}
   unlockTier: 3
+  notePlacements:
+  - {fileID: 11400000, guid: fb7df52a96f1c7e4c8eb7ff6b14c65f3, type: 2}
   objectives:
   - type: EndMusic
     parameters: []

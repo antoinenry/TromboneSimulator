@@ -3,7 +3,6 @@ using UnityEngine.Events;
 using System;
 using System.Reflection;
 using System.Collections.Generic;
-using System.Linq;
 
 [ExecuteAlways]
 public abstract class MenuUI : MonoBehaviour
@@ -19,6 +18,9 @@ public abstract class MenuUI : MonoBehaviour
     static public HandCursor cursor;
 
     static private Dictionary<Type, MenuUI> MenuUIs;
+
+    static public UnityEvent<Level> onSelectLevel;
+    static public UnityEvent onStartLevel;
 
     //static public MainMenu UIMainMenu;
     //static public LevelSelectionScreen UILevelSelection;
@@ -47,6 +49,8 @@ public abstract class MenuUI : MonoBehaviour
         if (cursor == null) cursor = FindObjectOfType<HandCursor>(true);
         if (visibleMenuUis == null) visibleMenuUis = new List<MenuUI>();
         if (MenuUIs == null) MenuUIs = FindAllMenuUIs();
+        if (onStartLevel == null) onStartLevel = new();
+        if (onSelectLevel == null) onSelectLevel = new();
     }
 
     protected virtual void Start()
