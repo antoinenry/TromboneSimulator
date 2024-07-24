@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,10 +7,11 @@ public class ModifierSelectionScreen : MenuUI
 {
     public TromboneBuildStack modifierStack;
     [Header("UI Components")]
-    public ModifierSelectionButton buttonPrefab;
+    public ModifierSelectionButton modifierTogglePrefab;
     public LayoutGroupScroller modifierGrid;
     public ModifierInfoPanel modifierInfoPanel;
     public BuildStackInfoPanel stackInfoPanel;
+    public TMP_Text levelNameField;
     [Header("Contents")]
     public TromboneBuildModifier[] modifiers;
     [Header("Events")]
@@ -21,7 +23,11 @@ public class ModifierSelectionScreen : MenuUI
     {
         base.ShowUI();
         UpdateModifierGrid();
-        if (Application.isPlaying) AddButtonGridListeners();
+        if (Application.isPlaying)
+        {
+            AddButtonGridListeners();
+            DisplayLevelName();
+        }
     }
 
     public override void HideUI()
@@ -69,9 +75,9 @@ public class ModifierSelectionScreen : MenuUI
         modifierGrid.Clear();
         foreach (TromboneBuildModifier mod in modifiers)
         {
-            if (buttonPrefab == null) break;
+            if (modifierTogglePrefab == null) break;
             ModifierSelectionButton b;
-            b = Instantiate(buttonPrefab);
+            b = Instantiate(modifierTogglePrefab);
             b.SetModifier(mod);
             b.active = Array.IndexOf(activeMods, mod) != -1;
             modifierGrid.Add(b.gameObject);
@@ -126,5 +132,12 @@ public class ModifierSelectionScreen : MenuUI
         else modifierStack.TryRemoveModifier(modifier);
         modifierStack.ApplyStack();
         UpdateModifierGrid();
+    }
+
+    private void DisplayLevelName()
+    {
+        if (levelNameField == null) return;
+        Level l = Get<LevelSelectionScreen>()?.GetSelectedLevel();
+        levelNameField.text = l != null ? l.name : "";
     }
 }
