@@ -1,5 +1,7 @@
 using System;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ObjectiveJudge : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class ObjectiveJudge : MonoBehaviour
     [Header("Components")]
     public MusicPlayer musicPlayer;
     public PerformanceJudge performanceJudge;
+
+    public UnityEvent<ObjectiveInfo> onObjectiveComplete;
 
     private ObjectiveInstance[] objectives;
 
@@ -19,11 +23,23 @@ public class ObjectiveJudge : MonoBehaviour
     private void OnEnable()
     {
         AddListeners();
+        EnableGUI();
     }
 
     private void OnDisable()
     {
         RemoveListeners();
+        DisableGUI();
+    }
+
+    public void EnableGUI()
+    {
+        if (performanceJudge?.gui) performanceJudge.gui.Objectives = this;
+    }
+
+    public void DisableGUI()
+    {
+        if (performanceJudge?.gui) performanceJudge.gui.Objectives = null;
     }
 
     public void LoadObjectives(ObjectiveInfo[] objectiveInfos)
@@ -77,5 +93,6 @@ public class ObjectiveJudge : MonoBehaviour
     private void OnCompleteObjective(ObjectiveInfo objectiveInfo)
     {
         if (showDebug) Debug.Log("Completed objective: " + objectiveInfo.type);
+        onObjectiveComplete.Invoke(objectiveInfo);
     }
 }

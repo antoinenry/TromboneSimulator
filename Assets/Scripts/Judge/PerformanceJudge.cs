@@ -8,7 +8,7 @@ public class PerformanceJudge : MonoBehaviour
     [Header("Components")]
     public NoteCatcher noteCatcher;
     public NoteCrasher noteCrasher;
-    public PerformanceGUI gui;
+    public JudgeGUI gui;
     [Header("Difficulty")]
     public float maxHealth = 1f;
     public float scoringRate = 10f;
@@ -45,12 +45,12 @@ public class PerformanceJudge : MonoBehaviour
 
     public void EnableGUI()
     {
-        if (gui) gui.Judge = this;
+        if (gui) gui.Performance = this;
     }
 
     public void DisableGUI()
     {
-        if (gui && gui.Judge == this) gui.Judge = null;
+        if (gui && gui.Performance == this) gui.Performance = null;
     }
 
     public void EnableDetection()

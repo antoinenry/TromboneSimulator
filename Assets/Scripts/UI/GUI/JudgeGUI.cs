@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 [ExecuteAlways]
-public class PerformanceGUI : GameUI
+public class JudgeGUI : GameUI
 {
     [Header("UI Components")]
     public CounterDisplay scoreDisplay;
@@ -13,32 +14,63 @@ public class PerformanceGUI : GameUI
     public Slider powerBar;
     public SwooshDisplay smallMessageDisplay;
     public TransformShaker smallMessageShake;
+    public Transform objectiveDisplay;
     [Header("Content")]
     public string[] wrongNoteMessages;
     public Color wrongNoteMessageColor = Color.red;
     public float healthBarScale = 64f;
     public Color damageFrameTint = Color.red;
+    public ObjectiveCheckPanel objectivePanelPrefab;
+    public float displayObjectiveDuration = 2f;
 
-    private PerformanceJudge judge;
+    private PerformanceJudge performance;
+    private ObjectiveJudge objectives;
     private string wrongNoteMessage;
+    private Coroutine displayObjectiveCoroutine;
 
     public override Component[] UIComponents => new Component[]
-        { scoreDisplay, comboDisplay, accuracyDisplay, healthBar, smallMessageDisplay, powerBar };
+        { scoreDisplay, comboDisplay, accuracyDisplay, healthBar, smallMessageDisplay, powerBar, objectiveDisplay };
 
 
-    public PerformanceJudge Judge
+    public PerformanceJudge Performance
     {
-        get => judge;
+        get => performance;
         set
         {
-            RemoveListenners(judge);
-            judge = value;
-            AddListenners(judge);
-            GUIActive = judge;
+            RemoveListeners(performance);
+            performance = value;
+            AddListeners(performance);
+            GUIActive = performance != null || objectives != null;
         }
     }
 
-    private void AddListenners(PerformanceJudge perfJudge)
+    public ObjectiveJudge Objectives
+    {
+        get => objectives;
+        set
+        {
+            RemoveListeners(objectives);
+            objectives = value;
+            AddListeners(objectives);
+            GUIActive = performance != null || objectives != null;
+        }
+    }
+
+    public override bool GUIActive
+    {
+        set
+        {
+            if (value != GUIActive)
+            {
+                StopAllCoroutines();
+                displayObjectiveCoroutine = null;
+                DestroyObjectivePanels();
+            }
+            base.GUIActive = value;
+        }
+    }
+
+    private void AddListeners(PerformanceJudge perfJudge)
     {
         if (perfJudge)
         {
@@ -51,7 +83,7 @@ public class PerformanceGUI : GameUI
         }
     }
 
-    private void RemoveListenners(PerformanceJudge perfJudge)
+    private void RemoveListeners(PerformanceJudge perfJudge)
     {
         if (perfJudge)
         {
@@ -63,6 +95,23 @@ public class PerformanceGUI : GameUI
             perfJudge.onNoteCombo.RemoveListener(DisplayNoteCombo);
         }
     }
+
+    private void AddListeners(ObjectiveJudge objJudge)
+    {
+        if (objJudge)
+        {
+            objJudge.onObjectiveComplete.AddListener(DisplayObjectivePanel);
+        }
+    }
+
+    private void RemoveListeners(ObjectiveJudge objJudge)
+    {
+        if (objJudge)
+        {
+            objJudge.onObjectiveComplete.RemoveListener(DisplayObjectivePanel);
+        }
+    }
+
     public void ResetDisplay(float maxHealth = float.NaN)
     {
         if (float.IsNaN(maxHealth)) DisplayHealth(healthBar.maxValue, healthBar.maxValue);
@@ -159,5 +208,34 @@ public class PerformanceGUI : GameUI
             smallMessageDisplay.SetTextColor(wrongNoteMessageColor);
         }
         if (smallMessageShake) smallMessageShake.Shake();
+    }
+
+    public void DisplayObjectivePanel(ObjectiveInfo objectiveInfo)
+    {
+        if (objectivePanelPrefab == null || objectiveDisplay == null) return;
+        StartCoroutine(QueueDisplayObjectiveCoroutine(objectiveInfo));
+    }
+
+    public void DestroyObjectivePanels()
+    {
+        if (objectiveDisplay == null) return;
+        ObjectiveCheckPanel[] panels = objectiveDisplay.GetComponentsInChildren<ObjectiveCheckPanel>(true);
+        foreach (ObjectiveCheckPanel panel in panels) Destroy(panel.gameObject);
+    }
+
+    private IEnumerator QueueDisplayObjectiveCoroutine(ObjectiveInfo objectiveInfo)
+    {
+        while (displayObjectiveCoroutine != null) yield return null;
+        displayObjectiveCoroutine = StartCoroutine(DisplayObjectiveCoroutine(objectiveInfo));
+    }
+
+    private IEnumerator DisplayObjectiveCoroutine(ObjectiveInfo objectiveInfo)
+    {
+        ObjectiveCheckPanel panel = Instantiate(objectivePanelPrefab, objectiveDisplay);
+        panel.SetText(objectiveInfo.type);
+        panel.PlayCheckedAnimation();
+        yield return new WaitForSeconds(displayObjectiveDuration);
+        panel.PlayDisappearAnimation(destroyOnAnimationEnd: true);
+        displayObjectiveCoroutine = null;
     }
 }

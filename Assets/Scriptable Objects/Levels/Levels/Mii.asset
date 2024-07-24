@@ -21,10 +21,10 @@ MonoBehaviour:
     parameters: []
   - type: Highscore
     parameters:
-    - 50000
+    - 30000
   - type: Highscore
     parameters:
-    - 10000
+    - 60000
   - type: Highscore
     parameters:
-    - 20000
+    - 150000

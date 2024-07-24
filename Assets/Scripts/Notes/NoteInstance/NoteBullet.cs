@@ -54,10 +54,13 @@ public class NoteBullet : MonoBehaviour
         SetLinkSprites();
     }
 
+    public float DisplayLength => roundValues ? RoundedLength : length;
+    public int RoundedLength => Mathf.CeilToInt(length);
+
     public void SetLength(float value)
     {
         length = Mathf.Max(value, 0f);
-        float l = roundValues ? Mathf.Ceil(length) : length;
+        float l = DisplayLength;
         Vector2 linkPosition = Vector2.zero;
         if (hRenderer != null) hRenderer.SetTotalLength(l);
         if (vRenderer != null)
@@ -242,6 +245,7 @@ public class NoteBullet : MonoBehaviour
 
     public bool TryLinkToNextNote(NoteBullet next)
     {
+        float l = DisplayLength;
         // Determine if note can be link together
         if (topCut || next == null || next.bottomCut
             // Neighbour x
@@ -249,7 +253,7 @@ public class NoteBullet : MonoBehaviour
             // Neighbour y
             || Mathf.Abs(next.transform.position.y - transform.position.y) > linkMaxDistance.y
             // Note ends when next note starts
-            || next.distance > distance + length + linkMaxDistance.y)
+            || next.distance > distance + l + linkMaxDistance.y)
         {
             // Notes are separated
             topLink = LinkDirection.NoLink;
@@ -282,7 +286,7 @@ public class NoteBullet : MonoBehaviour
         if (topLink != LinkDirection.NoLink)
         {
             // Match y positions (sometimes necessary due to position rounding)
-            next.SetDistanceRaw(distance + length);
+            next.SetDistanceRaw(distance + l);
             // Match two notes' color
             next.currentColor = currentColor;
             next.SetColor(currentColor);

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 [ExecuteAlways]
 public class ObjectiveCheckPanel : MonoBehaviour
@@ -10,6 +11,7 @@ public class ObjectiveCheckPanel : MonoBehaviour
     [Header("Animations")]
     public AnimationClip checkedAnimation;
     public AnimationClip uncheckedAnimation;
+    public AnimationClip disappearAnimation;
 
     private Animation anim;
 
@@ -24,19 +26,28 @@ public class ObjectiveCheckPanel : MonoBehaviour
         if (textGlow) textGlow.text = value;
     }
 
-    public void PlayCheckedAnimation()
+    public void PlayCheckedAnimation() => PlayAnimation(checkedAnimation);
+
+    public void PlayUncheckedAnimation() => PlayAnimation(uncheckedAnimation);
+
+    public void PlayDisappearAnimation(bool destroyOnAnimationEnd)
+    {
+        if (destroyOnAnimationEnd) StartCoroutine(PlayAnimationThenDestroyCoroutine(disappearAnimation));
+        else PlayAnimation(disappearAnimation);
+    }
+
+    private void PlayAnimation(AnimationClip clip)
     {
         if (anim == null) return;
         anim.Stop();
-        anim.clip = checkedAnimation;
+        anim.clip = clip;
         if (Application.isPlaying) anim.Play();
     }
 
-    public void PlayUncheckedAnimation()
+    private IEnumerator PlayAnimationThenDestroyCoroutine(AnimationClip clip)
     {
-        if (anim == null) return;
-        anim.Stop();
-        anim.clip = uncheckedAnimation;
-        if (Application.isPlaying) anim.Play();
+        PlayAnimation(clip);
+        if (anim != null) yield return new WaitWhile(() => anim.isPlaying);
+        Destroy(gameObject);
     }
 }

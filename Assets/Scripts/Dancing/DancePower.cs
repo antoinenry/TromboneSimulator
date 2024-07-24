@@ -8,7 +8,7 @@ public class DancePower : MonoBehaviour
 
     protected TromboneDisplay trombone;
     protected DanceDetector dance;
-    protected PerformanceGUI perfGUI;
+    protected JudgeGUI perfGUI;
     protected TintFlash frame;
 
     protected virtual void Awake()
@@ -16,7 +16,7 @@ public class DancePower : MonoBehaviour
         trombone = FindObjectOfType<TromboneDisplay>(true);
         dance = FindObjectOfType<DanceDetector>(true);
         dance.dancer = trombone.body.transform;
-        perfGUI = FindObjectOfType<PerformanceGUI>(true);
+        perfGUI = FindObjectOfType<JudgeGUI>(true);
         frame = perfGUI.frame;
     }
 

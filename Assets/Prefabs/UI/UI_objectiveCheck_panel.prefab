@@ -101,7 +101,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743423755103462045}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -113,11 +113,11 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 14}
-  m_Pivot: {x: 0.5, y: 1}
+  m_SizeDelta: {x: 100, y: 14}
+  m_Pivot: {x: 1, y: 0}
 --- !u!111 &1743423755103462047
 Animation:
   m_ObjectHideFlags: 0
@@ -131,8 +131,9 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: d6b9adfbb05a19f4ea673fd4b9ac2a15, type: 2}
   - {fileID: 7400000, guid: 4e5e26b112fc8fe41b6837787792b2fe, type: 2}
+  - {fileID: 7400000, guid: 6fae60684bd4ba446abc46825cc2e010, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!114 &1743423755103462046
@@ -149,8 +150,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textField: {fileID: 1743423756490945057}
   textGlow: {fileID: 1743423755520227144}
-  checkedAnimation: {fileID: 7400000, guid: d6b9adfbb05a19f4ea673fd4b9ac2a15, type: 2}
+  checkedAnimation: {fileID: 7400000, guid: 6fae60684bd4ba446abc46825cc2e010, type: 2}
   uncheckedAnimation: {fileID: 7400000, guid: 4e5e26b112fc8fe41b6837787792b2fe, type: 2}
+  disappearAnimation: {fileID: 7400000, guid: d6b9adfbb05a19f4ea673fd4b9ac2a15, type: 2}
 --- !u!1 &1743423755520227150
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +367,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287421934
+    rgba: 1519181294
   m_fontColor: {r: 0.9333334, g: 0.86666673, b: 0.54901963, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
