@@ -19,3 +19,12 @@ MonoBehaviour:
   objectives:
   - type: EndMusic
     parameters: []
+  - type: Highscore
+    parameters:
+    - 80000
+  - type: Highscore
+    parameters:
+    - 130000
+  - type: Highscore
+    parameters:
+    - 250000

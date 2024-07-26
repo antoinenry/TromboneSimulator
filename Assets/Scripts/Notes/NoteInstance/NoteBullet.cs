@@ -54,8 +54,9 @@ public class NoteBullet : MonoBehaviour
         SetLinkSprites();
     }
 
-    public float DisplayLength => roundValues ? RoundedLength : length;
-    public int RoundedLength => Mathf.CeilToInt(length);
+    private float Round(float value) => Mathf.Ceil(value);
+    public float DisplayLength => roundValues ? Round(length) : length;
+    public float DisplayDistance => roundValues ? Round(distance + distanceOffset) : distance + distanceOffset;
 
     public void SetLength(float value)
     {
@@ -72,7 +73,7 @@ public class NoteBullet : MonoBehaviour
         {
             topLinkRenderer.size = new(topLinkLength, topLinkRenderer.size.y);
             linkPosition.x = topLink == LinkDirection.Left ? .5f * width : -.5f * width;
-            linkPosition.y = l;
+            linkPosition.y = l + (vRenderer != null ? vRenderer.spriteEndLength : 0f);
             topLinkRenderer.transform.localPosition = linkPosition;
         }
         if (bottomLinkRenderer != null)
@@ -86,16 +87,15 @@ public class NoteBullet : MonoBehaviour
 
     public void SetDistance(float value, bool ignoreLink = false)
     {
+        distance = value;
         // When linked, some values can be set by the previous note
         bool isLinkedToPreviousNote = !ignoreLink && bottomLink != LinkDirection.NoLink;
-        // Set distance value
-        distance = value;
-        float d = roundValues ? Mathf.Ceil(distance) : distance;
         // Set sprite positions
         if (isLinkedToPreviousNote == false)
         {
-            if (hRenderer != null) hRenderer.transform.localPosition = new Vector3(d + distanceOffset, hRenderer.transform.localPosition.y);
-            if (vRenderer != null) vRenderer.transform.localPosition = new Vector3(vRenderer.transform.localPosition.x, d + distanceOffset);
+            float displayDistance = DisplayDistance;
+            if (hRenderer != null) hRenderer.transform.localPosition = new Vector3(displayDistance, hRenderer.transform.localPosition.y);
+            if (vRenderer != null) vRenderer.transform.localPosition = new Vector3(vRenderer.transform.localPosition.x, displayDistance);
         }
         // Passed note
         if (distance < -length)
@@ -151,11 +151,12 @@ public class NoteBullet : MonoBehaviour
         }
     }
 
-    private void SetDistanceRaw(float d)
+    private void SetDistanceLinked(float otherDistance, float otherLength)
     {
-        distance = d;
-        if (hRenderer != null) hRenderer.transform.localPosition = new Vector3(d + distanceOffset, hRenderer.transform.localPosition.y);
-        if (vRenderer != null) vRenderer.transform.localPosition = new Vector3(vRenderer.transform.localPosition.x, d + distanceOffset);
+        //distance = otherDistance + otherLength;
+        float displayDistance = Round(otherDistance) + Round(otherLength) + Round(distanceOffset);
+        if (hRenderer != null) hRenderer.transform.localPosition = new Vector3(displayDistance, hRenderer.transform.localPosition.y);
+        if (vRenderer != null) vRenderer.transform.localPosition = new Vector3(vRenderer.transform.localPosition.x, displayDistance);
     }
 
     public void Play(float fromPosition, float toPosition, float accuracy)
@@ -188,13 +189,15 @@ public class NoteBullet : MonoBehaviour
 
     public void CutLocal(float fromPosition, float toPosition, bool horizontal = true, bool vertical = true)
     {
-        // Round values
+        // Round parameters
         if (roundValues)
         {
-            fromPosition = Mathf.Ceil(fromPosition);
-            toPosition = Mathf.Ceil(toPosition);
+            fromPosition = Round(fromPosition);
+            toPosition = Round(toPosition);
         }
+        // Horizontal render
         if (horizontal && hRenderer != null) hRenderer.Cut(fromPosition, toPosition);
+        // Vertical render (with links)
         if (vertical && vRenderer != null)
         {
             vRenderer.Cut(fromPosition, toPosition);
@@ -206,16 +209,21 @@ public class NoteBullet : MonoBehaviour
     {
         if (hRenderer != null) hRenderer.SetVisible(horizontal);
         if (vRenderer != null) vRenderer.SetVisible(vertical);
+        if (bottomLinkRenderer != null) bottomLinkRenderer.enabled = vertical;
+        if (topLinkRenderer != null) topLinkRenderer.enabled = vertical;
     }
 
     public void SetColorLocal(Color c, float fromPosition, float toPosition)
     {
+        // Round parameters
         if (roundValues)
         {
-            fromPosition = Mathf.Ceil(fromPosition);
-            toPosition = Mathf.Ceil(toPosition);
+            fromPosition = Round(fromPosition);
+            toPosition = Round(toPosition);
         }
+        // Horizontal render
         if (hRenderer != null) hRenderer.SetColorFromToPosition(c, fromPosition, toPosition, false, true);
+        // Vertical render (with links)
         Color topColor = Color.clear;
         Color bottomColor = Color.clear;
         if (vRenderer != null)
@@ -229,7 +237,9 @@ public class NoteBullet : MonoBehaviour
 
     public void SetColor(Color c, float fromPosition, float toPosition)
     {
-        SetColorLocal(c, fromPosition - distance, toPosition - distance);
+        float localFromPosition = roundValues ? Round(fromPosition - distance) : fromPosition - distance;
+        float localToPosition = roundValues ? Round(toPosition - distance) : toPosition - distance;
+        SetColorLocal(c, localFromPosition, localToPosition);
     }
 
     public void SetColor(Color c) => SetColor(c, float.NegativeInfinity, float.PositiveInfinity);
@@ -245,7 +255,6 @@ public class NoteBullet : MonoBehaviour
 
     public bool TryLinkToNextNote(NoteBullet next)
     {
-        float l = DisplayLength;
         // Determine if note can be link together
         if (topCut || next == null || next.bottomCut
             // Neighbour x
@@ -253,7 +262,7 @@ public class NoteBullet : MonoBehaviour
             // Neighbour y
             || Mathf.Abs(next.transform.position.y - transform.position.y) > linkMaxDistance.y
             // Note ends when next note starts
-            || next.distance > distance + l + linkMaxDistance.y)
+            || next.distance > distance + length + linkMaxDistance.y)
         {
             // Notes are separated
             topLink = LinkDirection.NoLink;
@@ -285,8 +294,8 @@ public class NoteBullet : MonoBehaviour
         // If notes are link do additional matching operations and return true
         if (topLink != LinkDirection.NoLink)
         {
-            // Match y positions (sometimes necessary due to position rounding)
-            next.SetDistanceRaw(distance + l);
+            // Match y positions (safer due to position rounding)
+            next.SetDistanceLinked(distance, length);
             // Match two notes' color
             next.currentColor = currentColor;
             next.SetColor(currentColor);
