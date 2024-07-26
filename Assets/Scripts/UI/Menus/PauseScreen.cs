@@ -5,13 +5,24 @@ using TMPro;
 
 public class PauseScreen : MenuUI
 {
+    [Header("Components")]
     public Button stopButton;
     public Button playButton;
     public Button settingsButton;
-
+    [Header("Configuration")]
+    public DialogBoxScreen.Dialog quitDialog;
+    [Header("Events")]
     public UnityEvent onUnpause;
     public UnityEvent onQuit;
     public UnityEvent onOpenSettings;
+
+    private DialogBoxScreen dialogBox;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        dialogBox = Get<DialogBoxScreen>();
+    }
 
     override public void ShowUI()
     {
@@ -29,14 +40,14 @@ public class PauseScreen : MenuUI
 
     private void EnableButtons()
     {
-        stopButton.onClick.AddListener(Quit);
+        stopButton.onClick.AddListener(RequestQuit);
         playButton.onClick.AddListener(Unpause);
         settingsButton.onClick.AddListener(OpenSettings);
     }
 
     private void DisableButtons()
     {
-        stopButton.onClick.RemoveListener(Quit);
+        stopButton.onClick.RemoveListener(RequestQuit);
         playButton.onClick.RemoveListener(Unpause);
         settingsButton.onClick.RemoveListener(OpenSettings);
     }
@@ -47,7 +58,25 @@ public class PauseScreen : MenuUI
         HideUI();
     }
 
-    private void Quit()
+    private void RequestQuit()
+    {
+        if (dialogBox != null)
+        {
+            dialogBox.configuration = quitDialog;
+            dialogBox.onAnswer.AddListener(OnQuitAnswer);
+            dialogBox.ShowUI();
+        }
+        else
+            ValidateQuit();
+    }
+
+    private void OnQuitAnswer(bool quit)
+    {
+        if (dialogBox != null) dialogBox.onAnswer.RemoveListener(OnQuitAnswer);
+        if (quit) ValidateQuit();
+    }
+
+    private void ValidateQuit()
     {
         onQuit.Invoke();
         HideUI();

@@ -8,22 +8,22 @@ public abstract class MenuNavigationButton : MonoBehaviour
 
     private Button button;
 
-    private void Reset()
+    protected virtual void Reset()
     {
         TryFindOrigin();
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         button = GetComponent<Button>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         button.onClick.AddListener(OnButtonClicked);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         button.onClick.RemoveListener(OnButtonClicked);
     }
