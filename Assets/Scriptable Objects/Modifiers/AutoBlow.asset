@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c722ce8973646f64391ec7c36ce09a72, type: 3}
   m_Name: AutoBlow
   m_EditorClassIdentifier: 
-  modName: Autopouet
+  modName: Auto Pouet
   icon: {fileID: -470509015, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  uiColor: {r: 0.882353, g: 0.8313726, b: 0.54901963, a: 1}
+  colorizeIcon: 0
   unlockTier: 0
   scoreMultiplierBonus: 0.85
   description: "Les notes sortent toutes seules. Reste \xE0 jouer juste."

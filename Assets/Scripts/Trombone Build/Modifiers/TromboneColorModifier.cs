@@ -6,7 +6,6 @@ public class TromboneColorModifier : TromboneBuildModifier
     public Color color = Color.white;
 
     public override bool ReplaceOnly => true;
-    public override Color IconColor => color;
 
     public override void ApplyTo(TromboneBuild build)
     {

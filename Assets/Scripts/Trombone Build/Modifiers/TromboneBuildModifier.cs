@@ -4,6 +4,8 @@ public abstract class TromboneBuildModifier : ScriptableObject, IUnlockableConte
 {
     public string modName;
     public Sprite icon;
+    public Color uiColor = Color.white;
+    public bool colorizeIcon;
     public int unlockTier;
     public float scoreMultiplierBonus = 1f;
     public string description;
@@ -12,7 +14,7 @@ public abstract class TromboneBuildModifier : ScriptableObject, IUnlockableConte
     public int UnlockTier => unlockTier;
     public virtual bool ReplaceOnly => false;
     public virtual float ScoreMultiplier => scoreMultiplierBonus;
-    public virtual Color IconColor => Color.white;
+    public virtual Color IconColor => colorizeIcon ? uiColor : Color.white;
     public virtual string StatDescription => ScoreMultiplier != 1f ? "Score x" + ScoreMultiplier : null;
 
     public virtual bool CanStackWith(TromboneBuildModifier other)

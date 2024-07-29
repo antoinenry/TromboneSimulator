@@ -132,6 +132,7 @@ public class ModifierSelectionScreen : MenuUI
         else modifierStack.TryRemoveModifier(modifier);
         modifierStack.ApplyStack();
         UpdateModifierGrid();
+        onSelectModifier.Invoke(modifier);
     }
 
     private void DisplayLevelName()

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modName: "Caf\xE9ine"
   icon: {fileID: 1242161697, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  uiColor: {r: 0.93725497, g: 0.32941177, b: 0.32156864, a: 1}
+  colorizeIcon: 0
   unlockTier: 1
   scoreMultiplierBonus: 2
   description: "La m\xEAme en plus vite."
