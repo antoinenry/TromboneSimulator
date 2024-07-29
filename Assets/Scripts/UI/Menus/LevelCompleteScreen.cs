@@ -261,6 +261,7 @@ public class LevelCompleteScreen : MenuUI
         {
             yield return new WaitForSeconds(objectiveDisplayDelay);
             ObjectiveCheckPanel o = objectivePanels[i];
+            if (o == null) continue;
             o.gameObject.SetActive(true);
             if (i < checkCount && checkList[i] == true) o.PlayCheckedAnimation();
             else o.PlayUncheckedAnimation();
