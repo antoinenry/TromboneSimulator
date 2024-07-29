@@ -20,8 +20,6 @@ public class LevelEditor : MonoBehaviour
     public KeyCode nextPlacementKey = KeyCode.UpArrow;
     public KeyCode previousPlacementKey = KeyCode.DownArrow;
 
-    public ObjectMethodCaller caller = new("LoadLevel");
-
     private NoteGrid noteGrid;
     private NoteSpawner noteSpawner;
     private MusicPlayer musicPlayer;

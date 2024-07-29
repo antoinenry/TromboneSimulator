@@ -25,6 +25,7 @@ public class NotePlacementInspector : Editor
         {
             Undo.RecordObject(notePlacement, "Set Grid From Scene");
             notePlacement.FindCurrentGridDimensions();
+            EditorUtility.SetDirty(notePlacement);
         }
         EditorGUILayout.LabelField("Edit coordinates", EditorStyles.boldLabel);
         EditorGUILayout.BeginHorizontal();
@@ -33,6 +34,7 @@ public class NotePlacementInspector : Editor
             Undo.RecordObject(notePlacement, "Set Default Coordinates");
             NoteInfo[] getNotes = selectedMusic?.GetPartNotes(selectedPartIndex);
             notePlacement.SetDefaultCoordinates(getNotes);
+            EditorUtility.SetDirty(notePlacement);
         }
         selectedMusic = (SheetMusic)EditorGUILayout.ObjectField(selectedMusic, typeof(SheetMusic), false);
         selectedPartIndex = EditorGUILayout.Popup(selectedPartIndex, selectedMusic != null ? selectedMusic.PartNames : new string[0]);
