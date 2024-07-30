@@ -8,7 +8,12 @@ public static class GameContentPicker
         if (progress == null) progress = GameProgress.Current;
         int requestedCount = modifiers != null ? modifiers.Length : 0;
         if (requestedCount == 0 || progress == null) return;
-        List<GameContentLock> available = new List<GameContentLock>(Array.FindAll(progress.contentLocks, c => c.locked == false && c.contentAsset != null && c.contentAsset is TromboneBuildModifier));
+        List<GameContentLock> available = new List<GameContentLock>(
+            Array.FindAll(progress.contentLocks, 
+            c => progress.CanUnlock(c)
+            && c.contentAsset != null 
+            && c.contentAsset is TromboneBuildModifier)
+            );
         int availableCount = available != null ? available.Count : 0;
         int m;
         for (m = 0; m < requestedCount; m++)

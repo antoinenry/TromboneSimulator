@@ -132,6 +132,20 @@ public class GameProgress : ScriptableObject
         else return true;
     }
 
+    public bool CanUnlock(GameContentLock contentLock)
+    {
+        GetObjectiveCount(out int completedObjectiveCount);
+        return CanUnlockWithObjectives(contentLock, completedObjectiveCount);
+    }
+
+    public bool CanUnlockWithObjectives(GameContentLock contentLock, int completedObjectiveCount)
+    {
+        ScriptableObject contentAsset = contentLock.contentAsset;
+        if (contentAsset == null || Array.IndexOf(contentLocks, contentLock) == -1) return false;
+        if (contentAsset is IUnlockableContent) return completedObjectiveCount >= (contentAsset as IUnlockableContent).UnlockTier;
+        else return true;
+    }
+
     public void AutoUnlock()
     {
         if (contentLocks == null) return;

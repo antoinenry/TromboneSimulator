@@ -47,7 +47,7 @@ public class ModifierUnlockScreen : MenuUI
     public override void ShowUI()
     {
         base.ShowUI();
-        GameContentPicker.PickModifiers(ref modifiers);
+        GameContentPicker.PickModifiers(ref modifiers, progress:GameProgress.Current);
     }
 
     private bool UpdateButtonInstances(out ModifierUnlockButton[] buttons)
@@ -83,12 +83,13 @@ public class ModifierUnlockScreen : MenuUI
     private void AddButtonListeners(ModifierUnlockButton[] buttons)
     {
         if (buttons == null || buttons.Length == 0) return;
+        foreach (ModifierUnlockButton button in buttons) button?.onClick?.AddListener(OnClickModifierButton);
     }
 
     private void RemoveButtonListeners(ModifierUnlockButton[] buttons)
     {
         if (buttons == null || buttons.Length == 0) return;
-
+        foreach (ModifierUnlockButton button in buttons) button?.onClick?.RemoveListener(OnClickModifierButton);
     }
 
     private void UpdateButtonContainerSize(int buttonCount)
@@ -97,5 +98,10 @@ public class ModifierUnlockScreen : MenuUI
         Vector2 size = modifierButtonContainer.sizeDelta;
         size.x = buttonCount * ModifierButtonWidth + modifierContainerSizeMargin;
         modifierButtonContainer.sizeDelta = size;
+    }
+
+    private void OnClickModifierButton(TromboneBuildModifier modifier)
+    {
+        GameProgress.Current?.TrySetLock(modifier, false);
     }
 }

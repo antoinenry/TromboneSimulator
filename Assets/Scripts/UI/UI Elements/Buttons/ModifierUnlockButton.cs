@@ -1,6 +1,7 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 [ExecuteAlways]
 public class ModifierUnlockButton : MonoBehaviour
@@ -13,7 +14,25 @@ public class ModifierUnlockButton : MonoBehaviour
     [Header("Configuration")]
     public TromboneBuildModifier modifier;
     public bool showStats;
+    [Header("Events")]
+    public UnityEvent<TromboneBuildModifier> onClick;
 
+    private Button button;
+
+    private void Awake()
+    {
+        button = GetComponent<Button>();
+    }
+
+    private void OnEnable()
+    {
+        if (button) button.onClick.AddListener(OnClick);
+    }
+
+    private void OnDisable()
+    {
+        if (button) button.onClick.RemoveListener(OnClick);
+    }
     private void Update()
     {
         if (modifier)
@@ -48,4 +67,6 @@ public class ModifierUnlockButton : MonoBehaviour
 
     public void ShowStats() => showStats = true;
     public void HideStats() => showStats = false;
+
+    private void OnClick() => onClick.Invoke(modifier);
 }
