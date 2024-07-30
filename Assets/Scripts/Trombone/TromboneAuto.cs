@@ -179,13 +179,13 @@ public class TromboneAuto : MonoBehaviour,
         ActivePlayhead = setPlayhead;
     }
 
-    private void StartNote(INote note)
+    private void StartNote(INote note, int noteIndex)
     {
         // Start note
         if (note != null)
         {
             autoTone = note.Tone;
-            Vector2 noteCoordinate = spawner.GetNotePlacement(note);
+            Vector2 noteCoordinate = spawner.GetNotePlacement(note, noteIndex);
             autoSlideTone = noteCoordinate.x;
             autoPressureLevel = noteCoordinate.y;
         }
@@ -213,7 +213,7 @@ public class TromboneAuto : MonoBehaviour,
 
     private void OnAutoPlayNoteEnter(int noteIndex, INote note)
     {
-        StartNote(note);
+        StartNote(note, noteIndex);
     }
 
     private void OnAutoPlayNoteStay(int noteIndex, INote note)

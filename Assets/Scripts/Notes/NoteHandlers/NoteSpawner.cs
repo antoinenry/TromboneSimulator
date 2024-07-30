@@ -159,7 +159,7 @@ public class NoteSpawner : MonoBehaviour
         if (note != null) SpawnNote(note, noteIndex);
     }
 
-    public NoteSpawn SpawnNote(INote note, int index = -1)
+    public NoteSpawn SpawnNote(INote note, int index)
     {
         if (note == null) return null;
         NoteInfo noteInfo = NoteInfo.GetInfo(note);
@@ -223,7 +223,7 @@ public class NoteSpawner : MonoBehaviour
         //time = keep_time;
     }
 
-    public Vector2 GetNotePlacement(INote note, int index = -1)
+    public Vector2 GetNotePlacement(INote note, int index)
     {
         Vector2[] possibleCoordinates = grid.dimensions.ToneToCoordinates(note.Tone);
         // Exception 1: no possible coordinates, return undefined value
