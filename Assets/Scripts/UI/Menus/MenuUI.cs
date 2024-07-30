@@ -21,17 +21,7 @@ public abstract class MenuUI : MonoBehaviour
 
     static public UnityEvent<Level> onSelectLevel;
     static public UnityEvent onStartLevel;
-
-    //static public MainMenu UIMainMenu;
-    //static public LevelSelectionScreen UILevelSelection;
-    //static public TromboneSelectionScreen UITromboneSelection;
-    //static public LeaderBoardScreen UILeaderboard;
-    //static public PauseScreen UIPause;
-    //static public ScoreScreen UIScore;
-    //static public GameOverScreen UIGameOver;
-    //static public NewHighscoreScreen UIHighScore;
-    //static public SettingsScreen UISettings;
-    //static public LoadingScreen UILoading;
+    static public UnityEvent<LoadingScreen, bool> onLoadingScreenVisible;
 
     public MenuUI PreviousUI { get; protected set; }
 
@@ -51,6 +41,7 @@ public abstract class MenuUI : MonoBehaviour
         if (MenuUIs == null) MenuUIs = FindAllMenuUIs();
         if (onStartLevel == null) onStartLevel = new();
         if (onSelectLevel == null) onSelectLevel = new();
+        if (onLoadingScreenVisible == null) onLoadingScreenVisible = new();
     }
 
     protected virtual void Start()

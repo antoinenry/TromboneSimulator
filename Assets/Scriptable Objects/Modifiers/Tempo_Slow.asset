@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: -912079090, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.70980394, g: 0.9686275, b: 0.48235297, a: 1}
   colorizeIcon: 0
-  unlockTier: 0
+  unlockTier: 1
   scoreMultiplierBonus: 0.75
   description: "Par le pouvoir de la camomille, on se d\xE9tend et on joue un peu
     moins vite."

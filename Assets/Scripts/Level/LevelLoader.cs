@@ -65,6 +65,12 @@ public class LevelLoader : MonoBehaviour
         StartLevel();
     }
 
+    private void OnLoadingScreenVisible(LoadingScreen loadingScreen, bool loadingVisible)
+    {
+        if (loadingScreen == null || loadingVisible == false) return;
+        loadingScreen.showAsPanel = false;
+        loadingScreen.showOrchestra = true;
+    }
     #endregion
 
     #region LOAD/UNLOAD
@@ -77,6 +83,8 @@ public class LevelLoader : MonoBehaviour
 
     private IEnumerator LoadLevelCoroutine()
     {
+        // Loading screen setup
+        MenuUI.onLoadingScreenVisible.AddListener(OnLoadingScreenVisible);
         // Trombone setup
         if (trombone)
         {
@@ -125,6 +133,7 @@ public class LevelLoader : MonoBehaviour
             GUI.onPauseRequest.AddListener(PauseLevel);
         }
         loadLevelCoroutine = null;
+        MenuUI.onLoadingScreenVisible.RemoveListener(OnLoadingScreenVisible);
     }
 
     public void UnloadLevel()

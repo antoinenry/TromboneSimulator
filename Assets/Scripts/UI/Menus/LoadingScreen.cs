@@ -8,9 +8,10 @@ public class LoadingScreen : MenuUI
     [Header("UI Components")]
     public Slider loadingSlider;
     public Transform loadingOrchestraLayout;
-    public TextMeshProUGUI loadingMessage;
+    public Image background;
     [Header("Content")]
     public bool showOrchestra = true;
+    public bool showAsPanel = true;
     public string defaultLoadingText = "LOADINGUE";
     public Color orchestraLowTint = Color.black;
     public Color orchestraHighTint = Color.white;
@@ -37,12 +38,18 @@ public class LoadingScreen : MenuUI
         if (trackGenerator != null) trackGenerator.onGenerationProgress.RemoveListener(OnLoadMusic);
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        loadingOrchestraLayout?.gameObject?.SetActive(showOrchestra && !showAsPanel);
+        background?.gameObject?.SetActive(!showAsPanel);
+    }
+
     private void OnLoadMusic(float progress)
     {
         if (progress < 1f)
         {
-            // Don't show orchestra when loading a menu screen
-            showOrchestra = VisibleMenuCount == 1;
+            onLoadingScreenVisible?.Invoke(this, true);
             if (IsVisible == false)
             {
                 SetOrchestraLayout(trackGenerator.music.PartNames);
@@ -55,6 +62,7 @@ public class LoadingScreen : MenuUI
         }
         else
         {
+            onLoadingScreenVisible?.Invoke(this, false);
             if (IsVisible == true)
             {
                 SetOrchestraLayout(null);

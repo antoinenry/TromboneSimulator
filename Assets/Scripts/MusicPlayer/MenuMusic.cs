@@ -60,7 +60,12 @@ public class MenuMusic : MonoBehaviour
 
     private void OnLoadMusic(float progress)
     {
-        if (progress < 1f) StopPlaying();
+        if (progress < 1f)
+        {
+            StopPlaying();
+            LoadingScreen loadingScreen = MenuUI.Get<LoadingScreen>();
+            if (loadingScreen) loadingScreen.showOrchestra = false;
+        }
         else
         {
             TromboneSetup();
