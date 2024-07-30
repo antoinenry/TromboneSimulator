@@ -27,6 +27,8 @@ public class ModifierSelectionScreen : MenuUI
         {
             AddButtonGridListeners();
             DisplayLevelName();
+            LoadingScreen loadingScreen = Get<LoadingScreen>();
+            if (loadingScreen) loadingScreen.showAsPanel = true;
         }
     }
 

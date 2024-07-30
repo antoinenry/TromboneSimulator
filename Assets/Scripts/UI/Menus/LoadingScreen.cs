@@ -62,13 +62,13 @@ public class LoadingScreen : MenuUI
         }
         else
         {
-            onLoadingScreenVisible?.Invoke(this, false);
             if (IsVisible == true)
             {
                 SetOrchestraLayout(null);
                 if (cursor != null) cursor.cursorState |= HandCursor.CursorState.Visible;
                 HideUI();
             }
+            onLoadingScreenVisible?.Invoke(this, false);
         }
     }
 

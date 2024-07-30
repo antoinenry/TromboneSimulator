@@ -68,8 +68,16 @@ public class LevelLoader : MonoBehaviour
     private void OnLoadingScreenVisible(LoadingScreen loadingScreen, bool loadingVisible)
     {
         if (loadingScreen == null || loadingVisible == false) return;
-        loadingScreen.showAsPanel = false;
-        loadingScreen.showOrchestra = true;
+        if (LoadedLevel != null)
+        {
+            loadingScreen.showAsPanel = false;
+            loadingScreen.showOrchestra = true;
+        }
+        else
+        {
+            loadingScreen.showAsPanel = false;
+            loadingScreen.showOrchestra = false;
+        }
     }
     #endregion
 
@@ -171,6 +179,8 @@ public class LevelLoader : MonoBehaviour
         if (noteSpawner) noteSpawner.enabled = false;
         // Stop note catcher
         if (noteCatcher) noteCatcher.enabled = false;
+        // Clear
+        LoadedLevel = null;
     }
     #endregion
 
