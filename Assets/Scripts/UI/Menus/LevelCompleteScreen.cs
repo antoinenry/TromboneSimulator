@@ -1,6 +1,7 @@
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using System.Collections;
 
 [ExecuteAlways]
 public class LevelCompleteScreen : MenuUI
@@ -8,13 +9,15 @@ public class LevelCompleteScreen : MenuUI
     [Header("Components")]
     public ScoreLineDisplay header;
     public ScoreLineDisplay title;
-    public Button nextButton;
     public ScoreLineDisplay baseScoreDisplay;
     public ScoreLineDisplay noteCountDisplay;
     public ScoreLineDisplay accuracyDisplay;
     public ScoreLineDisplay comboDisplay;
     public ScoreLineDisplay totalDisplay;
     public Transform objectiveChecklist;
+    public Button replayButton;
+    public Button nextButton;
+    public Button skipButton;
     [Header("Prefabs")]
     public ObjectiveCheckPanel objectiveItemPrefab;
     [Header("Timing")]
@@ -24,9 +27,14 @@ public class LevelCompleteScreen : MenuUI
     [Header("Values")]
     public LevelProgress levelProgress;
     public LevelScoreInfo levelScore;
+    [Header("Events")]
+    public UnityEvent onPressReplay;
+    public UnityEvent onPressNext;
 
     private Coroutine displayLinesCoroutine;
     private Coroutine displayObjectivesCoroutine;
+
+    public bool DisplayCoroutine => displayLinesCoroutine != null || displayObjectivesCoroutine != null; 
 
     override protected void Reset()
     {
@@ -52,6 +60,10 @@ public class LevelCompleteScreen : MenuUI
             ShowAllLines();
             InstantiateObjectivePanels();
         }
+        else
+        {
+            ToggleButtonsVisibility();
+        }
     }
 
     public override void ShowUI()
@@ -61,7 +73,7 @@ public class LevelCompleteScreen : MenuUI
         DestroyObjectivePanels();
         if (Application.isPlaying)
         {
-            nextButton.onClick.AddListener(OnPressNext);
+            AddButtonListeners();
             displayLinesCoroutine = StartCoroutine(DisplayLinesCoroutine());
             displayObjectivesCoroutine = StartCoroutine(DisplayObjectivesCoroutine());
         }
@@ -74,11 +86,10 @@ public class LevelCompleteScreen : MenuUI
         DestroyObjectivePanels();
         if (Application.isPlaying)
         {
-            nextButton.onClick.RemoveListener(OnPressNext);
+            RemoveButtonListeners();
             if (displayLinesCoroutine != null) StopCoroutine(displayLinesCoroutine);
             displayLinesCoroutine = null;
             if (displayObjectivesCoroutine != null) StopCoroutine(displayObjectivesCoroutine);
-            displayObjectivesCoroutine = null;
         }
     }
 
@@ -266,20 +277,63 @@ public class LevelCompleteScreen : MenuUI
             if (i < checkCount && checkList[i] == true) o.PlayCheckedAnimation();
             else o.PlayUncheckedAnimation();
         }
+        displayObjectivesCoroutine = null;
     }
     #endregion
 
-    private void OnPressNext()
+    #region Buttons
+
+    private void AddButtonListeners()
+    {
+        skipButton?.onClick?.AddListener(OnPressSkip);
+        replayButton?.onClick?.AddListener(OnPressReplay);
+        nextButton?.onClick?.AddListener(OnPressNext);
+    }
+
+    private void RemoveButtonListeners()
+    {
+        skipButton?.onClick?.RemoveListener(OnPressSkip);
+        replayButton?.onClick?.RemoveListener(OnPressReplay);
+        nextButton?.onClick?.RemoveListener(OnPressNext);
+    }
+
+    private void ToggleButtonsVisibility()
+    {
+        // Display buttons depending on coroutine state
+        if (DisplayCoroutine)
+        {
+            skipButton?.gameObject?.SetActive(true);
+            replayButton?.gameObject?.SetActive(false);
+            nextButton?.gameObject?.SetActive(false);
+        }
+        else
+        {
+            skipButton?.gameObject?.SetActive(false);
+            replayButton?.gameObject?.SetActive(true);
+            nextButton?.gameObject?.SetActive(true);
+        }
+    }
+
+    private void OnPressSkip()
     {
         if (displayLinesCoroutine != null)
         {
             StopCoroutine(displayLinesCoroutine);
             displayLinesCoroutine = null;
-            ShowAllLines();
         }
-        else
-        {
-            HideUI();
-        }
+        ShowAllLines();
     }
+
+    private void OnPressNext()
+    {
+        onPressNext.Invoke();
+        HideUI();
+    }
+
+    private void OnPressReplay()
+    {
+        onPressReplay.Invoke();
+        HideUI();
+    }
+    #endregion
 }

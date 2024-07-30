@@ -17,7 +17,7 @@ MonoBehaviour:
   uiColor: {r: 0.93725497, g: 0.32941177, b: 0.32156864, a: 1}
   colorizeIcon: 0
   unlockTier: 1
-  scoreMultiplierBonus: 2
+  scoreMultiplierBonus: 1.5
   description: "La m\xEAme en plus vite."
   tempoMultiplier: 1.25
-  multiplyScoreByTempo: 0
+  multiplyScoreByTempo: 1

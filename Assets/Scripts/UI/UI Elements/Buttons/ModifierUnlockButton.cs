@@ -67,6 +67,7 @@ public class ModifierUnlockButton : MonoBehaviour
 
     public void ShowStats() => showStats = true;
     public void HideStats() => showStats = false;
+    public void Select() => button?.Select();
 
     private void OnClick() => onClick.Invoke(modifier);
 }

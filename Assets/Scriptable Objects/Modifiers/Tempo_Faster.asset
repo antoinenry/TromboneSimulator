@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modName: Supersonique
   icon: {fileID: 755006580, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  uiColor: {r: 1, g: 1, b: 1, a: 1}
+  colorizeIcon: 0
   unlockTier: 2
-  scoreMultiplierBonus: 1.1
+  scoreMultiplierBonus: 2
   description: "La m\xEAme en plus vite!"
   tempoMultiplier: 1.75
   multiplyScoreByTempo: 1

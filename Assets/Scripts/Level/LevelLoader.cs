@@ -48,23 +48,16 @@ public class LevelLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        MenuUI.onSelectLevel.AddListener(OnMenuSelectLevel);
         MenuUI.onStartLevel.AddListener(OnMenuStartLevel);
     }
 
     private void OnDisable()
     {
-        MenuUI.onSelectLevel.RemoveListener(OnMenuSelectLevel);
         MenuUI.onStartLevel.RemoveListener(OnMenuStartLevel);
     }
     #endregion
 
-    #region MENU CONTROLS
-    private void OnMenuSelectLevel(Level selectedLevel)
-    {
-
-    }
-        
+    #region MENU CONTROLS        
     private void OnMenuStartLevel()
     {
         Level selectedLevel = MenuUI.Get<LevelSelectionScreen>()?.GetSelectedLevel();
@@ -180,10 +173,18 @@ public class LevelLoader : MonoBehaviour
         startLevelCoroutine = StartCoroutine(LevelStartCoroutine());
     }
 
+    public void RestartLevel()
+    {
+        LoadLevel(LoadedMode, LoadedLevel);
+        StartLevel();
+    }
+
     private IEnumerator LevelStartCoroutine()
     {
-        // Wait for music to finish loading
+        // Initialize music
         while (musicPlayer.IsLoading) yield return null;
+        musicPlayer.Stop();
+        musicPlayer.playTime = 0f;
         // Reactivate pause button
         GUI?.SetPauseButtonActive(true);
         // Initialize note spawn: display first notes
@@ -396,9 +397,29 @@ public class LevelLoader : MonoBehaviour
             UILevelComplete.levelProgress = levelProgress;
             UILevelComplete.levelScore = levelScore;
             UILevelComplete.ShowUI();
-            yield return new WaitWhile(() => UILevelComplete.IsVisible);
+            yield return new WaitWhile(() => UILevelComplete.DisplayCoroutine);
         }
-        QuitLevel();
+        // Show unlock screen on top of score screen
+        ModifierUnlockScreen UIModUnlock = MenuUI.Get<ModifierUnlockScreen>();
+        if (UIModUnlock)
+        {
+            UIModUnlock.ShowUI();
+            yield return new WaitWhile(() =>  UIModUnlock.IsVisible);
+        }
+        // Wait for score screen to close and chose action
+        if (UILevelComplete)
+        {
+            UILevelComplete.onPressNext.AddListener(QuitLevel);
+            UILevelComplete.onPressReplay.AddListener(RestartLevel);
+            yield return new WaitWhile(() => UILevelComplete.IsVisible);
+            UILevelComplete.onPressNext.RemoveListener(QuitLevel);
+            UILevelComplete.onPressReplay.RemoveListener(RestartLevel);
+        }
+        // If no UI, just quit
+        else
+        {
+            QuitLevel();
+        }
     }
 
     public void QuitLevel()

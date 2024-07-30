@@ -1,13 +1,20 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ModifierUnlockScreen : MenuUI
 {
     [Header("Components")]
+    public TromboneBuildStack modifierStack;
     public ModifierUnlockButton modifierButtonPrefab;
     public RectTransform modifierButtonContainer;
+    public Button validateButton;
     [Header("Configuration")]
     public TromboneBuildModifier[] modifiers;
     public float modifierContainerSizeMargin = 0f;
+    public DialogBoxScreen.Dialog applyModDialog;
+
+    private TromboneBuildModifier selectedModifier;
+    private DialogBoxScreen dialogBox;
 
     private float ModifierButtonWidth
     {
@@ -23,16 +30,10 @@ public class ModifierUnlockScreen : MenuUI
         Update();
     }
 
-    private void OnEnable()
+    protected override void Awake()
     {
-        UpdateButtonInstances(out ModifierUnlockButton[] buttons);
-        AddButtonListeners(buttons);
-    }
-
-    private void OnDisable()
-    {
-        UpdateButtonInstances(out ModifierUnlockButton[] buttons);
-        RemoveButtonListeners(buttons);
+        base.Awake();
+        dialogBox = Get<DialogBoxScreen>();
     }
 
     protected override void Update()
@@ -41,13 +42,25 @@ public class ModifierUnlockScreen : MenuUI
         bool buttonChanges = UpdateButtonInstances(out ModifierUnlockButton[] buttons);
         UpdateButtonContent(buttons);
         UpdateButtonContainerSize(buttons.Length);
-        if (buttonChanges && Application.isPlaying) AddButtonListeners(buttons);
+        if (buttonChanges && Application.isPlaying) AddModifierButtonsListeners(buttons);
     }
 
     public override void ShowUI()
     {
         base.ShowUI();
+        validateButton?.onClick?.AddListener(OnClickValidateButton);
         GameContentPicker.PickModifiers(ref modifiers, progress:GameProgress.Current);
+        UpdateButtonInstances(out ModifierUnlockButton[] buttons);
+        AddModifierButtonsListeners(buttons);
+        SelectModifier(buttons, 0);
+    }
+
+    public override void HideUI()
+    {
+        base.HideUI();
+        validateButton?.onClick?.RemoveListener(OnClickValidateButton);
+        UpdateButtonInstances(out ModifierUnlockButton[] buttons);
+        RemoveModifiersButtonsListeners(buttons);
     }
 
     private bool UpdateButtonInstances(out ModifierUnlockButton[] buttons)
@@ -80,13 +93,21 @@ public class ModifierUnlockScreen : MenuUI
         }
     }
 
-    private void AddButtonListeners(ModifierUnlockButton[] buttons)
+    private void SelectModifier(ModifierUnlockButton[] buttons, int index)
+    {
+        int buttonCount = buttons != null ? buttons.Length : 0;
+        if (index < 0 || index >= buttonCount || buttons[index] == null) return;
+        selectedModifier = buttons[index].modifier;
+        buttons[index].Select();
+    }
+
+    private void AddModifierButtonsListeners(ModifierUnlockButton[] buttons)
     {
         if (buttons == null || buttons.Length == 0) return;
         foreach (ModifierUnlockButton button in buttons) button?.onClick?.AddListener(OnClickModifierButton);
     }
 
-    private void RemoveButtonListeners(ModifierUnlockButton[] buttons)
+    private void RemoveModifiersButtonsListeners(ModifierUnlockButton[] buttons)
     {
         if (buttons == null || buttons.Length == 0) return;
         foreach (ModifierUnlockButton button in buttons) button?.onClick?.RemoveListener(OnClickModifierButton);
@@ -102,6 +123,33 @@ public class ModifierUnlockScreen : MenuUI
 
     private void OnClickModifierButton(TromboneBuildModifier modifier)
     {
-        GameProgress.Current?.TrySetLock(modifier, false);
+        selectedModifier = modifier;
+    }
+
+    private void OnClickValidateButton()
+    {
+        GameProgress.Current?.TrySetLock(selectedModifier, false);
+        if (dialogBox != null && selectedModifier != null)
+        {
+            dialogBox.configuration = applyModDialog;
+            dialogBox.configuration.bottomText = selectedModifier.modName;
+            dialogBox.onAnswer.AddListener(OnApplyAnswer);
+            dialogBox.ShowUI();
+        }
+        else
+            HideUI();
+
+    }
+
+    private void OnApplyAnswer(bool apply)
+    {
+        if (dialogBox != null) dialogBox.onAnswer.RemoveListener(OnApplyAnswer);
+        if (apply)
+        {
+            if (modifierStack == null) return;
+            modifierStack.TryAddModifier(selectedModifier);
+            modifierStack.ApplyStack();
+        }
+        HideUI();
     }
 }

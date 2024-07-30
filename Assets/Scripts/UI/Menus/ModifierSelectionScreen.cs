@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class ModifierSelectionScreen : MenuUI
 {
+    [Header("Components")]
     public TromboneBuildStack modifierStack;
-    [Header("UI Components")]
     public ModifierSelectionButton modifierTogglePrefab;
     public LayoutGroupScroller modifierGrid;
     public ModifierInfoPanel modifierInfoPanel;

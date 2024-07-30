@@ -17,7 +17,7 @@ MonoBehaviour:
   uiColor: {r: 0.70980394, g: 0.9686275, b: 0.48235297, a: 1}
   colorizeIcon: 0
   unlockTier: 0
-  scoreMultiplierBonus: 0.9
+  scoreMultiplierBonus: 0.75
   description: "Par le pouvoir de la camomille, on se d\xE9tend et on joue un peu
     moins vite."
   tempoMultiplier: 0.8

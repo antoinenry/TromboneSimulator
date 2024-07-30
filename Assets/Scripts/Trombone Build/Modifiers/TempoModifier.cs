@@ -5,8 +5,6 @@ public class TempoModifier : TromboneBuildModifier
 {
     public float tempoMultiplier = 1f;
     public bool multiplyScoreByTempo = true;
-
-    public override float ScoreMultiplier => multiplyScoreByTempo ? tempoMultiplier * base.ScoreMultiplier : base.ScoreMultiplier;
     public override string StatDescription => "Tempo x" + tempoMultiplier + "\n" + base.StatDescription;
 
     public override void ApplyTo(TromboneBuild build)
