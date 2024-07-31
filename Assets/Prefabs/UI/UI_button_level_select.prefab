@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 2796536847522837534}
   - component: {fileID: 7747301083455630852}
   - component: {fileID: 2796536847522837535}
+  - component: {fileID: -2542129899591144828}
   m_Layer: 5
   m_Name: UI_button_level_select
   m_TagString: Untagged
@@ -290,13 +291,13 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2796536847522837535}
-          m_TargetAssemblyTypeName: LevelSelectionButton, Assembly-CSharp
-          m_MethodName: OnSelect
-          m_Mode: 1
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+          m_MethodName: PlayOneShot
+          m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_ObjectArgument: {fileID: 8300000, guid: 2de5940c89e68164a8007ae24de6ed2d, type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -339,6 +340,19 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-2542129899591144828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2796536847522837533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ed713693b0d00408f90cfa0b90866b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundIndex: 1
 --- !u!1 &2796536847725648801
 GameObject:
   m_ObjectHideFlags: 0

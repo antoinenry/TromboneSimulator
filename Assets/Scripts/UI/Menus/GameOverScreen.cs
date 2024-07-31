@@ -23,7 +23,7 @@ public class GameOverScreen : MenuUI
             if (giveUpButton != null) giveUpButton.onClick.AddListener(GiveUp);
         }
         // Detach hand cursor from trombone
-        if (cursor != null) cursor.cursorState &= ~HandCursor.CursorState.Trombone;
+        if (cursor != null) cursor.State &= ~HandCursor.CursorState.Trombone;
         base.ShowUI();
     }
 

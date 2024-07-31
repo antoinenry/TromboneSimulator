@@ -29,7 +29,7 @@ public class PauseScreen : MenuUI
         base.ShowUI();
         if (Application.isPlaying) EnableButtons();
         // Detach hand cursor from trombone
-        if (cursor != null) cursor.cursorState &= ~HandCursor.CursorState.Trombone;
+        if (cursor != null) cursor.State &= ~HandCursor.CursorState.Trombone;
     }
 
     override public void HideUI()

@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2040580305949621832}
   - component: {fileID: 1825840212032619724}
   - component: {fileID: 4547584434677503931}
+  - component: {fileID: 8243823140468261466}
+  - component: {fileID: 7100635751842878479}
   m_Layer: 5
   m_Name: UI_button_modifier_activate
   m_TagString: Untagged
@@ -219,6 +221,32 @@ MonoBehaviour:
   onToggle:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8243823140468261466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040580305949621830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa77984d833972040a58fd3f30b9826e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundIndex: 0
+--- !u!114 &7100635751842878479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040580305949621830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ed713693b0d00408f90cfa0b90866b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundIndex: 1
 --- !u!1 &2040580306135510190
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,7 +54,7 @@ public class LoadingScreen : MenuUI
             {
                 SetOrchestraLayout(trackGenerator.music.PartNames);
                 ResetOrchestraLoadProgress();
-                if (cursor != null) cursor.cursorState &= ~HandCursor.CursorState.Visible;
+                if (cursor != null) cursor.State &= ~HandCursor.CursorState.Visible;
                 ShowUI();
             }
             if (loadingSlider != null) loadingSlider.value = progress * loadingSlider.maxValue;
@@ -65,7 +65,7 @@ public class LoadingScreen : MenuUI
             if (IsVisible == true)
             {
                 SetOrchestraLayout(null);
-                if (cursor != null) cursor.cursorState |= HandCursor.CursorState.Visible;
+                if (cursor != null) cursor.State |= HandCursor.CursorState.Visible;
                 HideUI();
             }
             onLoadingScreenVisible?.Invoke(this, false);

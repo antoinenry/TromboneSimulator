@@ -7,15 +7,17 @@ using System.Collections.Generic;
 [ExecuteAlways]
 public abstract class MenuUI : MonoBehaviour
 {
+    [Header("General UI")]
     public RectTransform UI;
-    public bool showUI;
-    public bool startVisible;
-    [Header("Events")]
+    public bool showUI = true;
+    public bool startVisible = false;
+    public bool enableTromboneGrab = true;
     public UnityEvent onShowUI;
     public UnityEvent onHideUI;
 
     static public List<MenuUI> visibleMenuUis;
     static public HandCursor cursor;
+    static public UISoundFXSource SFXSource;
 
     static private Dictionary<Type, MenuUI> MenuUIs;
 
@@ -37,6 +39,7 @@ public abstract class MenuUI : MonoBehaviour
     protected virtual void Awake()
     {
         if (cursor == null) cursor = FindObjectOfType<HandCursor>(true);
+        if (SFXSource == null) SFXSource = FindObjectOfType<UISoundFXSource>(true);
         if (visibleMenuUis == null) visibleMenuUis = new List<MenuUI>();
         if (MenuUIs == null) MenuUIs = FindAllMenuUIs();
         if (onStartLevel == null) onStartLevel = new();
@@ -71,6 +74,7 @@ public abstract class MenuUI : MonoBehaviour
         if (Application.isPlaying)
         {
             if (visibleMenuUis.Contains(this) == false) visibleMenuUis.Add(this);
+            if (cursor != null) cursor.enableTromboneGrab = enableTromboneGrab;
         }
     }
 
@@ -83,6 +87,7 @@ public abstract class MenuUI : MonoBehaviour
         if (Application.isPlaying)
         {
             visibleMenuUis.RemoveAll(m => m == this);
+            if (cursor != null) cursor.enableTromboneGrab = (visibleMenuUis.Find(m => m.enableTromboneGrab == false) == null);
         }
     }
 

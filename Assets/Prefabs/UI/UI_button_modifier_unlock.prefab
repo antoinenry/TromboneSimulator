@@ -639,6 +639,7 @@ GameObject:
   - component: {fileID: 6201867289546590484}
   - component: {fileID: 6201867289546590568}
   - component: {fileID: 6201867289546590569}
+  - component: {fileID: 6084627698809351837}
   m_Layer: 5
   m_Name: UI_button_modifier_unlock
   m_TagString: Untagged
@@ -812,3 +813,19 @@ MonoBehaviour:
   icon: {fileID: 4193798609878586312}
   modifier: {fileID: 11400000, guid: dbad7aa75977a40418d9615ed3b99260, type: 2}
   showStats: 0
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6084627698809351837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6201867289546590486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ed713693b0d00408f90cfa0b90866b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundIndex: 0

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
 
@@ -50,7 +51,7 @@ public class HandCursor : BaseInput
     [Header("Outputs")]
     public Vector2 cursorPosition;
     public Vector2 handPosition;
-    public CursorState cursorState;
+    [SerializeField] private CursorState cursorState;
     [Header("Control")]
     public int clickButtonNumber = 0;
     public int secondaryClickButtonNumber = 1;
@@ -59,12 +60,27 @@ public class HandCursor : BaseInput
     [Header("Movement")]
     public float sensibility = 1f;
     public bool keepOnScreen = true;
+    public bool enableTromboneGrab = true;
     [Header("Look")]
     public bool roundDisplayPosition;
     public HandSprites sprites;
     public string defaultSortingLayer;
     public string tromboneSortingLayer;
+    [Header("Events")]
+    public UnityEvent<CursorState> onStateChange;
 
+    public CursorState State
+    {
+        get => cursorState;
+        set
+        {
+            if (value != cursorState)
+            {
+                cursorState = value;
+                onStateChange.Invoke(cursorState);
+            }
+        }
+    }
     public bool MainClick { get; private set; }
     public bool SecondaryClick { get; private set; }
 
@@ -128,10 +144,12 @@ public class HandCursor : BaseInput
         // Hand animation
         if (handRenderer != null)
         {
-            GetCurrentState(ref cursorState);
-            handRenderer.sprite = sprites.GetSprite(cursorState);
+            CursorState newState = cursorState;
+            GetCurrentState(ref newState);
+            handRenderer.sprite = sprites.GetSprite(newState);
             // Sorting layer changes when grabbing trombone
-            handRenderer.sortingLayerName = cursorState.HasFlag(CursorState.Trombone) ? tromboneSortingLayer : defaultSortingLayer;
+            handRenderer.sortingLayerName = newState.HasFlag(CursorState.Trombone) ? tromboneSortingLayer : defaultSortingLayer;
+            State = newState;
         }
     }
 

@@ -18,6 +18,13 @@ public class ModifierSelectionButton : MonoBehaviour
     public UnityEvent<TromboneBuildModifier,bool> onSelect;
     public UnityEvent<TromboneBuildModifier, bool> onToggle;
 
+    private UIToggleSFX sfxSource;
+
+    private void Awake()
+    {
+        sfxSource = GetComponentInChildren<UIToggleSFX>(true);
+    }
+
     private void Update()
     {
         if (button) button.colors = active ? activeColors : inactiveColors;
@@ -49,6 +56,7 @@ public class ModifierSelectionButton : MonoBehaviour
     {
         if (modifierAsset == null) return;
         active = !active;
+        if (sfxSource) sfxSource.OnToggle(active);
         onToggle.Invoke(modifierAsset, active);
     }
 
