@@ -16,16 +16,16 @@ public class LoadingScreen : MenuUI
     public Color orchestraLowTint = Color.black;
     public Color orchestraHighTint = Color.white;
 
-    private AudioTrackGenerator trackGenerator;
-    //private HandCursor cursor;
+    private AudioTrackGenerator trackGenerator;    
     private Image[] loadingOrchestra;
+    private UILoadingSFX loadingSFX;
 
     protected override void Awake()
     {
         base.Awake();
         trackGenerator = FindObjectOfType<AudioTrackGenerator>(true);
-        //cursor = FindObjectOfType<HandCursor>(true);
-        if (loadingOrchestraLayout != null) loadingOrchestra = loadingOrchestraLayout.GetComponentsInChildren<Image>(true);
+        loadingOrchestra = loadingOrchestraLayout?.GetComponentsInChildren<Image>(true);
+        loadingSFX = GetComponent<UILoadingSFX>();
     }
 
     private void OnEnable()
@@ -47,6 +47,7 @@ public class LoadingScreen : MenuUI
 
     private void OnLoadMusic(float progress)
     {
+        // Loading
         if (progress < 1f)
         {
             onLoadingScreenVisible?.Invoke(this, true);
@@ -60,6 +61,7 @@ public class LoadingScreen : MenuUI
             if (loadingSlider != null) loadingSlider.value = progress * loadingSlider.maxValue;
             SetOrchestraLoadProgress(trackGenerator.CurrentPart, trackGenerator.CurrentPartGeneratedNotes, trackGenerator.CurrentPartLength);
         }
+        // Complete
         else
         {
             if (IsVisible == true)
@@ -70,6 +72,8 @@ public class LoadingScreen : MenuUI
             }
             onLoadingScreenVisible?.Invoke(this, false);
         }
+        // SFX
+        loadingSFX?.OnLoadingProgress(progress);
     }
 
     private void SetOrchestraLayout(string[] instrumentNames)

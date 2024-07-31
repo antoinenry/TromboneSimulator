@@ -17,6 +17,6 @@ MonoBehaviour:
   uiColor: {r: 1, g: 1, b: 1, a: 1}
   colorizeIcon: 0
   unlockTier: 1
-  scoreMultiplierBonus: 1.25
+  scoreMultiplierBonus: 1.5
   description: "R\xE9duit la  barre de vie."
   additionalMaxHealth: -0.5
