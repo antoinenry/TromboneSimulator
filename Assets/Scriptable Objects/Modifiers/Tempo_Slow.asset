@@ -18,7 +18,6 @@ MonoBehaviour:
   colorizeIcon: 0
   unlockTier: 1
   scoreMultiplierBonus: 0.75
-  description: "Par le pouvoir de la camomille, on se d\xE9tend et on joue un peu
-    moins vite."
+  description: Diminue le tempo.
   tempoMultiplier: 0.8
   multiplyScoreByTempo: 1

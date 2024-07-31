@@ -26,7 +26,7 @@ MonoBehaviour:
   parts:
   - name: Trombone Sib
     notes:
-    - tone: 55
+    - tone: 60
       velocity: 0.859375
       startTime: 1
       duration: 2

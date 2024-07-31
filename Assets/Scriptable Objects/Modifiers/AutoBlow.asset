@@ -17,6 +17,6 @@ MonoBehaviour:
   uiColor: {r: 0.882353, g: 0.8313726, b: 0.54901963, a: 1}
   colorizeIcon: 0
   unlockTier: 0
-  scoreMultiplierBonus: 0.85
+  scoreMultiplierBonus: 0.8
   description: "Les notes sortent toutes seules. Reste \xE0 jouer juste."
   blowControl: 13

@@ -104,7 +104,7 @@ public class LevelLoader : MonoBehaviour
         {
             musicPlayer.Stop();
             musicPlayer.loop = false;
-            musicPlayer.LoadMusic(LoadedLevel.music, playedInstrument: trombone.Sampler);
+            musicPlayer.LoadMusic(LoadedLevel?.music, playedInstrument: trombone.Sampler);
             //musicPlayer.onPlayerUpdate.AddListener(OnMusicPlayerUpdate);
             musicPlayer.onMusicEnd.AddListener(OnMusicEnd);
         }
@@ -408,7 +408,7 @@ public class LevelLoader : MonoBehaviour
         // Transition
         yield return new WaitForSeconds(levelEndTransitionDuration);
         // Unload level
-        UnloadLevel();
+        //UnloadLevel();
         // Show score screen
         LevelCompleteScreen UILevelComplete = MenuUI.Get<LevelCompleteScreen>();
         if (UILevelComplete)

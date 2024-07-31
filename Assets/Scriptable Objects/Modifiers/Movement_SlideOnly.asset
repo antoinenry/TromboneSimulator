@@ -18,7 +18,7 @@ MonoBehaviour:
   colorizeIcon: 0
   unlockTier: 0
   scoreMultiplierBonus: 0.3
-  description: Pas de pression.
+  description: "D\xE9sactive les notes horizontales."
   enabledMovements: 1
   toneOffset: 0
   changeSlideLength: 0

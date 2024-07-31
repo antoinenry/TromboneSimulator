@@ -18,7 +18,7 @@ MonoBehaviour:
   colorizeIcon: 0
   unlockTier: 1
   scoreMultiplierBonus: 0.3
-  description: C'est un peu comme une grosse trompette sans pistons.
+  description: "D\xE9sactive les notes verticales."
   enabledMovements: 2
   toneOffset: 0
   changeSlideLength: 0

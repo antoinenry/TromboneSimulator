@@ -13,8 +13,17 @@ MonoBehaviour:
   m_Name: Luigi
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: d5c6c7d00a594cf46a63269b57870a34, type: 2}
-  objectives:
-    end:
-      enabled: 0
-    scores: []
   unlockTier: 1
+  notePlacements: []
+  objectives:
+  - type: EndMusic
+    parameters: []
+  - type: Highscore
+    parameters:
+    - 100000
+  - type: Highscore
+    parameters:
+    - 200000
+  - type: Highscore
+    parameters:
+    - 400000

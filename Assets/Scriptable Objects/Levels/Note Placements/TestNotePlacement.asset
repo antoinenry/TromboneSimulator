@@ -24,4 +24,4 @@ MonoBehaviour:
     columns: 8
     tonePerColumn: 1
   noteCoordinates:
-  - {x: 3, y: 2}
+  - {x: 5, y: 4}

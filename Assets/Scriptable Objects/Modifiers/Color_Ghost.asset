@@ -18,5 +18,5 @@ MonoBehaviour:
   colorizeIcon: 1
   unlockTier: 1
   scoreMultiplierBonus: 1
-  description: "Trouv\xE9 dans un vieux manoir par un grand moustachu."
+  description: "Trouv\xE9 dans un vieux manoir."
   color: {r: 0.8962264, g: 0.88048285, b: 0.81590426, a: 0.49019608}

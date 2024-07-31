@@ -17,6 +17,6 @@ MonoBehaviour:
   uiColor: {r: 0.93725497, g: 0.8117648, b: 0.2901961, a: 1}
   colorizeIcon: 0
   unlockTier: 1
-  scoreMultiplierBonus: 0.85
-  description: "Boost de confiance (toujours avec mod\xE9ration)"
-  additionalMaxHealth: 0.5
+  scoreMultiplierBonus: 0.8
+  description: Augmente la barre de vie.
+  additionalMaxHealth: 0.25

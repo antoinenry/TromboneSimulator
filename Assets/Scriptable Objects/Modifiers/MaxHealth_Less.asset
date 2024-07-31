@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0259dfbe41bac46b521e9239acb545, type: 3}
   m_Name: MaxHealth_Less
   m_EditorClassIdentifier: 
-  modName: Perfectionniste
+  modName: Tabac
   icon: {fileID: 755006580, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  uiColor: {r: 1, g: 1, b: 1, a: 1}
+  colorizeIcon: 0
   unlockTier: 1
-  scoreMultiplierBonus: 1.15
-  description: "Pas le droit \xE0 l'erreur!"
+  scoreMultiplierBonus: 1.25
+  description: "R\xE9duit la  barre de vie."
   additionalMaxHealth: -0.5

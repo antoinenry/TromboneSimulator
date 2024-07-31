@@ -18,5 +18,5 @@ MonoBehaviour:
   colorizeIcon: 1
   unlockTier: 1
   scoreMultiplierBonus: 1
-  description: Parfait pour jouer vite
+  description: Parfait pour jouer vite!
   color: {r: 0.31372547, g: 0.49371254, b: 0.85882354, a: 1}

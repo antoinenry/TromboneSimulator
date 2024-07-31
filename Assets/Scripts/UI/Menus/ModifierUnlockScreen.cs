@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ModifierUnlockScreen : MenuUI
 {
@@ -7,7 +6,6 @@ public class ModifierUnlockScreen : MenuUI
     public TromboneBuildStack modifierStack;
     public ModifierUnlockButton modifierButtonPrefab;
     public RectTransform modifierButtonContainer;
-    public Button validateButton;
     [Header("Configuration")]
     public TromboneBuildModifier[] modifiers;
     public float modifierContainerSizeMargin = 0f;
@@ -23,11 +21,6 @@ public class ModifierUnlockScreen : MenuUI
             RectTransform rt = modifierButtonPrefab?.GetComponent<RectTransform>();
             return rt != null ? rt.rect.width : 0f;
         }
-    }
-
-    private void OnValidate()
-    {
-        Update();
     }
 
     protected override void Awake()
@@ -48,17 +41,15 @@ public class ModifierUnlockScreen : MenuUI
     public override void ShowUI()
     {
         base.ShowUI();
-        validateButton?.onClick?.AddListener(OnClickValidateButton);
         GameContentPicker.PickModifiers(ref modifiers, progress:GameProgress.Current);
         UpdateButtonInstances(out ModifierUnlockButton[] buttons);
         AddModifierButtonsListeners(buttons);
-        SelectModifier(buttons, 0);
+        //SelectModifier(buttons, 0);
     }
 
     public override void HideUI()
     {
         base.HideUI();
-        validateButton?.onClick?.RemoveListener(OnClickValidateButton);
         UpdateButtonInstances(out ModifierUnlockButton[] buttons);
         RemoveModifiersButtonsListeners(buttons);
     }
@@ -124,10 +115,6 @@ public class ModifierUnlockScreen : MenuUI
     private void OnClickModifierButton(TromboneBuildModifier modifier)
     {
         selectedModifier = modifier;
-    }
-
-    private void OnClickValidateButton()
-    {
         GameProgress.Current?.TrySetLock(selectedModifier, false);
         if (dialogBox != null && selectedModifier != null)
         {
@@ -138,7 +125,6 @@ public class ModifierUnlockScreen : MenuUI
         }
         else
             HideUI();
-
     }
 
     private void OnApplyAnswer(bool apply)

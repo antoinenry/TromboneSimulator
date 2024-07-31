@@ -27,4 +27,4 @@ MonoBehaviour:
     - 60000
   - type: Highscore
     parameters:
-    - 12000
+    - 100000
