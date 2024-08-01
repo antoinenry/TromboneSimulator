@@ -31,7 +31,7 @@ MonoBehaviour:
     maxSlideTone: 7
     enablePressureMovement: 1
   tromboneAudio:
-    sampler: {fileID: 11400000, guid: b9e0e621eb1e32d4c8a6c3500d1d454b, type: 2}
+    sampler: {fileID: 11400000, guid: 33b726ba1c0c24f4d964af32631cd81a, type: 2}
   tromboneAuto:
     autoSettings:
       blowControl: 0

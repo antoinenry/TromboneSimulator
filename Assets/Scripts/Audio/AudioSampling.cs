@@ -1,31 +1,31 @@
 using System;
+using System.ComponentModel.Design;
 using UnityEngine;
+using UnityEngine.Networking;
 
 static public class AudioSampling
 {
-    static public float[] GetSamples(AudioClip audio)
-    {
-        float[] samples;
-        if (audio != null)
-        {
-            samples = new float[audio.samples];
-            audio.GetData(samples, 0);
-        }
-        else samples = null;
-        return samples;
-    }
 
     static public float[] GetMonoSamples(AudioClip audio)
     {
-        float[] samples = GetSamples(audio);
+        float[] samples = audio?.GetSamples();
         if (samples != null && audio.channels == 2) return StereoToMono(samples);
         return samples;
     }
 
     static public float[] GetStereoSamples(AudioClip audio, float pan = 0f)
     {
-        float[] samples = GetSamples(audio);
+        float[] samples = audio?.GetSamples();
         if (samples != null && audio.channels == 1) return MonoToStereo(samples, pan);
+        return samples;
+    }
+
+    static public float[] GetSamples(this AudioClip clip)
+    {
+        int sampleLength = clip.samples;
+        int channels = clip.channels;
+        float[] samples = new float[channels * sampleLength];
+        clip.GetData(samples, 0);
         return samples;
     }
 
@@ -163,5 +163,35 @@ static public class AudioSampling
         AudioClip clone = AudioClip.Create(clipName, original.samples, original.channels, original.frequency, false);
         clone.SetData(loadedAudioData, 0);
         return clone;
+    }
+
+    static public int FindNextSilence(float[] samples, int fromIndex, int minSilenceLength, out int silenceLength, int channels = 1, float threshold = 0f)
+    {
+        silenceLength = 0;
+        int sampleCount = samples != null ? samples.Length : 0;
+        if (sampleCount == 0 || fromIndex >= sampleCount || minSilenceLength < 0) return -1;
+        int sampleIndex = 0, silenceStartIndex = -1;
+        // Find silence start
+        for (sampleIndex = fromIndex * channels; sampleIndex < sampleCount; sampleIndex++)
+        {
+            if (Mathf.Abs(samples[sampleIndex]) > threshold)
+            {
+                silenceLength = 0;
+                silenceStartIndex = sampleIndex;
+                continue;
+            }
+            if (++silenceLength >= minSilenceLength) break;
+        }
+        // No long enough silence found
+        if (sampleIndex >= sampleCount) return -1;
+        // Silence found, now find silence end
+        for (; sampleIndex < sampleCount; sampleIndex++)
+        {
+            silenceLength = sampleIndex - silenceStartIndex;
+            if (Mathf.Abs(samples[sampleIndex]) > threshold) break; 
+        }
+        // Return index and duration scaled with number of channels
+        silenceLength /= channels;
+        return silenceStartIndex / channels;
     }
 }

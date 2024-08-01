@@ -1,6 +1,10 @@
 using UnityEngine;
 using System;
 
+using static InstrumentDictionary;
+using static AudioSampling;
+using UnityEngine.Networking;
+
 [CreateAssetMenu(fileName = "NewInstrument", menuName = "Trombone Hero/Instruments/Instrument")]
 public class SamplerInstrument : ScriptableObject
 {
@@ -93,6 +97,7 @@ public class SamplerInstrument : ScriptableObject
 
     public void CreateAudioWithoutAttacks(int smoothInSamples, int smoothOutSamples)
     {
+        if (fullAudio == null) return;
         // Get audio data
         int sampleLength = fullAudio.samples;
         int channels = fullAudio.channels;
@@ -106,7 +111,7 @@ public class SamplerInstrument : ScriptableObject
             for (int s = 0; s < tone.attackSamples; s++)
                 samples[tone.audioStartSamples + s] = 0f;
             // Smooth in
-            AudioSampling.FadeIn(ref samples, channels, smoothInSamples, tone.audioStartSamples + tone.attackSamples);
+            FadeIn(ref samples, channels, smoothInSamples, tone.audioStartSamples + tone.attackSamples);
             // Smooth out
             //AudioSampling.FadeOut(ref samples, channels, smoothOutSamples, tone.audioStartSamples + tone.audioDurationSamples);
         }
@@ -115,12 +120,12 @@ public class SamplerInstrument : ScriptableObject
         audioWithoutAttacks.SetData(samples, 0);
     }
 
-    public void SetTones(float lowTone, float highTone)
+    public void AutoSetTones(float lowTone, float highTone)
     {
-        SetTones(lowTone, highTone, Mathf.RoundToInt(highTone - lowTone + 1));
+        AutoSetTones(lowTone, highTone, Mathf.RoundToInt(highTone - lowTone + 1));
     }
 
-    public void SetTones(float lowTone, float highTone, int toneCount)
+    public void AutoSetTones(float lowTone, float highTone, int toneCount)
     {
         if (toneCount < 0) toneCount = 0;
         tones = new ToneInfo[toneCount];
@@ -128,13 +133,43 @@ public class SamplerInstrument : ScriptableObject
         float sampleCutLength = fullAudio != null ? (float)fullAudio.samples / toneCount : 0f;
         for (int t = 0; t < toneCount; t++)
         {
-            tones[t] = new ToneInfo()
+            tones[t] = new()
             {
                 tone = lowTone + t * toneStep,
                 name = ToneAttribute.GetNoteName(lowTone + t * toneStep),
                 audioStartSamples = Mathf.FloorToInt(sampleCutLength * t),
                 audioDurationSamples = Mathf.FloorToInt(sampleCutLength)
             };
+        }
+    }
+
+    public void AutoSetHits(DrumHitInfo[] drumHits, int minSilenceLength, float silenceThreshold = 0f)
+    {
+        float[] samples = fullAudio?.GetSamples();
+        int channels = fullAudio != null ? fullAudio.channels : 0;
+        int sampleCount = samples != null ? samples.Length : 0;
+        int hitCount = drumHits != null ? drumHits.Length : 0;
+        tones = new ToneInfo[hitCount];
+        int toneIndex = 0, sampleIndex = 0, silenceIndex, silenceLength;
+        // If audio starts with a silence, skip to the end of that silence
+        silenceIndex = FindNextSilence(samples, sampleIndex, minSilenceLength, out silenceLength, channels, silenceThreshold);
+        if (silenceIndex == 0) sampleIndex = silenceLength;
+        // Split audio around each silence
+        foreach (DrumHitInfo drumHit in drumHits)
+        {
+            // Get tone info from drumHits
+            tones[toneIndex] = new()
+            {
+                tone = drumHit.tones != null && drumHit.tones.Length > 0 ? drumHit.tones[0] : 0f,
+                name = drumHit.name
+            };
+            // Get sample positions from silences
+            silenceIndex = FindNextSilence(samples, sampleIndex, minSilenceLength, out silenceLength, channels, silenceThreshold);
+            tones[toneIndex].audioStartSamples = sampleIndex;
+            tones[toneIndex].audioDurationSamples = silenceIndex;
+            // Move drumhit and sample indices
+            toneIndex++;
+            sampleIndex = silenceIndex + silenceLength;
         }
     }
 
@@ -146,7 +181,7 @@ public class SamplerInstrument : ScriptableObject
             // For drumkits, one sound can be triggered by several alternative tones
             if (drumkit)
             {
-                InstrumentDictionary.FindCurrentAlternativeDrumHitTones(note.tone, out float[] altenativeTones);
+                FindCurrentAlternativeDrumHitTones(note.tone, out float[] altenativeTones);
                 if (altenativeTones != null) toneIndex = Array.FindIndex(tones, t => Array.IndexOf(altenativeTones, t.tone) != -1);
             }
             else
@@ -197,8 +232,8 @@ public class SamplerInstrument : ScriptableObject
     {
         lowTone = float.NaN;
         highTone = float.NaN;
-        if (fileName == null || InstrumentDictionary.Current == null) return false;
-        InstrumentDictionary.Current.FindOfficalName(fileName, out instrumentName);
+        if (fileName == null || Current == null) return false;
+        Current.FindOfficalName(fileName, out instrumentName);
         string[] noteNames = ToneAttribute.GetAllNoteNames();        
         foreach (string n in noteNames)
         {
