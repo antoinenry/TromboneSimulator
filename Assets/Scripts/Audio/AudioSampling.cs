@@ -183,7 +183,7 @@ static public class AudioSampling
             if (++silenceLength >= minSilenceLength) break;
         }
         // No long enough silence found, next silence is the end of the audio
-        if (sampleIndex >= sampleCount) return sampleCount - 1;
+        if (sampleIndex >= sampleCount) return (sampleCount / channels);
         // Silence found, now find silence end
         for (; sampleIndex < sampleCount; sampleIndex++)
         {
