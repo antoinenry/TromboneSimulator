@@ -3,9 +3,8 @@ using System;
 
 using static InstrumentDictionary;
 using static AudioSampling;
-using UnityEngine.Networking;
 
-[CreateAssetMenu(fileName = "NewInstrument", menuName = "Trombone Hero/Instruments/Instrument")]
+[CreateAssetMenu(fileName = "NewInstrument", menuName = "Trombone Hero/Sampler Instrument")]
 public class SamplerInstrument : ScriptableObject
 {
     [Serializable]

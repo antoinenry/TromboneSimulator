@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "NewContentLibrary", menuName = "Trombone Hero/Game Data/Game Content Library")]
+[CreateAssetMenu(fileName = "NewContentLibrary", menuName = "Trombone Hero/Game Content Library")]
 public class GameContentLibrary : ScriptableObject
 {
     [CurrentToggle] public bool isCurrent;

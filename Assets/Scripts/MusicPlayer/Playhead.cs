@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(fileName = "NewPlayhead", menuName = "Trombone Hero/Music/Playhead")]
+[CreateAssetMenu(fileName = "NewPlayhead", menuName = "Trombone Hero/Playhead")]
 public class Playhead : ScriptableObject
 {
     [Flags]

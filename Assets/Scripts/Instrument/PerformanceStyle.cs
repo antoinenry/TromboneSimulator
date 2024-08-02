@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewPerformanceStyle", menuName = "Trombone Hero/Instruments/Performance Style")]
+[CreateAssetMenu(fileName = "NewPerformanceStyle", menuName = "Trombone Hero/Performance Style")]
 public class PerformanceStyle : ScriptableObject
 {
     public bool useAsDefault;

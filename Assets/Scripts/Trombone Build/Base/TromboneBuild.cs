@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Reflection;
 
-[CreateAssetMenu(fileName = "NewTrombone", menuName = "Trombone Hero/Instruments/Trombone Customizer")]
+[CreateAssetMenu(fileName = "NewTrombone", menuName = "Trombone Hero/Trombone Build")]
 public class TromboneBuild : ScriptableObject
 {
     public TromboneCoreCustomizer tromboneCore = new();

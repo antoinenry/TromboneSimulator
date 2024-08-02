@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewOrchestra", menuName = "Trombone Hero/Instruments/Orchestra")]
+[CreateAssetMenu(fileName = "NewOrchestra", menuName = "Trombone Hero/Orchestra")]
 public class Orchestra : ScriptableObject
 {
     public InstrumentMixInfo[] instrumentInfo;

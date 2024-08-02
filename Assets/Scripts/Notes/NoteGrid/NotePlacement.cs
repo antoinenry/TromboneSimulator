@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "NewNotePlacement", menuName = "Trombone Hero/Game Data/Note Placement")]
+[CreateAssetMenu(fileName = "NewNotePlacement", menuName = "Trombone Hero/Note Placement")]
 public class NotePlacement : ScriptableObject
 {
     public NoteGridDimensions grid = NoteGridDimensions.DefaultTromboneGrid;

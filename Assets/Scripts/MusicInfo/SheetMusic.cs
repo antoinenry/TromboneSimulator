@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewSheetMusic", menuName = "Trombone Hero/Music/Sheet Music")]
+[CreateAssetMenu(fileName = "NewSheetMusic", menuName = "Trombone Hero/Sheet Music")]
 public class SheetMusic : ScriptableObject
 {
     [Header("Info")]

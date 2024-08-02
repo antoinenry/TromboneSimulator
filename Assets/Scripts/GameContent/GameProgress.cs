@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "NewGameProgress", menuName = "Trombone Hero/Game Data/Progress")]
+[CreateAssetMenu(fileName = "NewGameProgress", menuName = "Trombone Hero/Game Progress")]
 public class GameProgress : ScriptableObject
 {
     public static GameProgress Current => CurrentAssetsManager.GetCurrent<GameProgress>();

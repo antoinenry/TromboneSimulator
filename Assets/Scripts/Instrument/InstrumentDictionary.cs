@@ -2,7 +2,7 @@
 using System;
 
 [ExecuteAlways]
-[CreateAssetMenu(fileName = "NewInstrumentDictionary", menuName = "Trombone Hero/Instruments/Instrument Dictionary")]
+[CreateAssetMenu(fileName = "NewInstrumentDictionary", menuName = "Trombone Hero/Instrument Dictionary")]
 public class InstrumentDictionary : ScriptableObject
 {
     [Serializable]

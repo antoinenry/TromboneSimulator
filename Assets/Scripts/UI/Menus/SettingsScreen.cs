@@ -5,17 +5,17 @@ using UnityEngine.Events;
 [ExecuteAlways]
 public class SettingsScreen : MenuUI
 {
-    public GameState_old gameState;
-    public GameSettingsInfo settings;
+    //public GameState_old gameState;
+    //public GameSettingsInfo settings;
 
-    [Header("UI Components")]
-    public Button touchControlsButton;
-    public Button mouseControlsButton;
-    public Slider backingVolumeSlider;
-    public Slider gridLatencySlider;
-    public Button backButton;
+    //[Header("UI Components")]
+    //public Button touchControlsButton;
+    //public Button mouseControlsButton;
+    //public Slider backingVolumeSlider;
+    //public Slider gridLatencySlider;
+    //public Button backButton;
 
-    public UnityEvent onGoBack;
+    //public UnityEvent onGoBack;
 
     //protected override void Awake()
     //{

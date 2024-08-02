@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System;
-using UnityEditor.Experimental.GraphView;
 
-[CreateAssetMenu(fileName = "NewLevel", menuName = "Trombone Hero/Game Data/Level")]
+[CreateAssetMenu(fileName = "NewLevel", menuName = "Trombone Hero/Level")]
 public class Level : ScriptableObject, IUnlockableContent
 {
     public SheetMusic music;

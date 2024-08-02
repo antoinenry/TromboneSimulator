@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewNotePlacer", menuName = "Trombone Hero/Music/Note Placer")]
+[CreateAssetMenu(fileName = "NewNotePlacer", menuName = "Trombone Hero/Note Placer")]
 public class NotePlacer : ScriptableObject
 {   
     private struct NotePlacementRanking
