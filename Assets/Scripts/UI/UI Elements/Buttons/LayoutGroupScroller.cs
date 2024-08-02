@@ -19,8 +19,8 @@ public class LayoutGroupScroller : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            scrollPreviousButton?.onClick?.AddListener(ScrollUp);
-            scrollNextButton?.onClick?.AddListener(ScrollDown);
+            scrollPreviousButton?.onClick?.AddListener(ScrollPrevious);
+            scrollNextButton?.onClick?.AddListener(ScrollNext);
         }
     }
 
@@ -28,8 +28,8 @@ public class LayoutGroupScroller : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            scrollPreviousButton?.onClick?.RemoveListener(ScrollUp);
-            scrollNextButton?.onClick?.RemoveListener(ScrollDown);
+            scrollPreviousButton?.onClick?.RemoveListener(ScrollPrevious);
+            scrollNextButton?.onClick?.RemoveListener(ScrollNext);
         }
     }
 
@@ -79,9 +79,9 @@ public class LayoutGroupScroller : MonoBehaviour
         return true;
     }
 
-    private void ScrollUp() => displayOffset += scrollStep;
+    private void ScrollNext() => displayOffset += scrollStep;
 
-    private void ScrollDown() => displayOffset -= scrollStep;
+    private void ScrollPrevious() => displayOffset -= scrollStep;
 
     public void Clear()
     {

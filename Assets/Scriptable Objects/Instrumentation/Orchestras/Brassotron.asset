@@ -15,11 +15,11 @@ MonoBehaviour:
   instrumentInfo:
   - partName: AltoSax
     instrument: {fileID: 11400000, guid: 70c960cf1ee35fd46b2e05ca43af0400, type: 2}
-    volume: 1
+    volume: 0.8
     pan: 0.5
   - partName: TenorSax
     instrument: {fileID: 11400000, guid: 840bba917887279419fd4b2b55f2f57a, type: 2}
-    volume: 1
+    volume: 0.8
     pan: 0.3
   - partName: BarytonSax
     instrument: {fileID: 11400000, guid: 48b3be68a3da94c488bdf2aed622062a, type: 2}

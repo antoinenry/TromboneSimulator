@@ -22,7 +22,7 @@ public class LevelEditorInspector : Editor
         GUILayout.Button("Save changes");
         {
             if (levelEditor.levelAsset) EditorUtility.SetDirty(levelEditor.levelAsset);
-            if (levelEditor.notePlacementAsset) EditorUtility.SetDirty(levelEditor.notePlacementAsset);
+            if (levelEditor.NotePlacementAsset) EditorUtility.SetDirty(levelEditor.NotePlacementAsset);
         }
         EditorGUILayout.EndHorizontal();
     }

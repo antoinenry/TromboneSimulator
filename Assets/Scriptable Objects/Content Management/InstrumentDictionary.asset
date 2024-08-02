@@ -82,55 +82,69 @@ MonoBehaviour:
     tones:
     - 35
     - 36
+    interruptible: 0
   - name: Snare
     tones:
     - 38
     - 40
+    interruptible: 0
   - name: ClosedHiHat
     tones:
     - 42
     - 44
+    interruptible: 0
   - name: OpenHiHat
     tones:
     - 46
+    interruptible: 1
   - name: LowTom
     tones:
     - 41
     - 45
     - 69
+    interruptible: 0
   - name: MidTom
     tones:
     - 43
     - 47
+    interruptible: 0
   - name: HiTom
     tones:
     - 48
     - 50
+    interruptible: 0
   - name: Crash
     tones:
     - 49
+    interruptible: 0
   - name: Ride
     tones:
     - 51
     - 53
+    interruptible: 0
   - name: Splash
     tones:
     - 52
     - 55
     - 57
+    interruptible: 0
   - name: Bell
     tones:
     - 56
     - 54
     - 80
+    interruptible: 0
   - name: Rimshot
     tones:
     - 37
+    interruptible: 0
   - name: Woodblock
     tones:
     - 75
     - 76
     - 77
+    interruptible: 0
   - name: Handclap
     tones:
     - 39
+    interruptible: 0

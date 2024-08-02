@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: Rayman
+  m_Name: 1 Mii
   m_EditorClassIdentifier: 
-  music: {fileID: 11400000, guid: ca916547c25c4be44844bba13c27e95c, type: 2}
-  unlockTier: 2
+  music: {fileID: 11400000, guid: 74e8a4f689ebe774384177acf6ce8bbe, type: 2}
+  unlockTier: 0
+  notePlacements:
+  - {fileID: 11400000, guid: ae82a993813003149aea8a5ec29f7ead, type: 2}
   objectives:
   - type: EndMusic
     parameters: []
   - type: Highscore
     parameters:
+    - 30000
+  - type: Highscore
+    parameters:
+    - 60000
+  - type: Highscore
+    parameters:
     - 100000
-  - type: Highscore
-    parameters:
-    - 300000
-  - type: Highscore
-    parameters:
-    - 600000

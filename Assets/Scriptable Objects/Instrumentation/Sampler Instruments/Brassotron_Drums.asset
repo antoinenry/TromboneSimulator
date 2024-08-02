@@ -22,85 +22,85 @@ MonoBehaviour:
     tone: 35
     audioStartSamples: 0
     audioDurationSamples: 42823
-    attackSamples: 0
-    letRing: 0
+    attackSamples: 260
+    letRing: 1
   - name: Snare
     tone: 38
     audioStartSamples: 44005
-    audioDurationSamples: 86780
-    attackSamples: 0
-    letRing: 0
+    audioDurationSamples: 29426
+    attackSamples: 398
+    letRing: 1
   - name: ClosedHiHat
     tone: 42
-    audioStartSamples: 88207
-    audioDurationSamples: 131390
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 76461
+    audioDurationSamples: 16612
+    attackSamples: 490
+    letRing: 1
   - name: OpenHiHat
     tone: 46
-    audioStartSamples: 132296
-    audioDurationSamples: 219287
-    attackSamples: 0
+    audioStartSamples: 95658
+    audioDurationSamples: 37573
+    attackSamples: 638
     letRing: 0
   - name: LowTom
     tone: 41
-    audioStartSamples: 220489
-    audioDurationSamples: 307526
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 136111
+    audioDurationSamples: 70004
+    attackSamples: 441
+    letRing: 1
   - name: MidTom
     tone: 43
-    audioStartSamples: 308665
-    audioDurationSamples: 395547
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 208596
+    audioDurationSamples: 49412
+    attackSamples: 469
+    letRing: 1
   - name: HiTom
     tone: 48
-    audioStartSamples: 396770
-    audioDurationSamples: 484153
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 260544
+    audioDurationSamples: 62252
+    attackSamples: 558
+    letRing: 1
   - name: Crash
     tone: 49
-    audioStartSamples: 485087
-    audioDurationSamples: 740805
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 325784
+    audioDurationSamples: 204184
+    attackSamples: 935
+    letRing: 1
   - name: Ride
     tone: 51
-    audioStartSamples: 742225
-    audioDurationSamples: 1066665
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 532295
+    audioDurationSamples: 277258
+    attackSamples: 448
+    letRing: 1
   - name: Splash
     tone: 52
-    audioStartSamples: 1094297
-    audioDurationSamples: 1350773
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 824490
+    audioDurationSamples: 125855
+    attackSamples: 538
+    letRing: 1
   - name: Bell
     tone: 56
-    audioStartSamples: 1360498
-    audioDurationSamples: 1444602
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 958391
+    audioDurationSamples: 51187
+    attackSamples: 1660
+    letRing: 1
   - name: Rimshot
     tone: 37
-    audioStartSamples: 1448628
-    audioDurationSamples: 1535828
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 1013456
+    audioDurationSamples: 29971
+    attackSamples: 1724
+    letRing: 1
   - name: Woodblock
     tone: 75
-    audioStartSamples: 1537486
-    audioDurationSamples: 1624102
-    attackSamples: 0
-    letRing: 0
+    audioStartSamples: 1046351
+    audioDurationSamples: 32950
+    attackSamples: 420
+    letRing: 1
   - name: Handclap
     tone: 39
-    audioStartSamples: 1625731
-    audioDurationSamples: -1
+    audioStartSamples: 1081257
+    audioDurationSamples: -1081258
     attackSamples: 0
-    letRing: 0
+    letRing: 1
   allowPitchForTone: 0
   style: {fileID: 11400000, guid: 820d39334e222714ca0b5a8be7137be7, type: 2}

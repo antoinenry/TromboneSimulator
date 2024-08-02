@@ -7,7 +7,7 @@ public class LevelEditor : MonoBehaviour
     [Header("Level")]
     public Level levelAsset;
     public string partName = "Trombone";
-    public NotePlacement notePlacementAsset;
+    public NotePlacement NotePlacementAsset;
     [Header("Playing")]
     public Playhead editorPlayhead;
     public int currentNoteIndex;
@@ -92,7 +92,7 @@ public class LevelEditor : MonoBehaviour
             if (levelAsset) noteSpawner.SpawnNotes(notes, 0f, levelAsset.MusicDuration);
             noteSpawner.time = 0f;
             noteSpawner.UpdateNoteInstances();
-            notePlacementAsset = levelAsset?.GetNotePlacement(noteSpawner.GridDimensions);
+            NotePlacementAsset = levelAsset?.GetNotePlacement(noteSpawner.GridDimensions);
         }
     }
 
@@ -144,11 +144,11 @@ public class LevelEditor : MonoBehaviour
         spawnedNotesCoordinates[noteIndex] = newPlacement;
         NoteSpawn spawn = noteSpawner?.GetSpawn(currentNoteInfo);
         if (spawn) spawn.transform.localPosition = noteGrid.CoordinatesToLocalPosition(newPlacement);
-        if (notePlacementAsset)
+        if (NotePlacementAsset)
         {
-            int assetNotePlacementCount = notePlacementAsset.noteCoordinates != null ? notePlacementAsset.noteCoordinates.Length : 0;
-            if (assetNotePlacementCount != loadedNoteCount) notePlacementAsset.noteCoordinates = new Vector2[loadedNoteCount];
-            Array.Copy(spawnedNotesCoordinates, notePlacementAsset.noteCoordinates, notePlacementAsset.noteCoordinates.Length);
+            int assetNotePlacementCount = NotePlacementAsset.noteCoordinates != null ? NotePlacementAsset.noteCoordinates.Length : 0;
+            if (assetNotePlacementCount != loadedNoteCount) NotePlacementAsset.noteCoordinates = new Vector2[loadedNoteCount];
+            Array.Copy(spawnedNotesCoordinates, NotePlacementAsset.noteCoordinates, NotePlacementAsset.noteCoordinates.Length);
         }
     }
 }

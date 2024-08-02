@@ -10,21 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: TestLevel
+  m_Name: 2 Kass
   m_EditorClassIdentifier: 
-  music: {fileID: 11400000, guid: 5638372add3a54947917eb3c17781454, type: 2}
+  music: {fileID: 11400000, guid: aea71f694d9277148966f4199692dbf8, type: 2}
   unlockTier: 0
   notePlacements: []
-  objectives:
-  - type: EndMusic
-    parameters: []
-  - type: Highscore
-    parameters:
-    - 10
-  - type: Highscore
-    parameters:
-    - 100000
-  - type: PlayPhrase
-    parameters:
-    - 6
-    - 16
+  objectives: []
