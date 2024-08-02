@@ -45,13 +45,13 @@ public class SpriteCutter : MonoBehaviour
         // No last slice found or current length is already correct
         if (lastSlice == null || lastSliceEnd == length) return;
         // Augment length
-        if (lastSliceEnd < length)
+        if (lastSliceEnd < length + spriteEndLength)
         {
             float lastSliceStart = horizontalSlice ? lastSlice.transform.localPosition.x : lastSlice.transform.localPosition.y;
             SetSpriteSlice(lastSlice, lastSliceStart, length);
         }
         // Reduce length
-        else if (lastSliceEnd > length)
+        else if (lastSliceEnd > length + spriteEndLength)
         {
             Cut(length, float.PositiveInfinity);
         }
