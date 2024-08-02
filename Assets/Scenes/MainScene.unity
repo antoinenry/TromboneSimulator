@@ -39966,12 +39966,6 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: d01daaadd8663c849bb1d0af1665b2dc, type: 3}
     cursorState: 16
     invertCondition: 1
-  - clip: {fileID: 8300000, guid: 2de5940c89e68164a8007ae24de6ed2d, type: 3}
-    cursorState: 4
-    invertCondition: 0
-  - clip: {fileID: 8300000, guid: ecbba17ad5564614782af57f0c6653aa, type: 3}
-    cursorState: 4
-    invertCondition: 1
 --- !u!82 &1435221271
 AudioSource:
   m_ObjectHideFlags: 0
@@ -49802,7 +49796,7 @@ MonoBehaviour:
   - partName: trombone
     mainVoice: 1
     alternativeVoiceIndices: 00000000
-  frequency: 48000
+  frequency: 44100
   stereo: 1
   sampleSmoothIn: 48
   sampleSmoothOut: 480
@@ -52548,9 +52542,9 @@ MonoBehaviour:
   verticalCrashEffect: {fileID: 1425153441}
   boundaries:
     serializedVersion: 2
-    x: -0.044326782
+    x: 0.015045166
     y: 0
-    width: 288.08865
+    width: 287.9699
     height: 162
   thickness: 0
   onHorizontalCrash:

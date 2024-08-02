@@ -15,92 +15,92 @@ MonoBehaviour:
   showDebug: 0
   instrumentName: Drumkit
   drumkit: 1
-  fullAudio: {fileID: 8300000, guid: 9113457470d8ad245aa250648b8150e6, type: 3}
+  fullAudio: {fileID: 8300000, guid: 4028f6fb0ae242b4fa8a23ebff8dae07, type: 3}
   audioWithoutAttacks: {fileID: 0}
   tones:
   - name: Kick
-    tone: 36
+    tone: 35
     audioStartSamples: 0
-    audioDurationSamples: 48000
+    audioDurationSamples: 5854
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: Snare
     tone: 38
-    audioStartSamples: 48000
-    audioDurationSamples: 48000
+    audioStartSamples: 44070
+    audioDurationSamples: 50257
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: ClosedHiHat
     tone: 42
-    audioStartSamples: 96000
-    audioDurationSamples: 48000
+    audioStartSamples: 88134
+    audioDurationSamples: 92167
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: OpenHiHat
     tone: 46
-    audioStartSamples: 144000
-    audioDurationSamples: 48000
+    audioStartSamples: 132303
+    audioDurationSamples: 156488
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: LowTom
-    tone: 45
-    audioStartSamples: 240000
-    audioDurationSamples: 96000
+    tone: 41
+    audioStartSamples: 220483
+    audioDurationSamples: 238697
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: MidTom
-    tone: 47
-    audioStartSamples: 336000
-    audioDurationSamples: 96000
+    tone: 43
+    audioStartSamples: 308702
+    audioDurationSamples: 330449
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: HiTom
-    tone: 50
-    audioStartSamples: 432000
-    audioDurationSamples: 96000
+    tone: 48
+    audioStartSamples: 396984
+    audioDurationSamples: 410245
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: Crash
     tone: 49
-    audioStartSamples: 528000
-    audioDurationSamples: 336000
+    audioStartSamples: 485110
+    audioDurationSamples: 541778
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: Ride
     tone: 51
-    audioStartSamples: 864000
-    audioDurationSamples: 384000
+    audioStartSamples: 793781
+    audioDurationSamples: 839308
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: Splash
-    tone: 55
-    audioStartSamples: 1248000
-    audioDurationSamples: 288000
+    tone: 52
+    audioStartSamples: 840447
+    audioDurationSamples: 840789
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: Bell
     tone: 56
-    audioStartSamples: 1536000
-    audioDurationSamples: 48000
+    audioStartSamples: 1146589
+    audioDurationSamples: 1165370
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: Rimshot
     tone: 37
-    audioStartSamples: 1632000
-    audioDurationSamples: 48000
+    audioStartSamples: 1411147
+    audioDurationSamples: 1417743
     attackSamples: 0
-    letRing: 1
-  - name: Wood
-    tone: 77
-    audioStartSamples: 1728000
-    audioDurationSamples: 48000
+    letRing: 0
+  - name: Woodblock
+    tone: 75
+    audioStartSamples: 1499347
+    audioDurationSamples: 1503644
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   - name: Handclap
     tone: 39
-    audioStartSamples: 1824000
-    audioDurationSamples: 48000
+    audioStartSamples: 1587507
+    audioDurationSamples: 1589181
     attackSamples: 0
-    letRing: 1
+    letRing: 0
   allowPitchForTone: 0
   style: {fileID: 11400000, guid: 820d39334e222714ca0b5a8be7137be7, type: 2}

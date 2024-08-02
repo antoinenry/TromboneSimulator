@@ -16,27 +16,27 @@ MonoBehaviour:
   - partName: AltoSax
     instrument: {fileID: 11400000, guid: 49745398c0fd00141a219cc2c87be6f3, type: 2}
     volume: 1
-    pan: 0
+    pan: -0.5
   - partName: TenorSax
     instrument: {fileID: 11400000, guid: bb1ec1b7561ac244886ab662d4ea81e7, type: 2}
     volume: 1
-    pan: 0
+    pan: 0.2
   - partName: BarytonSax
     instrument: {fileID: 11400000, guid: ba20ecda3c864734bbc745246aacf216, type: 2}
     volume: 1
-    pan: 0
+    pan: 1
   - partName: Trumpet
     instrument: {fileID: 11400000, guid: 1e3362788b88ff54685b00fb74cff912, type: 2}
     volume: 1
-    pan: 0
+    pan: 0.5
   - partName: Tuba
     instrument: {fileID: 11400000, guid: 338005724f6c1a544a5ab4965b72ccbe, type: 2}
     volume: 1
-    pan: 0
+    pan: -1
   - partName: Trombone
     instrument: {fileID: 11400000, guid: 33b726ba1c0c24f4d964af32631cd81a, type: 2}
     volume: 1
-    pan: 0
+    pan: -0.2
   - partName: Souba
     instrument: {fileID: 11400000, guid: 6658940845efeb14183ef284cce123fb, type: 2}
     volume: 1
