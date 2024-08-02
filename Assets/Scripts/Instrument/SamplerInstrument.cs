@@ -160,12 +160,13 @@ public class SamplerInstrument : ScriptableObject
             tones[toneIndex] = new()
             {
                 tone = drumHit.tones != null && drumHit.tones.Length > 0 ? drumHit.tones[0] : 0f,
-                name = drumHit.name
+                name = drumHit.name, 
+                letRing = !drumHit.interruptible
             };
             // Get sample positions from silences
             silenceIndex = FindNextSilence(samples, sampleIndex, minSilenceLength, out silenceLength, channels, silenceThreshold);
             tones[toneIndex].audioStartSamples = sampleIndex;
-            tones[toneIndex].audioDurationSamples = silenceIndex;
+            tones[toneIndex].audioDurationSamples = silenceIndex - sampleIndex;
             // Move drumhit and sample indices
             toneIndex++;
             sampleIndex = silenceIndex + silenceLength;

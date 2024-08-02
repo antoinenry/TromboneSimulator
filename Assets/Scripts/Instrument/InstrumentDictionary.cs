@@ -20,6 +20,7 @@ public class InstrumentDictionary : ScriptableObject
     {
         public string name;
         [Tone] public float[] tones;
+        public bool interruptible;
     }
 
     [CurrentToggle] public bool isCurrent;
