@@ -25,5 +25,10 @@ public abstract partial class ObjectiveInstance
         {
             if (score >= scoreGoal) Complete();
         }
+
+        public static string GetDisplayName(ObjectiveInfo info)
+        {
+            return info.name + " - " + info.parameters[0];
+        }
     }
 }

@@ -59,9 +59,9 @@ public class LevelInfoPanel : InfoPanel
         int objectiveCount = levelInfo.ObjectiveCount;
         if (objectiveCount > 0)
         {
-            text += objectiveLabel + "\n";
-            overlayText += "\n";
-            string[] objectives = levelInfo.ObjectiveNames;
+            text += objectiveLabel + "\n\n";
+            overlayText += "\n\n";
+            string[] objectives = levelInfo.ObjectiveLongNames;
             bool[] completed = levelInfo.checkList;
             for (int i = 0; i < objectiveCount; i++)
             {

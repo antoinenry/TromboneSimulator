@@ -9,7 +9,7 @@ public class LevelSelectionButton : MonoBehaviour
     public TMP_Text titleField;
     public TMP_Text durationField;
     public TMP_Text progressField;
-    
+    public GameObject newNotification;
 
     public UnityEvent<LevelProgress,bool> onSelect;
     public UnityEvent<Level> onClick;
@@ -44,7 +44,7 @@ public class LevelSelectionButton : MonoBehaviour
             SetProgress(0, 0);
             return;
         }
-        SetTitle(l.levelAsset.name);
+        SetTitle(l.levelAsset.levelName);
         SetDuration(l.levelAsset.MusicDuration);
         SetProgress(l.CompletedObjectivesCount, l.ObjectiveCount);
     }
@@ -84,6 +84,8 @@ public class LevelSelectionButton : MonoBehaviour
         int percentage = Mathf.FloorToInt(100f * completedObjectives / totalObjectives);
         progressField.text = percentage + "%";
     }
+
+    public void MarkAsNew(bool isNew) => newNotification?.SetActive(isNew);
 
     public void OnSelect() => onSelect.Invoke(levelInfo, true);
 

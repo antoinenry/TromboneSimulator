@@ -141,6 +141,6 @@ public class ModifierSelectionScreen : MenuUI
     {
         if (levelNameField == null) return;
         Level l = Get<LevelSelectionScreen>()?.GetSelectedLevel();
-        levelNameField.text = l != null ? l.name : "";
+        levelNameField.text = l != null ? l.levelName : "";
     }
 }

@@ -4,6 +4,7 @@ using System;
 [CreateAssetMenu(fileName = "NewLevel", menuName = "Trombone Hero/Level")]
 public class Level : ScriptableObject, IUnlockableContent
 {
+    public string levelName;
     public SheetMusic music;
     public int unlockTier;
     public NotePlacement[] notePlacements;

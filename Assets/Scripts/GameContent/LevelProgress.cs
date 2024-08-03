@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using System;
 
 [Serializable]
@@ -16,7 +15,8 @@ public struct LevelProgress
     }
 
     public int ObjectiveCount => levelAsset?.objectives != null ? levelAsset.objectives.Length : 0;
-    public string[] ObjectiveNames => levelAsset?.objectives != null ? Array.ConvertAll(levelAsset.objectives, o => o.type) : new string[0];
+    public string[] ObjectiveNames => levelAsset?.objectives != null ? Array.ConvertAll(levelAsset.objectives, o => o.name) : new string[0];
+    public string[] ObjectiveLongNames => levelAsset?.objectives != null ? Array.ConvertAll(levelAsset.objectives, o => o.LongName) : new string[0];
 
     public int CompletedObjectivesCount
     {

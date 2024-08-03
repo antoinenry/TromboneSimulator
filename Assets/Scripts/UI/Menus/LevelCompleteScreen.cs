@@ -98,7 +98,7 @@ public class LevelCompleteScreen : MenuUI
     {
         ShowLine(header);
         ShowLine(title);
-        SetLineTexts(title, levelProgress.levelAsset?.name);
+        SetLineTexts(title, levelProgress.levelAsset?.levelName);
         ShowLine(baseScoreDisplay);
         SetLineValuesImmediate(baseScoreDisplay, levelScore.baseScore);
         ShowLine(accuracyDisplay);
@@ -131,7 +131,7 @@ public class LevelCompleteScreen : MenuUI
         ShowLine(header);
         yield return new WaitForSeconds(lineDisplayDelay);
         // Level title
-        SetLineTexts(title, levelProgress.levelAsset?.name);
+        SetLineTexts(title, levelProgress.levelAsset?.levelName);
         ShowLine(title);
         yield return new WaitForSeconds(lineDisplayDelay);
         // Base score

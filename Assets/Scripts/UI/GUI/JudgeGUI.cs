@@ -232,7 +232,7 @@ public class JudgeGUI : GameUI
     private IEnumerator DisplayObjectiveCoroutine(ObjectiveInfo objectiveInfo)
     {
         ObjectiveCheckPanel panel = Instantiate(objectivePanelPrefab, objectiveDisplay);
-        panel.SetText(objectiveInfo.type);
+        panel.SetText(objectiveInfo.name);
         panel.PlayCheckedAnimation();
         yield return new WaitForSeconds(displayObjectiveDuration);
         panel.PlayDisappearAnimation(destroyOnAnimationEnd: true);

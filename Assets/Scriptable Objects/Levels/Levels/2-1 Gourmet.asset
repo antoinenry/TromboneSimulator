@@ -12,13 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
   m_Name: 2-1 Gourmet
   m_EditorClassIdentifier: 
+  levelName: Gourmet Race
   music: {fileID: 11400000, guid: 4e7df8d3b5d25ed47b59e5df3dfe146d, type: 2}
-  unlockTier: 10
+  unlockTier: 8
   notePlacements: []
   objectives:
-  - type: 
+  - name: Finir le morceau
+    type: EndMusic
     parameters: []
-  - type: 
-    parameters: []
-  - type: 
-    parameters: []
+  - name: Super Score
+    type: Highscore
+    parameters:
+    - 75000
+  - name: Hyper Score
+    type: Highscore
+    parameters:
+    - 150000
+  - name: Ultra Score
+    type: Highscore
+    parameters:
+    - 200000

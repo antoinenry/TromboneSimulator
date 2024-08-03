@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -18,8 +19,21 @@ public class LevelSelectionScreen : MenuUI
     public string playerXPPrefix = "Niveau";
     public string defaultInfoPanelContent;
 
+    private List<Level> newLevels; 
+
+    private void OnEnable()
+    {
+        GameProgress.Current?.onUnlockContent?.AddListener(OnUnlockContent);
+    }
+
+    private void OnDisable()
+    {
+        GameProgress.Current?.onUnlockContent?.RemoveListener(OnUnlockContent);
+    }
+
     public override void ShowUI()
     {
+        GameProgress.Current?.Update();
         base.ShowUI();
         UpdatePlayerXP();
         UpdateLevelList();
@@ -36,6 +50,7 @@ public class LevelSelectionScreen : MenuUI
         if (clearSelectionOnShow) selectedLevelIndex = -1;
         SelectLevel(selectedLevelIndex);
         ShowLevelInfo(selectedLevelIndex);
+        newLevels?.Clear();
     }
 
     public override void HideUI()
@@ -78,6 +93,7 @@ public class LevelSelectionScreen : MenuUI
                     if (buttonPrefab == null) continue;
                     unlockedInstance = Instantiate(buttonPrefab);
                     unlockedInstance.SetLevel(level);
+                    unlockedInstance.MarkAsNew(newLevels != null && newLevels.Contains(level.levelAsset));
                     levelList.Add(unlockedInstance.gameObject);
                 }
                 else
@@ -153,5 +169,12 @@ public class LevelSelectionScreen : MenuUI
     {
         LevelSelectionButton[] buttons = GetComponentsInChildren<LevelSelectionButton>(true);
         if (buttons != null) Array.Find(buttons, b => b != null && b.LevelAsset == levelAsset)?.Select();
+    }
+
+    private void OnUnlockContent(ScriptableObject contentAsset)
+    {
+        if (contentAsset == null || contentAsset is Level == false) return;
+        if (newLevels == null) newLevels = new List<Level>();
+        newLevels.Add(contentAsset as Level);
     }
 }

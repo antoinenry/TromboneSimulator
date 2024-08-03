@@ -1,8 +1,10 @@
 using System;
+using System.Reflection;
 
 [Serializable]
 public struct ObjectiveInfo : IEquatable<ObjectiveInfo>
 {
+    public string name;
     public string type;
     public string[] parameters;
 
@@ -15,17 +17,32 @@ public struct ObjectiveInfo : IEquatable<ObjectiveInfo>
         return o;
     }
 
-    public static ObjectiveInfo New(Type objectiveType)
+    public static ObjectiveInfo New(Type objectiveType, string name)
     {
         ObjectiveInfo o = new ObjectiveInfo();
         o.type = typeof(ObjectiveInstance).IsAssignableFrom(objectiveType) ? objectiveType.Name : null;
         Type[] parameterTypes = o.GetParameterTypes();
         o.parameters = Array.ConvertAll(parameterTypes, t => "");
+        o.name = name;
         return o;
     }
 
-    public static ObjectiveInfo New(string objectiveType)
-        => New(ObjectiveInstance.GetType(objectiveType));
+    public static ObjectiveInfo New(string objectiveType, string name)
+        => New(ObjectiveInstance.GetType(objectiveType), name);
+
+    public string LongName
+    {
+        get
+        {
+            Type objectiveType = ObjectiveInstance.GetType(type);
+            MethodInfo getMethod = objectiveType?.GetMethod("GetDisplayName", BindingFlags.Static | BindingFlags.Public);
+            if (getMethod == null) return name;
+            object[] methodParameters = new object[1] { this };
+            object result = getMethod.Invoke(null, methodParameters);
+            if (result == null || result.GetType() != typeof(string)) return name;
+            return (string)result;
+        }
+    }
 
     public bool IsValid()
     {

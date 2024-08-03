@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 
 [CreateAssetMenu(fileName = "NewGameProgress", menuName = "Trombone Hero/Game Progress")]
@@ -8,6 +9,8 @@ public class GameProgress : ScriptableObject
 
     public LevelProgress[] levelProgress;
     public GameContentLock[] contentLocks;
+
+    public UnityEvent<ScriptableObject> onUnlockContent;
 
     private void Awake() => Reset();
 
@@ -157,8 +160,13 @@ public class GameProgress : ScriptableObject
             if (contentAsset != null && contentAsset is IUnlockableContent)
             {
                 bool canUnlock = CanUnlockWithObjectives(contentAsset, completedObjectiveCount);
-                if ((contentAsset as IUnlockableContent).AutoUnlock) contentLocks[i].SetLocked(!canUnlock);
-                else if (canUnlock == false) contentLocks[i].SetLocked(true);
+                if ((contentAsset as IUnlockableContent).AutoUnlock)
+                {
+                    if (canUnlock && contentLocks[i].locked) onUnlockContent.Invoke(contentAsset);
+                    contentLocks[i].SetLocked(!canUnlock);
+                }
+                else if (canUnlock == false)
+                    contentLocks[i].SetLocked(true);
             }
         }
     }    

@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using UnityEngine.Events;
 
 public abstract partial class ObjectiveInstance
@@ -15,11 +16,11 @@ public abstract partial class ObjectiveInstance
     
     static public string[] GetAllTypeNames() => Array.ConvertAll(GetAllTypes(), t => t.Name);
 
-    static public FieldInfo[] GetParameterFileds(Type type)
+    static public FieldInfo[] GetParameterFields(Type type)
         => type != null && typeof(ObjectiveInstance).IsAssignableFrom(type) ? type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly) : new FieldInfo[0];
 
     static public string[] GetParameterNames(Type type)
-        => Array.ConvertAll(GetParameterFileds(type), f => f.Name);
+        => Array.ConvertAll(GetParameterFields(type), f => f.Name);
 
     static public string[] GetParameterNames(string type)
         => GetParameterNames(GetType(type));
@@ -28,7 +29,7 @@ public abstract partial class ObjectiveInstance
         => GetParameterNames(typeof(T));
 
     static public Type[] GetParameterTypes(Type type)
-        => Array.ConvertAll(GetParameterFileds(type), f => f.FieldType);
+        => Array.ConvertAll(GetParameterFields(type), f => f.FieldType);
 
     static public Type[] GetParameterTypes(string type)
         => GetParameterTypes(GetType(type));
@@ -61,20 +62,25 @@ public abstract partial class ObjectiveInstance
     }
     #endregion
 
+    public string name;
     public bool isComplete;
     public UnityEvent<ObjectiveInfo> onComplete;
 
     public virtual ObjectiveInfo GetInfo()
     {
         Type thisType = GetType();
-        return ObjectiveInfo.New(thisType);
+        return ObjectiveInfo.New(thisType, name);
     }
 
     public virtual void SetInfo(ObjectiveInfo value)
     {
+        // Check objective type
         Type thisType = GetType();
         if (value.type != thisType.Name)
             throw new Exception("Type mismatch: " + thisType.Name + " / " + value.type);
+        // Set name
+        name = value.name;
+        // Set parameters
         string[] thoseParameters = GetParameterNames(thisType);
         if (value.parameters == null || value.parameters.Length != thoseParameters.Length)
             throw new Exception("Parameter count mismatch (" + thisType.Name + ")");

@@ -9,7 +9,7 @@ public class ObjectiveInfoDrawer : PropertyDrawer
     {
         ObjectiveInfo target = GetDescriptor(property);
         int parameterCount = target.parameters != null ? target.parameters.Length : 0;
-        return base.GetPropertyHeight(property, label) + parameterCount * (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing);
+        return base.GetPropertyHeight(property, label) + (1 + parameterCount) * (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing);
     }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -24,19 +24,23 @@ public class ObjectiveInfoDrawer : PropertyDrawer
         selectedIndex = EditorGUI.Popup(drawingRect, "", selectedIndex, typeNames);
         if (EditorGUI.EndChangeCheck())
         {
-            target = ObjectiveInfo.New(typeNames[selectedIndex]);
+            target = ObjectiveInfo.New(typeNames[selectedIndex], target.name);
             property.FindPropertyRelative("type").stringValue = target.type;
             property.FindPropertyRelative("parameters").arraySize = target.parameters.Length;
         }
         if (target.type == null) return;
+        // Edit objective name
+        SerializedProperty nameProperty = property.FindPropertyRelative("name");
+        drawingRect.position += (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * Vector2.up;
+        nameProperty.stringValue = EditorGUI.TextField(drawingRect, "Name", nameProperty.stringValue);
         // Edit objective parameters
+        EditorGUI.indentLevel++;
         string[] parameterNames = target.GetParameterNames();
         Type[] parameterTypes = target.GetParameterTypes();
-        EditorGUI.indentLevel++;
         for (int i = 0, iend = parameterNames.Length; i < iend; i++)
         {
             EditorGUI.BeginChangeCheck();
-            drawingRect.position = position.position + (i + 1) * (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * Vector2.up;
+            drawingRect.position = position.position + (i + 2) * (EditorGUIUtility.singleLineHeight + EditorGUIUtility.standardVerticalSpacing) * Vector2.up;
             string parameterValue = ParameterFieldGUI(drawingRect, parameterNames[i], target.parameters[i], parameterTypes[i]);
             if (EditorGUI.EndChangeCheck()) property.FindPropertyRelative("parameters").GetArrayElementAtIndex(i).stringValue = parameterValue;
         }
@@ -46,13 +50,14 @@ public class ObjectiveInfoDrawer : PropertyDrawer
     private ObjectiveInfo GetDescriptor(SerializedProperty property)
     {
         string type = property.FindPropertyRelative("type").stringValue;
-        ObjectiveInfo o = ObjectiveInfo.New(type);
+        string name = property.FindPropertyRelative("name").stringValue;
+        ObjectiveInfo o = ObjectiveInfo.New(type, name);
         SerializedProperty serializedParameters = property.FindPropertyRelative("parameters");
         int parameterCount = serializedParameters != null ? serializedParameters.arraySize : 0;
         string[] parameterValues = new string[parameterCount];
         for (int i = 0; i < parameterCount; i++) parameterValues[i] = serializedParameters.GetArrayElementAtIndex(i).stringValue;
         o.parameters = parameterValues;        
-        return o.IsValid() ? o : ObjectiveInfo.New(type);
+        return o.IsValid() ? o : ObjectiveInfo.New(type, name);
     }
 
     private string ParameterFieldGUI(Rect position, string label, string value, Type type)

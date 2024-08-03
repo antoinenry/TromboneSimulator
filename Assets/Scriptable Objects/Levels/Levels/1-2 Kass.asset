@@ -12,7 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
   m_Name: 1-2 Kass
   m_EditorClassIdentifier: 
+  levelName: Kass
   music: {fileID: 11400000, guid: aea71f694d9277148966f4199692dbf8, type: 2}
-  unlockTier: 6
+  unlockTier: 3
   notePlacements: []
-  objectives: []
+  objectives:
+  - name: Finir le morceau
+    type: EndMusic
+    parameters: []
+  - name: Super Score
+    type: Highscore
+    parameters:
+    - 30000
+  - name: Hyper Score
+    type: Highscore
+    parameters:
+    - 60000
+  - name: Ultra Score
+    type: Highscore
+    parameters:
+    - 100000

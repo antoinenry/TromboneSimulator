@@ -55,6 +55,7 @@ public class GameProgressInspector : Editor
             levelProgressFoldouts[i] = EditorGUILayout.Foldout(levelProgressFoldouts[i], 
                 l.levelAsset.name 
                 + " (" + l.CompletedObjectivesCount + "/" + l.ObjectiveCount + ")");
+            // Objectives
             if (levelProgressFoldouts[i])
             {
                 GUI.enabled = false;
@@ -62,7 +63,7 @@ public class GameProgressInspector : Editor
                 GUI.enabled = GUIEnabled;
                 if (l.ObjectiveCount > 0)
                 {
-                    string[] objectiveNames = l.ObjectiveNames;
+                    string[] objectiveNames = l.ObjectiveLongNames;
                     bool[] completion = l.checkList;
                     EditorGUILayout.BeginVertical("box");
                     for (int j = 0; j < l.ObjectiveCount; j++)

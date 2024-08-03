@@ -12,19 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
   m_Name: 2-2 Corneria
   m_EditorClassIdentifier: 
+  levelName: Corneria
   music: {fileID: 11400000, guid: d53085cada8cf8542bcd30f8e8f529f0, type: 2}
-  unlockTier: 12
+  unlockTier: 20
   notePlacements:
   - {fileID: 11400000, guid: fb7df52a96f1c7e4c8eb7ff6b14c65f3, type: 2}
   objectives:
-  - type: EndMusic
+  - name: Finir le morceau
+    type: EndMusic
     parameters: []
-  - type: Highscore
+  - name: Super Score
+    type: Highscore
     parameters:
-    - 80000
-  - type: Highscore
+    - 30000
+  - name: Hyper Score
+    type: Highscore
     parameters:
-    - 130000
-  - type: Highscore
+    - 60000
+  - name: Ultra Score
+    type: Highscore
     parameters:
-    - 250000
+    - 100000
