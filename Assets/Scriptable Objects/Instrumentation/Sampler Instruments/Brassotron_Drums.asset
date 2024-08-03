@@ -99,8 +99,8 @@ MonoBehaviour:
   - name: Handclap
     tone: 39
     audioStartSamples: 1081257
-    audioDurationSamples: -1081258
-    attackSamples: 0
+    audioDurationSamples: 12081
+    attackSamples: 434
     letRing: 1
   allowPitchForTone: 0
   style: {fileID: 11400000, guid: 820d39334e222714ca0b5a8be7137be7, type: 2}

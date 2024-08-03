@@ -22,223 +22,223 @@ MonoBehaviour:
     tone: 53
     audioStartSamples: 0
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 7488
     letRing: 0
   - name: F#3
     tone: 54
     audioStartSamples: 441000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 9083
     letRing: 0
   - name: G3
     tone: 55
     audioStartSamples: 882000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 7423
     letRing: 0
   - name: G#3
     tone: 56
     audioStartSamples: 1323000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 8863
     letRing: 0
   - name: A3
     tone: 57
     audioStartSamples: 1764000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 8105
     letRing: 0
   - name: A#3
     tone: 58
     audioStartSamples: 2205000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 7086
     letRing: 0
   - name: B3
     tone: 59
     audioStartSamples: 2646000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 7487
     letRing: 0
   - name: C4
     tone: 60
     audioStartSamples: 3087000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 6035
     letRing: 0
   - name: C#4
     tone: 61
     audioStartSamples: 3528000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 6662
     letRing: 0
   - name: D4
     tone: 62
     audioStartSamples: 3969000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 6426
     letRing: 0
   - name: D#4
     tone: 63
     audioStartSamples: 4410000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 5788
     letRing: 0
   - name: E4
     tone: 64
     audioStartSamples: 4851000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 5691
     letRing: 0
   - name: F4
     tone: 65
     audioStartSamples: 5292000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4158
     letRing: 0
   - name: F#4
     tone: 66
     audioStartSamples: 5733000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4714
     letRing: 0
   - name: G4
     tone: 67
     audioStartSamples: 6174000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 3973
     letRing: 0
   - name: G#4
     tone: 68
     audioStartSamples: 6615000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 3297
     letRing: 0
   - name: A4
     tone: 69
     audioStartSamples: 7056000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 2576
     letRing: 0
   - name: A#4
     tone: 70
     audioStartSamples: 7497000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 3402
     letRing: 0
   - name: B4
     tone: 71
     audioStartSamples: 7938000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 2474
     letRing: 0
   - name: C5
     tone: 72
     audioStartSamples: 8379000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 5581
     letRing: 0
   - name: C#5
     tone: 73
     audioStartSamples: 8820000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 5241
     letRing: 0
   - name: D5
     tone: 74
     audioStartSamples: 9261000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4697
     letRing: 0
   - name: D#5
     tone: 75
     audioStartSamples: 9702000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 5639
     letRing: 0
   - name: E5
     tone: 76
     audioStartSamples: 10143000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4049
     letRing: 0
   - name: F5
     tone: 77
     audioStartSamples: 10584000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4357
     letRing: 0
   - name: F#5
     tone: 78
     audioStartSamples: 11025000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 5019
     letRing: 0
   - name: G5
     tone: 79
     audioStartSamples: 11466000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 1835
     letRing: 0
   - name: G#5
     tone: 80
     audioStartSamples: 11907000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 2621
     letRing: 0
   - name: A5
     tone: 81
     audioStartSamples: 12348000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 5101
     letRing: 0
   - name: A#5
     tone: 82
     audioStartSamples: 12789000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4524
     letRing: 0
   - name: B5
     tone: 83
     audioStartSamples: 13230000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4858
     letRing: 0
   - name: C6
     tone: 84
     audioStartSamples: 13671000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4330
     letRing: 0
   - name: C#6
     tone: 85
     audioStartSamples: 14112000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4375
     letRing: 0
   - name: D6
     tone: 86
     audioStartSamples: 14553000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 4055
     letRing: 0
   - name: D#6
     tone: 87
     audioStartSamples: 14994000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 3938
     letRing: 0
   - name: E6
     tone: 88
     audioStartSamples: 15435000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 5015
     letRing: 0
   - name: F6
     tone: 89
     audioStartSamples: 15876000
     audioDurationSamples: 441000
-    attackSamples: 0
+    attackSamples: 3759
     letRing: 0
   allowPitchForTone: 1
   style: {fileID: 11400000, guid: 820d39334e222714ca0b5a8be7137be7, type: 2}

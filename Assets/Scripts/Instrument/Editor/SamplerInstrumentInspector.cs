@@ -43,8 +43,9 @@ public class SamplerInstrumentInspector : Editor
             silenceThreshold = EditorGUILayout.FloatField("Silence threshold", silenceThreshold);
             if (GUILayout.Button("Auto-set hits"))
             {
-                Undo.RecordObject(target, "Auto-set hits hits");
-                (target as SamplerInstrument).AutoSetHits(drumHits, silenceSamples, silenceThreshold);
+                Undo.RecordObject(instrument, "Auto-set hits hits");
+                instrument.AutoSetHits(drumHits, silenceSamples, silenceThreshold);
+                EditorUtility.SetDirty(instrument);
             }
         }
         else
@@ -53,16 +54,18 @@ public class SamplerInstrumentInspector : Editor
             highTone = ToneAttributeDrawer.GUIToneField("High tone", highTone, !instrument.drumkit);
             if (GUILayout.Button("Auto-set tones"))
             {
-                Undo.RecordObject(target, "Auto-set hits tones");
-                (target as SamplerInstrument).AutoSetTones(lowTone, highTone);
+                Undo.RecordObject(instrument, "Auto-set hits tones");
+                instrument.AutoSetTones(lowTone, highTone);
+                EditorUtility.SetDirty(instrument);
             }
         }
         // Attack
         attackThreshold = EditorGUILayout.Slider("Attack threshold", attackThreshold, 0f, 1f);
         if (GUILayout.Button("Set attacks"))
         {
-            Undo.RecordObject(target, "Set attacks");
-            (target as SamplerInstrument).GuessToneAttacks(attackThreshold);
+            Undo.RecordObject(instrument, "Set attacks");
+            instrument.GuessToneAttacks(attackThreshold);
+            EditorUtility.SetDirty(instrument);
         }        
         EditorGUILayout.EndVertical();
         // Auto set tones on audio file change
