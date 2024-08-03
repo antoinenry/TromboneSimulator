@@ -4,8 +4,11 @@ using UnityEngine.UI;
 
 public abstract class InfoPanel : MonoBehaviour
 {
+    [Header("Components")]
     public TMP_Text textField;
     public Image background;
+    [Header("Content")]
+    public string textOverride = "";
 
     protected virtual void OnEnable()
     {
@@ -19,7 +22,13 @@ public abstract class InfoPanel : MonoBehaviour
         if (background != null) background.enabled = false;
     }
 
-    protected virtual void Update() => UpdateText();
+    protected virtual void Update()
+    {
+        if (textOverride == null || textOverride == "")
+            UpdateText();
+        else
+            textField?.SetText(textOverride);
+    }
 
     public abstract void UpdateText();
 }

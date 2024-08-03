@@ -6,6 +6,8 @@ public class LevelInfoPanel : InfoPanel
 {
     public TMP_Text overlay;
     public LevelProgress levelInfo;
+    public string composerLabel = "Compositeur:";
+    public string objectiveLabel = "Objectifs:";
 
     protected override void OnEnable()
     {
@@ -19,6 +21,17 @@ public class LevelInfoPanel : InfoPanel
         if (overlay != null) overlay.enabled = false;
     }
 
+    protected override void Update()
+    {
+        if (textOverride == null || textOverride == "")
+            UpdateText();
+        else
+        {
+            textField?.SetText(textOverride);
+            overlay?.SetText("");
+        }
+    }
+
     public override void UpdateText()
     {
         string text = "";
@@ -27,15 +40,27 @@ public class LevelInfoPanel : InfoPanel
         // Music info
         if (music != null)
         {
-            text += music.title + "\n"
-                + music.composer + "\n"
-                + music.subtitle + "\n\n";
-            overlayText += "\n\n\n\n";
+            text += music.title + "\n";
+            overlayText += "\n";
+            if (music.subtitle != "")
+            {
+                text += music.subtitle + "\n";
+                overlayText += "\n";
+            }
+            if (music.composer != "")
+            {
+                text += composerLabel + music.composer + "\n";
+                overlayText += "\n";
+            }
+            text += "\n";
+            overlayText += "\n";
         }
         // Objectives
         int objectiveCount = levelInfo.ObjectiveCount;
         if (objectiveCount > 0)
         {
+            text += objectiveLabel + "\n";
+            overlayText += "\n";
             string[] objectives = levelInfo.ObjectiveNames;
             bool[] completed = levelInfo.checkList;
             for (int i = 0; i < objectiveCount; i++)

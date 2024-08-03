@@ -9,6 +9,7 @@ public class LevelSelectionButton : MonoBehaviour
     public TMP_Text titleField;
     public TMP_Text durationField;
     public TMP_Text progressField;
+    
 
     public UnityEvent<LevelProgress,bool> onSelect;
     public UnityEvent<Level> onClick;

@@ -1,27 +1,37 @@
 using System;
 using UnityEngine;
+using TMPro;
 
 public class LevelSelectionScreen : MenuUI
 {
     [Header("UI Components")]
     public LevelSelectionButton buttonPrefab;
-    public GameObject lockedPrefab;
+    public TMP_Text lockedPrefab;
     public LayoutGroupScroller levelList;
     public LevelInfoPanel levelInfoPanel;
+    public TMP_Text playerXPField;
     [Header("Contents")]
     public LevelProgress[] levels;
     public int selectedLevelIndex;
     public bool clearSelectionOnShow;
+    public int playerXP;
+    public string playerXPPrefix = "Niveau";
+    public string defaultInfoPanelContent;
 
     public override void ShowUI()
     {
         base.ShowUI();
+        UpdatePlayerXP();
         UpdateLevelList();
         if (Application.isPlaying)
         {
-            if (levelInfoPanel != null) levelInfoPanel.levelInfo = new(null);
             LevelSelectionButton[] buttons = GetComponentsInChildren<LevelSelectionButton>(true);
             if (buttons != null) foreach (LevelSelectionButton b in buttons) b.AddListeners(OnLevelButtonHighlighted, OnLevelButtonPressed);
+        }
+        if (levelInfoPanel != null)
+        {
+            levelInfoPanel.levelInfo = new(null);
+            levelInfoPanel.textOverride = defaultInfoPanelContent;
         }
         if (clearSelectionOnShow) selectedLevelIndex = -1;
         SelectLevel(selectedLevelIndex);
@@ -36,6 +46,13 @@ public class LevelSelectionScreen : MenuUI
             LevelSelectionButton[] buttons = GetComponentsInChildren<LevelSelectionButton>(true);
             if (buttons != null) foreach (LevelSelectionButton b in buttons) b.RemoveListeners(OnLevelButtonHighlighted, OnLevelButtonPressed);
         }
+    }
+
+    public void UpdatePlayerXP()
+    {
+        GameProgress progress = GameProgress.Current;
+        progress?.GetObjectiveCount(out playerXP);
+        playerXPField?.SetText(playerXPPrefix + playerXP.ToString());
     }
 
     public void UpdateLevelList()
@@ -54,16 +71,21 @@ public class LevelSelectionScreen : MenuUI
             {
                 if (buttonPrefab == null) break;
                 bool unlocked = progress.IsUnlocked(level.levelAsset);
-                LevelSelectionButton b;
+                LevelSelectionButton unlockedInstance;
+                TMP_Text lockedInstance;
                 if (unlocked)
                 {
-                    b = Instantiate(buttonPrefab);
-                    b.SetLevel(level);
-                    levelList.Add(b.gameObject);
+                    if (buttonPrefab == null) continue;
+                    unlockedInstance = Instantiate(buttonPrefab);
+                    unlockedInstance.SetLevel(level);
+                    levelList.Add(unlockedInstance.gameObject);
                 }
                 else
                 {
-                    levelList.Add(Instantiate(lockedPrefab));
+                    if (lockedPrefab == null) continue;
+                    lockedInstance = Instantiate(lockedPrefab);
+                    lockedInstance.SetText(level.levelAsset != null ? (playerXPPrefix + level.levelAsset.unlockTier) : "");
+                    levelList.Add(lockedInstance.gameObject);
                 }
             }
         }
@@ -98,12 +120,15 @@ public class LevelSelectionScreen : MenuUI
 
     private void ShowLevelInfo(LevelProgress info, bool show)
     {
-        if (levelInfoPanel)
+        if (levelInfoPanel == null) return;
+        levelInfoPanel.textOverride = null;
+        if (show) levelInfoPanel.levelInfo = info;
+        else if (levelInfoPanel.levelInfo.levelAsset == info.levelAsset)
         {
-            if (show)
-                levelInfoPanel.levelInfo = info;
-            else if (levelInfoPanel.levelInfo.levelAsset == info.levelAsset)
+            if (defaultInfoPanelContent == "" || defaultInfoPanelContent == null)
                 levelInfoPanel.levelInfo = selectedLevelIndex != -1 ? levels[selectedLevelIndex] : new();
+            else
+                levelInfoPanel.textOverride = defaultInfoPanelContent;
         }
     }
 
@@ -128,11 +153,5 @@ public class LevelSelectionScreen : MenuUI
     {
         LevelSelectionButton[] buttons = GetComponentsInChildren<LevelSelectionButton>(true);
         if (buttons != null) Array.Find(buttons, b => b != null && b.LevelAsset == levelAsset)?.Select();
-    }
-
-    private void EnterPassword(string word)
-    {
-        //gameState.SubmitPassword(word);
-        UpdateLevelList();
     }
 }
