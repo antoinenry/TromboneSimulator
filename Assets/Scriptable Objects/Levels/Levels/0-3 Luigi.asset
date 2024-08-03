@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: 3 Corneria
+  m_Name: 0-3 Luigi
   m_EditorClassIdentifier: 
-  music: {fileID: 11400000, guid: 8c035c0f7dad9664aa6e10b8b6eb87bf, type: 2}
-  unlockTier: 0
-  notePlacements:
-  - {fileID: 11400000, guid: fb7df52a96f1c7e4c8eb7ff6b14c65f3, type: 2}
+  music: {fileID: 11400000, guid: d5c6c7d00a594cf46a63269b57870a34, type: 2}
+  unlockTier: 1
+  notePlacements: []
   objectives:
   - type: EndMusic
     parameters: []
   - type: Highscore
     parameters:
-    - 80000
+    - 100000
   - type: Highscore
     parameters:
-    - 130000
+    - 200000
   - type: Highscore
     parameters:
-    - 250000
+    - 400000

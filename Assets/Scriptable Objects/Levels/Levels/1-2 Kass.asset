@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: 1 Sonic
+  m_Name: 1-2 Kass
   m_EditorClassIdentifier: 
-  music: {fileID: 11400000, guid: 883f4a66c9aece54ba84fb34b7ce77c7, type: 2}
-  unlockTier: 0
+  music: {fileID: 11400000, guid: aea71f694d9277148966f4199692dbf8, type: 2}
+  unlockTier: 6
   notePlacements: []
   objectives: []
