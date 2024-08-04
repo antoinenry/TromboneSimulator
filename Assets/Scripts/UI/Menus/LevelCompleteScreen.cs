@@ -25,8 +25,9 @@ public class LevelCompleteScreen : MenuUI
     [Min(0f)] public float objectiveDisplayDelay = .5f;
     [Min(0f)] public float endDisplayDelay = 3f;
     [Header("Values")]
-    public LevelProgress levelProgress;
     public LevelScoreInfo levelScore;
+    public LevelProgress levelProgress;
+    public bool[] checklist;
     [Header("Events")]
     public UnityEvent onPressReplay;
     public UnityEvent onPressNext;
@@ -266,15 +267,17 @@ public class LevelCompleteScreen : MenuUI
         foreach (ObjectiveCheckPanel panel in objectivePanels) panel.gameObject.SetActive(false);
         // Animate objectives
         int objectiveCount = levelProgress.ObjectiveCount;
-        bool[] checkList = levelProgress.checkList;
-        int checkCount = checkList != null ? checkList.Length : 0;
+        bool[] levelChecklist = levelProgress.checkList;
+        int levelCheckCount = levelChecklist != null ? levelChecklist.Length : 0;
+        int checkCount = checklist != null ? checklist.Length : 0;
         for (int i = 0; i < objectiveCount; i++)
         {
             yield return new WaitForSeconds(objectiveDisplayDelay);
             ObjectiveCheckPanel o = objectivePanels[i];
             if (o == null) continue;
             o.gameObject.SetActive(true);
-            if (i < checkCount && checkList[i] == true) o.PlayCheckedAnimation();
+            if (i < levelCheckCount && levelChecklist[i] == true) o.PlayAlreadyCheckedAnimation();
+            else if (i < checkCount && checklist[i]) o.PlayNewlyCheckedAnimation();
             else o.PlayUncheckedAnimation();
         }
         displayObjectivesCoroutine = null;

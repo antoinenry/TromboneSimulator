@@ -77,6 +77,24 @@ public class SheetMusic : ScriptableObject
                 TransposePart(p, tones);
         }
     }
+
+    public NoteInfo GetNote(int partIndex, int noteIndex)
+    {
+        if (partIndex < 0 || partIndex >= PartCount) return NoteInfo.None;
+        return parts[partIndex].GetNote(noteIndex);
+    }
+
+    public NoteInfo GetNote(string instrumentName, int noteIndex)
+        => GetNote(GetPartIndex(instrumentName), noteIndex);
+
+    public void SetNote(int partIndex, int noteIndex, NoteInfo noteInfo)
+    {
+        if (partIndex < 0 || partIndex >= PartCount) return;
+        parts[partIndex].SetNote(noteIndex, noteInfo);
+    }
+
+    public void SetNote(string instrumentName, int noteIndex, NoteInfo noteInfo)
+        => SetNote(GetPartIndex(instrumentName), noteIndex, noteInfo);
     #endregion
 
     #region Read Music

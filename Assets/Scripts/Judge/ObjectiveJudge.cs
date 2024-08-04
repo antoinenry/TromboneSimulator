@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,7 +9,7 @@ public class ObjectiveJudge : MonoBehaviour
     public MusicPlayer musicPlayer;
     public PerformanceJudge performanceJudge;
 
-    public UnityEvent<ObjectiveInfo> onObjectiveComplete;
+    public UnityEvent<ObjectiveInfo> onNewObjectiveComplete;
 
     private ObjectiveInstance[] objectives;
 
@@ -54,6 +53,17 @@ public class ObjectiveJudge : MonoBehaviour
         }
     }
 
+    public void LoadProgress(bool[] objectiveChecklist)
+    {
+        int objectiveCount = objectives != null ? objectives.Length : 0;
+        int checklistLength = objectiveChecklist != null ? objectiveChecklist.Length : 0;
+        for (int i = 0; i < objectiveCount; i++)
+        {
+            if (objectives[i] == null) continue;
+            objectives[i].isComplete = i < checklistLength && objectiveChecklist[i];
+        }
+    }
+
     public void UnloadObjectives()
     {
         RemoveListeners();
@@ -72,7 +82,7 @@ public class ObjectiveJudge : MonoBehaviour
         foreach (ObjectiveInstance o in objectives)
         {
             if (o == null) continue;
-            o.onComplete.AddListener(OnCompleteObjective);
+            if (o.isComplete == false) o.onComplete.AddListener(OnCompleteNewObjective);
             if (musicPlayer) musicPlayer.onMusicEnd.AddListener(o.OnMusicEnd);
             if (performanceJudge) performanceJudge.onScore.AddListener(o.OnPerformanceJudgeScore);
         }
@@ -84,15 +94,15 @@ public class ObjectiveJudge : MonoBehaviour
         foreach (ObjectiveInstance o in objectives)
         {
             if (o == null) continue;
-            o.onComplete.RemoveListener(OnCompleteObjective);
+            o.onComplete.RemoveListener(OnCompleteNewObjective);
             if (musicPlayer) musicPlayer.onMusicEnd.RemoveListener(o.OnMusicEnd);
             if (performanceJudge) performanceJudge.onScore.RemoveListener(o.OnPerformanceJudgeScore);
         }
     }
 
-    private void OnCompleteObjective(ObjectiveInfo objectiveInfo)
+    private void OnCompleteNewObjective(ObjectiveInfo objectiveInfo)
     {
         if (showDebug) Debug.Log("Completed objective: " + objectiveInfo.type);
-        onObjectiveComplete.Invoke(objectiveInfo);
+        onNewObjectiveComplete.Invoke(objectiveInfo);
     }
 }

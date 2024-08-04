@@ -45,23 +45,13 @@ MonoBehaviour:
   - name: Trombone
     notes:
     - tone: 52
-      velocity: 0.625
-      startTime: 2.999997
-      duration: 0.4276781
+      velocity: 1
+      startTime: 1
+      duration: 0.6
+  - name: Trombone
+    notes:
     - tone: 50
-      velocity: 0.625
-      startTime: 4.7142806
-      duration: 0.4276781
-    - tone: 53
-      velocity: 0.625
-      startTime: 5.1428514
-      duration: 0.4276781
-    - tone: 52
-      velocity: 0.625
-      startTime: 5.785708
-      duration: 0.4276781
-    - tone: 50
-      velocity: 0.625
-      startTime: 6.4285645
-      duration: 1.7133918
+      velocity: 1
+      startTime: 2
+      duration: 0.5
   completeLastBar: 1

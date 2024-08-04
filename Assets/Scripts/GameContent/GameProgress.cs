@@ -77,6 +77,9 @@ public class GameProgress : ScriptableObject
         return contentLocks.Length;
     }
 
+    public LevelProgress FindLevelProgress(Level level)
+        => levelProgress != null ? Array.Find(levelProgress, p => p.levelAsset == level) : new LevelProgress();
+
     public bool TryGetLevelProgress(Level level, out int completedObjectives, out int totalObjectives)
     {
         completedObjectives = 0;

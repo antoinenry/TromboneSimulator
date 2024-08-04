@@ -33,8 +33,7 @@ public class NoteSpawn : MonoBehaviour, INote
     {
         // Init display
         //display.SetSprites(linkToNextNote);
-        DisplayLength = Duration * timeScale;
-        display.SetLength(DisplayLength);
+        SetLength(Duration, timeScale);
         DisplayDistance = (StartTime - time) * timeScale;
         display.SetDistance(DisplayDistance);
         display.baseColor = color;
@@ -44,6 +43,12 @@ public class NoteSpawn : MonoBehaviour, INote
         // Init crash distance
         horizontalCrashDelay = float.PositiveInfinity;
         verticalCrashDelay = float.PositiveInfinity;
+    }
+
+    public void SetLength(float duration, float timeScale)
+    {
+        DisplayLength = duration * timeScale;
+        display.SetLength(DisplayLength);
     }
 
     public void Move(float toTime, float timeScale)

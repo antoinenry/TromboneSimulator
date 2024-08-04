@@ -15,7 +15,8 @@ MonoBehaviour:
   levelName: Green Hill Zone
   music: {fileID: 11400000, guid: 883f4a66c9aece54ba84fb34b7ce77c7, type: 2}
   unlockTier: 1
-  notePlacements: []
+  notePlacements:
+  - {fileID: 11400000, guid: 282d1db29a08ba54b9b588fea8007c0f, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic
@@ -23,12 +24,12 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 30000
+    - 150000
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 60000
+    - 300000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 100000
+    - 500000

@@ -22,6 +22,7 @@ public class LevelEditorInspector : Editor
         GUILayout.Button("Save changes");
         {
             if (levelEditor.levelAsset) EditorUtility.SetDirty(levelEditor.levelAsset);
+            if (levelEditor.levelAsset?.music) EditorUtility.SetDirty(levelEditor.levelAsset.music);
             if (levelEditor.NotePlacementAsset) EditorUtility.SetDirty(levelEditor.NotePlacementAsset);
         }
         EditorGUILayout.EndHorizontal();

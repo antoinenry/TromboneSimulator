@@ -15,7 +15,8 @@ MonoBehaviour:
   levelName: Luigi's Mansion
   music: {fileID: 11400000, guid: d5c6c7d00a594cf46a63269b57870a34, type: 2}
   unlockTier: 1
-  notePlacements: []
+  notePlacements:
+  - {fileID: 11400000, guid: 04785612527c41b428f1c0f44b6f448e, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic
@@ -23,12 +24,12 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 80000
+    - 100000
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 180000
+    - 200000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 280000
+    - 350000

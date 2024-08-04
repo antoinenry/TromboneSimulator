@@ -131,6 +131,7 @@ public class LevelLoader : MonoBehaviour
         {
             objectiveJudge.enabled = true;
             objectiveJudge.LoadObjectives(LoadedLevel.objectives);
+            objectiveJudge.LoadProgress(GameProgress.Current?.FindLevelProgress(LoadedLevel).checkList);
         }
         // GUI Setup
         if (GUI)
@@ -140,6 +141,14 @@ public class LevelLoader : MonoBehaviour
             GUI.SetPauseButtonActive(true);
             GUI.onPauseRequest.AddListener(PauseLevel);
         }
+        // Level end UI setup
+        LevelCompleteScreen UILevelComplete = MenuUI.Get<LevelCompleteScreen>();
+        if (UILevelComplete)
+        {
+            UILevelComplete.levelProgress.levelAsset = LoadedLevel;
+            UILevelComplete.levelProgress.checkList = GameProgress.Current?.FindLevelProgress(LoadedLevel).checkList;
+        }
+        // End coroutine
         loadLevelCoroutine = null;
         MenuUI.onLoadingScreenVisible.RemoveListener(OnLoadingScreenVisible);
     }
@@ -413,7 +422,8 @@ public class LevelLoader : MonoBehaviour
         LevelCompleteScreen UILevelComplete = MenuUI.Get<LevelCompleteScreen>();
         if (UILevelComplete)
         {
-            UILevelComplete.levelProgress = levelProgress;
+            //UILevelComplete.levelProgress = levelProgress;
+            UILevelComplete.checklist = levelProgress.checkList;
             UILevelComplete.levelScore = levelScore;
             UILevelComplete.ShowUI();
             yield return new WaitWhile(() => UILevelComplete.DisplayCoroutine);

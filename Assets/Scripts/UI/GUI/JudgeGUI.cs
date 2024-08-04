@@ -100,7 +100,7 @@ public class JudgeGUI : GameUI
     {
         if (objJudge)
         {
-            objJudge.onObjectiveComplete.AddListener(DisplayObjectivePanel);
+            objJudge.onNewObjectiveComplete.AddListener(DisplayObjectivePanel);
         }
     }
 
@@ -108,7 +108,7 @@ public class JudgeGUI : GameUI
     {
         if (objJudge)
         {
-            objJudge.onObjectiveComplete.RemoveListener(DisplayObjectivePanel);
+            objJudge.onNewObjectiveComplete.RemoveListener(DisplayObjectivePanel);
         }
     }
 
@@ -233,7 +233,7 @@ public class JudgeGUI : GameUI
     {
         ObjectiveCheckPanel panel = Instantiate(objectivePanelPrefab, objectiveDisplay);
         panel.SetText(objectiveInfo.name);
-        panel.PlayCheckedAnimation();
+        panel.PlayNewlyCheckedAnimation();
         yield return new WaitForSeconds(displayObjectiveDuration);
         panel.PlayDisappearAnimation(destroyOnAnimationEnd: true);
         displayObjectiveCoroutine = null;

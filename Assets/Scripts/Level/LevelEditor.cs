@@ -19,6 +19,10 @@ public class LevelEditor : MonoBehaviour
     public KeyCode scrollBackwardKey = KeyCode.LeftArrow;
     public KeyCode nextPlacementKey = KeyCode.UpArrow;
     public KeyCode previousPlacementKey = KeyCode.DownArrow;
+    public KeyCode legatoKey = KeyCode.L;
+    public KeyCode reduceDurationKey = KeyCode.Minus;
+    public KeyCode augmentDurationKey = KeyCode.Plus;
+    public float durationIncrement = .1f;
 
     private NoteGrid noteGrid;
     private NoteSpawner noteSpawner;
@@ -65,6 +69,9 @@ public class LevelEditor : MonoBehaviour
         {
             if (Input.GetKeyDown(nextPlacementKey)) ChangeNotePlacement(currentNoteIndex, true);
             else if (Input.GetKeyDown(previousPlacementKey)) ChangeNotePlacement(currentNoteIndex, false);
+            else if (Input.GetKeyDown(augmentDurationKey)) ChangeNoteDurationBy(currentNoteIndex, durationIncrement);
+            else if (Input.GetKeyDown(reduceDurationKey)) ChangeNoteDurationBy(currentNoteIndex, -durationIncrement);
+            else if (Input.GetKeyDown(legatoKey)) ForceNoteLegato(currentNoteIndex);
         }
     }
 
@@ -102,21 +109,27 @@ public class LevelEditor : MonoBehaviour
         currentNoteInfo = note != null ? NoteInfo.GetInfo(note) : NoteInfo.None;
     }
 
-    private void ChangeNotePlacement(int noteIndex, bool direction)
+    private NoteInstance GetNoteInstance(int noteIndex)
     {
         int loadedNoteCount = musicPlayer?.LoadedNotes != null ? musicPlayer.LoadedNotes.Length : 0;
         if (loadedNoteCount <= 0 || noteIndex > loadedNoteCount)
         {
             Debug.LogWarning("Note index out of bound: " + noteIndex + "/" + loadedNoteCount);
-            return;
+            return null;
         }
         INote currentNote = musicPlayer.LoadedNotes[noteIndex];
         if (currentNote == null || currentNote is NoteInstance == false)
         {
             Debug.LogWarning("Couldn't find note instance " + noteIndex + "/" + loadedNoteCount);
-            return;
+            return null;
         }
-        NoteInstance noteInstance = currentNote as NoteInstance;
+        return currentNote as NoteInstance;
+    }
+
+    private void ChangeNotePlacement(int noteIndex, bool direction)
+    {
+        int loadedNoteCount = musicPlayer?.LoadedNotes != null ? musicPlayer.LoadedNotes.Length : 0;
+        NoteInstance currentNote = GetNoteInstance(noteIndex);
         NoteGridDimensions gridInfo = new();
         if (noteGrid == null)
         {
@@ -133,7 +146,7 @@ public class LevelEditor : MonoBehaviour
         Vector2[] possiblePlacement = gridInfo.ToneToCoordinates(currentNote.Tone);
         if (possiblePlacement == null || possiblePlacement.Length == 0)
         {
-            Debug.LogWarning("Couldn't place note " + noteIndex + "/" + loadedNoteCount + " on grid");
+            Debug.LogWarning("Couldn't place note " + noteIndex + " on grid");
             return;
         }
         Vector2 currentPlacement = spawnedNotesCoordinates[noteIndex];
@@ -150,5 +163,42 @@ public class LevelEditor : MonoBehaviour
             if (assetNotePlacementCount != loadedNoteCount) NotePlacementAsset.noteCoordinates = new Vector2[loadedNoteCount];
             Array.Copy(spawnedNotesCoordinates, NotePlacementAsset.noteCoordinates, NotePlacementAsset.noteCoordinates.Length);
         }
+    }
+
+    private void SetNoteDuration(int noteIndex, float duration)
+    {
+        // Edit sheet music
+        SheetMusic loadedMusic = levelAsset?.music;
+        if (loadedMusic != null)
+        {
+            NoteInfo noteInfo = loadedMusic.GetNote(partName, noteIndex);
+            noteInfo.duration = duration;
+            loadedMusic.SetNote(partName, noteIndex, noteInfo);
+            Debug.Log("Change note duration :" + noteInfo + ". New duration: " + duration);
+        }
+        // Show changes on loaded level
+        NoteInstance noteInstance = GetNoteInstance(noteIndex);
+        if (noteInstance != null)
+        {
+            NoteSpawn spawn = noteSpawner?.GetSpawn(noteIndex);
+            spawn?.SetLength(duration, noteSpawner.TimeScale);
+            noteInstance.Duration = duration;
+        }
+    }
+
+    private void ChangeNoteDurationBy(int noteIndex, float durationDelta)
+    {
+        NoteInstance noteInstance = GetNoteInstance(noteIndex);
+        if (noteInstance == null) return;
+        float noteDuration = noteInstance.Duration;
+        SetNoteDuration(noteIndex, noteDuration + durationDelta);
+    }
+
+    private void ForceNoteLegato(int noteIndex)
+    {
+        NoteInstance noteInstance = GetNoteInstance(noteIndex);
+        NoteInstance nextNoteInstance = GetNoteInstance(noteIndex + 1);
+        if (noteInstance == null || nextNoteInstance == null) return;
+        SetNoteDuration(noteIndex, nextNoteInstance.StartTime - noteInstance.StartTime);
     }
 }

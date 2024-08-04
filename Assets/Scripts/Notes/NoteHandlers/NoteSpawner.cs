@@ -249,6 +249,11 @@ public class NoteSpawner : MonoBehaviour
     }
 
     public NoteSpawn GetSpawn(NoteInfo noteInfo) => noteSpawns?.Find(n => n != null && n.noteInfo == noteInfo);
+    public NoteSpawn GetSpawn(int index)
+    {
+        int spawnCount = noteSpawns != null ? noteSpawns.Count : 0;
+        return index < 0 || index > spawnCount ? null : noteSpawns[index];
+    }
 
     private void DestroyNote(NoteSpawn note)
     {

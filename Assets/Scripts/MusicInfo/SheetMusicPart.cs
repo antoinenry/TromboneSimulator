@@ -9,6 +9,18 @@ public struct SheetMusicPart : IEquatable<SheetMusicPart>
 
     public int NoteCount => notes != null ? notes.Length : 0;
 
+    public NoteInfo GetNote(int index)
+    {
+        if (index < 0 || index >= NoteCount) return NoteInfo.None;
+        return notes[index];
+    }
+
+    public void SetNote(int index, NoteInfo note)
+    {
+        if (index < 0 || index >= NoteCount) return;
+        notes[index] = note;
+    }
+
     public SheetMusicPart Transpose(float byTones, bool transposeDrums = false)
     {
         SheetMusicPart newPart = new();
