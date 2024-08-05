@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Gourmet Race
   music: {fileID: 11400000, guid: 4e7df8d3b5d25ed47b59e5df3dfe146d, type: 2}
-  unlockTier: 8
+  unlockTier: 12
   notePlacements:
   - {fileID: 11400000, guid: 3c6c56bb61eff934a81e515d6c0b6920, type: 2}
   objectives:

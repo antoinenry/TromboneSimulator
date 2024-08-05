@@ -131,7 +131,7 @@ public class LevelLoader : MonoBehaviour
         {
             objectiveJudge.enabled = true;
             objectiveJudge.LoadObjectives(LoadedLevel.objectives);
-            objectiveJudge.LoadProgress(GameProgress.Current?.FindLevelProgress(LoadedLevel).checkList);
+            objectiveJudge.LoadProgress(GameProgress.Current?.FindLevelProgress(LoadedLevel).checklist);
         }
         // GUI Setup
         if (GUI)
@@ -140,13 +140,6 @@ public class LevelLoader : MonoBehaviour
             GUI.GUIActive = true;
             GUI.SetPauseButtonActive(true);
             GUI.onPauseRequest.AddListener(PauseLevel);
-        }
-        // Level end UI setup
-        LevelCompleteScreen UILevelComplete = MenuUI.Get<LevelCompleteScreen>();
-        if (UILevelComplete)
-        {
-            UILevelComplete.levelProgress.levelAsset = LoadedLevel;
-            UILevelComplete.levelProgress.checkList = GameProgress.Current?.FindLevelProgress(LoadedLevel).checkList;
         }
         // End coroutine
         loadLevelCoroutine = null;
@@ -412,8 +405,8 @@ public class LevelLoader : MonoBehaviour
         // Get level progress
         ObjectiveInfo[] completedObjectives = objectiveJudge.GetCompletedObjectives();
         GameProgress progress = GameProgress.Current;
-        LevelProgress oldLevelProgress = progress ? progress.FindLevelProgress(LoadedLevel) : new(LoadedLevel);
-        LevelProgress newLevelProgress = oldLevelProgress;
+        LevelProgress oldLevelProgress = progress ? progress.FindLevelProgress(LoadedLevel).Clone() : new(LoadedLevel);
+        LevelProgress newLevelProgress = oldLevelProgress.Clone();
         int oldPlayerXp = -1;
         progress?.GetObjectiveCount(out oldPlayerXp);
         newLevelProgress.TryCheckObjectives(completedObjectives);
@@ -427,7 +420,7 @@ public class LevelLoader : MonoBehaviour
         {
             UILevelComplete.levelProgress = oldLevelProgress;
             UILevelComplete.levelScore = levelScore;
-            UILevelComplete.checklist = newLevelProgress.checkList;
+            UILevelComplete.checklist = newLevelProgress.checklist;
             if (oldPlayerXp != -1) UILevelComplete.playerXp = oldPlayerXp;
             UILevelComplete.ShowUI();
             yield return new WaitWhile(() => UILevelComplete.DisplayCoroutine);

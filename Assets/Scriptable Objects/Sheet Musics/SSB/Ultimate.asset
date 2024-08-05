@@ -102,7 +102,7 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 5.8125
       duration: 0.18359375
-    - tone: 69
+    - tone: 66
       velocity: 0.859375
       startTime: 6
       duration: 2.90625
@@ -10907,7 +10907,7 @@ MonoBehaviour:
     - tone: 65
       velocity: 0.859375
       startTime: 6
-      duration: 2.90625
+      duration: 2.6062503
     - tone: 50
       velocity: 0.859375
       startTime: 9
@@ -11279,7 +11279,7 @@ MonoBehaviour:
     - tone: 67
       velocity: 0.859375
       startTime: 39.375
-      duration: 0.3125
+      duration: 0.375
     - tone: 69
       velocity: 0.859375
       startTime: 39.75
@@ -11343,7 +11343,7 @@ MonoBehaviour:
     - tone: 59
       velocity: 0.859375
       startTime: 45
-      duration: 0.65625
+      duration: 0.75
     - tone: 61
       velocity: 0.859375
       startTime: 45.75
@@ -11387,7 +11387,7 @@ MonoBehaviour:
     - tone: 67
       velocity: 0.859375
       startTime: 51.375
-      duration: 0.3125
+      duration: 0.375
     - tone: 69
       velocity: 0.859375
       startTime: 51.75
@@ -11451,7 +11451,7 @@ MonoBehaviour:
     - tone: 59
       velocity: 0.859375
       startTime: 57
-      duration: 0.65625
+      duration: 0.75
     - tone: 61
       velocity: 0.859375
       startTime: 57.75
@@ -11515,7 +11515,7 @@ MonoBehaviour:
     - tone: 60
       velocity: 0.859375
       startTime: 63
-      duration: 0.3125
+      duration: 0.375
     - tone: 58
       velocity: 0.859375
       startTime: 63.375
@@ -11547,7 +11547,7 @@ MonoBehaviour:
     - tone: 62
       velocity: 0.859375
       startTime: 65.4375
-      duration: 0.18359375
+      duration: 0.375
     - tone: 61
       velocity: 0.859375
       startTime: 65.8125
@@ -11575,7 +11575,7 @@ MonoBehaviour:
     - tone: 67
       velocity: 0.859375
       startTime: 67.3125
-      duration: 0.18359375
+      duration: 0.1375
     - tone: 67
       velocity: 0.859375
       startTime: 67.5
@@ -11631,7 +11631,7 @@ MonoBehaviour:
     - tone: 67
       velocity: 0.859375
       startTime: 75.375
-      duration: 0.3125
+      duration: 0.375
     - tone: 69
       velocity: 0.859375
       startTime: 75.75
@@ -11695,7 +11695,7 @@ MonoBehaviour:
     - tone: 59
       velocity: 0.859375
       startTime: 81
-      duration: 0.65625
+      duration: 0.75
     - tone: 61
       velocity: 0.859375
       startTime: 81.75
@@ -11739,7 +11739,7 @@ MonoBehaviour:
     - tone: 67
       velocity: 0.859375
       startTime: 87.375
-      duration: 0.3125
+      duration: 0.375
     - tone: 69
       velocity: 0.859375
       startTime: 87.75
@@ -11803,7 +11803,7 @@ MonoBehaviour:
     - tone: 59
       velocity: 0.859375
       startTime: 93
-      duration: 0.65625
+      duration: 0.75
     - tone: 61
       velocity: 0.859375
       startTime: 93.75
@@ -11835,7 +11835,7 @@ MonoBehaviour:
     - tone: 62
       velocity: 0.859375
       startTime: 101.4375
-      duration: 0.18359375
+      duration: 0.375
     - tone: 61
       velocity: 0.859375
       startTime: 101.8125
@@ -11863,7 +11863,7 @@ MonoBehaviour:
     - tone: 67
       velocity: 0.859375
       startTime: 103.3125
-      duration: 0.18359375
+      duration: 0.1375
     - tone: 67
       velocity: 0.859375
       startTime: 103.5

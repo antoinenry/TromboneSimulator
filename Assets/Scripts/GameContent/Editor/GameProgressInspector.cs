@@ -64,7 +64,7 @@ public class GameProgressInspector : Editor
                 if (l.ObjectiveCount > 0)
                 {
                     string[] objectiveNames = l.ObjectiveLongNames;
-                    bool[] completion = l.checkList;
+                    bool[] completion = l.checklist;
                     EditorGUILayout.BeginVertical("box");
                     for (int j = 0; j < l.ObjectiveCount; j++)
                     {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Kass
   music: {fileID: 11400000, guid: aea71f694d9277148966f4199692dbf8, type: 2}
-  unlockTier: 3
+  unlockTier: 5
   notePlacements:
   - {fileID: 11400000, guid: 693e6b50c574fd94681118a452788b94, type: 2}
   objectives:

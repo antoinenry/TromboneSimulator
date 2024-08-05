@@ -16,7 +16,7 @@ MonoBehaviour:
   music: {fileID: 11400000, guid: 23cf0d2497f68f24b9ed83ab161f9a27, type: 2}
   unlockTier: 20
   notePlacements:
-  - {fileID: 11400000, guid: fb7df52a96f1c7e4c8eb7ff6b14c65f3, type: 2}
+  - {fileID: 11400000, guid: 544a9d9ee427d1248a68d87354f0bcfd, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic
@@ -24,12 +24,12 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 30000
+    - 125000
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 60000
+    - 200000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 100000
+    - 300000

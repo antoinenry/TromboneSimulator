@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Doom's Gate
   music: {fileID: 11400000, guid: d528ec35e1347b64baef4d33ee0196bd, type: 2}
-  unlockTier: 3
+  unlockTier: 2
   notePlacements:
   - {fileID: 11400000, guid: 6017bb2a3009073479c8df74e48eda65, type: 2}
   objectives:

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Luigi's Mansion
   music: {fileID: 11400000, guid: d5c6c7d00a594cf46a63269b57870a34, type: 2}
-  unlockTier: 1
+  unlockTier: 3
   notePlacements:
   - {fileID: 11400000, guid: 04785612527c41b428f1c0f44b6f448e, type: 2}
   objectives:

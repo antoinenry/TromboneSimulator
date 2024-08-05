@@ -17,19 +17,18 @@ MonoBehaviour:
   unlockTier: 0
   notePlacements: []
   objectives:
-  - name: 
+  - name: Finir le morceau
     type: EndMusic
     parameters: []
-  - name: 
+  - name: Super Score
+    type: Highscore
+    parameters:
+    - 1
+  - name: Hyper Score
     type: Highscore
     parameters:
     - 10
-  - name: 
+  - name: Ultra Score
     type: Highscore
     parameters:
-    - 100000
-  - name: 
-    type: PlayPhrase
-    parameters:
-    - 6
-    - 16
+    - 100

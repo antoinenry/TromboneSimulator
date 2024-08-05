@@ -44,14 +44,8 @@ MonoBehaviour:
   parts:
   - name: Trombone
     notes:
-    - tone: 52
-      velocity: 1
-      startTime: 1
-      duration: 0.6
-  - name: Trombone
-    notes:
     - tone: 50
       velocity: 1
-      startTime: 2
+      startTime: 1
       duration: 0.5
   completeLastBar: 1

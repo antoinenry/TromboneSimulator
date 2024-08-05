@@ -1,18 +1,31 @@
 using System;
+using UnityEngine;
 
 [Serializable]
 public struct LevelProgress
 {
     public Level levelAsset;
-    public bool[] checkList;
+    public bool[] checklist;
+
+    public LevelProgress(Level level, bool[] checklist)
+    {
+        levelAsset = level;
+        int objectiveCount = level?.objectives != null ? level.objectives.Length : 0;
+        this.checklist = new bool[objectiveCount];
+        int checklistLength = checklist != null ? checklist.Length : 0;
+        for (int i = 0; i < objectiveCount; i++)
+            this.checklist[i] = i < checklistLength ? checklist[i] : false;
+    }
 
     public LevelProgress(Level level, ObjectiveInfo[] completedObjectives = null)
     {
         levelAsset = level;
         int objectiveCount = level?.objectives != null ? level.objectives.Length : 0;
-        checkList = new bool[objectiveCount];
+        checklist = new bool[objectiveCount];
         if (completedObjectives != null) foreach (ObjectiveInfo o in completedObjectives) TryCheckObjective(o);
     }
+
+    public LevelProgress Clone() => new(levelAsset, checklist);
 
     public int ObjectiveCount => levelAsset?.objectives != null ? levelAsset.objectives.Length : 0;
     public string[] ObjectiveNames => levelAsset?.objectives != null ? Array.ConvertAll(levelAsset.objectives, o => o.name) : new string[0];
@@ -23,7 +36,7 @@ public struct LevelProgress
         get
         {
             int counter = 0;
-            for (int i = 0, iend = CorrectChecklistLength(); i < iend; i++) if (checkList[i]) counter++;
+            for (int i = 0, iend = CorrectChecklistLength(); i < iend; i++) if (checklist[i]) counter++;
             return counter;
         }
     }
@@ -31,7 +44,7 @@ public struct LevelProgress
     public bool TryCheckObjective(int index, bool value = true)
     {
         if (index < 0 || index >= CorrectChecklistLength()) return false;
-        checkList[index] = value;
+        checklist[index] = value;
         return true;
     }
 
@@ -53,19 +66,19 @@ public struct LevelProgress
 
     public void CheckAllObjectives()
     {
-        if (checkList != null) checkList = Array.ConvertAll(checkList, c => true);
+        if (checklist != null) checklist = Array.ConvertAll(checklist, c => true);
     }
 
     public void UncheckAllObjectives()
     {
-        if (checkList != null) checkList = Array.ConvertAll(checkList, c => false);
+        if (checklist != null) checklist = Array.ConvertAll(checklist, c => false);
     }
 
     private int CorrectChecklistLength()
     {
         int correctLength = ObjectiveCount;
-        if (checkList == null) checkList = new bool[correctLength];
-        else if (checkList.Length != correctLength) Array.Resize(ref checkList, correctLength);
+        if (checklist == null) checklist = new bool[correctLength];
+        else if (checklist.Length != correctLength) Array.Resize(ref checklist, correctLength);
         return correctLength;
     }
 }
