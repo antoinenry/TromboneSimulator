@@ -414,6 +414,8 @@ public class LevelLoader : MonoBehaviour
         GameProgress progress = GameProgress.Current;
         LevelProgress oldLevelProgress = progress ? progress.FindLevelProgress(LoadedLevel) : new(LoadedLevel);
         LevelProgress newLevelProgress = oldLevelProgress;
+        int oldPlayerXp = -1;
+        progress?.GetObjectiveCount(out oldPlayerXp);
         newLevelProgress.TryCheckObjectives(completedObjectives);
         // Update general progress
         progress?.CompleteObjectives(LoadedLevel, completedObjectives);
@@ -424,8 +426,9 @@ public class LevelLoader : MonoBehaviour
         if (UILevelComplete)
         {
             UILevelComplete.levelProgress = oldLevelProgress;
-            UILevelComplete.checklist = newLevelProgress.checkList;
             UILevelComplete.levelScore = levelScore;
+            UILevelComplete.checklist = newLevelProgress.checkList;
+            if (oldPlayerXp != -1) UILevelComplete.playerXp = oldPlayerXp;
             UILevelComplete.ShowUI();
             yield return new WaitWhile(() => UILevelComplete.DisplayCoroutine);
         }

@@ -46,6 +46,8 @@ public abstract class SelectionButton<T> : MonoBehaviour, IPointerEnterHandler, 
 
     public virtual void Unselect()
     {
+        EventSystem eventSystem = EventSystem.current;
+        if (eventSystem != null && eventSystem.currentSelectedGameObject == gameObject) eventSystem.SetSelectedGameObject(null);
         onSelect.Invoke(Selection, false);
     }
 }

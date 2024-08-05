@@ -18,6 +18,7 @@ public class LevelCompleteScreen : MenuUI
     public Button replayButton;
     public Button nextButton;
     public Button skipButton;
+    public PlayerXpPanel playerXpPanel;
     [Header("Prefabs")]
     public ObjectiveCheckPanel objectiveItemPrefab;
     [Header("Timing")]
@@ -28,6 +29,7 @@ public class LevelCompleteScreen : MenuUI
     public LevelScoreInfo levelScore;
     public LevelProgress levelProgress;
     public bool[] checklist;
+    public int playerXp;
     [Header("Events")]
     public UnityEvent onPressReplay;
     public UnityEvent onPressNext;
@@ -35,8 +37,9 @@ public class LevelCompleteScreen : MenuUI
     private Coroutine displayLinesCoroutine;
     private Coroutine displayObjectivesCoroutine;
 
-    public bool DisplayCoroutine => displayLinesCoroutine != null || displayObjectivesCoroutine != null; 
+    public bool DisplayCoroutine => displayLinesCoroutine != null || displayObjectivesCoroutine != null;
 
+    #region Initialize
     override protected void Reset()
     {
         base.Reset();
@@ -65,6 +68,8 @@ public class LevelCompleteScreen : MenuUI
         {
             ToggleButtonsVisibility();
         }
+        // Display player xp
+        playerXpPanel?.SetXp(playerXp);
     }
 
     public override void ShowUI()
@@ -93,6 +98,7 @@ public class LevelCompleteScreen : MenuUI
             if (displayObjectivesCoroutine != null) StopCoroutine(displayObjectivesCoroutine);
         }
     }
+    #endregion
 
     #region Lines (header and score)
     public void ShowAllLines()
@@ -276,9 +282,15 @@ public class LevelCompleteScreen : MenuUI
             ObjectiveCheckPanel o = objectivePanels[i];
             if (o == null) continue;
             o.gameObject.SetActive(true);
-            if (i < levelCheckCount && levelChecklist[i] == true) o.PlayAlreadyCheckedAnimation();
-            else if (i < checkCount && checklist[i]) o.PlayNewlyCheckedAnimation();
-            else o.PlayUncheckedAnimation();
+            if (i < levelCheckCount && levelChecklist[i] == true)
+                o.PlayAlreadyCheckedAnimation();
+            else if (i < checkCount && checklist[i])
+            {
+                o.PlayNewlyCheckedAnimation();
+                playerXp += 1;
+            }
+            else
+                o.PlayUncheckedAnimation();
         }
         displayObjectivesCoroutine = null;
     }

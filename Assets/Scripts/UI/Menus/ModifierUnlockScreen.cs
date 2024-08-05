@@ -124,7 +124,8 @@ public class ModifierUnlockScreen : MenuUI
             if (selected) ShowModifierInfo(modifier);
             else if (modifier == selectedModifier) infoTextField.SetText(infoDefaultText);
         }
-        selectedModifier = modifier;
+        if (selected) selectedModifier = modifier;
+        else if (selectedModifier == modifier) selectedModifier = null;
     }
 
     private void OnClickModifierButton(TromboneBuildModifier modifier)
