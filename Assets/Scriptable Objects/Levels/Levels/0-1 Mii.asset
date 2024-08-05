@@ -24,12 +24,4 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 30000
-  - name: Hyper Score
-    type: Highscore
-    parameters:
-    - 60000
-  - name: Ultra Score
-    type: Highscore
-    parameters:
     - 100000

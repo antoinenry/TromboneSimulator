@@ -207,20 +207,14 @@ public class NoteSpawner : MonoBehaviour
     {
         int noteCount = notes != null ? notes.Length : 0;
         if (noteCount == 0) return;
-        // Remember time
-        //float keep_previousTime = previousTime;
-        //float keep_time = time;
-        //previousTime = fromTime;
-        //time = toTime;
         // Move playhead without triggering events
         Playhead.ProgressOnNote[] progressOnNotes = playHead.Move(notes, fromTime, toTime, true, true, false);
         // Spawn all notes detected by playhead
         for (int n = 0; n < noteCount; n++)
             if (progressOnNotes[n] != Playhead.ProgressOnNote.None)
                 SpawnNote(notes[n], startIndex + n);
-        // Restore time
-        //previousTime = keep_previousTime;
-        //time = keep_time;
+        // Update notes
+        UpdateNoteInstances();
     }
 
     public Vector2 GetNotePlacement(INote note, int index)
