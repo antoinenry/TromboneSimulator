@@ -1,10 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public interface IUnlockableContent
 {
+    public ScriptableObject ContentAsset { get; }
     public bool AutoUnlock { get; }
-    public int UnlockTier { get; }
+    public int UnlockTier { get; set; }
 }
 
 public class UnlockTierComparer : IComparer<IUnlockableContent>

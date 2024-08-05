@@ -10,8 +10,13 @@ public class Level : ScriptableObject, IUnlockableContent
     public NotePlacement[] notePlacements;
     public ObjectiveInfo[] objectives;
 
+    public ScriptableObject ContentAsset => this;
     public bool AutoUnlock => true;
-    public int UnlockTier => unlockTier;
+    public int UnlockTier
+    {
+        get => unlockTier;
+        set => unlockTier = value;
+    }
     public float MusicDuration => music != null ? music.GetDuration() : 0;
 
     public NotePlacement GetNotePlacement(NoteGridDimensions gridDimensions)

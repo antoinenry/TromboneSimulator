@@ -13,21 +13,21 @@ public class GameContentLibrary : ScriptableObject
 
     public Level[] levels;
     public TromboneBuildModifier[] modifiers;
-    public ObjectMethodCaller caller = new ObjectMethodCaller("SortByUnlockTier");
     //public TromboneBuild[] trombones;
     //public Orchestra[] orchestras;
 
     public string[] GetLevelNames()
         => Array.ConvertAll(levels, l => l?.name);
 
-    public ScriptableObject[] GetAllContent()
+    public ScriptableObject[] GetAllContent(bool sorted = true)
     {
         int levelCount = levels != null ? levels.Length : 0;
         int modifierCount = modifiers != null ? modifiers.Length : 0;
-        ScriptableObject[] allContent = new ScriptableObject[levelCount + modifierCount];
+        IUnlockableContent[] allContent = new IUnlockableContent[levelCount + modifierCount];
         Array.Copy(levels, allContent, levelCount);
         Array.Copy(modifiers, 0, allContent, levelCount, modifierCount);
-        return allContent;
+        Array.Sort(allContent, new UnlockTierComparer());
+        return Array.ConvertAll(allContent, c => c.ContentAsset);
     }
 
     public void SortByUnlockTier()

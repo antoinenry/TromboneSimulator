@@ -28,6 +28,7 @@ public class GameProgressInspector : Editor
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("UnlockAll")) targetProgress.UnlockAll();
         if (GUILayout.Button("Reset")) targetProgress.Reset();
+        if (GUILayout.Button("Sort")) targetProgress.SortByUnlockTier();
         EditorGUILayout.EndHorizontal();
     }
 
@@ -99,6 +100,16 @@ public class GameProgressInspector : Editor
         contentLocksFoldout = EditorGUILayout.Foldout(contentLocksFoldout, "Unlocked " + unlockedCount + "/" + contentCount);
         if (contentLocksFoldout)
         {
+            // Header
+            float totalWidth = EditorGUIUtility.currentViewWidth * .9f,
+                assetFieldWidth = totalWidth * .5f,
+                lockButtonWidth = totalWidth * .3f,
+                unlockTierFieldWidth = totalWidth * .2f;
+            EditorGUILayout.BeginHorizontal("box");
+            EditorGUILayout.LabelField("Asset", EditorStyles.boldLabel, GUILayout.Width(assetFieldWidth));
+            EditorGUILayout.LabelField("Lock", EditorStyles.boldLabel, GUILayout.Width(lockButtonWidth));
+            EditorGUILayout.LabelField("Tier", EditorStyles.boldLabel, GUILayout.Width(unlockTierFieldWidth));
+            EditorGUILayout.EndHorizontal();
             // List
             bool GUIEnabled = GUI.enabled;
             Color GUIColor = GUI.backgroundColor;
@@ -107,7 +118,7 @@ public class GameProgressInspector : Editor
             {
                 EditorGUILayout.BeginHorizontal();
                 GUI.enabled = false;
-                EditorGUILayout.ObjectField(l.contentAsset, typeof(ScriptableObject), false);
+                EditorGUILayout.ObjectField(l.contentAsset, typeof(ScriptableObject), false, GUILayout.Width(assetFieldWidth));
                 if (l.contentAsset == null || l.contentAsset is IUnlockableContent == false)
                 {
                     GUI.enabled = true;
@@ -127,11 +138,12 @@ public class GameProgressInspector : Editor
                 {
                     GUI.backgroundColor = Color.red;
                 }
-                if (GUILayout.Button(l.locked ? "  locked  " : "unlocked")) targetProgress.TrySetLock(l.contentAsset, !l.locked);
+                if (GUILayout.Button(l.locked ? "  locked  " : "unlocked", GUILayout.Width(lockButtonWidth))) targetProgress.TrySetLock(l.contentAsset, !l.locked);
+                GUI.enabled = GUIEnabled;
+                GameContentLock.SetUnlockTier(l.contentAsset, EditorGUILayout.IntField(l.UnlockTier, GUILayout.Width(unlockTierFieldWidth)));
                 EditorGUILayout.EndHorizontal();
                 GUI.backgroundColor = GUIColor;
             }
-            GUI.enabled = GUIEnabled;
         }
         EditorGUI.indentLevel--;
     }

@@ -181,4 +181,10 @@ public class GameProgress : ScriptableObject
         int lockCount = GetLockCount(out int unlocked);
         for (int i = 0; i < lockCount; i++) contentLocks[i].SetLocked(false);
     }
+
+    public void SortByUnlockTier()
+    {
+        GameContentLibrary.Current?.SortByUnlockTier();
+        Update();
+    }
 }

@@ -10,6 +10,7 @@ public class ModifierUnlockScreen : MenuUI
     public TMP_Text infoTextField;
     [Header("Configuration")]
     public TromboneBuildModifier[] modifiers;
+    public int requestModifierCount = 3;
     public float modifierContainerSizeMargin = 0f;
     public DialogBoxScreen.Dialog applyModDialog;
     public string infoDefaultText = "";
@@ -46,7 +47,12 @@ public class ModifierUnlockScreen : MenuUI
     public override void ShowUI()
     {
         base.ShowUI();
-        GameContentPicker.PickModifiers(ref modifiers, progress:GameProgress.Current);
+        modifiers = GameContentPicker.PickUnlockableModifiers(requestModifierCount, GameProgress.Current, prioritizeHighTier:true);
+        if (modifiers == null ||  modifiers.Length == 0)
+        {
+            HideUI();
+            return;
+        }
         UpdateButtonInstances(out ModifierUnlockButton[] buttons);
         AddModifierButtonsListeners(buttons);
         //SelectModifier(buttons, 0);
