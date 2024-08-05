@@ -41,6 +41,16 @@ public struct LevelProgress
         return TryCheckObjective(Array.IndexOf(levelAsset.objectives, objective), value);
     }
 
+    public bool TryCheckObjectives(ObjectiveInfo[] objective, bool value = true)
+    {
+        bool success = true;
+        foreach (ObjectiveInfo obj in objective)
+        {
+            if (TryCheckObjective(obj, value) == false) success = false;
+        }
+        return success;
+    }
+
     public void CheckAllObjectives()
     {
         if (checkList != null) checkList = Array.ConvertAll(checkList, c => true);

@@ -15,7 +15,8 @@ MonoBehaviour:
   levelName: The Great Escape
   music: {fileID: 11400000, guid: ca916547c25c4be44844bba13c27e95c, type: 2}
   unlockTier: 8
-  notePlacements: []
+  notePlacements:
+  - {fileID: 11400000, guid: 7ba22e0a6e24c9e46b4883e94bf62b6c, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic

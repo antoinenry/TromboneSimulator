@@ -22,7 +22,7 @@ public class LevelEditor : MonoBehaviour
     public KeyCode legatoKey = KeyCode.L;
     public KeyCode reduceDurationKey = KeyCode.Minus;
     public KeyCode augmentDurationKey = KeyCode.Plus;
-    public float durationIncrement = .1f;
+    public float durationIncrement = .05f;
 
     private NoteGrid noteGrid;
     private NoteSpawner noteSpawner;

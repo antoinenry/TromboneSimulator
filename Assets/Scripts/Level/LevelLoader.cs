@@ -407,23 +407,24 @@ public class LevelLoader : MonoBehaviour
         // Stop level
         GUI.SetPauseButtonActive(false);
         musicPlayer.Stop();
-        // Get level performance
+        // Get score
         LevelScoreInfo levelScore = performanceJudge.GetLevelScore();
+        // Get level progress
         ObjectiveInfo[] completedObjectives = objectiveJudge.GetCompletedObjectives();
-        LevelProgress levelProgress = new LevelProgress(LoadedLevel, completedObjectives);
-        // Update general progress
         GameProgress progress = GameProgress.Current;
-        if (progress) progress.CompleteObjectives(LoadedLevel, completedObjectives);
+        LevelProgress oldLevelProgress = progress ? progress.FindLevelProgress(LoadedLevel) : new(LoadedLevel);
+        LevelProgress newLevelProgress = oldLevelProgress;
+        newLevelProgress.TryCheckObjectives(completedObjectives);
+        // Update general progress
+        progress?.CompleteObjectives(LoadedLevel, completedObjectives);
         // Transition
         yield return new WaitForSeconds(levelEndTransitionDuration);
-        // Unload level
-        //UnloadLevel();
         // Show score screen
         LevelCompleteScreen UILevelComplete = MenuUI.Get<LevelCompleteScreen>();
         if (UILevelComplete)
         {
-            //UILevelComplete.levelProgress = levelProgress;
-            UILevelComplete.checklist = levelProgress.checkList;
+            UILevelComplete.levelProgress = oldLevelProgress;
+            UILevelComplete.checklist = newLevelProgress.checkList;
             UILevelComplete.levelScore = levelScore;
             UILevelComplete.ShowUI();
             yield return new WaitWhile(() => UILevelComplete.DisplayCoroutine);

@@ -121,9 +121,9 @@ public class LevelSelectionScreen : MenuUI
         ShowLevelInfo(levelInfo, enter);
     }
 
-    private void OnLevelButtonPressed(Level levelAsset)
+    private void OnLevelButtonPressed(LevelProgress levelInfo)
     {
-        SelectLevel(levelAsset);
+        SelectLevel(levelInfo.levelAsset);
         GoTo(Get<ModifierSelectionScreen>());
     }
 

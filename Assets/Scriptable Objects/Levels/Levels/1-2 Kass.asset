@@ -15,7 +15,8 @@ MonoBehaviour:
   levelName: Kass
   music: {fileID: 11400000, guid: aea71f694d9277148966f4199692dbf8, type: 2}
   unlockTier: 3
-  notePlacements: []
+  notePlacements:
+  - {fileID: 11400000, guid: 693e6b50c574fd94681118a452788b94, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic
@@ -23,12 +24,12 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 30000
+    - 200000
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 60000
+    - 350000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 100000
+    - 550000

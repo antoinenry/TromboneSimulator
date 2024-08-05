@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class ModifierUnlockScreen : MenuUI
@@ -6,10 +7,14 @@ public class ModifierUnlockScreen : MenuUI
     public TromboneBuildStack modifierStack;
     public ModifierUnlockButton modifierButtonPrefab;
     public RectTransform modifierButtonContainer;
+    public TMP_Text infoTextField;
     [Header("Configuration")]
     public TromboneBuildModifier[] modifiers;
     public float modifierContainerSizeMargin = 0f;
     public DialogBoxScreen.Dialog applyModDialog;
+    public string infoDefaultText = "";
+    public bool infoShowsDescription = true;
+    public bool infoShowsStats = false;
 
     private TromboneBuildModifier selectedModifier;
     private DialogBoxScreen dialogBox;
@@ -95,13 +100,13 @@ public class ModifierUnlockScreen : MenuUI
     private void AddModifierButtonsListeners(ModifierUnlockButton[] buttons)
     {
         if (buttons == null || buttons.Length == 0) return;
-        foreach (ModifierUnlockButton button in buttons) button?.onClick?.AddListener(OnClickModifierButton);
+        foreach (ModifierUnlockButton button in buttons) button?.AddListeners(OnSelectModifierButton, OnClickModifierButton);
     }
 
     private void RemoveModifiersButtonsListeners(ModifierUnlockButton[] buttons)
     {
         if (buttons == null || buttons.Length == 0) return;
-        foreach (ModifierUnlockButton button in buttons) button?.onClick?.RemoveListener(OnClickModifierButton);
+        foreach (ModifierUnlockButton button in buttons) button?.RemoveListeners(OnSelectModifierButton, OnClickModifierButton);
     }
 
     private void UpdateButtonContainerSize(int buttonCount)
@@ -112,11 +117,25 @@ public class ModifierUnlockScreen : MenuUI
         modifierButtonContainer.sizeDelta = size;
     }
 
+    private void OnSelectModifierButton(TromboneBuildModifier modifier, bool selected)
+    {
+        if (infoTextField)
+        {
+            if (selected) ShowModifierInfo(modifier);
+            else if (modifier == selectedModifier) infoTextField.SetText(infoDefaultText);
+        }
+        selectedModifier = modifier;
+    }
+
     private void OnClickModifierButton(TromboneBuildModifier modifier)
     {
-        selectedModifier = modifier;
+        if (selectedModifier == null)
+        {
+            HideUI();
+            return;
+        }
         GameProgress.Current?.TrySetLock(selectedModifier, false);
-        if (dialogBox != null && selectedModifier != null)
+        if (dialogBox != null)
         {
             dialogBox.configuration = applyModDialog;
             dialogBox.configuration.bottomText = selectedModifier.modName;
@@ -137,5 +156,18 @@ public class ModifierUnlockScreen : MenuUI
             modifierStack.ApplyStack();
         }
         HideUI();
+    }
+
+    private void ShowModifierInfo(TromboneBuildModifier modifier)
+    {
+        if (infoTextField == null) return;
+        string infoText = infoDefaultText;
+        if (modifier != null)
+        {
+            if (infoShowsDescription && infoShowsStats) infoText = modifier.description + "\n" + modifier.StatDescription;
+            else if (infoShowsDescription) infoText = modifier.description;
+            else if (infoShowsStats) infoText = modifier.StatDescription;
+        }
+        infoTextField.SetText(infoText);
     }
 }

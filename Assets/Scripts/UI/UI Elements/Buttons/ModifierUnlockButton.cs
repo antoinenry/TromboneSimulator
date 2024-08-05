@@ -1,11 +1,14 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 [ExecuteAlways]
-public class ModifierUnlockButton : MonoBehaviour
+public class ModifierUnlockButton : SelectionButton<TromboneBuildModifier>
 {
+    [Flags]
+    public enum ContentToggle { Name = 1, Icon = 2, Description = 4, Stats = 8}
+
     [Header("Components")]
     public TMP_Text nameField;
     public TMP_Text nameFieldShadow;
@@ -13,26 +16,11 @@ public class ModifierUnlockButton : MonoBehaviour
     public Image icon;
     [Header("Configuration")]
     public TromboneBuildModifier modifier;
-    public bool showStats;
-    [Header("Events")]
-    public UnityEvent<TromboneBuildModifier> onClick;
+    public ContentToggle unselectedContent = ContentToggle.Name | ContentToggle.Icon;
+    public ContentToggle selectedContent = ContentToggle.Name | ContentToggle.Stats;
 
-    private Button button;
+    public override TromboneBuildModifier Selection { get => modifier; set => modifier = value; }
 
-    private void Awake()
-    {
-        button = GetComponent<Button>();
-    }
-
-    private void OnEnable()
-    {
-        if (button) button.onClick.AddListener(OnClick);
-    }
-
-    private void OnDisable()
-    {
-        if (button) button.onClick.RemoveListener(OnClick);
-    }
     private void Update()
     {
         if (modifier)
@@ -45,10 +33,6 @@ public class ModifierUnlockButton : MonoBehaviour
             if (nameFieldShadow)
             {
                 nameFieldShadow.text = modifier.modName;
-            }
-            if (descriptionField)
-            {
-                descriptionField.text = (showStats && modifier.StatDescription != null) ? modifier.StatDescription : modifier.description;
             }
             if (icon)
             {
@@ -65,9 +49,31 @@ public class ModifierUnlockButton : MonoBehaviour
         }
     }
 
-    public void ShowStats() => showStats = true;
-    public void HideStats() => showStats = false;
-    public void Select() => button?.Select();
+    public override void Select()
+    {
+        base.Select();
+        if (nameField == null) return;
+        ShowContent(selectedContent);
+    }
 
-    private void OnClick() => onClick.Invoke(modifier);
+    public override void Unselect()
+    {
+        base.Unselect();
+        ShowContent(unselectedContent);
+    }
+
+    private void ShowContent(ContentToggle visibleContent)
+    {
+        icon?.gameObject?.SetActive(visibleContent.HasFlag(ContentToggle.Icon));
+        nameField?.gameObject?.SetActive(visibleContent.HasFlag(ContentToggle.Name));
+        if (descriptionField)
+        {
+            bool showDescription = visibleContent.HasFlag(ContentToggle.Description),
+                showStats = visibleContent.HasFlag(ContentToggle.Stats);
+            descriptionField.gameObject.SetActive(showDescription || showStats);
+            if (showDescription && showStats) descriptionField.text = modifier.description + "\n" + modifier.StatDescription;
+            else if (showDescription) descriptionField.text = modifier.description;
+            else if (showStats) descriptionField.text = modifier.StatDescription;
+        }
+    }
 }

@@ -1,38 +1,17 @@
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 using TMPro;
 
-public class LevelSelectionButton : MonoBehaviour
+public class LevelSelectionButton : SelectionButton<LevelProgress>
 {
     [Header("Components")]
     public TMP_Text titleField;
     public TMP_Text durationField;
     public TMP_Text progressField;
     public GameObject newNotification;
+    [Header("Content")]
+    public LevelProgress levelInfo;
 
-    public UnityEvent<LevelProgress,bool> onSelect;
-    public UnityEvent<Level> onClick;
-
-    private LevelProgress levelInfo;
-    private Button button;
-
-    private void Awake()
-    {
-        button = GetComponent<Button>();
-    }
-
-    public void AddListeners(UnityAction<LevelProgress,bool> onSelectAction, UnityAction<Level> onClickAction)
-    {
-        if (onSelectAction != null) onSelect.AddListener(onSelectAction);
-        if (onClickAction != null) onClick.AddListener(onClickAction);
-    }
-
-    public void RemoveListeners(UnityAction<LevelProgress, bool> onSelectAction, UnityAction<Level> onClickAction)
-    {
-        if (onSelectAction != null) onSelect.RemoveListener(onSelectAction);
-        if (onClickAction != null) onClick.RemoveListener(onClickAction);
-    }
+    public override LevelProgress Selection { get => levelInfo; set => levelInfo = value; }
 
     public void SetLevel(LevelProgress l)
     {
@@ -86,17 +65,6 @@ public class LevelSelectionButton : MonoBehaviour
     }
 
     public void MarkAsNew(bool isNew) => newNotification?.SetActive(isNew);
-
-    public void OnSelect() => onSelect.Invoke(levelInfo, true);
-
-    public void OnUnselect() => onSelect.Invoke(levelInfo, false);
-
-    public void OnClick() => onClick.Invoke(LevelAsset);
-
-    public void Select()
-    {
-        button?.Select();
-    }
 
     public Level LevelAsset => levelInfo.levelAsset;
 }
