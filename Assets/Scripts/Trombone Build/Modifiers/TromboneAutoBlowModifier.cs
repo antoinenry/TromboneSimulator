@@ -4,6 +4,7 @@ using UnityEngine;
 public class TromboneAutoBlowModifier : TromboneBuildModifier
 {
     public TromboneAutoSettings.ControlConditions blowControl;
+    public override bool ReplaceOnly => true;
 
     public override void ApplyTo(TromboneBuild build)
     {

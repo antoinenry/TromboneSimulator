@@ -319,6 +319,7 @@ public class NoteBullet : MonoBehaviour
             // Match y positions (safer due to position rounding)
             next.SetDistanceLinked(distance, length);
             // Match two notes' color
+            next.baseColor = baseColor;
             next.currentColor = currentColor;
             next.SetColor(currentColor);
             return true;

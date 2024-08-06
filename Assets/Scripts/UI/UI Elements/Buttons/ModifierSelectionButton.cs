@@ -5,11 +5,15 @@ using UnityEngine.UI;
 [ExecuteAlways]
 public class ModifierSelectionButton : MonoBehaviour
 {
+    public enum ModifierAvailability { Locked, Available, Active }
+
+    [Header("Components")]
     public Button button;
     public Image icon;
+    public Image lockOverlay;
     [Header("Content")]
     public TromboneBuildModifier modifierAsset;
-    public bool active;
+    public ModifierAvailability availability;
     [Header("Active colors")]
     public ColorBlock activeColors = ColorBlock.defaultColorBlock;
     [Header("Inactive colors")]
@@ -27,7 +31,7 @@ public class ModifierSelectionButton : MonoBehaviour
 
     private void Update()
     {
-        if (button) button.colors = active ? activeColors : inactiveColors;
+        SetButtonLook();
     }
 
     public void AddListeners(UnityAction<TromboneBuildModifier, bool> onSelectAction, UnityAction<TromboneBuildModifier, bool> onClickAction)
@@ -54,10 +58,11 @@ public class ModifierSelectionButton : MonoBehaviour
 
     public void OnClick()
     {
-        if (modifierAsset == null) return;
-        active = !active;
-        if (sfxSource) sfxSource.OnToggle(active);
-        onToggle.Invoke(modifierAsset, active);
+        if (availability == ModifierAvailability.Locked) return;
+        bool activate = availability == ModifierAvailability.Available;
+        availability = activate ? ModifierAvailability.Active : ModifierAvailability.Available;
+        sfxSource.OnToggle(activate);
+        onToggle.Invoke(modifierAsset, activate);
     }
 
     public void OnSelect()
@@ -68,5 +73,11 @@ public class ModifierSelectionButton : MonoBehaviour
     public void OnUnselect()
     {
         onSelect.Invoke(modifierAsset, false);
+    }
+
+    public void SetButtonLook()
+    {
+        if (lockOverlay) lockOverlay.enabled = availability == ModifierAvailability.Locked;
+        if (button) button.colors = availability == ModifierAvailability.Active ? activeColors : inactiveColors;
     }
 }

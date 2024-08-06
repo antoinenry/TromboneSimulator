@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using static ModifierSelectionButton;
 
 public class ModifierSelectionScreen : MenuUI
 {
@@ -44,7 +45,7 @@ public class ModifierSelectionScreen : MenuUI
         if (progress?.contentLocks == null) return;
         // Get modifier list
         modifiers = Array.ConvertAll(
-            Array.FindAll(progress.contentLocks, c => c.locked == false && c.contentAsset is TromboneBuildModifier),
+            Array.FindAll(progress.contentLocks, c => c.contentAsset != null && c.contentAsset is TromboneBuildModifier && progress.CanUnlock(c.contentAsset)),
             c => c.contentAsset as TromboneBuildModifier);
         // Update button grid
         if (modifierGrid != null)
@@ -62,9 +63,16 @@ public class ModifierSelectionScreen : MenuUI
                         ResetModifierGrid();
                         return;
                     }
-            // Update active/inactive states
+            // Update active/inactive/locked states
             TromboneBuildModifier[] activeMods = modifierStack != null ? modifierStack.Modifiers : new TromboneBuildModifier[0];
-            foreach (ModifierSelectionButton b in buttons) b.active = Array.IndexOf(activeMods, b.modifierAsset) != -1;
+            foreach (ModifierSelectionButton b in buttons)
+            {
+                TromboneBuildModifier modifierAsset = b?.modifierAsset;
+                if (modifierAsset == null) continue;
+                else if (progress.IsUnlocked(modifierAsset) == false) b.availability = ModifierAvailability.Locked;
+                else if (Array.IndexOf(activeMods, modifierAsset) == -1) b.availability = ModifierAvailability.Available;
+                else b.availability = ModifierAvailability.Active;
+            }
         }
     }
 
@@ -81,7 +89,6 @@ public class ModifierSelectionScreen : MenuUI
             ModifierSelectionButton b;
             b = Instantiate(modifierTogglePrefab);
             b.SetModifier(mod);
-            b.active = Array.IndexOf(activeMods, mod) != -1;
             modifierGrid.Add(b.gameObject);
         }
         AddButtonGridListeners(buttons);

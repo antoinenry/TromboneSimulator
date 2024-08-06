@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c722ce8973646f64391ec7c36ce09a72, type: 3}
-  m_Name: AutoBlow
+  m_Name: AutoBlowOff
   m_EditorClassIdentifier: 
   modName: Auto Pouet
   icon: {fileID: -470509015, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
