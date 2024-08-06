@@ -64,6 +64,20 @@ public class MusicPlayerCustomizer : ComponentCustomizer
 }
 
 [Serializable]
+public class AudioTrackGeneratorCustomizer : ComponentCustomizer
+{
+    public Orchestra orchestra;
+
+    public Type GetComponentType() => typeof(AudioTrackGenerator);
+
+    public void OnApplyToComponent(UnityEngine.Object component)
+    {
+        AudioTrackGenerator generator = component as AudioTrackGenerator;
+        if (generator.orchestra != generator.SampledOrchestra) generator.SampleTrack();
+    }
+}
+
+[Serializable]
 public class PerformanceJudgeCustomizer : ComponentCustomizer
 {
     public float scoringRate = 10f;

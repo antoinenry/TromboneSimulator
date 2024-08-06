@@ -44,6 +44,8 @@ MonoBehaviour:
     tempoModifier: 1
     keyModifier: 0
     playingSpeed: 1
+  audioTrackGenerator:
+    orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
   performanceJudge:
     scoringRate: 100
     maxHealth: 1

@@ -69,9 +69,15 @@ public class MusicPlayer : MonoBehaviour
         if (playOnStart) Play();
     }
 
+    private void OnEnable()
+    {
+        audioGenerator?.onGenerationProgress?.AddListener(OnAudioGeneratorProgress);
+    }
+
     private void OnDisable()
     {
         Stop();
+        audioGenerator?.onGenerationProgress?.RemoveListener(OnAudioGeneratorProgress);
     }
 
     private void Update()
@@ -137,63 +143,11 @@ public class MusicPlayer : MonoBehaviour
 
     public bool NeedsReload() => IsLoadedMusic(music);
 
-    //public void LoadMusic(SheetMusic sheetMusic, AudioClip preGeneratedAudio = null, SamplerInstrument playedInstrument = null, int voiceIndex = 1)
-    //{
-    //    if (showDebug) Debug.Log("Loading Music " + sheetMusic?.name);
-    //    // Unload previous music
-    //    if (LoadedAudio != preGeneratedAudio) UnloadMusic();
-    //    if (sheetMusic == null) return;
-    //    // Load new music
-    //    //LoadedMusic = sheetMusic;
-    //    //music = sheetMusic;
-    //    music = Instantiate(sheetMusic);
-    //    music.name = sheetMusic.name + " (copy)";
-    //    music.MultiplyTempoBy(tempoModifier);
-    //    if (LoadedMusic != null)
-    //    {
-    //        if (playedInstrument != null)
-    //        {
-    //            // Get notes to play
-    //            LoadedNotes = music.GetVoiceNotes(playedInstrument, voiceIndex/*, TempoStretch*/);
-    //            playedInstrument.ApplyStyle(LoadedNotes);
-    //        }
-    //        else
-    //        {
-    //            LoadedNotes = new NotePlay[0];
-    //        }
-    //        if (audioSource != null)
-    //        {
-    //            // If audio is already generated, set as backing clip
-    //            if (preGeneratedAudio != null)
-    //            {
-    //                audioSource.clip = AudioSampling.CloneAudioClip(preGeneratedAudio);
-    //            }
-    //            // Else generate new audio
-    //            else
-    //            {
-    //                if (audioGenerator != null)
-    //                {
-    //                    audioGenerator.orchestra = orchestra;
-    //                    audioGenerator.music = LoadedMusic;
-    //                    //backingGenerator.tempoStretch = TempoStretch;
-    //                    // Don't generate playable voices (main voice and played alternative)
-    //                    audioGenerator.mutedParts = null;
-    //                    if (playedInstrument != null) audioGenerator.IgnoreVoice(playedInstrument.instrumentName, true, voiceIndex);
-    //                    // Begin sampling
-    //                    audioGenerator.SampleTrack();
-    //                    StartCoroutine(WaitForGeneratedAudio());
-    //                }
-    //            }
-    //        }
-    //        // Metronome setup
-    //        metronome.playSpeed = playingSpeed;
-    //        metronome.SetRythm(music.GetTempo(/*TempoStretch*/), music.GetMeasure());
-    //    }
-    //    else
-    //    {
-    //        audioSource.clip = null;
-    //    }
-    //}
+    private void OnAudioGeneratorProgress(float progress)
+    {
+        if (audioSource == null || audioGenerator == null) return;
+        if (progress >= 1f) audioSource.clip = audioGenerator.generatedAudio;
+    }
 
     private IEnumerator WaitForGeneratedAudio()
     {

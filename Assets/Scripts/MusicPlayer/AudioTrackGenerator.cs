@@ -27,6 +27,8 @@ public class AudioTrackGenerator : MonoBehaviour
     [Header("Events")]
     public UnityEvent<float> onGenerationProgress;
 
+    public Orchestra SampledOrchestra { get; private set; }
+
     public int TotalNoteCount { get; private set; }
     public int GeneratedNoteCount { get; private set; }
     public float GenerationProgress => (float)GeneratedNoteCount / TotalNoteCount;
@@ -61,6 +63,8 @@ public class AudioTrackGenerator : MonoBehaviour
     {
         // Sample in a timed coroutine to avoid freezing framerate
         StopAllCoroutines();
+        SampledOrchestra = orchestra;
+        if (SampledOrchestra == null) return ErrorType.NullInstrument;
         StartCoroutine(SampleTrackCoroutine());
         return ErrorType.NoError;
     }
@@ -140,7 +144,7 @@ public class AudioTrackGenerator : MonoBehaviour
                         CurrentPartLength = notes.Length;
                     }
                     // Sample part with corresponding instrument
-                    InstrumentMixInfo instrumentMix = Array.Find(orchestra.instrumentInfo, instrument => InstrumentDictionary.SameCurrentInstruments(instrument.partName, partOfficialName));
+                    InstrumentMixInfo instrumentMix = Array.Find(SampledOrchestra.instrumentInfo, instrument => InstrumentDictionary.SameCurrentInstruments(instrument.partName, partOfficialName));
                     SamplerInstrument partInstrument = instrumentMix.instrument;
                     if (partInstrument != null)
                     {

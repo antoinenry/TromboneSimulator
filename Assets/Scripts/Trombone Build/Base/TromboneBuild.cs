@@ -10,6 +10,7 @@ public class TromboneBuild : ScriptableObject
     public TromboneAudioCustomizer tromboneAudio = new();
     public TromboneAutoCustomizer tromboneAuto = new();
     public MusicPlayerCustomizer musicPlayer = new();
+    public AudioTrackGeneratorCustomizer audioTrackGenerator = new();
     public PerformanceJudgeCustomizer performanceJudge = new();
     public NoteCatcherCustomizer noteCatcher = new();
 
