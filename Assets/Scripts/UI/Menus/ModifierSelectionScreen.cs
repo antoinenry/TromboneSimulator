@@ -23,6 +23,7 @@ public class ModifierSelectionScreen : MenuUI
     public override void ShowUI()
     {
         base.ShowUI();
+        ResetModifierGrid();
         UpdateModifierGrid();
         if (Application.isPlaying)
         {

@@ -18,6 +18,7 @@ public class ModifierUnlockScreen : MenuUI
     public bool infoShowsStats = false;
 
     private TromboneBuildModifier selectedModifier;
+    private TromboneBuildModifier clickedModifier;
     private DialogBoxScreen dialogBox;
 
     private float ModifierButtonWidth
@@ -136,16 +137,17 @@ public class ModifierUnlockScreen : MenuUI
 
     private void OnClickModifierButton(TromboneBuildModifier modifier)
     {
-        if (selectedModifier == null)
+        clickedModifier = modifier;
+        if (clickedModifier == null)
         {
             HideUI();
             return;
         }
-        GameProgress.Current?.TrySetLock(selectedModifier, false);
+        GameProgress.Current?.TrySetLock(clickedModifier, false);
         if (dialogBox != null)
         {
             dialogBox.configuration = applyModDialog;
-            dialogBox.configuration.bottomText = selectedModifier.modName;
+            dialogBox.configuration.bottomText = clickedModifier.modName;
             dialogBox.onAnswer.AddListener(OnApplyAnswer);
             dialogBox.ShowUI();
         }
@@ -159,7 +161,7 @@ public class ModifierUnlockScreen : MenuUI
         if (apply)
         {
             if (modifierStack == null) return;
-            modifierStack.TryAddModifier(selectedModifier);
+            modifierStack.TryAddModifier(clickedModifier);
             modifierStack.ApplyStack();
         }
         HideUI();
