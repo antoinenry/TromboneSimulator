@@ -8,6 +8,7 @@ public class ModifierUnlockScreen : MenuUI
     public ModifierUnlockButton modifierButtonPrefab;
     public RectTransform modifierButtonContainer;
     public TMP_Text infoTextField;
+    public GameContentPicker gameContentPicker;
     [Header("Configuration")]
     public TromboneBuildModifier[] modifiers;
     public int requestModifierCount = 3;
@@ -48,12 +49,7 @@ public class ModifierUnlockScreen : MenuUI
     public override void ShowUI()
     {
         base.ShowUI();
-        modifiers = GameContentPicker.PickUnlockableModifiers(requestModifierCount, GameProgress.Current, prioritizeHighTier:true);
-        if (modifiers == null ||  modifiers.Length == 0)
-        {
-            HideUI();
-            return;
-        }
+        PickModifiers();
         UpdateButtonInstances(out ModifierUnlockButton[] buttons);
         AddModifierButtonsListeners(buttons);
         //SelectModifier(buttons, 0);
@@ -178,5 +174,25 @@ public class ModifierUnlockScreen : MenuUI
             else if (infoShowsStats) infoText = modifier.StatDescription;
         }
         infoTextField.SetText(infoText);
+    }
+
+    private void PickModifiers()
+    {
+        if (requestModifierCount < 0) requestModifierCount = 0;
+        if (gameContentPicker != null)
+        {
+            gameContentPicker.picks = new TromboneBuildModifier[requestModifierCount];
+            gameContentPicker.Pick();
+            modifiers = gameContentPicker.picks;
+        }
+        else
+        {
+            modifiers = GameContentPicker.PickUnlockableModifiers(requestModifierCount, GameProgress.Current, prioritizeHighTier: true);
+        }
+        if (modifiers == null || modifiers.Length == 0)
+        {
+            HideUI();
+            return;
+        }
     }
 }

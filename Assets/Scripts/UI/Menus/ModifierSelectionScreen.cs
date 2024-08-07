@@ -20,6 +20,7 @@ public class ModifierSelectionScreen : MenuUI
 
     public ObjectMethodCaller caller = new("ResetModifierGrid");
 
+
     public override void ShowUI()
     {
         base.ShowUI();
