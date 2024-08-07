@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5633422024472375444}
   - component: {fileID: 3911672867440982833}
   - component: {fileID: 5036912943633812689}
+  - component: {fileID: 6159628619172881727}
   m_Layer: 5
   m_Name: UI_button_level_locked
   m_TagString: Untagged
@@ -137,6 +138,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6159628619172881727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 962266474265399407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb6127841dd3fa458d70c3692c0f62f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: 7ea271e0421614d4fb746542c6c3e91c, type: 2}
 --- !u!1 &2562167762767161775
 GameObject:
   m_ObjectHideFlags: 0

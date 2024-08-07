@@ -7,8 +7,6 @@ public class OrchestraModifier : TromboneBuildModifier
 
     public override bool ReplaceOnly => true;
 
-    public override string StatDescription => "Change le son de l'accompagnement";
-
     public override void ApplyTo(TromboneBuild build)
     {
         base.ApplyTo(build);

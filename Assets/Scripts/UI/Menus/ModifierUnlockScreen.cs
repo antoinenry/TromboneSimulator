@@ -50,6 +50,11 @@ public class ModifierUnlockScreen : MenuUI
     {
         base.ShowUI();
         PickModifiers();
+        if (Application.isPlaying && (modifiers == null || modifiers.Length == 0))
+        {
+            HideUI();
+            return;
+        }
         UpdateButtonInstances(out ModifierUnlockButton[] buttons);
         AddModifierButtonsListeners(buttons);
         //SelectModifier(buttons, 0);
@@ -188,11 +193,6 @@ public class ModifierUnlockScreen : MenuUI
         else
         {
             modifiers = GameContentPicker.PickUnlockableModifiers(requestModifierCount, GameProgress.Current, prioritizeHighTier: true);
-        }
-        if (modifiers == null || modifiers.Length == 0)
-        {
-            HideUI();
-            return;
         }
     }
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 828556456376640810}
   - component: {fileID: 8836080690076273906}
   - component: {fileID: 1725109813937564748}
+  - component: {fileID: 1230816022865525909}
   m_Layer: 5
   m_Name: UI_button_modifier_activate
   m_TagString: Untagged
@@ -102,11 +103,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_NormalColor: {r: 0.24705884, g: 0.24705884, b: 0.24705884, a: 1}
+    m_HighlightedColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
+    m_PressedColor: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+    m_SelectedColor: {r: 0.4039216, g: 0.4039216, b: 0.4039216, a: 1}
+    m_DisabledColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -140,7 +141,7 @@ MonoBehaviour:
   button: {fileID: 828556456376640810}
   toggleActive: 0
   activeColors:
-    m_NormalColor: {r: 0.9339623, g: 0.86257344, b: 0.5242524, a: 1}
+    m_NormalColor: {r: 0.81568635, g: 0.7254902, b: 0.29803923, a: 1}
     m_HighlightedColor: {r: 0.9803922, g: 0.87843144, b: 0.38431376, a: 1}
     m_PressedColor: {r: 0.87843144, g: 0.87843144, b: 0.87843144, a: 1}
     m_SelectedColor: {r: 0.9811321, g: 0.8786603, b: 0.38412246, a: 1}
@@ -183,6 +184,19 @@ MonoBehaviour:
   lockOverlay: {fileID: 2264763183283619420}
   modifierAsset: {fileID: 0}
   isLocked: 0
+--- !u!114 &1230816022865525909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040580305949621830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c577fd34312a424a80ed1e6357d7e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: a70a5b22c5ba43f43bb9f51a894942ff, type: 2}
 --- !u!1 &2040580306135510190
 GameObject:
   m_ObjectHideFlags: 0

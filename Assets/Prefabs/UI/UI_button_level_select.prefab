@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 2796536847522837521}
   - component: {fileID: 2796536847522837534}
   - component: {fileID: 2796536847522837535}
-  - component: {fileID: -2542129899591144828}
+  - component: {fileID: -7969400556296851306}
   m_Layer: 5
   m_Name: UI_button_level_select
   m_TagString: Untagged
@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75a207043cce17348b6aab24a8a53e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSelect:
+  onHover:
     m_PersistentCalls:
       m_Calls: []
   onClick:
@@ -364,7 +364,7 @@ MonoBehaviour:
   levelInfo:
     levelAsset: {fileID: 0}
     checklist: 
---- !u!114 &-2542129899591144828
+--- !u!114 &-7969400556296851306
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -373,10 +373,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2796536847522837533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ed713693b0d00408f90cfa0b90866b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0bb6127841dd3fa458d70c3692c0f62f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundIndex: 2
+  sfx: {fileID: 11400000, guid: 7ea271e0421614d4fb746542c6c3e91c, type: 2}
 --- !u!1 &2796536847725648801
 GameObject:
   m_ObjectHideFlags: 0

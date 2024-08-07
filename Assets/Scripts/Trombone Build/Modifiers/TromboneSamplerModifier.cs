@@ -7,8 +7,6 @@ public class TromboneSamplerModifier : TromboneBuildModifier
 
     public override bool ReplaceOnly => true;
 
-    public override string StatDescription => "Change le son du trombone";
-
     public override void ApplyTo(TromboneBuild build)
     {
         base.ApplyTo(build);

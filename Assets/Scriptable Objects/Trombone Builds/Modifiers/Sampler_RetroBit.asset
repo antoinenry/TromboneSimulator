@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fb441e80259274aacd36b01dd8869e, type: 3}
   m_Name: Sampler_RetroBit
   m_EditorClassIdentifier: 
-  modName: RetroBit (instrument)
+  modName: Trombone RetroBit
   icon: {fileID: 1660633597, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.9013007, g: 0.3820755, b: 1, a: 1}
   colorizeIcon: 1
-  unlockTier: 0
+  unlockTier: 3
   scoreMultiplierBonus: 1
   description: 
   samplerInstrument: {fileID: 11400000, guid: 33b726ba1c0c24f4d964af32631cd81a, type: 2}

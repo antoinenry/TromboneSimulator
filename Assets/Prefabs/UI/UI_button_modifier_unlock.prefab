@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Auto Pouet
+  m_text: Auto Pouet ON
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd193bccd506691479fb0c613ed779be, type: 2}
   m_sharedMaterial: {fileID: -3245745383905593507, guid: cd193bccd506691479fb0c613ed779be, type: 2}
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Auto Pouet
+  m_text: Auto Pouet ON
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd193bccd506691479fb0c613ed779be, type: 2}
   m_sharedMaterial: {fileID: -3245745383905593507, guid: cd193bccd506691479fb0c613ed779be, type: 2}
@@ -503,6 +503,7 @@ GameObject:
   - component: {fileID: 8385924478530687732}
   - component: {fileID: 8385924478530687733}
   - component: {fileID: 8385924478530687731}
+  - component: {fileID: 2315323613195538311}
   m_Layer: 5
   m_Name: UI_button_modifier_unlock
   m_TagString: Untagged
@@ -625,7 +626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce365e06ae555045b0572c0e0cb9ea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onSelect:
+  onHover:
     m_PersistentCalls:
       m_Calls: []
   onClick:
@@ -636,10 +637,21 @@ MonoBehaviour:
   descriptionField: {fileID: 8385924478553123074}
   icon: {fileID: 8385924477394166090}
   modifier: {fileID: 11400000, guid: 19795275c1104bd41b3d84201e3f3a67, type: 2}
-  showName: 1
-  showIcon: 1
-  showDescription: 0
-  showStats: 0
+  unselectedContent: 3
+  selectedContent: 9
+--- !u!114 &2315323613195538311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8385924478530687729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb6127841dd3fa458d70c3692c0f62f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: 9dd6a0e9adb3125408bc84b0836e36d2, type: 2}
 --- !u!1 &8385924478553123072
 GameObject:
   m_ObjectHideFlags: 0

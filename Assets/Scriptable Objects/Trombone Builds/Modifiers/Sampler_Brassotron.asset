@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1fb441e80259274aacd36b01dd8869e, type: 3}
   m_Name: Sampler_Brassotron
   m_EditorClassIdentifier: 
-  modName: Brassotron (instrument)
+  modName: Trobmone Brassotron
   icon: {fileID: 1660633597, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.6132076, g: 0.5451684, b: 0.2227216, a: 1}
   colorizeIcon: 1

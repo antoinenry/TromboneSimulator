@@ -1,29 +1,37 @@
-using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonSFXSource : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class ButtonSFXSource : PointerTargetSFXSource
 {
-    public ButtonSFX sfx;
+    protected Button button;
 
-    private Button button;
-
-    private void Awake()
+    protected virtual void Awake()
     {
         button = GetComponent<Button>();
     }
 
-    public virtual void OnPointerEnter(PointerEventData eventData) => MenuUI.SFXSource?.Play(sfx?.pointerEnterSFX);
-    public virtual void OnPointerExit(PointerEventData eventData) => MenuUI.SFXSource?.Play(sfx?.pointerExitSFX);
-    public virtual void OnPointerClick(PointerEventData eventData)
+    public override void OnPointerEnter(PointerEventData eventData)
     {
-        if (button == null || button.interactable) MenuUI.SFXSource?.Play(sfx?.pointerClickSFX);
-        else MenuUI.SFXSource?.Play(sfx?.notInteractableSFX);
+        if (IsButtonInteractable) base.OnPointerEnter(eventData);
     }
-}
 
-[CreateAssetMenu(menuName = "Trombone Hero/UI SFX/Button")]
-public class ButtonSFX : PointerTargetSFX
-{
-    public AudioClip notInteractableSFX;
+    public override void OnPointerExit(PointerEventData eventData)
+    {
+        if (IsButtonInteractable) base.OnPointerExit(eventData);
+    }
+
+    public override void OnPointerClick(PointerEventData eventData)
+    {
+        if (HasMatchingSFX)
+        {
+            ButtonSFX buttonSFX = sfx as ButtonSFX;
+            MenuUI.SFXSource?.Play(IsButtonInteractable ? buttonSFX?.pointerClick : buttonSFX?.notInteractable);
+        }
+        else
+            base.OnPointerClick(eventData);
+    }
+
+    protected virtual bool HasMatchingSFX => sfx != null && sfx is ButtonSFX;
+
+    protected virtual bool IsButtonInteractable => button != null && button.interactable;
 }
