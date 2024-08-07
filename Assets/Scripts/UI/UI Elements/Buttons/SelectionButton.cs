@@ -3,9 +3,10 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Button))]
 public abstract class SelectionButton<T> : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public UnityEvent<T, bool> onSelect;
+    public UnityEvent<T, bool> onHover;
     public UnityEvent<T> onClick;
 
     protected Button button;
@@ -23,31 +24,34 @@ public abstract class SelectionButton<T> : MonoBehaviour, IPointerEnterHandler, 
 
     public virtual void AddListeners(UnityAction<T, bool> onSelectAction, UnityAction<T> onClickAction)
     {
-        if (onSelectAction != null) onSelect.AddListener(onSelectAction);
+        if (onSelectAction != null) onHover.AddListener(onSelectAction);
         if (onClickAction != null) onClick.AddListener(onClickAction);
     }
 
     public virtual void RemoveListeners(UnityAction<T, bool> onSelectAction, UnityAction<T> onClickAction)
     {
-        if (onSelectAction != null) onSelect.RemoveListener(onSelectAction);
+        if (onSelectAction != null) onHover.RemoveListener(onSelectAction);
         if (onClickAction != null) onClick.RemoveListener(onClickAction);
     }
 
     public virtual void Click()
     {
+        if (button == null || button.interactable == false) return;
         onClick.Invoke(Selection);
     }
 
     public virtual void Select()
     {
+        if (button == null || button.interactable == false) return;
         button?.Select();
-        onSelect.Invoke(Selection, true);
+        onHover.Invoke(Selection, true);
     }
 
     public virtual void Unselect()
     {
+        if (button == null || button.interactable == false) return;
         EventSystem eventSystem = EventSystem.current;
         if (eventSystem != null && eventSystem.currentSelectedGameObject == gameObject) eventSystem.SetSelectedGameObject(null);
-        onSelect.Invoke(Selection, false);
+        onHover.Invoke(Selection, false);
     }
 }

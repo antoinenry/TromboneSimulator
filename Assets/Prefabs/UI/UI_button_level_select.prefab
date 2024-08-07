@@ -363,7 +363,7 @@ MonoBehaviour:
   newNotification: {fileID: 1694048150913542409}
   levelInfo:
     levelAsset: {fileID: 0}
-    checkList: 
+    checklist: 
 --- !u!114 &-2542129899591144828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95ed713693b0d00408f90cfa0b90866b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundIndex: 1
+  soundIndex: 2
 --- !u!1 &2796536847725648801
 GameObject:
   m_ObjectHideFlags: 0

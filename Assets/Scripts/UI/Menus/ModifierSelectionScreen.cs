@@ -2,13 +2,13 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using static ModifierSelectionButton;
+using static ModifierSelectionToggle;
 
 public class ModifierSelectionScreen : MenuUI
 {
     [Header("Components")]
     public TromboneBuildStack modifierStack;
-    public ModifierSelectionButton modifierTogglePrefab;
+    public ModifierSelectionToggle modifierTogglePrefab;
     public LayoutGroupScroller modifierGrid;
     public ModifierInfoPanel modifierInfoPanel;
     public BuildStackInfoPanel stackInfoPanel;
@@ -24,7 +24,6 @@ public class ModifierSelectionScreen : MenuUI
     {
         base.ShowUI();
         ResetModifierGrid();
-        UpdateModifierGrid();
         if (Application.isPlaying)
         {
             AddButtonGridListeners();
@@ -40,6 +39,12 @@ public class ModifierSelectionScreen : MenuUI
         if (Application.isPlaying) RemoveButtonGridListeners();
     }
 
+    protected override void Update()
+    {
+        base.Update();
+        UpdateModifierGrid();
+    }
+
     public void UpdateModifierGrid()
     {
         GameProgress progress = GameProgress.Current;
@@ -51,7 +56,7 @@ public class ModifierSelectionScreen : MenuUI
         // Update button grid
         if (modifierGrid != null)
         {
-            ModifierSelectionButton[] buttons = modifierGrid.GetComponentsInChildren<ModifierSelectionButton>(true);
+            ModifierSelectionToggle[] buttons = modifierGrid.GetComponentsInChildren<ModifierSelectionToggle>(true);
             // Check if there's a button for each mod, if not correct it
             if (modifiers.Length != buttons.Length)
             {
@@ -66,13 +71,12 @@ public class ModifierSelectionScreen : MenuUI
                     }
             // Update active/inactive/locked states
             TromboneBuildModifier[] activeMods = modifierStack != null ? modifierStack.Modifiers : new TromboneBuildModifier[0];
-            foreach (ModifierSelectionButton b in buttons)
+            foreach (ModifierSelectionToggle b in buttons)
             {
                 TromboneBuildModifier modifierAsset = b?.modifierAsset;
                 if (modifierAsset == null) continue;
-                else if (progress.IsUnlocked(modifierAsset) == false) b.availability = ModifierAvailability.Locked;
-                else if (Array.IndexOf(activeMods, modifierAsset) == -1) b.availability = ModifierAvailability.Available;
-                else b.availability = ModifierAvailability.Active;
+                b.isLocked = progress.IsUnlocked(modifierAsset) == false;
+                b.SetToggle(Array.IndexOf(activeMods, modifierAsset) != -1);
             }
         }
     }
@@ -80,14 +84,13 @@ public class ModifierSelectionScreen : MenuUI
     private void ResetModifierGrid()
     {
         // Get active modifiers
-        TromboneBuildModifier[] activeMods = modifierStack != null ? modifierStack.Modifiers : new TromboneBuildModifier[0];
-        ModifierSelectionButton[] buttons = modifierGrid?.GetComponentsInChildren<ModifierSelectionButton>(true);
+        ModifierSelectionToggle[] buttons = modifierGrid?.GetComponentsInChildren<ModifierSelectionToggle>(true);
         RemoveButtonGridListeners(buttons);
         modifierGrid.Clear();
         foreach (TromboneBuildModifier mod in modifiers)
         {
             if (modifierTogglePrefab == null) break;
-            ModifierSelectionButton b;
+            ModifierSelectionToggle b;
             b = Instantiate(modifierTogglePrefab);
             b.SetModifier(mod);
             modifierGrid.Add(b.gameObject);
@@ -96,21 +99,21 @@ public class ModifierSelectionScreen : MenuUI
         ShowModifierInfo(null, true);
     }
 
-    private void AddButtonGridListeners(ModifierSelectionButton[] buttons)
+    private void AddButtonGridListeners(ModifierSelectionToggle[] buttons)
     {
-        if (buttons != null) foreach (ModifierSelectionButton b in buttons) b.AddListeners(ShowModifierInfo, SelectModifier);
+        if (buttons != null) foreach (ModifierSelectionToggle b in buttons) b.AddListeners(ShowModifierInfo, SelectModifier);
     }
 
     private void AddButtonGridListeners() 
-        => AddButtonGridListeners(modifierGrid?.GetComponentsInChildren<ModifierSelectionButton>(true));
+        => AddButtonGridListeners(modifierGrid?.GetComponentsInChildren<ModifierSelectionToggle>(true));
 
-    private void RemoveButtonGridListeners(ModifierSelectionButton[] buttons)
+    private void RemoveButtonGridListeners(ModifierSelectionToggle[] buttons)
     {
-        if (buttons != null) foreach (ModifierSelectionButton b in buttons) b.RemoveListeners(ShowModifierInfo, SelectModifier);
+        if (buttons != null) foreach (ModifierSelectionToggle b in buttons) b.RemoveListeners(ShowModifierInfo, SelectModifier);
     }
 
     private void RemoveButtonGridListeners() 
-        => RemoveButtonGridListeners(modifierGrid?.GetComponentsInChildren<ModifierSelectionButton>(true));
+        => RemoveButtonGridListeners(modifierGrid?.GetComponentsInChildren<ModifierSelectionToggle>(true));
 
     private void ShowModifierInfo(TromboneBuildModifier modifier, bool show)
     {
