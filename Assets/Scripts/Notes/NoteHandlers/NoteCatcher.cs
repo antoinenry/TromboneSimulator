@@ -7,7 +7,7 @@ public class NoteCatcher : MonoBehaviour
     [Header("Components")]
     public NoteSpawner spawner;
     public TromboneCore trombone;
-    public Playhead playhead;
+    public Playhead<INoteInfo> playhead;
     [Header("Activation")]
     public bool catchNotes;
     public float catchTone;
@@ -47,9 +47,9 @@ public class NoteCatcher : MonoBehaviour
             spawner.onMoveNotes.AddListener(OnNotesMoved);
         if (playhead != null)
         {
-            playhead.onNote.AddListener(OnNoteIsInCatchTimeRange);
-            playhead.onExitNote.AddListener(OnNoteExitsCatchRange);
-            playhead.onEndExitNote.AddListener(OnNoteEndExitsCatchRange);
+            playhead.onRead.AddListener(OnNoteIsInCatchTimeRange);
+            playhead.onExitRead.AddListener(OnNoteExitsCatchRange);
+            playhead.onEndExitRead.AddListener(OnNoteEndExitsCatchRange);
         }
     }
 
@@ -60,9 +60,9 @@ public class NoteCatcher : MonoBehaviour
             spawner.onMoveNotes.RemoveListener(OnNotesMoved);
         if (playhead != null)
         {
-            playhead.onNote.RemoveListener(OnNoteIsInCatchTimeRange);
-            playhead.onExitNote.RemoveListener(OnNoteExitsCatchRange);
-            playhead.onEndExitNote.RemoveListener(OnNoteEndExitsCatchRange);
+            playhead.onRead.RemoveListener(OnNoteIsInCatchTimeRange);
+            playhead.onExitRead.RemoveListener(OnNoteExitsCatchRange);
+            playhead.onEndExitRead.RemoveListener(OnNoteEndExitsCatchRange);
         }
     }
 
@@ -86,7 +86,7 @@ public class NoteCatcher : MonoBehaviour
         playhead.Move(notes, fromTime, toTime);
     }
 
-    private void OnNoteIsInCatchTimeRange(int noteIndex, INote note)
+    private void OnNoteIsInCatchTimeRange(int noteIndex, INoteInfo note)
     {
         if (note != null && note is NoteSpawn)
         {
@@ -129,7 +129,7 @@ public class NoteCatcher : MonoBehaviour
         }        
     }
 
-    private void OnNoteExitsCatchRange(int noteIndex, INote note)
+    private void OnNoteExitsCatchRange(int noteIndex, INoteInfo note)
     {
         if (note != null && note is NoteSpawn)
         {
@@ -148,7 +148,7 @@ public class NoteCatcher : MonoBehaviour
         }
     }
 
-    private void OnNoteEndExitsCatchRange(int noteIndex, INote note)
+    private void OnNoteEndExitsCatchRange(int noteIndex, INoteInfo note)
     {
         if (note != null && note is NoteSpawn)
         {

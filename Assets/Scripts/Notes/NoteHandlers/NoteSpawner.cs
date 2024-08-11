@@ -7,7 +7,7 @@ public class NoteSpawner : MonoBehaviour
 {
     public bool showDebug;
     [Header("Timing")]
-    public Playhead playHead;
+    public Playhead<INoteInfo> playHead;
     public float time;
     public bool reverse;
     [Header("Spawning")]
@@ -61,7 +61,7 @@ public class NoteSpawner : MonoBehaviour
         if (playHead != null)
         {
             playHead.onMove.AddListener(OnPlayheadMove);
-            playHead.onStartEnterNote.AddListener(OnPlayheadEntersNote);
+            playHead.onStartEnterRead.AddListener(OnPlayheadEntersNote);
             playHead.onStop.AddListener(ClearNotes);
         }
         if (grid?.trombone?.tromboneDisplay != null)
@@ -76,7 +76,7 @@ public class NoteSpawner : MonoBehaviour
         if (playHead != null)
         {
             playHead.onMove.RemoveListener(OnPlayheadMove);
-            playHead.onStartEnterNote.RemoveListener(OnPlayheadEntersNote);
+            playHead.onStartEnterRead.RemoveListener(OnPlayheadEntersNote);
             playHead.onStop.RemoveListener(ClearNotes);
         }
         ClearNotes();
@@ -154,12 +154,12 @@ public class NoteSpawner : MonoBehaviour
         noteSpawns = new List<NoteSpawn>();
     }
 
-    private void OnPlayheadEntersNote(int noteIndex, INote note)
+    private void OnPlayheadEntersNote(int noteIndex, INoteInfo note)
     {
         if (note != null) SpawnNote(note, noteIndex);
     }
 
-    public NoteSpawn SpawnNote(INote note, int index)
+    public NoteSpawn SpawnNote(INoteInfo note, int index)
     {
         if (note == null) return null;
         NoteInfo noteInfo = NoteInfo.GetInfo(note);
@@ -203,21 +203,21 @@ public class NoteSpawner : MonoBehaviour
         return spawnedNote;
     }
 
-    public void SpawnNotes(INote[] notes, float fromTime, float toTime, int startIndex = 0)
+    public void SpawnNotes(INoteInfo[] notes, float fromTime, float toTime, int startIndex = 0)
     {
         int noteCount = notes != null ? notes.Length : 0;
         if (noteCount == 0) return;
         // Move playhead without triggering events
-        Playhead.ProgressOnNote[] progressOnNotes = playHead.Move(notes, fromTime, toTime, true, true, false);
+        Playhead.ReadProgress[] progressOnNotes = playHead.Move(notes, fromTime, toTime, true, true, false);
         // Spawn all notes detected by playhead
         for (int n = 0; n < noteCount; n++)
-            if (progressOnNotes[n] != Playhead.ProgressOnNote.None)
+            if (progressOnNotes[n] != Playhead.ReadProgress.None)
                 SpawnNote(notes[n], startIndex + n);
         // Update notes
         UpdateNoteInstances();
     }
 
-    public Vector2 GetNotePlacement(INote note, int index)
+    public Vector2 GetNotePlacement(INoteInfo note, int index)
     {
         Vector2[] possibleCoordinates = grid.dimensions.ToneToCoordinates(note.Tone);
         // Exception 1: no possible coordinates, return undefined value

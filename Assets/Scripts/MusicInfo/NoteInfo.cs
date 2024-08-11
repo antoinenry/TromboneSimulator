@@ -1,52 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public interface INote 
-{
-    public float Tone { get; set; }
-    public float Velocity { get; set; }
-    public float StartTime { get; set; }
-    public float Duration { get; set; }
-}
-
 [Serializable]
-public struct NoteInfo : IEquatable<NoteInfo>
+public struct NoteInfo : INoteInfo
 {
-    public class NoteComparer : IComparer<NoteInfo>
-    {
-        public bool compareStartTime;
-        public bool compareTone;
-        public bool invertTime;
-        public bool invertTone;
-
-        public int Compare(NoteInfo x, NoteInfo y)
-        {
-            if (compareStartTime)
-            {
-                if (x.startTime > y.startTime) return invertTime ? -1 : 1;
-                if (x.startTime < y.startTime) return invertTime ? 1 : -1;
-            }
-            if (compareTone)
-            {
-                if (x.tone > y.tone) return invertTone ? -1 : 1;
-                if (x.tone < y.tone) return invertTone ? 1 : -1;
-            }
-            return 0;
-        }
-    }
-
     [Tone] public float tone;
     [Range(0f, 1f)] public float velocity;
     public float startTime;
     public float duration;
 
-    public float EndTime
-    {
-        get => startTime + duration;
-        set => duration = Mathf.Max(0f, value - startTime);
-    }
+    #region Interface Infos
+    public float Tone { get => tone; set => tone = value; }
+    public float Velocity { get => velocity; set => velocity = value; }
+    public float StartTime { get => startTime; set => startTime = value; }
+    public float Duration { get => duration; set => duration = value; }
+    public float EndTime { get => startTime + duration; set => duration = Mathf.Max(0f, value - startTime); }
+    #endregion
 
     static public NoteInfo None => new NoteInfo()
     {
@@ -56,7 +26,7 @@ public struct NoteInfo : IEquatable<NoteInfo>
         duration = 0f
     };
 
-    static public NoteInfo GetInfo(INote note)
+    static public NoteInfo GetInfo(INoteInfo note)
     {
         return note != null ? new NoteInfo()
         {
@@ -68,7 +38,7 @@ public struct NoteInfo : IEquatable<NoteInfo>
         : None;
     }
 
-    static public void SetInfo(INote note, NoteInfo info)
+    static public void SetInfo(INoteInfo note, NoteInfo info)
     {
         if (note != null)
         {
@@ -135,12 +105,12 @@ public struct NoteInfo : IEquatable<NoteInfo>
     static public NoteInfo[] OrderNotes(NoteInfo[] notes, bool byStartTime = true, bool timeReverse = false, bool byTone = true, bool toneReverse = false)
     {
         if (notes == null) return null;
-        NoteComparer comparer = new NoteComparer()
-        { 
-            compareStartTime = byStartTime, 
-            compareTone = byTone, 
-            invertTime = timeReverse, 
-            invertTone = toneReverse 
+        NoteInfoComparer comparer = new NoteInfoComparer()
+        {
+            compareStartTime = byStartTime,
+            compareTone = byTone,
+            invertTime = timeReverse,
+            invertTone = toneReverse
         };
         return notes.OrderBy(n => n, comparer).ToArray();
     }
@@ -149,8 +119,8 @@ public struct NoteInfo : IEquatable<NoteInfo>
     {
         if (notes == null || noteIndices == null) return null;
         int indexCount = noteIndices.Length;
-        NoteComparer comparer = new NoteComparer()
-        { 
+        NoteInfoComparer comparer = new NoteInfoComparer()
+        {
             compareStartTime = byStartTime,
             compareTone = byTone,
             invertTime = timeReverse,

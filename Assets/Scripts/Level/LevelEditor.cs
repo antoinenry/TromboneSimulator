@@ -9,7 +9,7 @@ public class LevelEditor : MonoBehaviour
     public string partName = "Trombone";
     public NotePlacement NotePlacementAsset;
     [Header("Playing")]
-    public Playhead editorPlayhead;
+    public Playhead<INoteInfo> editorPlayhead;
     public int currentNoteIndex;
     public NoteInfo currentNoteInfo;
     public float fastSpeed = 2f;
@@ -39,12 +39,12 @@ public class LevelEditor : MonoBehaviour
 
     private void OnEnable()
     {        
-        editorPlayhead.onStartEnterNote.AddListener(OnPlayheadEntersNote);
+        editorPlayhead.onStartEnterRead.AddListener(OnPlayheadEntersNote);
     }
 
     private void OnDisable()
     {
-        editorPlayhead.onStartEnterNote.RemoveListener(OnPlayheadEntersNote);
+        editorPlayhead.onStartEnterRead.RemoveListener(OnPlayheadEntersNote);
     }
 
     private void Update()
@@ -103,7 +103,7 @@ public class LevelEditor : MonoBehaviour
         }
     }
 
-    private void OnPlayheadEntersNote(int noteIndex, INote note)
+    private void OnPlayheadEntersNote(int noteIndex, INoteInfo note)
     {
         currentNoteIndex = noteIndex;
         currentNoteInfo = note != null ? NoteInfo.GetInfo(note) : NoteInfo.None;
@@ -117,7 +117,7 @@ public class LevelEditor : MonoBehaviour
             Debug.LogWarning("Note index out of bound: " + noteIndex + "/" + loadedNoteCount);
             return null;
         }
-        INote currentNote = musicPlayer.LoadedNotes[noteIndex];
+        INoteInfo currentNote = musicPlayer.LoadedNotes[noteIndex];
         if (currentNote == null || currentNote is NoteInstance == false)
         {
             Debug.LogWarning("Couldn't find note instance " + noteIndex + "/" + loadedNoteCount);

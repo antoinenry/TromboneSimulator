@@ -352,14 +352,12 @@ public class MusicPlayer : MonoBehaviour
             float musicDuration = LoadedMusic != null ? LoadedMusic.GetDuration(/*TempoStretch*/) : 0f;
             foreach (Playhead p in playHeads)
             {
-                if (p != null)
-                {
-                    //if (hasLooped) p.loop = loop;
-                    p.loop = loop;
-                    p.loopStart = 0f;
-                    p.loopEnd = musicDuration;
-                    p.Move(LoadedNotes, fromTime, toTime, offsetFromTime, offsetToTime);
-                }
+                if (p == null) continue;
+                //if (hasLooped) p.loop = loop;
+                p.loop = loop;
+                p.loopStart = 0f;
+                p.loopEnd = musicDuration;
+                if (p is Playhead<INoteInfo>) (p as Playhead<INoteInfo>).Move(LoadedNotes, fromTime, toTime, offsetFromTime, offsetToTime);
             }
         }
         // Update playheads time

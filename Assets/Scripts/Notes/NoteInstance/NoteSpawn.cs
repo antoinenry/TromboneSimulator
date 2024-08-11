@@ -2,7 +2,7 @@
 using System;
 
 [RequireComponent(typeof(NoteBullet))]
-public class NoteSpawn : MonoBehaviour, INote
+public class NoteSpawn : MonoBehaviour, INoteInfo
 {
     [Flags] public enum CatchState { Nothing = 0, Mixed = 1, All = 3 }
 
@@ -17,6 +17,7 @@ public class NoteSpawn : MonoBehaviour, INote
     public float Velocity { get => noteInfo.velocity; set => noteInfo.velocity = value; }
     public float StartTime { get => noteInfo.startTime; set => noteInfo.startTime = value; }
     public float Duration { get => noteInfo.duration; set => noteInfo.duration = value; }
+    public float EndTime { get => StartTime + Duration; set => Duration = Mathf.Max(0f, value - StartTime); }
 
     public Color DisplayColor => display != null ? display.baseColor : Color.magenta;
     public float DisplayLength { get; private set; }

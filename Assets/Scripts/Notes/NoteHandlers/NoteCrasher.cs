@@ -45,7 +45,7 @@ public class NoteCrasher : MonoBehaviour
     private void Update()
     {
         if (cam != null) SetBoundariesOnCamera();
-        if (spawner != null && spawner.playHead.PlayingSpeed == 0)
+        if (spawner?.playHead != null && spawner.playHead.PlayingSpeed == 0)
         {
             horizontalCrashEffect.Pause();
             verticalCrashEffect.Pause();

@@ -17,7 +17,7 @@ public class PerformanceStyle : ScriptableObject
         if (useAsDefault) Default = this;
     }
 
-    public void ProcessNotes(INote[] notes)
+    public void ProcessNotes(INoteInfo[] notes)
     {
         if (notes != null)
         {

@@ -346,7 +346,7 @@ public class SamplerInstrument : ScriptableObject
         }
     }
 
-    public void ApplyStyle(INote[] notes)
+    public void ApplyStyle(INoteInfo[] notes)
     {
         if (style != null) style.ProcessNotes(notes);
     }

@@ -5,7 +5,7 @@ public class TromboneAuto : MonoBehaviour,
     ITromboneBlowOutput, ITromboneSlideToneOutput, ITrombonePressureLevelOutput
 {
     [Header("Components")]
-    public Playhead playhead;
+    public Playhead<INoteInfo> playhead;
     public NoteSpawner spawner;
     [Header("Controls")]
     public TromboneAutoSettings autoSettings;
@@ -22,7 +22,7 @@ public class TromboneAuto : MonoBehaviour,
     private float? slideToneInput;
     private float? pressureLevelInput;
 
-    public Playhead ActivePlayhead { get; private set; }
+    public Playhead<INoteInfo> ActivePlayhead { get; private set; }
 
     #region Input/Output interfaces
     public bool? Grab { set => grabInput = value; }
@@ -158,28 +158,28 @@ public class TromboneAuto : MonoBehaviour,
         pressureLevelInput = null;
     }
 
-    private void SetActivePlayhead(Playhead setPlayhead)
+    private void SetActivePlayhead(Playhead<INoteInfo> setPlayhead)
     {
         if (ActivePlayhead != null)
         {
-            ActivePlayhead.onStartEnterNote.RemoveListener(OnAutoPlayNoteEnter);
-            ActivePlayhead.onNote.RemoveListener(OnAutoPlayNoteStay);
-            ActivePlayhead.onEndExitNote.RemoveListener(OnAutoPlayNoteExit);
+            ActivePlayhead.onStartEnterRead.RemoveListener(OnAutoPlayNoteEnter);
+            ActivePlayhead.onRead.RemoveListener(OnAutoPlayNoteStay);
+            ActivePlayhead.onEndExitRead.RemoveListener(OnAutoPlayNoteExit);
             ActivePlayhead.onPause.RemoveListener(OnAutoPlayPause);
             ActivePlayhead.onStop.RemoveListener(OnAutoPlayStop);
         }
         if (setPlayhead != null)
         {
-            setPlayhead.onStartEnterNote.AddListener(OnAutoPlayNoteEnter);
-            setPlayhead.onNote.AddListener(OnAutoPlayNoteStay);
-            setPlayhead.onEndExitNote.AddListener(OnAutoPlayNoteExit);
+            setPlayhead.onStartEnterRead.AddListener(OnAutoPlayNoteEnter);
+            setPlayhead.onRead.AddListener(OnAutoPlayNoteStay);
+            setPlayhead.onEndExitRead.AddListener(OnAutoPlayNoteExit);
             setPlayhead.onPause.AddListener(OnAutoPlayPause);
             setPlayhead.onStop.AddListener(OnAutoPlayStop);
         }
         ActivePlayhead = setPlayhead;
     }
 
-    private void StartNote(INote note, int noteIndex)
+    private void StartNote(INoteInfo note, int noteIndex)
     {
         // Start note
         if (note != null)
@@ -205,24 +205,24 @@ public class TromboneAuto : MonoBehaviour,
         //autoPressureLevel = float.NaN;
     }
 
-    private void StopNote(INote note)
+    private void StopNote(INoteInfo note)
     {
         // Stop current note
         if (note.Tone == autoTone) StopNote();
     }
 
-    private void OnAutoPlayNoteEnter(int noteIndex, INote note)
+    private void OnAutoPlayNoteEnter(int noteIndex, INoteInfo note)
     {
         StartNote(note, noteIndex);
     }
 
-    private void OnAutoPlayNoteStay(int noteIndex, INote note)
+    private void OnAutoPlayNoteStay(int noteIndex, INoteInfo note)
     {
         // Keep blowing as long as plahead is moving
         HoldNote(playhead.DeltaTime != 0f);
     }
 
-    private void OnAutoPlayNoteExit(int noteIndex, INote note)
+    private void OnAutoPlayNoteExit(int noteIndex, INoteInfo note)
     {
         // Stop blowing
         StopNote(note);
