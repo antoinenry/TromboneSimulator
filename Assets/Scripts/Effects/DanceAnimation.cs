@@ -6,15 +6,19 @@ public class DanceAnimation : MonoBehaviour
 
     public Vector2 danceAmplitude;
     public DanceRythm rythm = DanceRythm.OnBeat;
+    public bool flipX = false;
+    public bool flipY = false;
     public AnimationCurve customCurve;
 
     private Metronome metronome;
     private Vector2 idlePosition;
+    private Vector2 idleScale;
 
     private void Awake()
     {
         metronome = FindObjectOfType<Metronome>(true);
         idlePosition = transform.localPosition;
+        idleScale = transform.localScale;
     }
 
     private void Update()
@@ -31,18 +35,24 @@ public class DanceAnimation : MonoBehaviour
 
     private void Dance(float time)
     {
-        Vector2 dance;
+        // Position
+        Vector2 dancePosition = Vector2.zero;
         if (customCurve.length <= 1)
         {
-            dance.x = Mathf.Round(danceAmplitude.x * Mathf.Abs(Mathf.Sin(time * Mathf.PI)));
-            dance.y = Mathf.Round(danceAmplitude.y * Mathf.Abs(Mathf.Sin(time * Mathf.PI)));
+            dancePosition.x = Mathf.Round(danceAmplitude.x * Mathf.Abs(Mathf.Sin(time * Mathf.PI)));
+            dancePosition.y = Mathf.Round(danceAmplitude.y * Mathf.Abs(Mathf.Sin(time * Mathf.PI)));
         }
         else
         {
             float time01 = Mathf.Repeat(time, 1f);
-            dance.x = Mathf.Round(danceAmplitude.x * customCurve.Evaluate(time01));
-            dance.y = Mathf.Round(danceAmplitude.y * customCurve.Evaluate(time01));
+            dancePosition.x = Mathf.Round(danceAmplitude.x * customCurve.Evaluate(time01));
+            dancePosition.y = Mathf.Round(danceAmplitude.y * customCurve.Evaluate(time01));
         }
-        transform.localPosition = idlePosition + dance;
+        transform.localPosition = idlePosition + dancePosition;
+        // Flip
+        Vector2 danceScale = Vector2.one;
+        if (flipX) danceScale.x = time < .5f ? 1f : -1f;
+        if (flipY) danceScale.y = time < .5f ? 1f : -1f;
+        transform.localScale = Vector2.Scale(idleScale, danceScale);
     }
 }

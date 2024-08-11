@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bd192cc66edb645b4b9619c425ffdd, type: 3}
   m_Name: MiniButtonSFX
   m_EditorClassIdentifier: 
-  pointerEnter: {fileID: 8300000, guid: e17e8583f7d7ff34ca241c9162a3cb81, type: 3}
+  pointerEnter: {fileID: 8300000, guid: 2de5940c89e68164a8007ae24de6ed2d, type: 3}
   pointerExit: {fileID: 0}
-  pointerClick: {fileID: 8300000, guid: adc0d94a9ac63674786b31dcb35782f9, type: 3}
+  pointerClick: {fileID: 8300000, guid: 72f82d2d3407601469c6ff304a11641c, type: 3}
   notInteractable: {fileID: 8300000, guid: ecbba17ad5564614782af57f0c6653aa, type: 3}

@@ -15,6 +15,7 @@ public class JudgeGUI : GameUI
     public SwooshDisplay smallMessageDisplay;
     public TransformShaker smallMessageShake;
     public Transform objectiveDisplay;
+    public DanceMeterGUI danceMeterDisplay;
     [Header("Content")]
     public string[] wrongNoteMessages;
     public Color wrongNoteMessageColor = Color.red;
@@ -29,7 +30,7 @@ public class JudgeGUI : GameUI
     private Coroutine displayObjectiveCoroutine;
 
     public override Component[] UIComponents => new Component[]
-        { scoreDisplay, comboDisplay, accuracyDisplay, healthBar, smallMessageDisplay, powerBar, objectiveDisplay };
+        { scoreDisplay, comboDisplay, accuracyDisplay, healthBar, smallMessageDisplay, powerBar, objectiveDisplay, danceMeterDisplay };
 
 
     public PerformanceJudge Performance

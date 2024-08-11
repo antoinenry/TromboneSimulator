@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class LevelLoader : MonoBehaviour
+public class LevelPlayer : MonoBehaviour
 {
     public enum Mode { ARCADE, ONE_LEVEL }
 

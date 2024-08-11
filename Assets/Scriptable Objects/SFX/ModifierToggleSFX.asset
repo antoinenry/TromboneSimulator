@@ -15,6 +15,6 @@ MonoBehaviour:
   pointerEnter: {fileID: 8300000, guid: 515937d45bc8abf45b1f229ddd4ae3ee, type: 3}
   pointerExit: {fileID: 0}
   pointerClick: {fileID: 0}
-  notInteractable: {fileID: 0}
+  notInteractable: {fileID: 8300000, guid: ecbba17ad5564614782af57f0c6653aa, type: 3}
   toggleOn: {fileID: 8300000, guid: 605a7f1e8c0cb6c4cad278b186cfe4c7, type: 3}
   toggleOff: {fileID: 8300000, guid: b7617d267998bb14c8c437b0509ee141, type: 3}
