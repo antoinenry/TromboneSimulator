@@ -174,12 +174,6 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
-    //public void ReloadMusic(string playedInstrument = null, int voiceIndex = 1)
-    //{
-    //    UnloadMusic();
-    //    LoadMusic(music, null, playedInstrument, voiceIndex);
-    //}
-
     private void PlayerUpdate()
     {
         // Check load state
@@ -203,13 +197,15 @@ public class MusicPlayer : MonoBehaviour
             UpdateAudio();
             UpdatePlayheads();
             UpdatePlayTime();
-            if (showDebug && hasLooped) Debug.Log("Music has looped at " + CurrentPlayTime + "s back to " + LoopedPlayTime + "s");            
+            if (showDebug && hasLooped) Debug.Log("Music has looped at " + CurrentPlayTime + "s back to " + LoopedPlayTime + "s");
         }
+        // Notify update
         onPlayerUpdate.Invoke();
     }
 
     private void UpdatePlayTime()
     {
+        // Stop
         if (PlayingState == PlayState.Stop)
         {
             playTime = 0f;

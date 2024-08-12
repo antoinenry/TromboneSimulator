@@ -11,8 +11,6 @@ public class LevelPlayer : MonoBehaviour
     public int startCountdownValue = 3;
     public float gameOverTransitionDuration = 2f;
     public float levelEndTransitionDuration = 2f;
-    [Header("TO MOVE")]
-    //public GameState_old gameState;
 
     // Coroutines
     private Coroutine loadLevelCoroutine;
@@ -49,11 +47,13 @@ public class LevelPlayer : MonoBehaviour
     private void OnEnable()
     {
         MenuUI.onStartLevel.AddListener(OnMenuStartLevel);
+        musicPlayer?.onPlayerUpdate?.AddListener(OnMusicPlayerUpdate);
     }
 
     private void OnDisable()
     {
         MenuUI.onStartLevel.RemoveListener(OnMenuStartLevel);
+        musicPlayer?.onPlayerUpdate?.RemoveListener(OnMusicPlayerUpdate);
     }
     #endregion
 
@@ -271,9 +271,7 @@ public class LevelPlayer : MonoBehaviour
 
     private void OnMusicPlayerUpdate()
     {
-        if (musicPlayer == null) return;
-        //if (musicPlayer.CurrentPlayTime >= musicPlayer.MusicDuration) OnLevelEnd();
-        if (GUI) GUI.SetTimeBar(musicPlayer.LoopedPlayTime, musicPlayer.MusicDuration);
+        GUI?.SetTimeBar(musicPlayer.LoopedPlayTime, musicPlayer.MusicDuration);
     }
 
     private void OnMusicEnd()
