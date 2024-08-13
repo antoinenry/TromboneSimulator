@@ -85,6 +85,7 @@ public abstract partial class ObjectiveInstance
             throw new Exception("Parameter count mismatch (" + thisType.Name + ")");
     }
 
+    public virtual void OnMusicPlayerUpdate() { }
     public virtual void OnMusicEnd() { }
     public virtual void OnPerformanceJudgeScore(float score) { }
 

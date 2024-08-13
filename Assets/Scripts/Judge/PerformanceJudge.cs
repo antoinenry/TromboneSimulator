@@ -8,8 +8,7 @@ public class PerformanceJudge : MonoBehaviour
     [Header("Components")]
     public NoteCatcher noteCatcher;
     public NoteCrasher noteCrasher;
-    public DanceMeter danceMeter;
-    public JudgeGUI gui;
+    public PerformanceJudgeGUI gui;
     [Header("Difficulty")]
     public float maxHealth = 1f;
     public float scoringRate = 10f;
@@ -46,12 +45,12 @@ public class PerformanceJudge : MonoBehaviour
 
     public void EnableGUI()
     {
-        if (gui) gui.Performance = this;
+        if (gui) gui.Judge = this;
     }
 
     public void DisableGUI()
     {
-        if (gui && gui.Performance == this) gui.Performance = null;
+        if (gui && gui.Judge == this) gui.Judge = null;
     }
 
     public void EnableDetection()
@@ -68,10 +67,6 @@ public class PerformanceJudge : MonoBehaviour
             noteCrasher.onHorizontalCrash.AddListener(OnNoteCrash);
             noteCrasher.onVerticalCrash.AddListener(OnNoteCrash);
         }
-        if (danceMeter)
-        {
-            danceMeter.onEnd.AddListener(OnDanceMeterEnd);
-        }
     }
 
     public void DisableDetection()
@@ -87,10 +82,6 @@ public class PerformanceJudge : MonoBehaviour
         {
             noteCrasher.onHorizontalCrash.RemoveListener(OnNoteCrash);
             noteCrasher.onVerticalCrash.RemoveListener(OnNoteCrash);
-        }
-        if (danceMeter)
-        {
-            danceMeter.onEnd.RemoveListener(OnDanceMeterEnd);
         }
     }
 
@@ -118,6 +109,8 @@ public class PerformanceJudge : MonoBehaviour
         score = value;
         onScore.Invoke(RoundedScore);
     }
+
+    public void AddScore(float value) => SetScore(score + value);
 
     public void AddNotePerformance(NoteSpawn instance)
     {
@@ -231,10 +224,5 @@ public class PerformanceJudge : MonoBehaviour
     private void OnNoteCrash(float deltaTime)
     {
         TakeDamage(deltaTime * damageRate);
-    }
-
-    private void OnDanceMeterEnd(int points)
-    {
-        if (points > 0) SetScore(score + points);
     }
 }

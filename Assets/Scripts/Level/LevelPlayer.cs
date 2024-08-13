@@ -21,6 +21,7 @@ public class LevelPlayer : MonoBehaviour
     private MusicPlayer musicPlayer;
     private NoteCatcher noteCatcher;
     private NoteSpawner noteSpawner;
+    private LevelEventSpawner eventSpawner;
     private PerformanceJudge performanceJudge;
     private ObjectiveJudge objectiveJudge;
     private LevelGUI GUI;
@@ -37,6 +38,7 @@ public class LevelPlayer : MonoBehaviour
         musicPlayer = FindObjectOfType<MusicPlayer>(true);
         noteCatcher = FindObjectOfType<NoteCatcher>(true);
         noteSpawner = FindObjectOfType<NoteSpawner>(true);
+        eventSpawner = FindObjectOfType<LevelEventSpawner>(true);
         performanceJudge = FindObjectOfType<PerformanceJudge>(true);
         objectiveJudge = FindObjectOfType<ObjectiveJudge>(true);
         GUI = FindObjectOfType<LevelGUI>(true);
@@ -120,6 +122,13 @@ public class LevelPlayer : MonoBehaviour
             noteCatcher.enabled = true;
             noteCatcher.trombone = trombone;
         }
+        // Event spawner setup
+        if (eventSpawner)
+        {
+            eventSpawner.enabled = true;
+            eventSpawner.UnloadEvents();
+            eventSpawner.LoadEvents(LoadedLevel?.events);
+        }
         // Judges setup
         if (performanceJudge)
         {
@@ -181,6 +190,12 @@ public class LevelPlayer : MonoBehaviour
         if (noteSpawner) noteSpawner.enabled = false;
         // Stop note catcher
         if (noteCatcher) noteCatcher.enabled = false;
+        // Stop level events
+        if (eventSpawner)
+        {
+            eventSpawner.UnloadEvents();
+            eventSpawner.enabled = false;
+        }
         // Clear
         LoadedLevel = null;
     }

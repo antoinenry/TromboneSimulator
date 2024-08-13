@@ -6,6 +6,7 @@ public class ObjectiveJudge : MonoBehaviour
 {
     public bool showDebug;
     [Header("Components")]
+    public ObjectiveJudgeGUI GUI;
     public MusicPlayer musicPlayer;
     public PerformanceJudge performanceJudge;
 
@@ -33,12 +34,12 @@ public class ObjectiveJudge : MonoBehaviour
 
     public void EnableGUI()
     {
-        if (performanceJudge?.gui) performanceJudge.gui.Objectives = this;
+        if (GUI) GUI.Objectives = this;
     }
 
     public void DisableGUI()
     {
-        if (performanceJudge?.gui) performanceJudge.gui.Objectives = null;
+        if (GUI) GUI.Objectives = null;
     }
 
     public void LoadObjectives(ObjectiveInfo[] objectiveInfos)

@@ -9,6 +9,7 @@ public class Level : ScriptableObject, IUnlockableContent
     public int unlockTier;
     public NotePlacement[] notePlacements;
     public ObjectiveInfo[] objectives;
+    public LevelEventSheet[] events;
 
     public ScriptableObject ContentAsset => this;
     public bool AutoUnlock => true;

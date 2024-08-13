@@ -411,7 +411,7 @@ public class MusicPlayer : MonoBehaviour
             audioSource.Stop();
             if (playHeads != null)
                 foreach (Playhead p in playHeads)
-                    p.Stop();
+                    p?.Stop();
         }
     }
 

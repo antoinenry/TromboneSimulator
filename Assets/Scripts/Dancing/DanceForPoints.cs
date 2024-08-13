@@ -1,24 +1,79 @@
 using UnityEngine;
+using static CounterUtility;
 
-public class DanceForPoints : DancePower
+public class DanceForPoints : MonoBehaviour
 {
-    public float pointsPerBeat = 100f;
+    [Header("Components")]
+    public DanceForPointsGUI GUI;
+    public Counter danceCounter;
+    [Header("Configuration")]
+    public int basePointsPerBeat = 10;
+    public float multiplierPerBeat = 1f;
 
-    private PerformanceJudge perfJudge;
+    private DanceDetector dance;
+    private PerformanceJudge judge;
 
-    protected override void Awake()
+    public int PointsPerBeat => multiplierPerBeat != 0f ? (int)(basePointsPerBeat * multiplierPerBeat * DanceLevel) : basePointsPerBeat * DanceLevel;
+    public int DanceLevel => danceCounter != null ? danceCounter.Value : 0;
+    public int MaxDanceLevel
     {
-        base.Awake();
-        perfJudge = FindObjectOfType<PerformanceJudge>(true);
+        set
+        {
+            if (danceCounter != null) danceCounter.maxValue = value;
+            if (GUI) GUI.SetGauge(maxValue: value);
+        }
+
+        get => danceCounter != null ? danceCounter.maxValue : 0;
     }
 
-    protected override void OnDanceBeat()
+    private void Awake()
     {
-        if (dance.DanceCounter > beatsToStart)
+        dance = FindObjectOfType<DanceDetector>(true);
+        judge = FindObjectOfType<PerformanceJudge>(true);
+    }
+
+    private void OnEnable()
+    {
+        if (GUI != null && danceCounter != null)
         {
-            perfGUI.frame.Tint(frameTint);
-            perfJudge.SetScore(perfJudge.score + pointsPerBeat);
-            particleEffect.Play();
+            danceCounter.Value = 0;
+            GUI.SetGauge(0, danceCounter.maxValue);
+            GUI.SetPoints(PointsPerBeat);
         }
+        AddDanceListeners();
+    }
+
+    private void OnDisable()
+    {
+        RemoveDanceListeners();
+    }
+
+    private void AddDanceListeners()
+    {
+        dance?.onDanceBeat?.AddListener(OnDanceBeat);
+        dance?.onMissBeat?.AddListener(OnMissBeat);
+    }
+
+    private void RemoveDanceListeners()
+    {
+        dance?.onDanceBeat?.RemoveListener(OnDanceBeat);
+        dance?.onMissBeat?.RemoveListener(OnMissBeat);
+    }
+
+    private void OnDanceBeat()
+    {
+        danceCounter?.Increment();
+        if (GUI)
+        {
+            GUI.SetPoints(PointsPerBeat);
+            GUI.SetGauge(DanceLevel);
+        }
+        judge?.AddScore(PointsPerBeat);
+    }
+
+    private void OnMissBeat()
+    {
+        danceCounter?.Decrement();
+        GUI?.SetGauge(DanceLevel);
     }
 }
