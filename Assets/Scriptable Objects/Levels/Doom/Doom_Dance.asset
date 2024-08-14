@@ -16,8 +16,8 @@ MonoBehaviour:
   - startTime: 0
     duration: 8
     danceLevel: 20
-    pointsPerBeat: 10
+    pointsPerBeat: 50
   - startTime: 57
     duration: 8
     danceLevel: 20
-    pointsPerBeat: 10
+    pointsPerBeat: 50

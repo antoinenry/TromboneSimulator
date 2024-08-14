@@ -23,7 +23,7 @@ public class TromboneBuildStack : MonoBehaviour
     public bool TryAddModifier(TromboneBuildModifier mod)
     {
         if (mods == null || mod == null) return false;
-        mods.RemoveAll(m => m == null || m.CanStackWith(mod) == false);
+        mods.RemoveAll(m => m == null || m == mod || m.CanStackWith(mod) == false);
         mods.Add(mod);
         return true;
     }

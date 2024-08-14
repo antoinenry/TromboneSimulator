@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18dc05fbdc617ad44a97302dd955f123, type: 3}
   m_Name: Orchestra_RetroBit
   m_EditorClassIdentifier: 
-  modName: Fanfare RetroBit
+  modName: RetroBit (fanfare)
   icon: {fileID: 1984006813, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.9019608, g: 0.38039216, b: 1, a: 1}
   colorizeIcon: 1
   unlockTier: 8
   scoreMultiplierBonus: 1
-  description: 
+  description: "Accompagnement r\xE9trogaming."
   orchestra: {fileID: 11400000, guid: 18199e8796528cd41a0927168fc8bdeb, type: 2}

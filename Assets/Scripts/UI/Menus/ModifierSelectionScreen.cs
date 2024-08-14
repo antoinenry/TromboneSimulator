@@ -2,7 +2,6 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using static ModifierSelectionToggle;
 
 public class ModifierSelectionScreen : MenuUI
 {
@@ -32,6 +31,7 @@ public class ModifierSelectionScreen : MenuUI
             LoadingScreen loadingScreen = Get<LoadingScreen>();
             if (loadingScreen) loadingScreen.showAsPanel = true;
         }
+        ShowModifierInfo(null, true);
     }
 
     public override void HideUI()
