@@ -9,6 +9,8 @@ public class LevelEventSpawner : MonoBehaviour
     public Playhead musicPlayhead;
     public LevelEventPlayhead eventPlayhead;
     public LevelEventInstance[] eventPrefabs;
+    [Header("Settings")]
+    public float tempoModifier = 1f;
 
     public LevelEventInstance[] LoadedEvents {  get; private set; }
 
@@ -28,14 +30,24 @@ public class LevelEventSpawner : MonoBehaviour
 
     public void LoadEvents(params LevelEventSheet[] sheets)
     {
+        if (sheets == null || sheets.Length == 0) return;
+        // Create working copies
+        LevelEventSheet[] sheetCopies = Array.ConvertAll(sheets, s => s != null ? Instantiate(s) : ScriptableObject.CreateInstance<LevelEventSheet>());
+        // Alter copies
+        foreach (LevelEventSheet s in sheetCopies)
+        {
+            s.name += " (copy)";
+            s.MultiplyTempoBy(tempoModifier);
+        }
+        // Load events
         List<LevelEventInstance> loadedEvents = new List<LevelEventInstance>();
-        foreach (LevelEventSheet sheet in sheets)
+        foreach (LevelEventSheet sheet in sheetCopies)
         {
             if (sheet == null) continue;
             Type instanceType = sheet.EventInstanceType;
             LevelEventInstance instancePrefab = GetEventPrefab(instanceType);
             if (instancePrefab == null) continue;
-            ITimingInfo[] getEvents = sheet.GetEvents();
+            ITimingInfo[] getEvents = sheet.GetEventTimings();
             if (getEvents == null) continue;
             foreach(ITimingInfo e in getEvents)
             {

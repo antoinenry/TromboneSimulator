@@ -7,14 +7,17 @@ public class LevelDanceSheet : LevelEventSheet<LevelDanceEventInfo>
     public LevelDanceEventInfo[] danceInfos;
 
     public override Type EventInstanceType => typeof(LevelDanceEventInstance);
-
     public override int EventCount => danceInfos != null ? danceInfos.Length : 0;
 
-    public override ITimingInfo[] GetEvents()
+    public override LevelDanceEventInfo[] GetEvents()
     {
         int count = EventCount;
-        ITimingInfo[] events = new ITimingInfo[count];
-        Array.Copy(danceInfos, events, count);
-        return events;
+        LevelDanceEventInfo[] get = new LevelDanceEventInfo[count];
+        Array.Copy(danceInfos, get, count);
+        return get;
     }
+
+    public override LevelDanceEventInfo GetEvent(int eventIndex) => danceInfos[eventIndex];
+
+    public override void SetEvent(int eventIndex, LevelDanceEventInfo eventInfo) => danceInfos[eventIndex] = eventInfo;
 }

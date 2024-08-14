@@ -33,3 +33,4 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 300000
+  events: []

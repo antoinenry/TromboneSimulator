@@ -127,6 +127,7 @@ public class LevelPlayer : MonoBehaviour
         {
             eventSpawner.enabled = true;
             eventSpawner.UnloadEvents();
+            if (musicPlayer) eventSpawner.tempoModifier = musicPlayer.tempoModifier;
             eventSpawner.LoadEvents(LoadedLevel?.events);
         }
         // Judges setup

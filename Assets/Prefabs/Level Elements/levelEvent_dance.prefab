@@ -518,7 +518,7 @@ MonoBehaviour:
   danceGaugeFill: {fileID: 5001245489696789245}
   pointsField: {fileID: 5001245488126240055}
   pointsPrefix: +
-  pointsDisplayDuration: 0.75
+  pointsDisplayDuration: 0.5
   dancingColor:
     labelColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
     gaugeColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}

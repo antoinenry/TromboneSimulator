@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   danceInfos:
   - startTime: 0
-    duration: 9
+    duration: 8
+    danceLevel: 20
+    pointsPerBeat: 10
+  - startTime: 57
+    duration: 8
     danceLevel: 20
     pointsPerBeat: 10
