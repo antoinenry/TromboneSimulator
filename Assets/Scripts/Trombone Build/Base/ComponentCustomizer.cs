@@ -59,7 +59,7 @@ public class MusicPlayerCustomizer : ComponentCustomizer
     public void OnApplyToComponent(UnityEngine.Object component)
     {
         MusicPlayer musicPlayer = component as MusicPlayer;
-        if (musicPlayer.NeedsReload()) musicPlayer.LoadMusic();
+        if (musicPlayer.PlayingState != MusicPlayer.PlayState.Stop && musicPlayer.NeedsReload()) musicPlayer.LoadMusic();
     }
 }
 
