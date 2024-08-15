@@ -17,7 +17,7 @@ MonoBehaviour:
   uiColor: {r: 0, g: 0.7134721, b: 1, a: 1}
   colorizeIcon: 0
   unlockTier: 3
-  scoreMultiplierBonus: 0.5
+  scoreMultiplierBonus: 0.75
   description: "Diminue la difficult\xE9."
   rythmToleranceMultiplier: 4
   toneToleranceMultiplier: 1

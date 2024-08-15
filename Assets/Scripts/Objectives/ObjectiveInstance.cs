@@ -10,7 +10,7 @@ public abstract partial class ObjectiveInstance
     static public Type[] GetAllTypes()
     {
         Type[] assemblyTypes = typeof(ObjectiveInstance).GetNestedTypes();
-        return Array.FindAll(assemblyTypes, t => typeof(ObjectiveInstance).IsAssignableFrom(t));
+        return Array.FindAll(assemblyTypes, t => typeof(ObjectiveInstance).IsAssignableFrom(t) && t.IsAbstract == false);
     }
     
     static public string[] GetAllTypeNames() => Array.ConvertAll(GetAllTypes(), t => t.Name);

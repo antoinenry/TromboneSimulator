@@ -42,6 +42,12 @@ public class LevelDanceEventInstance : LevelEventInstance<LevelDanceEventInfo>
         }
     }
 
+    public override void EndEvent()
+    {
+        base.EndEvent();
+        danceForPoints?.onDanceCount?.RemoveListener(OnDanceCount);
+    }
+
     private void OnDanceCount(int count, int maxCount)
     {
         float completion = (float)count / maxCount;

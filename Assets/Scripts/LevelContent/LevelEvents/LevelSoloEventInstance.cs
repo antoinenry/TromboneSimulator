@@ -38,7 +38,14 @@ public class LevelSoloEventInstance : LevelEventInstance<LevelSoloEventInfo>
         if (notesForPoints != null)
         {
             notesForPoints.noteCount = GetSoloLength();
+            notesForPoints.onNoteCount.AddListener(OnNoteCount);
         }
+    }
+
+    public override void EndEvent()
+    {
+        base.EndEvent();
+        notesForPoints?.onNoteCount?.RemoveListener(OnNoteCount);
     }
 
     private int GetSoloLength()
@@ -48,5 +55,11 @@ public class LevelSoloEventInstance : LevelEventInstance<LevelSoloEventInfo>
         FloatSegment soloTime = new FloatSegment(eventInfo.StartTime, eventInfo.EndTime);
         NoteInstance[] soloNotes = Array.FindAll(loadedNotes, n => n != null && soloTime.Contains(n.StartTime));
         return soloNotes != null ? soloNotes.Length : 0;
+    }
+
+    private void OnNoteCount(int playedNotes, int missedNotes, int totalNotes)
+    {
+        float completion = (float)playedNotes / totalNotes;
+        onCompletion.Invoke(this, completion);
     }
 }

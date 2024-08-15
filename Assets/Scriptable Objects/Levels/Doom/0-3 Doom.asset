@@ -29,12 +29,12 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 150000
-  - name: "Super Chor\xE9 (1/2)"
+  - name: Headbanger (1/2)
     type: Dance
     parameters:
     - 1
     - 1
-  - name: "Hyper Chor\xE9 (2/2)"
+  - name: Headbanger (2/2)
     type: Dance
     parameters:
     - 1

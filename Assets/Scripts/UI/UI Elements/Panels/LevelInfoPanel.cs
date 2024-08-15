@@ -65,9 +65,9 @@ public class LevelInfoPanel : InfoPanel
             bool[] completed = levelInfo.checklist;
             for (int i = 0; i < objectiveCount; i++)
             {
-                text += objectives[i] + "\n";
-                if (completed[i]) overlayText += objectives[i];
-                overlayText += "\n";
+                string line = "- " + objectives[i] + "\n";
+                text += line;
+                overlayText += completed[i] ? line : "\n";
             }
         }
         // Set field

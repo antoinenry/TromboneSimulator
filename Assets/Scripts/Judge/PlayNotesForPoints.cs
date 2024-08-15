@@ -17,7 +17,7 @@ public class PlayNotesForPoints : MonoBehaviour
     public int basePointsPerNote = 10;
     public float multiplierPerNote = 1f;
 
-    public UnityEvent onAllNotesPlayed;
+    public UnityEvent<int,int,int> onNoteCount;
 
     private PerformanceJudge judge;
     private int playedNoteCounter;
@@ -64,6 +64,7 @@ public class PlayNotesForPoints : MonoBehaviour
         int points = (int)(playedNoteCounter * multiplierPerNote * basePointsPerNote);
         judge?.AddScore(points);
         GUI?.SetPoints(points);
+        onNoteCount.Invoke(playedNoteCounter, missedNoteCounter, noteCount);
         if (playedNoteCounter >= noteCount) OnFullPlay();
     }
 
@@ -71,11 +72,11 @@ public class PlayNotesForPoints : MonoBehaviour
     {
         GUI?.SetNoteStateAt(CurrentNoteIndex, NoteState.Missed);
         missedNoteCounter++;
+        onNoteCount.Invoke(playedNoteCounter, missedNoteCounter, noteCount);
     }
 
     private void OnFullPlay()
     {
-        onAllNotesPlayed.Invoke();
         StartCoroutine(FullPlayAnimationCoroutine());
     }
 
