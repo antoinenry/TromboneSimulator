@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class LevelPlayer : MonoBehaviour
@@ -11,6 +12,13 @@ public class LevelPlayer : MonoBehaviour
     public int startCountdownValue = 3;
     public float gameOverTransitionDuration = 2f;
     public float levelEndTransitionDuration = 2f;
+    [Header("Events")]
+    public UnityEvent<Level> onStartLoadLevel;
+    public UnityEvent<Level> onEndLoadLevel;
+    public UnityEvent<Level> onUnloadLevel;
+    public UnityEvent onPlayLevel;
+    public UnityEvent onPauseLevel;
+    public UnityEvent onEndLevel;
 
     // Coroutines
     private Coroutine loadLevelCoroutine;
@@ -93,6 +101,7 @@ public class LevelPlayer : MonoBehaviour
 
     private IEnumerator LoadLevelCoroutine()
     {
+        onStartLoadLevel.Invoke(LoadedLevel);
         // Loading screen setup
         MenuUI.onLoadingScreenVisible.AddListener(OnLoadingScreenVisible);
         // Trombone setup
@@ -154,6 +163,7 @@ public class LevelPlayer : MonoBehaviour
         // End coroutine
         loadLevelCoroutine = null;
         MenuUI.onLoadingScreenVisible.RemoveListener(OnLoadingScreenVisible);
+        onEndLoadLevel.Invoke(LoadedLevel);
     }
 
     public void UnloadLevel()
@@ -198,6 +208,7 @@ public class LevelPlayer : MonoBehaviour
             eventSpawner.enabled = false;
         }
         // Clear
+        onUnloadLevel.Invoke(LoadedLevel);
         LoadedLevel = null;
     }
     #endregion
@@ -277,6 +288,7 @@ public class LevelPlayer : MonoBehaviour
         // Start music
         musicPlayer.Play();
         //musicPlayer.SetPlaytimeSamples(metronome.GetClickTimeSamples());
+        onPlayLevel.Invoke();
     }
 
     private void OnCountdownStep(int step)
@@ -319,6 +331,7 @@ public class LevelPlayer : MonoBehaviour
         if (trombone) trombone.Freeze();
         // Interrupt unpause sequence (grabbing trombone)
         if (unpauseLevelCoroutine != null) StopCoroutine(unpauseLevelCoroutine);
+        onPauseLevel.Invoke();
     }
 
     public void UnpauseLevel()
@@ -350,6 +363,7 @@ public class LevelPlayer : MonoBehaviour
         // Play music
         GUI.ClearMessage();
         musicPlayer.Play();
+        onPlayLevel.Invoke();
     }
     #endregion
 
@@ -409,6 +423,7 @@ public class LevelPlayer : MonoBehaviour
     #region END/QUIT
     private IEnumerator LevelEndCoroutine()
     {
+        onEndLevel.Invoke();
         // Wait one frame to ensure other method called on LevelEnd are executed beforehand
         yield return null;
         // Stop level

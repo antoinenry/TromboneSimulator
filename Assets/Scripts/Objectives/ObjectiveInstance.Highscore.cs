@@ -28,7 +28,7 @@ public abstract partial class ObjectiveInstance
 
         public static string GetDisplayName(ObjectiveInfo info)
         {
-            return info.name + " - " + info.parameters[0];
+            return info.name + ": " + info.parameters[0];
         }
     }
 }
