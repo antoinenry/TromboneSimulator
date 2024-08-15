@@ -5,7 +5,7 @@ public class PointerTargetSFXSource : MonoBehaviour, IPointerEnterHandler, IPoin
 {
     public PointerTargetSFX sfx;
 
-    public virtual void OnPointerEnter(PointerEventData eventData) => MenuUI.SFXSource?.Play(sfx?.pointerEnter);
-    public virtual void OnPointerExit(PointerEventData eventData) => MenuUI.SFXSource?.Play(sfx?.pointerExit);
-    public virtual void OnPointerClick(PointerEventData eventData) => MenuUI.SFXSource?.Play(sfx?.pointerClick);
+    public virtual void OnPointerEnter(PointerEventData eventData) => MenuUI.SFXSource?.PlayOneShot(sfx?.pointerEnter);
+    public virtual void OnPointerExit(PointerEventData eventData) => MenuUI.SFXSource?.PlayOneShot(sfx?.pointerExit);
+    public virtual void OnPointerClick(PointerEventData eventData) => MenuUI.SFXSource?.PlayOneShot(sfx?.pointerClick);
 }

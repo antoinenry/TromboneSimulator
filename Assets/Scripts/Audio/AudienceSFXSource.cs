@@ -1,20 +1,19 @@
 using UnityEngine;
 
-public class AudienceSFXSource : MonoBehaviour
+public class AudienceSFXSource : SFXSource
 {
     public AudioClip idle;
     public AudioClip[] objectiveComplete;
     public AudioClip[] levelComplete;
 
-    private AudioSource source;
     private LevelPlayer levelPlayer;
     private ObjectiveJudge objectiveJudge;
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         levelPlayer = FindObjectOfType<LevelPlayer>(true);
-        source = GetComponent<AudioSource>();
         objectiveJudge = FindObjectOfType<ObjectiveJudge>(true);
     }
 
@@ -22,11 +21,11 @@ public class AudienceSFXSource : MonoBehaviour
     {
         if (levelPlayer != null)
         {
-            levelPlayer.onStartLoadLevel.AddListener(OnLoad);
-            levelPlayer.onPlayLevel.AddListener(OnPlay);
-            levelPlayer.onPauseLevel.AddListener(OnPause);
-            levelPlayer.onEndLevel.AddListener(OnEnd);
-            levelPlayer.onUnloadLevel.AddListener(OnUnload);
+            levelPlayer.onStartLoadLevel.AddListener(OnLoadLevel);
+            levelPlayer.onPlayLevel.AddListener(OnPlayLevel);
+            levelPlayer.onPauseLevel.AddListener(OnPauseLevel);
+            levelPlayer.onEndLevel.AddListener(OnEndLevel);
+            levelPlayer.onUnloadLevel.AddListener(OnUnloadLevel);
         }
         objectiveJudge?.onNewObjectiveComplete?.AddListener(OnObjectiveComplete);
     }
@@ -35,52 +34,28 @@ public class AudienceSFXSource : MonoBehaviour
     {
         if (levelPlayer != null)
         {
-            levelPlayer.onStartLoadLevel.RemoveListener(OnLoad);
-            levelPlayer.onPlayLevel.RemoveListener(OnPlay);
-            levelPlayer.onPauseLevel.RemoveListener(OnPause);
-            levelPlayer.onEndLevel.RemoveListener(OnEnd);
-            levelPlayer.onUnloadLevel.RemoveListener(OnUnload);
+            levelPlayer.onStartLoadLevel.RemoveListener(OnLoadLevel);
+            levelPlayer.onPlayLevel.RemoveListener(OnPlayLevel);
+            levelPlayer.onPauseLevel.RemoveListener(OnPauseLevel);
+            levelPlayer.onEndLevel.RemoveListener(OnEndLevel);
+            levelPlayer.onUnloadLevel.RemoveListener(OnUnloadLevel);
         }
         objectiveJudge?.onNewObjectiveComplete?.RemoveListener(OnObjectiveComplete);
     }
 
-    private void OnLoad(Level l) => PlayLoop(idle);
+    private void OnLoadLevel(Level l) => PlayLoop(idle);
 
-    private void OnPlay() => StopLoop(idle);
+    private void OnPlayLevel() => StopLoop(idle);
 
-    private void OnPause() => PlayLoop(idle);
+    private void OnPauseLevel() => PlayLoop(idle);
 
-    private void OnEnd()
+    private void OnEndLevel()
     {
         PlayRandomOneShot(levelComplete);
         PlayLoop(idle);
     }
 
-    private void OnUnload(Level l) => StopLoop(idle);
+    private void OnUnloadLevel(Level l) => StopLoop(idle);
 
     private void OnObjectiveComplete(ObjectiveInfo o) => PlayRandomOneShot(objectiveComplete);
-
-    private void PlayLoop(AudioClip clip)
-    {
-        if (source == null || clip == null) return;
-        source.clip = clip;
-        source.loop = true;
-        source.Play();
-    }
-
-    private void StopLoop(AudioClip clip)
-    {
-        if (clip != null && source != null && source.isPlaying && source.clip == clip) source.Stop();
-    }
-
-    private void PlayOneShot(AudioClip clip)
-    {
-        if (source != null && clip != null) source.PlayOneShot(clip);
-    }
-
-    private void PlayRandomOneShot(AudioClip[] clips)
-    {
-        int clipCount = clips != null ? clips.Length : 0;
-        if (clipCount > 0) PlayOneShot(clips[Random.Range(0, clipCount)]);
-    }
 }

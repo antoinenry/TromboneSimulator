@@ -1,12 +1,28 @@
-using UnityEngine;
-
-public class MenuSFXSource : MonoBehaviour
+public class MenuSFXSource : SFXSource
 {
-    public AudioSource source;
+    public MenuSFX sfx;
 
-    public void Play(AudioClip clip)
+    protected MenuUI menu;
+
+    protected override void Awake()
     {
-        if (source == null || clip == null) return;
-        source.PlayOneShot(clip);
+        base.Awake();
+        menu = GetComponent<MenuUI>();
     }
+
+    private void OnEnable()
+    {
+        menu?.onShowUI?.AddListener(OnShowUI);
+        menu?.onHideUI?.AddListener(OnHideUI);
+    }
+
+    private void OnDisable()
+    {
+        menu?.onShowUI?.RemoveListener(OnShowUI);
+        menu?.onHideUI?.RemoveListener(OnHideUI);
+    }
+
+    private void OnShowUI() => PlayOneShot(sfx?.showUI);
+
+    private void OnHideUI() => PlayOneShot(sfx?.hideUI);
 }

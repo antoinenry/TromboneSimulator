@@ -17,7 +17,7 @@ public abstract class MenuUI : MonoBehaviour
 
     static public List<MenuUI> visibleMenuUis;
     static public HandCursor cursor;
-    static public MenuSFXSource SFXSource;
+    static public SFXSource SFXSource;
 
     static private Dictionary<Type, MenuUI> MenuUIs;
 
@@ -39,7 +39,7 @@ public abstract class MenuUI : MonoBehaviour
     protected virtual void Awake()
     {
         if (cursor == null) cursor = FindObjectOfType<HandCursor>(true);
-        if (SFXSource == null) SFXSource = FindObjectOfType<MenuSFXSource>(true);
+        if (SFXSource == null) SFXSource = FindObjectOfType<SFXSource>(true);
         if (visibleMenuUis == null) visibleMenuUis = new List<MenuUI>();
         if (MenuUIs == null) MenuUIs = FindAllMenuUIs();
         if (onStartLevel == null) onStartLevel = new();

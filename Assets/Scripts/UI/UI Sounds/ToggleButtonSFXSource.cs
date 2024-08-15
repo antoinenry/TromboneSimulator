@@ -22,7 +22,7 @@ public class ToggleButtonSFXSource : ButtonSFXSource
     {
         if (sfx == null || sfx is ToggleButtonSFX == false) return;
         ToggleButtonSFX toggleSfx = (ToggleButtonSFX)sfx;
-        MenuUI.SFXSource?.Play(value ? toggleSfx.toggleOn : toggleSfx.toggleOff);
+        MenuUI.SFXSource?.PlayOneShot(value ? toggleSfx.toggleOn : toggleSfx.toggleOff);
     }
 
     protected override bool HasMatchingSFX => sfx != null && sfx is ToggleButtonSFX;

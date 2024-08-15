@@ -12,6 +12,7 @@ public class GameObjectTextDisplay : MonoBehaviour
     }
 
     public TextMeshProUGUI descriptionField;
+    public string defaultText = "";
     public GameObjectText[] text;
 
     private GameObject currentTarget;
@@ -36,6 +37,6 @@ public class GameObjectTextDisplay : MonoBehaviour
     public void HideDescription()
     {
         if (descriptionField == null || text == null) return;
-        descriptionField.text = "";
+        descriptionField.text = defaultText;
     }
 }

@@ -1,75 +1,114 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System.Collections;
 using TMPro;
 
 public class GameOverScreen : MenuUI
 {
     [Header("UI Components")]
-    public TextMeshProUGUI continueDisplay;
-    public Button continueButton;
-    public TextMeshProUGUI continueButtonText;
-    public Button giveUpButton;
-    public string continueText = "Interpreter un morceau supplementaire !";
-    public string gameOverText = "Game Over";
+    public TMP_Text textField;
+    public Button replayButton;
+    public Button quitButton;
+    public Animation animate;
+    [Header("Look")]
+    public string defaultText = "Game Over";
+    public Color defaultTextColor = Color.red;
+    public string replayText = "Try Again?";
+    public Color replayTextColor = Color.yellow;
+    public string quitText = "Give Up?";
+    public Color quitTextColor = Color.white;
+    [Header("Animation")]
+    public AnimationClip showAnimation;
+    public float showAnimationDuration = 4f;
+    public AnimationClip selectReplayAnimation;
+    public AnimationClip selectQuitAnimation;
+    public AnimationClip replayAnimation;
+    public AnimationClip quitAnimation;
+    public float hideAnimationDuration = 2f;
     [Header("Events")]
     public UnityEvent<bool> onContinue;
 
     public override void ShowUI()
     {
         if (Application.isPlaying)
-        {
-            if (continueButton != null) continueButton.onClick.AddListener(Continue);
-            if (giveUpButton != null) giveUpButton.onClick.AddListener(GiveUp);
-        }
-        // Detach hand cursor from trombone
-        if (cursor != null) cursor.State &= ~HandCursor.CursorState.Trombone;
-        base.ShowUI();
-    }
-
-    public override void HideUI()
-    {
-        if (Application.isPlaying)
-        {
-            if (continueButton != null) continueButton.onClick.RemoveListener(Continue);
-            if (giveUpButton != null) giveUpButton.onClick.RemoveListener(GiveUp);
-        }
-        base.HideUI();
-    }
-
-    public void DisplayGameOver(int continues)
-    {
-        continueDisplay.text = "x" + continues.ToString();
-        if (continues > 0)
-        {
-            continueButtonText.text = continueText;
-            continueButton.interactable = true;
-        }
+            StartCoroutine(ShowUICoroutine());
         else
         {
-            continueButtonText.text = gameOverText;
-            continueButton.interactable = false;
+            base.ShowUI();
+            SetButtonsActive(true);
+            OnSelectNothing();
         }
-        ShowUI();
     }
 
-    public void DisplayGameOver()
+    private void PlayAnimation(AnimationClip clip, bool loop = false)
     {
-        continueDisplay.text = "";
-        continueButtonText.text = continueText;
-        continueButton.interactable = true;
-        ShowUI();
+        if (animate == null || clip == null) return;
+        animate.clip = clip;
+        animate.Play();
     }
 
-    private void Continue()
+    private IEnumerator ShowUICoroutine()
     {
-        onContinue.Invoke(true);
+        base.ShowUI();
+        SetButtonsActive(false);
+        PlayAnimation(showAnimation);
+        yield return new WaitForSeconds(showAnimationDuration);
+        OnSelectNothing();
+        SetButtonsActive(true);
+    }
+
+    private IEnumerator HideUICoroutine(bool replay)
+    {
+        SetButtonsActive(false);
+        PlayAnimation(replay ? replayAnimation : quitAnimation);
+        yield return new WaitForSeconds(hideAnimationDuration);
+        onContinue.Invoke(replay);
         HideUI();
     }
 
-    private void GiveUp()
+    private void SetButtonsActive(bool visible)
     {
-        onContinue.Invoke(false);
-        HideUI();
+        replayButton?.gameObject?.SetActive(visible);
+        quitButton?.gameObject?.SetActive(visible);
+    }
+
+    public void OnSelectNothing()
+    {
+        if (textField)
+        {
+            textField.SetText(defaultText);
+            textField.color = defaultTextColor;
+        }
+    }
+
+    public void OnSelectReplay()
+    {
+        if (textField)
+        {
+            textField.SetText(replayText);
+            textField.color = replayTextColor;
+        }
+        PlayAnimation(selectReplayAnimation);
+    }
+
+    public void OnSelectQuit()
+    {
+        if (textField)
+        {
+            textField.SetText(quitText);
+            textField.color = quitTextColor;
+        }
+        PlayAnimation(selectQuitAnimation);
+    }
+
+    public void OnPressReplay()
+    {
+        StartCoroutine(HideUICoroutine(replay: true));
+    }
+
+    public void OnPressQuit()
+    {
+        StartCoroutine(HideUICoroutine(replay: false));
     }
 }

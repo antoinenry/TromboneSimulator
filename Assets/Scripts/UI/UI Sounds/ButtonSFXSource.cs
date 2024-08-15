@@ -25,7 +25,7 @@ public class ButtonSFXSource : PointerTargetSFXSource
         if (HasMatchingSFX)
         {
             ButtonSFX buttonSFX = sfx as ButtonSFX;
-            MenuUI.SFXSource?.Play(IsButtonInteractable ? buttonSFX?.pointerClick : buttonSFX?.notInteractable);
+            MenuUI.SFXSource?.PlayOneShot(IsButtonInteractable ? buttonSFX?.pointerClick : buttonSFX?.notInteractable);
         }
         else
             base.OnPointerClick(eventData);

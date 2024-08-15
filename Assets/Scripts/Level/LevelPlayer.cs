@@ -395,7 +395,7 @@ public class LevelPlayer : MonoBehaviour
                 GameOverScreen UIGameOver = MenuUI.Get<GameOverScreen>();
                 if (UIGameOver)
                 {
-                    UIGameOver.DisplayGameOver();
+                    UIGameOver.ShowUI();
                     UIGameOver.onContinue.AddListener(OnContinue);
                 }
                 break;
