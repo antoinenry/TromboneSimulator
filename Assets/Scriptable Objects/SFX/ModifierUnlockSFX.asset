@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76bd192cc66edb645b4b9619c425ffdd, type: 3}
   m_Name: ModifierUnlockSFX
   m_EditorClassIdentifier: 
-  pointerEnterSFX: {fileID: 0}
-  pointerExitSFX: {fileID: 0}
-  pointerClickSFX: {fileID: 0}
-  notInteractableSFX: {fileID: 0}
+  pointerEnter: {fileID: 8300000, guid: e17e8583f7d7ff34ca241c9162a3cb81, type: 3}
+  pointerExit: {fileID: 0}
+  pointerClick: {fileID: 8300000, guid: 7827087d6ce0088428eca009b038c689, type: 3}
+  notInteractable: {fileID: 0}

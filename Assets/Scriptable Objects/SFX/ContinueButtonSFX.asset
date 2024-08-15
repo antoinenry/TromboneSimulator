@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointerEnter: {fileID: 8300000, guid: e17e8583f7d7ff34ca241c9162a3cb81, type: 3}
   pointerExit: {fileID: 0}
-  pointerClick: {fileID: 8300000, guid: 7827087d6ce0088428eca009b038c689, type: 3}
+  pointerClick: {fileID: 8300000, guid: 4a30c80431025004db355f190824defc, type: 3}
   notInteractable: {fileID: 8300000, guid: ecbba17ad5564614782af57f0c6653aa, type: 3}
