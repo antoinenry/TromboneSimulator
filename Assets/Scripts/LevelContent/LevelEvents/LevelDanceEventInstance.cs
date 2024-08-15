@@ -2,20 +2,8 @@ using UnityEngine;
 
 public class LevelDanceEventInstance : LevelEventInstance<LevelDanceEventInfo>
 {
-    [Header("Components")]
-    public GameObject GUI;
     [Header("Configuration")]
-    public LevelDanceEventInfo eventInfo;
-
-    public override ITimingInfo TimingInfo
-    {
-        get => eventInfo;
-        set
-        {
-            eventInfo.StartTime = value.StartTime;
-            eventInfo.Duration = value.Duration;
-        }
-    }
+    [SerializeField] private LevelDanceEventInfo eventInfo;
 
     public override LevelDanceEventInfo EventInfo
     {
@@ -25,35 +13,22 @@ public class LevelDanceEventInstance : LevelEventInstance<LevelDanceEventInfo>
 
     private DanceForPoints danceForPoints;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         danceForPoints = GetComponent<DanceForPoints>();
-        MoveGUIToContainer();
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        GUI?.SetActive(true);
+        base.OnEnable();
         if (danceForPoints) danceForPoints.enabled = true;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        GUI?.SetActive(false);
+        base.OnDisable();
         if (danceForPoints) danceForPoints.enabled = false;
-    }
-
-    private void MoveGUIToContainer()
-    {
-        if (GUI == null) return;
-        RectTransform container = FindObjectOfType<LevelGUI>(true)?.eventDisplayContainer;
-        if (container == null) return;
-        GUI.transform.SetParent(container);
-    }
-
-    private void OnDestroy()
-    {
-        if (GUI != null) DestroyImmediate(GUI);
     }
 
     public override void StartEvent()
@@ -63,6 +38,13 @@ public class LevelDanceEventInstance : LevelEventInstance<LevelDanceEventInfo>
         {
             danceForPoints.basePointsPerBeat = eventInfo.pointsPerBeat;
             danceForPoints.MaxDanceLevel = eventInfo.danceLevel;
+            danceForPoints.onDanceCount.AddListener(OnDanceCount);
         }
+    }
+
+    private void OnDanceCount(int count, int maxCount)
+    {
+        float completion = (float)count / maxCount;
+        onCompletion.Invoke(this, completion);
     }
 }

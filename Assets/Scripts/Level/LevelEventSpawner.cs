@@ -1,6 +1,8 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class LevelEventSpawner : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class LevelEventSpawner : MonoBehaviour
     [Header("Settings")]
     public float tempoModifier = 1f;
 
+    public UnityEvent<LevelEventInstance,float> onEventCompletion;
+
     public LevelEventInstance[] LoadedEvents {  get; private set; }
 
     private void OnEnable()
@@ -19,6 +23,7 @@ public class LevelEventSpawner : MonoBehaviour
         musicPlayhead?.onMove?.AddListener(MovePlayhead);
         eventPlayhead?.onEnterRead?.AddListener(StartEvent);
         eventPlayhead?.onExitRead?.AddListener(EndEvent);
+        AddEventListeners();
     }
 
     private void OnDisable()
@@ -26,6 +31,22 @@ public class LevelEventSpawner : MonoBehaviour
         musicPlayhead?.onMove?.RemoveListener(MovePlayhead);
         eventPlayhead?.onEnterRead?.RemoveListener(StartEvent);
         eventPlayhead?.onExitRead?.RemoveListener(EndEvent);
+        RemoveEventListeners();
+    }
+
+    private void AddEventListeners()
+    {
+        if (LoadedEvents == null) return;
+        foreach (LevelEventInstance e in LoadedEvents)
+            e?.onCompletion?.AddListener(OnEventCompletion);
+    }
+
+    private void RemoveEventListeners()
+    {
+        if (LoadedEvents == null) return;
+        foreach (LevelEventInstance e in LoadedEvents)
+            e?.onCompletion?.RemoveListener(OnEventCompletion);
+
     }
 
     public void LoadEvents(params LevelEventSheet[] sheets)
@@ -41,6 +62,7 @@ public class LevelEventSpawner : MonoBehaviour
         }
         // Load events
         List<LevelEventInstance> loadedEvents = new List<LevelEventInstance>();
+        if (LoadedEvents != null) loadedEvents.AddRange(LoadedEvents);
         foreach (LevelEventSheet sheet in sheetCopies)
         {
             if (sheet == null) continue;
@@ -58,11 +80,13 @@ public class LevelEventSpawner : MonoBehaviour
             }
         }
         LoadedEvents = loadedEvents.ToArray();
+        AddEventListeners();
     }
 
     public void UnloadEvents()
     {
         if (LoadedEvents == null) return;
+        RemoveEventListeners();
         foreach (LevelEventInstance loadedEventInstance in LoadedEvents)
         {
             if (loadedEventInstance == null) continue;
@@ -94,5 +118,11 @@ public class LevelEventSpawner : MonoBehaviour
         if (eventPrefabs == null) return null;
         if (eventInstanceType == null || eventInstanceType.IsAssignableFrom(typeof(LevelEventInstance))) return null;
         return Array.Find(eventPrefabs, p => p?.GetType() == eventInstanceType);
+    }
+
+    private void OnEventCompletion(LevelEventInstance eventInstance, float completion)
+    {
+        if (eventInstance == null) return;
+        onEventCompletion?.Invoke(eventInstance, completion);
     }
 }

@@ -28,7 +28,7 @@ public class DanceForPointsGUI : MonoBehaviour
     public TMP_Text pointsField;
     [Header("Look")]
     public string pointsPrefix = "+";
-    public float pointsDisplayDuration = 1f;
+    public float pointsDisplayDuration = .5f;
     public ColorSheme dancingColor = ColorSheme.AllWhite;
     public ColorSheme missingColor = ColorSheme.AllWhite;
     public ColorSheme maxedColors = ColorSheme.AllWhite;

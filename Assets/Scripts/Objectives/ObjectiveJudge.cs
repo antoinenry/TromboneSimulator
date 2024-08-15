@@ -9,6 +9,7 @@ public class ObjectiveJudge : MonoBehaviour
     public ObjectiveJudgeGUI GUI;
     public MusicPlayer musicPlayer;
     public PerformanceJudge performanceJudge;
+    public LevelEventSpawner levelEvents;
 
     public UnityEvent<ObjectiveInfo> onNewObjectiveComplete;
 
@@ -18,6 +19,7 @@ public class ObjectiveJudge : MonoBehaviour
     {
         musicPlayer = FindObjectOfType<MusicPlayer>(true);
         performanceJudge = FindObjectOfType<PerformanceJudge>(true);
+        levelEvents = FindObjectOfType<LevelEventSpawner>(true);
     }
 
     private void OnEnable()
@@ -84,8 +86,9 @@ public class ObjectiveJudge : MonoBehaviour
         {
             if (o == null) continue;
             if (o.isComplete == false) o.onComplete.AddListener(OnCompleteNewObjective);
-            if (musicPlayer) musicPlayer.onMusicEnd.AddListener(o.OnMusicEnd);
-            if (performanceJudge) performanceJudge.onScore.AddListener(o.OnPerformanceJudgeScore);
+            musicPlayer?.onMusicEnd?.AddListener(o.OnMusicEnd);
+            performanceJudge?.onScore?.AddListener(o.OnPerformanceJudgeScore);
+            levelEvents?.onEventCompletion?.AddListener(o.OnLevelEventCompletion);
         }
     }
 
@@ -96,8 +99,9 @@ public class ObjectiveJudge : MonoBehaviour
         {
             if (o == null) continue;
             o.onComplete.RemoveListener(OnCompleteNewObjective);
-            if (musicPlayer) musicPlayer.onMusicEnd.RemoveListener(o.OnMusicEnd);
-            if (performanceJudge) performanceJudge.onScore.RemoveListener(o.OnPerformanceJudgeScore);
+            musicPlayer?.onMusicEnd?.RemoveListener(o.OnMusicEnd);
+            performanceJudge?.onScore?.RemoveListener(o.OnPerformanceJudgeScore);
+            levelEvents?.onEventCompletion?.RemoveListener(o.OnLevelEventCompletion);
         }
     }
 

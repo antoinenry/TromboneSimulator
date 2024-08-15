@@ -24,20 +24,20 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 30000
+    - 60000
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 60000
-  - name: Ultra Score
-    type: Highscore
-    parameters:
-    - 100000
-  - name: "Chor\xE9"
+    - 150000
+  - name: "Super Chor\xE9 (1/2)"
     type: Dance
     parameters:
-    - 0
-    - 9
-    - 16
+    - 1
+    - 1
+  - name: "Hyper Chor\xE9 (2/2)"
+    type: Dance
+    parameters:
+    - 1
+    - 2
   events:
   - {fileID: 11400000, guid: c009b57bb157e7f478065c1d6afa2c52, type: 2}

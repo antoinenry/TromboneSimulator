@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using static CounterUtility;
 
 public class DanceForPoints : MonoBehaviour
@@ -9,6 +10,8 @@ public class DanceForPoints : MonoBehaviour
     [Header("Configuration")]
     public int basePointsPerBeat = 10;
     public float multiplierPerBeat = 1f;
+
+    public UnityEvent<int,int> onDanceCount;
 
     private DanceDetector dance;
     private PerformanceJudge judge;
@@ -62,7 +65,11 @@ public class DanceForPoints : MonoBehaviour
 
     private void OnDanceBeat()
     {
-        danceCounter?.Increment();
+        if (danceCounter != null)
+        {
+            danceCounter.Increment();
+            onDanceCount.Invoke(DanceLevel, MaxDanceLevel);
+        }
         if (GUI)
         {
             GUI.SetPoints(PointsPerBeat);
@@ -73,7 +80,11 @@ public class DanceForPoints : MonoBehaviour
 
     private void OnMissBeat()
     {
-        danceCounter?.Decrement();
+        if (danceCounter != null)
+        {
+            danceCounter.Decrement();
+            onDanceCount.Invoke(DanceLevel, MaxDanceLevel);
+        }
         GUI?.SetGauge(DanceLevel);
     }
 }

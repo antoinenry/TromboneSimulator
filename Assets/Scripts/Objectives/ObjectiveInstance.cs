@@ -88,6 +88,7 @@ public abstract partial class ObjectiveInstance
     public virtual void OnMusicPlayerUpdate() { }
     public virtual void OnMusicEnd() { }
     public virtual void OnPerformanceJudgeScore(float score) { }
+    public virtual void OnLevelEventCompletion(LevelEventInstance eventInstance, float completion) { }
 
     public void Complete(bool value = true)
     {

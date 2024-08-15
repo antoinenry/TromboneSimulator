@@ -1,8 +1,41 @@
-using System.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class LevelEventInstance : MonoBehaviour, ITimingInfo
 {
+    [Header("Components")]
+    public GameObject GUI;
+    [Header("Events")]
+    public UnityEvent<LevelEventInstance, float> onCompletion;
+
+    protected virtual void Awake()
+    {
+        MoveGUIToContainer();
+    }
+
+    protected virtual void OnEnable()
+    {
+        GUI?.SetActive(true);
+    }
+
+    protected virtual void OnDisable()
+    {
+        GUI?.SetActive(false);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (GUI != null) DestroyImmediate(GUI);
+    }
+
+    private void MoveGUIToContainer()
+    {
+        if (GUI == null) return;
+        RectTransform container = FindObjectOfType<LevelGUI>(true)?.eventDisplayContainer;
+        if (container == null) return;
+        GUI.transform.SetParent(container);
+    }
+
     public abstract ITimingInfo TimingInfo { get; set; }
     public float StartTime { get => TimingInfo.StartTime; set => TimingInfo.StartTime = value; }
     public float Duration { get => TimingInfo.Duration; set => TimingInfo.Duration = value; }
@@ -15,7 +48,17 @@ public abstract class LevelEventInstance : MonoBehaviour, ITimingInfo
 
 public abstract class LevelEventInstance<T> : LevelEventInstance where T : ITimingInfo
 {
-    public virtual T EventInfo { get; set; }
+    public abstract T EventInfo { get; set; }
+
+    public override ITimingInfo TimingInfo
+    {
+        get => EventInfo;
+        set
+        {
+            EventInfo.StartTime = value.StartTime;
+            EventInfo.Duration = value.Duration;
+        }
+    }
 
     public override void SetEventInfo(ITimingInfo info)
     {
