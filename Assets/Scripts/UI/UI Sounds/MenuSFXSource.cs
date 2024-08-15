@@ -22,7 +22,17 @@ public class MenuSFXSource : SFXSource
         menu?.onHideUI?.RemoveListener(OnHideUI);
     }
 
-    private void OnShowUI() => PlayOneShot(sfx?.showUI);
+    private void OnShowUI()
+    {
+        if (sfx == null) return;
+        PlayOneShot(sfx.showUI);
+        PlayLoop(sfx.visibleLoop, sfx.loopDelay);
+    }
 
-    private void OnHideUI() => PlayOneShot(sfx?.hideUI);
+    private void OnHideUI()
+    {
+        if (sfx == null) return;
+        PlayOneShot(sfx.hideUI);
+        StopLoop(sfx.visibleLoop);
+    }
 }

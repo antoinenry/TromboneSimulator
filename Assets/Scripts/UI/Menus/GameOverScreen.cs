@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
 using TMPro;
+using static DialogBoxScreen;
 
 public class GameOverScreen : MenuUI
 {
@@ -18,6 +19,7 @@ public class GameOverScreen : MenuUI
     public Color replayTextColor = Color.yellow;
     public string quitText = "Give Up?";
     public Color quitTextColor = Color.white;
+    public Dialog quitDialog;
     [Header("Animation")]
     public AnimationClip showAnimation;
     public float showAnimationDuration = 4f;
@@ -28,6 +30,14 @@ public class GameOverScreen : MenuUI
     public float hideAnimationDuration = 2f;
     [Header("Events")]
     public UnityEvent<bool> onContinue;
+
+    private DialogBoxScreen dialogBox;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        dialogBox = Get<DialogBoxScreen>();
+    }
 
     public override void ShowUI()
     {
@@ -109,6 +119,23 @@ public class GameOverScreen : MenuUI
 
     public void OnPressQuit()
     {
-        StartCoroutine(HideUICoroutine(replay: false));
+        if (dialogBox != null)
+        {
+            dialogBox.configuration = quitDialog;
+            dialogBox.onAnswer.AddListener(OnQuitDialogAnswer);
+            dialogBox.ShowUI();
+        }
+        else
+        {
+            OnConfirmQuit();
+        }
     }
+
+    private void OnQuitDialogAnswer(bool answer)
+    {
+        dialogBox.onAnswer.RemoveListener(OnQuitDialogAnswer);
+        if (answer == true) OnConfirmQuit();
+    }
+
+    private void OnConfirmQuit() => StartCoroutine(HideUICoroutine(replay: false));
 }

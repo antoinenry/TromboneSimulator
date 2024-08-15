@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 568e265024f74ef448da8a15ad52b864, type: 3}
   m_Name: GameOverScreenSFX
   m_EditorClassIdentifier: 
-  showUI: {fileID: 8300000, guid: 5502fc5fd9ee10944b6e3aafc9316a85, type: 3}
+  showUI: {fileID: 8300000, guid: d08e4fa4eafad014ba1c8de4a99d0d55, type: 3}
   hideUI: {fileID: 0}
