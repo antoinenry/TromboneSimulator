@@ -39,7 +39,7 @@ public abstract class MenuUI : MonoBehaviour
     protected virtual void Awake()
     {
         if (cursor == null) cursor = FindObjectOfType<HandCursor>(true);
-        if (SFXSource == null) SFXSource = FindObjectOfType<SFXSource>(true);
+        if (SFXSource == null) SFXSource = transform.parent?.GetComponent<SFXSource>();
         if (visibleMenuUis == null) visibleMenuUis = new List<MenuUI>();
         if (MenuUIs == null) MenuUIs = FindAllMenuUIs();
         if (onStartLevel == null) onStartLevel = new();

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ultimate
   m_EditorClassIdentifier: 
   title: Lifelight
-  subtitle: SuperSmashBros Ultimate
+  subtitle: SSB Ultimate
   composer: Hideki Sakamoto
   tempo:
   - time: 0

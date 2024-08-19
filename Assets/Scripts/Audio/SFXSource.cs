@@ -45,10 +45,13 @@ public class SFXSource : MonoBehaviour
         if (source != null && clip != null) source.PlayOneShot(clip);
     }
 
-    public void PlayRandomOneShot(AudioClip[] clips, float delay = 0f)
+    public int PlayRandomOneShot(AudioClip[] clips, float delay = 0f)
     {
         int clipCount = clips != null ? clips.Length : 0;
-        if (clipCount > 0) PlayOneShot(clips[UnityEngine.Random.Range(0, clipCount)], delay);
+        if (clipCount == 0) return -1;
+        int randomIndex = UnityEngine.Random.Range(0, clipCount);
+        if (clipCount > 0) PlayOneShot(clips[randomIndex], delay);
+        return randomIndex;
     }
 
     private IEnumerator DelayedActionCoroutine(Action action, float delay)

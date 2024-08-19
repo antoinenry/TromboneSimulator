@@ -62,9 +62,9 @@ public class GameOverScreen : MenuUI
     {
         base.ShowUI();
         SetButtonsActive(false);
+        OnSelectNothing();
         PlayAnimation(showAnimation);
         yield return new WaitForSeconds(showAnimationDuration);
-        OnSelectNothing();
         SetButtonsActive(true);
     }
 

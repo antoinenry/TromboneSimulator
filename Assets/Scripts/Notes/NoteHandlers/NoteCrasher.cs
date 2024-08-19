@@ -7,7 +7,8 @@ public class NoteCrasher : MonoBehaviour
     [Header("Components")]
     public Camera cam;
     public NoteSpawner spawner;
-    public GameObject hCrashEffect;
+    public ParticleSystem hCrashEffect;
+    public ParticleSystem vCrashEffect;
     [Header("Aspect")]
     public Rect boundaries;
     public float thickness = 0f;
@@ -32,12 +33,13 @@ public class NoteCrasher : MonoBehaviour
     private void OnEnable()
     {
         spawner?.onMoveNotes?.AddListener(OnNotesMove);
-        hCrashEffect?.SetActive(false);
     }
 
     private void OnDisable()
     {
         spawner?.onMoveNotes?.RemoveListener(OnNotesMove);
+        hCrashEffect?.Stop();
+        vCrashEffect?.Stop();
     }
 
     private void Update()
@@ -68,6 +70,7 @@ public class NoteCrasher : MonoBehaviour
                 {
                     onVerticalCrash.Invoke(toTime - fromTime);
                     note.verticalCrashDelay = toTime - vCrashTime;
+                    CrashEffect(notePosition, horizontal: false);
                 }
             }
         }
@@ -98,12 +101,12 @@ public class NoteCrasher : MonoBehaviour
 
     private void CrashEffect(Vector2 notePosition, bool horizontal)
     {
-        GameObject effect = horizontal ? hCrashEffect : null;
+        ParticleSystem effect = horizontal ? hCrashEffect : vCrashEffect;
         if (effect == null) return;
         Vector2 effectPosition = boundaries.min + (thickness - 1f) * Vector2.one;
         if (horizontal) effectPosition.y = notePosition.y;
         else effectPosition.x = notePosition.x;
         effect.transform.position = effectPosition;
-        effect.SetActive(true);
+        effect.Play();
     }
 }
