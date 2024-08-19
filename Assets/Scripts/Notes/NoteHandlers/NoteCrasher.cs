@@ -7,8 +7,7 @@ public class NoteCrasher : MonoBehaviour
     [Header("Components")]
     public Camera cam;
     public NoteSpawner spawner;
-    public ParticleSystem horizontalCrashEffect;
-    public ParticleSystem verticalCrashEffect;
+    public GameObject hCrashEffect;
     [Header("Aspect")]
     public Rect boundaries;
     public float thickness = 0f;
@@ -32,24 +31,18 @@ public class NoteCrasher : MonoBehaviour
 
     private void OnEnable()
     {
-        if (spawner != null) spawner.onMoveNotes.AddListener(OnNotesMove);
+        spawner?.onMoveNotes?.AddListener(OnNotesMove);
+        hCrashEffect?.SetActive(false);
     }
 
     private void OnDisable()
     {
-        if (spawner != null) spawner.onMoveNotes.RemoveListener(OnNotesMove);
-        horizontalCrashEffect.Stop();
-        verticalCrashEffect.Stop();
+        spawner?.onMoveNotes?.RemoveListener(OnNotesMove);
     }
 
     private void Update()
     {
         if (cam != null) SetBoundariesOnCamera();
-        if (spawner?.playHead != null && spawner.playHead.PlayingSpeed == 0)
-        {
-            horizontalCrashEffect.Pause();
-            verticalCrashEffect.Pause();
-        }
     }
 
     private void SetBoundariesOnCamera()
@@ -69,35 +62,13 @@ public class NoteCrasher : MonoBehaviour
                 {
                     onHorizontalCrash.Invoke(toTime - fromTime);
                     note.horizontalCrashDelay = toTime - hCrashTime;
-                    if (horizontalCrashEffect && !horizontalCrashEffect.isPlaying)
-                    {
-                        horizontalCrashEffect.transform.position = new(boundaries.xMin, notePosition.y, 0f);
-                        horizontalCrashEffect.Play();
-                    }
-                }
-                else
-                {
-                    horizontalCrashEffect.Stop();
+                    CrashEffect(notePosition, horizontal : true);
                 }
                 if (!float.IsNaN(vCrashTime))
                 {
                     onVerticalCrash.Invoke(toTime - fromTime);
                     note.verticalCrashDelay = toTime - vCrashTime;
-                    if (verticalCrashEffect && !verticalCrashEffect.isPlaying)
-                    {
-                        verticalCrashEffect.transform.position = new(notePosition.x, boundaries.yMin, 0f);
-                        verticalCrashEffect.Play();
-                    }
                 }
-                else
-                {
-                    verticalCrashEffect.Stop();
-                }
-            }
-            else
-            {
-                horizontalCrashEffect.Stop();
-                verticalCrashEffect.Stop();
             }
         }
     }
@@ -123,5 +94,16 @@ public class NoteCrasher : MonoBehaviour
             }
         }
         return !float.IsNaN(horizontalCrashTime) || !float.IsNaN(verticalCrashTime);
+    }
+
+    private void CrashEffect(Vector2 notePosition, bool horizontal)
+    {
+        GameObject effect = horizontal ? hCrashEffect : null;
+        if (effect == null) return;
+        Vector2 effectPosition = boundaries.min + (thickness - 1f) * Vector2.one;
+        if (horizontal) effectPosition.y = notePosition.y;
+        else effectPosition.x = notePosition.x;
+        effect.transform.position = effectPosition;
+        effect.SetActive(true);
     }
 }
