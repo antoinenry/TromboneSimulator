@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 public class LevelEventSpawner : MonoBehaviour
 {
@@ -51,7 +50,7 @@ public class LevelEventSpawner : MonoBehaviour
 
     public void LoadEvents(params LevelEventSheet[] sheets)
     {
-        if (sheets == null || sheets.Length == 0) return;
+        if (enabled == false || sheets == null || sheets.Length == 0) return;
         // Create working copies
         LevelEventSheet[] sheetCopies = Array.ConvertAll(sheets, s => s != null ? Instantiate(s) : ScriptableObject.CreateInstance<LevelEventSheet>());
         // Alter copies

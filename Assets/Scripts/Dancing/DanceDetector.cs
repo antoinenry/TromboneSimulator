@@ -5,7 +5,7 @@ public class DanceDetector : MonoBehaviour
 {
     public Transform dancer;
     [Range(0f, 1f)] public float minimumAccuracy = .75f;
-    public float minimumAmplitude = 5f;
+    public float minimumAmplitude = 1f;
     [Header("Events")]
     public UnityEvent onDanceBeat;
     public UnityEvent onMissBeat;

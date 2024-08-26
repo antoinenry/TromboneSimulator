@@ -7,13 +7,13 @@ public class TintFlash : MonoBehaviour
 {
     public Color idleColor = Color.white;
     public Color tintColor = Color.red;
-    public float holdDuration;
+    public AnimationCurve curve = AnimationCurve.Linear(0.0f, 1f, 1f, 0f);
     public bool tint;
 
     private Camera cam;
     private SpriteRenderer spriteRenderer;
     private Image UIImage;
-    private float holdTimer;
+    private float animationTimer;
 
     public Color Color
     {
@@ -51,10 +51,25 @@ public class TintFlash : MonoBehaviour
         if (Application.isPlaying == false) Color = tint ? tintColor : idleColor;
     }
 
+    public float GetAnimationDuration()
+    {
+        Keyframe[] animationKeys = curve.keys;
+        int animationLength = animationKeys != null ? animationKeys.Length : 0;
+        if (animationLength == 0) return 0f;
+        return animationKeys[animationLength - 1].time;
+    }
+
     public void Tint()
     {
-        if (tint == false) StartCoroutine(TintCoroutine());
-        holdTimer = 0f;
+        if (tint == false)
+        {
+            StartCoroutine(TintCoroutine());
+        }
+        else
+        {
+            animationTimer = 0f;
+            Color = tintColor;
+        }
     }
 
     public void Tint(Color t)
@@ -71,17 +86,19 @@ public class TintFlash : MonoBehaviour
 
     private IEnumerator TintCoroutine()
     {
+        animationTimer = 0f;
+        Color = tintColor;
         tint = true;
         float deltaTime = 0f;
-        float fadeSpeed = holdDuration != 0f ? 1f / holdDuration : 1f;
-        while (tint)
+        float duration = GetAnimationDuration();
+        while (tint && duration > 0f && animationTimer <= duration)
         {
-            holdTimer += deltaTime;
-            Color = Color.Lerp(tintColor, idleColor, holdTimer * fadeSpeed);
+            Color = Color.Lerp(idleColor, tintColor, curve.Evaluate(animationTimer / duration));
             yield return null;
             deltaTime = Time.deltaTime;
-            if (holdTimer > holdDuration) tint = false;
+            animationTimer += deltaTime;
         }
         Color = idleColor;
+        tint = false;
     }
 }

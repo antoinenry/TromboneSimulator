@@ -121,7 +121,7 @@ public class PerformanceJudge : MonoBehaviour
         SetScore(score + noteScore);
         // Increase combo if note was fully played
         bool fullPlay = instance.Duration == 0f || instance.performance.CorrectTime / instance.Duration >= 1f - fullPlayRounding;
-        if (fullPlay) SetCombo(combo + 1);
+        if (fullPlay) IncrementCombo();
         // Else break combo
         else SetCombo(0);
         onNotePerformanceEnd.Invoke(instance, noteScore);
@@ -132,6 +132,8 @@ public class PerformanceJudge : MonoBehaviour
         combo = value;
         onNoteCombo.Invoke(combo);
     }
+
+    public void IncrementCombo() => SetCombo(combo + 1);
 
     public void TakeDamage(float damagePoints)
     {

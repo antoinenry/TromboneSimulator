@@ -24,7 +24,7 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 100000
+    - 150000
   - name: Hyper Score
     type: Highscore
     parameters:
@@ -32,4 +32,5 @@ MonoBehaviour:
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 350000
+    - 300000
+  events: []

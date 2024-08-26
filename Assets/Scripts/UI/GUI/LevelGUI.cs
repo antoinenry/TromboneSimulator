@@ -9,7 +9,7 @@ public class LevelGUI : GameUI
     public Button pauseButton;    
     public Slider timeBar;
     public SwooshDisplay messageDisplay;
-    public RectTransform eventDisplayContainer;
+    public RectTransform eventPanel;
     [Header("Content")]
     public string grabTromboneMessage = "a vos coulisses";
     public int startCountDownAt = 3;

@@ -11,6 +11,11 @@ public class SliderScaler : MonoBehaviour
     private Slider slider;
     private RectTransform rectTransform;
 
+    private void Awake()
+    {
+        FindComponents();
+    }
+
     private void LateUpdate()
     {
         if (FindComponents() == false) return;
@@ -28,6 +33,7 @@ public class SliderScaler : MonoBehaviour
 
     private void UpdateScale()
     {
+        if (rectTransform == null) return;
         Vector2 size = rectTransform.sizeDelta;
         if (slider.direction == Slider.Direction.LeftToRight || slider.direction == Slider.Direction.RightToLeft)
             size.x = valueScale * maxValue;
@@ -38,8 +44,17 @@ public class SliderScaler : MonoBehaviour
 
     private void UpdateValue()
     {
+        if (slider == null) return;
         value = Mathf.Clamp(value, 0f, maxValue);
         slider.maxValue = maxValue * valueScale;
         slider.value = value * valueScale;
+    }
+
+    public void SetValueAndMax(int value, int maxValue)
+    {
+        this.value = value;
+        this.maxValue = maxValue;
+        UpdateScale();
+        UpdateValue();
     }
 }

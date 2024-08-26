@@ -10,9 +10,9 @@ public class PerformanceJudgeGUI : GameUI
     public MultiplierDisplay accuracyDisplay;
     public Slider healthBar;
     public TintFlash frame;
-    public Slider powerBar;
     public SwooshDisplay smallMessageDisplay;
     public TransformShaker smallMessageShake;
+    public RectTransform performancePanel;
     [Header("Content")]
     public string[] wrongNoteMessages;
     public Color wrongNoteMessageColor = Color.red;
@@ -23,7 +23,7 @@ public class PerformanceJudgeGUI : GameUI
     private string wrongNoteMessage;
 
     public override Component[] UIComponents => new Component[]
-        { scoreDisplay, comboDisplay, accuracyDisplay, healthBar, smallMessageDisplay, powerBar };
+        { scoreDisplay, comboDisplay, accuracyDisplay, healthBar, smallMessageDisplay, performancePanel };
 
     public PerformanceJudge Judge
     {

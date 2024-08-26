@@ -7,7 +7,8 @@ public struct LevelDanceEventInfo : ITimingInfo
     public float startTime;
     public float duration;
     public int danceLevel;
-    public int pointsPerBeat;
+    public int basePointsPerBeat;
+    public int pointMultiplierPerBeat;
 
     #region Interface Infos
     public float StartTime { get => startTime; set => startTime = value; }

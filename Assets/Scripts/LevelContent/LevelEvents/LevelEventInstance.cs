@@ -8,9 +8,13 @@ public abstract class LevelEventInstance : MonoBehaviour, ITimingInfo
     [Header("Events")]
     public UnityEvent<LevelEventInstance, float> onCompletion;
 
+    private GameObjectDispatch GUIDispatch;
+
     protected virtual void Awake()
     {
-        MoveGUIToContainer();
+        GUIDispatch = new GameObjectDispatch();
+        LevelGUI levelGUI = FindObjectOfType<LevelGUI>(true);
+        if (GUI && levelGUI) GUIDispatch.Dispatch(GUI.transform, levelGUI.eventPanel);
     }
 
     protected virtual void OnEnable()
@@ -25,15 +29,7 @@ public abstract class LevelEventInstance : MonoBehaviour, ITimingInfo
 
     protected virtual void OnDestroy()
     {
-        if (GUI != null) DestroyImmediate(GUI);
-    }
-
-    private void MoveGUIToContainer()
-    {
-        if (GUI == null) return;
-        RectTransform container = FindObjectOfType<LevelGUI>(true)?.eventDisplayContainer;
-        if (container == null) return;
-        GUI.transform.SetParent(container);
+        GUIDispatch?.DestroyDispatched();
     }
 
     public abstract ITimingInfo TimingInfo { get; set; }

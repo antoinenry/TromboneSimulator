@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5001245488126240040}
   - component: {fileID: 5001245488126240054}
   - component: {fileID: 5001245488126240055}
+  - component: {fileID: 4788954232932876278}
   m_Layer: 5
   m_Name: dancePoints
   m_TagString: Untagged
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: +10
+  m_text: +0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd193bccd506691479fb0c613ed779be, type: 2}
   m_sharedMaterial: {fileID: -3245745383905593507, guid: cd193bccd506691479fb0c613ed779be, type: 2}
@@ -76,7 +77,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4282927176
-  m_fontColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
+  m_fontColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -135,6 +136,29 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4788954232932876278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5001245488126240041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a4d88083e9a2a4fac3b8393b6ace6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textRenderer: {fileID: 5001245488126240055}
+  format: +0
+  threeDigitsSpacing: 0
+  pointFormat: 46
+  incrementSpeed: 1000
+  maxIncrementTime: 10000
+  idleColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 0}
+  animatedColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
+  colorFadeInSpeed: 1000
+  colorFadeOutSpeed: 1
+  value: 0
 --- !u!1 &5001245488827458294
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.31764707}
+  m_Color: {r: 0.26165897, g: 0.3773585, b: 0.26165897, a: 0.11372549}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -222,6 +246,7 @@ GameObject:
   - component: {fileID: 5001245488831471340}
   - component: {fileID: 5001245488831471339}
   - component: {fileID: 5001245488831471338}
+  - component: {fileID: 161696459295175715}
   m_Layer: 5
   m_Name: danceBar
   m_TagString: Untagged
@@ -318,6 +343,27 @@ MonoBehaviour:
   maxValue: 21
   value: 1
   valueScale: 4
+--- !u!114 &161696459295175715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5001245488831471341}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588157173b74365438a89c287603df8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 5001245488831471339}
+  coloredComponents:
+  - {fileID: 5001245489696789245}
+  onIdle: 1
+  idleColor: {r: 0.3224012, g: 0.6509434, b: 0.3224012, a: 1}
+  onIncrease: 1
+  increaseColor: {r: 0.34069067, g: 0.8301887, b: 0.34069067, a: 1}
+  onDecrease: 1
+  decreaseColor: {r: 0.38625848, g: 0.5283019, b: 0.38625848, a: 1}
 --- !u!1 &5001245489135568483
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5001245489135568480}
   - component: {fileID: 5001245489135568481}
-  - component: {fileID: 5001245489135568482}
+  - component: {fileID: 6931654316532538028}
   m_Layer: 0
   m_Name: levelEvent_dance
   m_TagString: Untagged
@@ -365,12 +411,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GUI: {fileID: 5001245489538534401}
+  onCompletion:
+    m_PersistentCalls:
+      m_Calls: []
   eventInfo:
     startTime: 0
     duration: 0
     danceLevel: 0
-    pointsPerBeat: 0
---- !u!114 &5001245489135568482
+    basePointsPerBeat: 0
+    pointMultiplierPerBeat: 0
+  onPoints:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4788954232932876278}
+        m_TargetAssemblyTypeName: CounterDisplay, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6931654316532538028
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -379,23 +444,50 @@ MonoBehaviour:
   m_GameObject: {fileID: 5001245489135568483}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5a409f88f352fc43afd13f7cd11fd51, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b91d96bc87543e4f9fe1f061009cdef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GUI: {fileID: 5001245489538534411}
-  danceCounter:
+  counter:
     counterValue: 0
     minValue: 0
-    maxValue: 16
-    incrementBufferSize: 1
-    decrementBufferSize: 2
+    maxValue: 0
+    incrementBufferSize: 0
+    decrementBufferSize: 0
     passiveMovementDelay: 0
     passiveMovementSpeed: 0
     onValueChange:
       m_PersistentCalls:
         m_Calls: []
-  basePointsPerBeat: 10
-  multiplierPerBeat: 1
+  onIncrease:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5001245488831471338}
+        m_TargetAssemblyTypeName: SliderScaler, Assembly-CSharp
+        m_MethodName: SetValueAndMax
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDecrease:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5001245488831471338}
+        m_TargetAssemblyTypeName: SliderScaler, Assembly-CSharp
+        m_MethodName: SetValueAndMax
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5001245489538534401
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +500,6 @@ GameObject:
   - component: {fileID: 5001245489538534412}
   - component: {fileID: 5001245489538534413}
   - component: {fileID: 5001245489538534414}
-  - component: {fileID: 5001245489538534411}
   m_Layer: 5
   m_Name: danceGUI
   m_TagString: Untagged
@@ -500,44 +591,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &5001245489538534411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5001245489538534401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf055a5545143c043a78ee208b342ed2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  labelField: {fileID: 5001245489653359367}
-  danceGauge: {fileID: 5001245488831471338}
-  danceGaugeImage: {fileID: 5001245489838823275}
-  danceGaugeFill: {fileID: 5001245489696789245}
-  pointsField: {fileID: 5001245488126240055}
-  pointsPrefix: +
-  pointsDisplayDuration: 0.5
-  dancingColor:
-    labelColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
-    gaugeColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
-    gaugeFillColor: {r: 0.19428623, g: 0.6981132, b: 0.22594023, a: 1}
-    pointsColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
-  missingColor:
-    labelColor: {r: 0.4433962, g: 0.22797258, b: 0.22797258, a: 1}
-    gaugeColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
-    gaugeFillColor: {r: 0.40005338, g: 0.5849056, b: 0.41160664, a: 1}
-    pointsColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
-  maxedColors:
-    labelColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
-    gaugeColor: {r: 0.4528302, g: 0.40286878, b: 0.16019936, a: 1}
-    gaugeFillColor: {r: 1, g: 0.882353, b: 0.34509805, a: 1}
-    pointsColor: {r: 1, g: 0.86188, b: 0.23113209, a: 1}
-  label: Dance
-  danceValue: 1
-  maxDanceValue: 21
-  points: 10
 --- !u!1 &5001245489653359417
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,7 +785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19428623, g: 0.6981132, b: 0.22594023, a: 1}
+  m_Color: {r: 0.3224012, g: 0.6509434, b: 0.3224012, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
