@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8235295, g: 0.73333335, b: 0.3019608, a: 1}
+  m_Color: {r: 0.9056604, g: 0.803683, b: 0.32039872, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -116,7 +116,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 272, y: 94}
-  m_SizeDelta: {x: 100, y: 8}
+  m_SizeDelta: {x: 100, y: 10}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &4793532036905752241
 CanvasRenderer:
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3224012, g: 0.6509434, b: 0.3224012, a: 1}
+  m_Color: {r: 0.8156863, g: 0.7264151, b: 0.29803923, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -492,11 +492,11 @@ MonoBehaviour:
   coloredComponents:
   - {fileID: 4793532037030348864}
   onIdle: 1
-  idleColor: {r: 0.3224012, g: 0.6509434, b: 0.3224012, a: 1}
+  idleColor: {r: 0.8156863, g: 0.7264151, b: 0.29803923, a: 1}
   onIncrease: 1
-  increaseColor: {r: 0.34069067, g: 0.8301887, b: 0.34069067, a: 1}
+  increaseColor: {r: 1, g: 0.88411236, b: 0.33490568, a: 1}
   onDecrease: 1
-  decreaseColor: {r: 0.38625848, g: 0.5283019, b: 0.38625848, a: 1}
+  decreaseColor: {r: 0.5849056, g: 0.5228911, b: 0.22899605, a: 1}
 --- !u!1 &4793532038350452811
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,13 +550,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4793532038350452811}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9716981, g: 0.87865615, b: 0.45376468, a: 0}
+  m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0.7529412}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -729,8 +729,8 @@ MonoBehaviour:
   maxIncrementTime: 10000
   idleColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 0}
   animatedColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
-  colorFadeInSpeed: 1000
-  colorFadeOutSpeed: 1
+  colorFadeInSpeed: 10
+  colorFadeOutSpeed: 2
   value: 0
 --- !u!1 &5223775023869676659
 GameObject:
@@ -782,7 +782,23 @@ MonoBehaviour:
   GUI: {fileID: 4793532036905752252}
   particleEffect: {fileID: 5223775025107038258}
   danceCounter: {fileID: 8633456722045199308}
-  tintEfectColor: {r: 0.38431373, g: 0.5294118, b: 0.38431373, a: 1}
+  frameTintColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
+  tromboneTintColor: {r: 0.81568635, g: 0.7254902, b: 0.29803923, a: 1}
+  onCharge:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4793532038346163287}
+        m_TargetAssemblyTypeName: SliderScaler, Assembly-CSharp
+        m_MethodName: SetValueAndMax
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   pointsPerChargeLevel: 100
   onPoints:
     m_PersistentCalls:
@@ -824,34 +840,10 @@ MonoBehaviour:
         m_Calls: []
   onIncrease:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4793532038346163287}
-        m_TargetAssemblyTypeName: SliderScaler, Assembly-CSharp
-        m_MethodName: SetValueAndMax
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onDecrease:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4793532038346163287}
-        m_TargetAssemblyTypeName: SliderScaler, Assembly-CSharp
-        m_MethodName: SetValueAndMax
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &5223775025107038263
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,7 +861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5223775025107038256
 Transform:
   m_ObjectHideFlags: 0
@@ -893,7 +885,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5223775025107038263}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -1075,7 +1067,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 0.81568635, g: 0.7254902, b: 0.29803923, a: 1}
-      maxColor: {r: 0.19607843, g: 0.69803923, b: 0.22745098, a: 1}
+      maxColor: {r: 0.81568635, g: 0.7254902, b: 0.29803923, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1453,14 +1445,14 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 10
+    maxNumParticles: 50
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -10
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1521,7 +1513,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 5, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 30, y: 10, z: 1}
+    m_Scale: {x: 100, y: 30, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -1718,8 +1710,8 @@ ParticleSystem:
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 10
+      minMaxState: 1
+      scalar: 20
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1727,21 +1719,21 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
+          inSlope: -1
+          outSlope: -1
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
+          value: 0
+          inSlope: -1
+          outSlope: -1
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -2149,7 +2141,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -2157,8 +2149,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.6415094, g: 0.58829755, b: 0.3721965, a: 1}
-        key1: {r: 0.6415094, g: 0.58829755, b: 0.3721965, a: 0}
+        key0: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -2334,12 +2326,12 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: -222832429, guid: f2db910809672484c95046ee9e99f88a, type: 3}
-    - sprite: {fileID: -1432536187, guid: f2db910809672484c95046ee9e99f88a, type: 3}
-    - sprite: {fileID: 2006823502, guid: f2db910809672484c95046ee9e99f88a, type: 3}
-    - sprite: {fileID: -1804983564, guid: f2db910809672484c95046ee9e99f88a, type: 3}
-    - sprite: {fileID: -567494970, guid: f2db910809672484c95046ee9e99f88a, type: 3}
-    - sprite: {fileID: 65301391, guid: f2db910809672484c95046ee9e99f88a, type: 3}
+    - sprite: {fileID: -955135017, guid: 30cc2cec67a534e4883f06c3f69038ba, type: 3}
+    - sprite: {fileID: 2139469752, guid: 30cc2cec67a534e4883f06c3f69038ba, type: 3}
+    - sprite: {fileID: -1516824931, guid: 30cc2cec67a534e4883f06c3f69038ba, type: 3}
+    - sprite: {fileID: 853196839, guid: 30cc2cec67a534e4883f06c3f69038ba, type: 3}
+    - sprite: {fileID: -1593597677, guid: 30cc2cec67a534e4883f06c3f69038ba, type: 3}
+    - sprite: {fileID: 1204551891, guid: 30cc2cec67a534e4883f06c3f69038ba, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:

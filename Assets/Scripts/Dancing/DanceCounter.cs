@@ -9,9 +9,16 @@ public class DanceCounter : MonoBehaviour
     public UnityEvent<int,int> onIncrease;
     public UnityEvent<int, int> onDecrease;
 
-    private DanceDetector dance;
+    public DanceDetector Dance { get; private set; }
 
-    public int DanceCount => counter != null ? counter.Value : 0;
+    public int DanceCount
+    {
+        get => counter != null ? counter.Value : 0;
+        set
+        {
+            if (counter != null) counter.Value = value;
+        }
+    }
 
     public int MaxDanceCount
     {
@@ -25,7 +32,7 @@ public class DanceCounter : MonoBehaviour
 
     private void Awake()
     {
-        dance = FindObjectOfType<DanceDetector>(true); 
+        Dance = FindObjectOfType<DanceDetector>(true); 
     }
 
     private void OnEnable()
@@ -41,16 +48,16 @@ public class DanceCounter : MonoBehaviour
 
     private void AddDanceListeners()
     {
-        if (dance == null) return;
-        dance.onDanceBeat?.AddListener(OnDanceBeat);
-        dance.onMissBeat?.AddListener(OnMissBeat);
+        if (Dance == null) return;
+        Dance.onDanceBeat?.AddListener(OnDanceBeat);
+        Dance.onMissBeat?.AddListener(OnMissBeat);
     }
 
     private void RemoveDanceListeners()
     {
-        if (dance == null) return;
-        dance.onDanceBeat?.RemoveListener(OnDanceBeat);
-        dance.onMissBeat?.RemoveListener(OnMissBeat);
+        if (Dance == null) return;
+        Dance.onDanceBeat?.RemoveListener(OnDanceBeat);
+        Dance.onMissBeat?.RemoveListener(OnMissBeat);
     }
 
     private void OnDanceBeat()

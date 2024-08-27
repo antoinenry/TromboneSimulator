@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PowerDance : MonoBehaviour
 {
@@ -7,7 +8,10 @@ public class PowerDance : MonoBehaviour
     public ParticleSystem particleEffect;
     public DanceCounter danceCounter;
     [Header("Base look")]
-    public Color tintEfectColor = Color.yellow;
+    public Color frameTintColor = Color.yellow;
+    public Color tromboneTintColor = Color.yellow;
+    [Header("Base Events")]
+    public UnityEvent<int, int> onCharge;
 
     protected TromboneDisplay trombone;
     protected PerformanceJudge perfJudge;
@@ -37,7 +41,8 @@ public class PowerDance : MonoBehaviour
         {
             danceCounter.onIncrease.AddListener(OnDanceCountUp);
             danceCounter.onDecrease.AddListener(OnDanceCountDown);
-        }        
+        }
+        onCharge.Invoke(ChargeLevel, MaxChargeLevel);
     }
 
     protected virtual void OnDisable()
@@ -58,39 +63,23 @@ public class PowerDance : MonoBehaviour
 
     protected virtual void Update()
     {
-        particleEffect.transform.position = trombone.GrabPosition;
+        if (particleEffect) particleEffect.transform.position = trombone.GrabPosition;
     }
 
-    public virtual void SetChargeLevel(int value)
+    protected virtual void OnDanceCountUp(int value, int maxValue) 
     {
-        if (value > ChargeLevel) OnChargeUp();
-        else if (value < ChargeLevel) OnChargeDown();
+        frameTintEffect?.Tint(frameTintColor);
     }
 
-    public virtual void SetChargeLevel(int value, int maxValue)
+    protected virtual void OnDanceCountDown(int value, int maxValue)
     {
-        SetChargeLevel(value);
+        particleEffect?.Stop();
+        onCharge.Invoke(value, maxValue);
     }
 
-    private void OnDanceCountUp(int value, int maxValue)
+    protected virtual void OnPowerEffect()
     {
-        OnChargeUp();
-    }
-
-    private void OnDanceCountDown(int value, int maxValue)
-    {
-        OnChargeDown();
-    }
-
-    protected virtual void OnChargeUp()
-    {
-        foreach (TintFlash tintEffect in tromboneTintEffects) tintEffect.Tint(tintEfectColor);
-        frameTintEffect.Tint(tintEfectColor);
-        particleEffect.Play();
-    }
-
-    protected virtual void OnChargeDown()
-    {
-        particleEffect.Stop();
+        particleEffect?.Play();
+        foreach (TintFlash tintEffect in tromboneTintEffects) tintEffect?.Tint(tromboneTintColor);
     }
 }

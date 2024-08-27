@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [ExecuteAlways]
 public class TintFlash : MonoBehaviour
@@ -13,6 +14,7 @@ public class TintFlash : MonoBehaviour
     private Camera cam;
     private SpriteRenderer spriteRenderer;
     private Image UIImage;
+    private TMP_Text textfield;
     private float animationTimer;
 
     public Color Color
@@ -22,6 +24,7 @@ public class TintFlash : MonoBehaviour
             if (cam != null) return cam.backgroundColor;
             if (spriteRenderer != null) return spriteRenderer.color;
             if (UIImage != null) return UIImage.color;
+            if (textfield != null) return textfield.color;
             return Color.clear;
         }
         set
@@ -29,6 +32,7 @@ public class TintFlash : MonoBehaviour
             if (cam != null) cam.backgroundColor = value;
             if (spriteRenderer != null) spriteRenderer.color = value;
             if (UIImage != null) UIImage.color = value;
+            if (textfield != null) textfield.color = value;
         }
     }
 
@@ -37,6 +41,7 @@ public class TintFlash : MonoBehaviour
         cam = GetComponent<Camera>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         UIImage = GetComponent<Image>();
+        textfield = GetComponent<TMP_Text>();
     }
 
     private void OnDisable()

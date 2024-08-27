@@ -19,12 +19,12 @@ public abstract class LevelEventInstance : MonoBehaviour, ITimingInfo
 
     protected virtual void OnEnable()
     {
-        GUI?.SetActive(true);
+        if (GUI) GUI.SetActive(true);
     }
 
     protected virtual void OnDisable()
     {
-        GUI?.SetActive(false);
+        if (GUI) GUI.SetActive(false);
     }
 
     protected virtual void OnDestroy()

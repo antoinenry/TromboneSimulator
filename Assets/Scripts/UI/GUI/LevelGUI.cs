@@ -16,7 +16,7 @@ public class LevelGUI : GameUI
     [Header("Events")]
     public UnityEvent onPauseRequest;
 
-    private LevelPlayer levelLoader;
+    private LevelLoader levelLoader;
 
     public override Component[] UIComponents => new Component[] 
         { pauseButton, timeBar, messageDisplay };

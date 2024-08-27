@@ -30,6 +30,8 @@ public class PerformanceJudge : MonoBehaviour
     public UnityEvent<int> onNoteCombo;
 
     public int RoundedScore => Mathf.CeilToInt(score);
+    public bool DetectionEnabled { get; private set; }
+    public bool GUIEnabled {  get; private set; }
 
     private void OnEnable()
     {
@@ -46,11 +48,13 @@ public class PerformanceJudge : MonoBehaviour
     public void EnableGUI()
     {
         if (gui) gui.Judge = this;
+        GUIEnabled = true;
     }
 
     public void DisableGUI()
     {
         if (gui && gui.Judge == this) gui.Judge = null;
+        GUIEnabled = false;
     }
 
     public void EnableDetection()
@@ -67,6 +71,7 @@ public class PerformanceJudge : MonoBehaviour
             noteCrasher.onHorizontalCrash.AddListener(OnNoteCrash);
             noteCrasher.onVerticalCrash.AddListener(OnNoteCrash);
         }
+        DetectionEnabled = true;
     }
 
     public void DisableDetection()
@@ -83,6 +88,7 @@ public class PerformanceJudge : MonoBehaviour
             noteCrasher.onHorizontalCrash.RemoveListener(OnNoteCrash);
             noteCrasher.onVerticalCrash.RemoveListener(OnNoteCrash);
         }
+        DetectionEnabled = false;
     }
 
     public void ResetPerformance()

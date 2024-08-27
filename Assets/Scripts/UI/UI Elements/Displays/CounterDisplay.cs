@@ -75,7 +75,9 @@ public class CounterDisplay : MonoBehaviour
         else textRenderer.color = Color.Lerp(textRenderer.color, idleColor, colorFadeOutSpeed * Time.deltaTime);
     }
 
-    public void SetValue(int value)
+    public void SetValue(int value) => SetValue((float)value);
+
+    public void SetValue(float value)
     {
         this.value = value;
         IsMoving = true;

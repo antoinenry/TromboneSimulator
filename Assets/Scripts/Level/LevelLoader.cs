@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 
-public class LevelPlayer : MonoBehaviour
+public class LevelLoader : MonoBehaviour
 {
     public enum Mode { ARCADE, ONE_LEVEL }
 
@@ -235,6 +235,8 @@ public class LevelPlayer : MonoBehaviour
         musicPlayer.playTime = 0f;
         // Reactivate pause button
         GUI?.SetPauseButtonActive(true);
+        // Disable points etc
+        performanceJudge?.DisableDetection();
         // Initialize note spawn: display first notes
         noteSpawner.time = 0f;
         noteSpawner.SpawnNotes(musicPlayer.LoadedNotes, -noteSpawner.SpawnDelay, 0f);
@@ -285,6 +287,8 @@ public class LevelPlayer : MonoBehaviour
         // Silence metronome and sync it on music player
         metronome.timeMode = Metronome.TimeMode.FollowPlayhead;
         metronome.click = false;
+        // Re-enable points
+        performanceJudge?.EnableDetection();
         // Start music
         musicPlayer.Play();
         //musicPlayer.SetPlaytimeSamples(metronome.GetClickTimeSamples());

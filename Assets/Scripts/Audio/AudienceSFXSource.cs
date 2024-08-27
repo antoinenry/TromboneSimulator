@@ -6,14 +6,14 @@ public class AudienceSFXSource : SFXSource
     public AudioClip[] objectiveComplete;
     public AudioClip[] levelComplete;
 
-    private LevelPlayer levelPlayer;
+    private LevelLoader levelPlayer;
     private ObjectiveJudge objectiveJudge;
 
 
     protected override void Awake()
     {
         base.Awake();
-        levelPlayer = FindObjectOfType<LevelPlayer>(true);
+        levelPlayer = FindObjectOfType<LevelLoader>(true);
         objectiveJudge = FindObjectOfType<ObjectiveJudge>(true);
     }
 

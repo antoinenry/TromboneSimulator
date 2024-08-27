@@ -10,6 +10,7 @@ public class TromboneCore : MonoBehaviour,
     public TromboneDisplay tromboneDisplay;
     public TromboneAudio tromboneAudio;
     public TromboneAuto tromboneAuto;
+    public TrombonePowerSlot trombonePower;
     public TromboneBuildStack tromboneBuild;
     [Header("Controls")]
     public bool grab;

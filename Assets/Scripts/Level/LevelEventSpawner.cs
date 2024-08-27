@@ -20,6 +20,7 @@ public class LevelEventSpawner : MonoBehaviour
     private void OnEnable()
     {
         musicPlayhead?.onMove?.AddListener(MovePlayhead);
+        musicPlayhead?.onStop?.AddListener(EndAllEvents);
         eventPlayhead?.onEnterRead?.AddListener(StartEvent);
         eventPlayhead?.onExitRead?.AddListener(EndEvent);
         AddEventListeners();
@@ -28,6 +29,7 @@ public class LevelEventSpawner : MonoBehaviour
     private void OnDisable()
     {
         musicPlayhead?.onMove?.RemoveListener(MovePlayhead);
+        musicPlayhead?.onStop?.RemoveListener(EndAllEvents);
         eventPlayhead?.onEnterRead?.RemoveListener(StartEvent);
         eventPlayhead?.onExitRead?.RemoveListener(EndEvent);
         RemoveEventListeners();
@@ -110,6 +112,12 @@ public class LevelEventSpawner : MonoBehaviour
     {
         if (showDebug) Debug.Log("End level event " + eventIndex + " - " + eventInstance?.name);
         eventInstance?.EndEvent();
+    }
+
+    public void EndAllEvents()
+    {
+        if (LoadedEvents == null) return;
+        foreach (LevelEventInstance eventInstance in LoadedEvents) eventInstance?.EndEvent();
     }
 
     private LevelEventInstance GetEventPrefab(Type eventInstanceType)
