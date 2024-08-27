@@ -50,11 +50,13 @@ public class SliderScaler : MonoBehaviour
         slider.value = value * valueScale;
     }
 
-    public void SetValueAndMax(int value, int maxValue)
+    public void SetValueAndMax(float value, float maxValue)
     {
         this.value = value;
         this.maxValue = maxValue;
         UpdateScale();
         UpdateValue();
     }
+
+    public void SetValueAndMax(int value, int maxValue) => SetValueAndMax((float)value, maxValue);
 }

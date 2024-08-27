@@ -9,13 +9,15 @@ public class GameObjectDispatch
     {
         public Transform dispatched;
         public Transform destination;
+        public bool worldPositionStays;
 
         public Transform Origin {  get; private set; }
 
-        public DispatchInfo(Transform dispatched, Transform destination)
+        public DispatchInfo(Transform dispatched, Transform destination, bool worldPositionStays = true)
         {
             this.dispatched = dispatched;
             this.destination = destination;
+            this.worldPositionStays = worldPositionStays;
             Origin = null;
             TrySetOrigin();
         }
@@ -48,18 +50,18 @@ public class GameObjectDispatch
                 Object.DestroyImmediate(info.dispatched.gameObject);
     }
 
-    public void Dispatch(Transform dispatched, Transform destination)
+    public void Dispatch(Transform dispatched, Transform destination, bool worldPositionStays = true)
     {
         if (dispatched == null) return;
         // Keep track of dispatch for cancellation and/or destruction
         if (dispatchedList == null) dispatchedList = new List<DispatchInfo>();
         if (dispatchedList.FindIndex(info => info.dispatched == dispatched) == -1)
         {
-            DispatchInfo info = new(dispatched, destination);
+            DispatchInfo info = new(dispatched, destination, worldPositionStays);
             dispatchedList.Add(info);
         }
         // Dispatch
-        dispatched.SetParent(destination);
+        dispatched.SetParent(destination, worldPositionStays);
     }
 
     public void CancelDispatch(Transform dispatched)
@@ -67,7 +69,7 @@ public class GameObjectDispatch
         if (dispatchedList == null) return;
         DispatchInfo info = dispatchedList.Find(i => i.dispatched == dispatched);
         if (info.dispatched == null) return;
-        info.dispatched.SetParent(info.Origin);
+        info.dispatched.SetParent(info.Origin, info.worldPositionStays);
         dispatchedList?.RemoveAll(i => i.dispatched == info.dispatched);
     } 
 }

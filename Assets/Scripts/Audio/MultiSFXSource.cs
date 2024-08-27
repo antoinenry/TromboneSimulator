@@ -17,9 +17,7 @@ public class MultiSFXSource : SFXSource
 
     public void PlaySFX()
     {
-        float time = Time.time;
-        if (time < lastPlayTime + spacing) return;
-        else lastPlayTime = time;
+        if (CheckTimeSpacing() == false) return;
         if (random) sfxIndex = PlayRandomOneShot(sfxClips);
         else
         {
@@ -29,8 +27,32 @@ public class MultiSFXSource : SFXSource
                 sfxIndex = -1;
                 return;
             }
-            sfxIndex = (int)Mathf.Repeat(sfxIndex + 1, sfxCount - 1);
+            if (sfxCount == 1)
+            {
+                sfxIndex = 0;
+            }
+            else
+            {
+                sfxIndex = (int)Mathf.Repeat(sfxIndex + 1, sfxCount - 1);
+            }                
             PlayOneShot(sfxClips[sfxIndex]);
         }
+    }
+
+    public void PlaySFX(int index)
+    {
+        if (CheckTimeSpacing() == false) return;
+        int sfxCount = sfxClips != null ? sfxClips.Length : 0;
+        if (index < 0 || index >= sfxCount) return;
+        sfxIndex = index;
+        PlayOneShot(sfxClips[sfxIndex]);
+    }
+
+    private bool CheckTimeSpacing()
+    {
+        float time = Time.time;
+        if (time < lastPlayTime + spacing) return false;
+        lastPlayTime = time;
+        return true;
     }
 }

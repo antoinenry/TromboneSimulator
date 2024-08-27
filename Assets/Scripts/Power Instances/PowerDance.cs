@@ -69,6 +69,8 @@ public class PowerDance : MonoBehaviour
     protected virtual void OnDanceCountUp(int value, int maxValue) 
     {
         frameTintEffect?.Tint(frameTintColor);
+        if (danceCounter != null && perfJudge != null && perfJudge.DetectionEnabled == false)
+            danceCounter.DanceCount = 0;
     }
 
     protected virtual void OnDanceCountDown(int value, int maxValue)
