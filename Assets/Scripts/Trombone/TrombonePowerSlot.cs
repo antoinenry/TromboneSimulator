@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class TrombonePowerSlot : MonoBehaviour
 {
-    public GameObject power;
+    public GameObject powerObject;
 
     private void Awake()
     {
-        if (power != null)
+        if (powerObject != null)
         {
-            if (power.transform.parent != transform) power = Instantiate(power, transform);
+            if (powerObject.transform.parent != transform) powerObject = Instantiate(powerObject, transform);
         }
     }
 
     public void LoadPower(GameObject powerPrefab)
     {
-        if (power != null) Destroy(powerPrefab);
-        if (powerPrefab != null) power = Instantiate(power, transform);
-        else power = null;
+        if (powerObject != null) Destroy(powerObject);
+        if (powerPrefab != null) powerObject = Instantiate(powerPrefab, transform);
+        else powerObject = null;
     }
 }

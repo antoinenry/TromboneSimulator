@@ -48,6 +48,20 @@ public class TromboneAutoCustomizer : ComponentCustomizer
 }
 
 [Serializable]
+public class TrombonePowerCustomizer : ComponentCustomizer
+{
+    public GameObject powerPrefab;
+
+    public Type GetComponentType() => typeof(TrombonePowerSlot);
+
+    public void OnApplyToComponent(UnityEngine.Object component)
+    {
+        TrombonePowerSlot powerSlot = component as TrombonePowerSlot;
+        powerSlot.LoadPower(powerPrefab);
+    }
+}
+
+[Serializable]
 public class MusicPlayerCustomizer : ComponentCustomizer
 {
     public float tempoModifier = 1f;

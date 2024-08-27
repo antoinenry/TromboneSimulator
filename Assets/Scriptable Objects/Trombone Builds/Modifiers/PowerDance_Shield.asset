@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96c0ddbcd5033548a90e55609fad4a8, type: 3}
+  m_Name: PowerDance_Shield
+  m_EditorClassIdentifier: 
+  modName: Dance du Bouclier
+  icon: {fileID: 1918088025, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  uiColor: {r: 0.40000004, g: 0.81568635, b: 0.91372555, a: 1}
+  colorizeIcon: 0
+  unlockTier: 9
+  scoreMultiplierBonus: 1
+  description: "Danser permet de d'activer un bouclier qui prot\xE8ge des d\xE9g\xE2ts
+    et se recharge lentement. Si le bouclier casse, suffit de redanser!"
+  powerPrefab: {fileID: 5541936730323625610, guid: ba22b3ab29ea9be49be05c8fbb0415f6, type: 3}
