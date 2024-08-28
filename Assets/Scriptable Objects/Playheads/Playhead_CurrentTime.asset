@@ -15,9 +15,9 @@ MonoBehaviour:
   showDebug: 0
   timeOffset: 0.025
   timeWidth: 0
-  loop: 0
+  loop: 1
   loopStart: 0
-  loopEnd: 106.8
+  loopEnd: 41.739136
   playedLoopCount: 0
   onMove:
     m_PersistentCalls:

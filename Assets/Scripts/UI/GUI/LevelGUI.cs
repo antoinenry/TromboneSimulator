@@ -50,7 +50,7 @@ public class LevelGUI : GameUI
 
     public void ShowGrabTromboneMessage()
     {
-        if (messageDisplay)
+        if (messageDisplay && messageDisplay.FreshText != grabTromboneMessage)
         {
             messageDisplay.FreeText();
             messageDisplay.SetTextContent(grabTromboneMessage);

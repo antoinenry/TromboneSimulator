@@ -77,7 +77,7 @@ public abstract class Playhead<T> : Playhead where T : ITimingInfo
                 // If time order is the same, it means no looping has occured
                 if (reverse == fromTime_looped > toTime_looped)
                 {
-                    Read(readableInfos, fromTime_offset, toTime_offset, ref progress, events);
+                    Read(readableInfos, fromTime_looped, toTime_looped, ref progress, events);
                 }
                 // If time has looped during deltatime, we read in two steps (before and after looping)
                 else
@@ -85,14 +85,14 @@ public abstract class Playhead<T> : Playhead where T : ITimingInfo
                     // Regular time
                     if (!reverse)
                     {
-                        Read(readableInfos, fromTime_offset, loopEnd, ref progress, events);
-                        Read(readableInfos, loopStart, toTime_offset, ref progress, events);
+                        Read(readableInfos, fromTime_looped, loopEnd, ref progress, events);
+                        Read(readableInfos, loopStart, toTime_looped, ref progress, events);
                     }
                     // Reversed time
                     else
                     {
-                        Read(readableInfos, fromTime_offset, loopStart, ref progress, events);
-                        Read(readableInfos, loopEnd, toTime_offset, ref progress, events);
+                        Read(readableInfos, fromTime_looped, loopStart, ref progress, events);
+                        Read(readableInfos, loopEnd, toTime_looped, ref progress, events);
                     }
                 }
             }
@@ -101,22 +101,22 @@ public abstract class Playhead<T> : Playhead where T : ITimingInfo
         return progress;
     }
 
-    protected void Read(T[] readableInfos, float fromTime, float toTime, ref ReadProgress[] progress, bool events)
+    protected void Read(T[] readableInfos, float fromTime, float toTime, ref ReadProgress[] progress, bool events, bool addLoopedTimeToReadableInfo = false)
     {
         if (readableInfos != null)
         {
             for (int n = 0, nCount = readableInfos.Length; n < nCount; n++)
-                progress[n] = Read(n, readableInfos[n], fromTime, toTime, events);
+                progress[n] = Read(n, readableInfos[n], fromTime, toTime, events, addLoopedTimeToReadableInfo);
         }
     }
 
-    protected ReadProgress Read(int noteIndex, T readableInfo, float fromTime, float toTime, bool events)
+    protected ReadProgress Read(int noteIndex, T readableInfo, float fromTime, float toTime, bool events, bool addLoopedTimeToReadableInfo = false)
     {
         if (readableInfo == null) return ReadProgress.None;
         // Get info time segment
         //ITimingInfo readableInfo = ITimingInfo.GetInfo(readable);
         float startTime = readableInfo.StartTime;
-        if (loop) startTime += playedLoopCount * LoopWidth;
+        if (addLoopedTimeToReadableInfo) startTime += playedLoopCount * LoopWidth;
         FloatSegment noteSegment = new FloatSegment(startTime, readableInfo.EndTime);
         // Playhead range at t = fromTime and at t = toTime
         float halfWidth = timeWidth / 2f;

@@ -57,11 +57,11 @@ public class TromboneAuto : MonoBehaviour,
             if (autoSettings.slideControl != TromboneAutoSettings.ControlConditions.Never)
             {
                 grabConditions =
-                    ((autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed) && grabInput == true)
-                        || (autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Released) && grabInput == false));
+                    (autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Grabbed) && grabInput == true)
+                        || (autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Released) && grabInput == false);
                 blowConditions =
-                    ((autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
-                        || (autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false));
+                    (autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Blows) && autoBlow == true)
+                        || (autoSettings.slideControl.HasFlag(TromboneAutoSettings.ControlConditions.Silences) && autoBlow == false);
                 if (grabConditions == true && blowConditions == true)
                 {
                     // Set slide to automatic value
@@ -199,8 +199,8 @@ public class TromboneAuto : MonoBehaviour,
     private void StopNote()
     {
         // Stop any note
-        //autoTone = float.NaN;
         autoBlow = false;
+        //autoTone = float.NaN;
         //autoSlideTone = float.NaN;
         //autoPressureLevel = float.NaN;
     }
@@ -208,7 +208,7 @@ public class TromboneAuto : MonoBehaviour,
     private void StopNote(INoteInfo note)
     {
         // Stop current note
-        if (note.Tone == autoTone) StopNote();
+        if (note != null && note.Tone == autoTone) StopNote();
     }
 
     private void OnAutoPlayNoteEnter(int noteIndex, INoteInfo note)
@@ -218,8 +218,8 @@ public class TromboneAuto : MonoBehaviour,
 
     private void OnAutoPlayNoteStay(int noteIndex, INoteInfo note)
     {
-        // Keep blowing as long as plahead is moving
-        HoldNote(playhead.DeltaTime != 0f);
+        // Keep blowing as long as playhead is moving
+        HoldNote(note != null && note.Tone == autoTone && playhead.DeltaTime != 0f);
     }
 
     private void OnAutoPlayNoteExit(int noteIndex, INoteInfo note)

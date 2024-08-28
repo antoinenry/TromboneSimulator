@@ -15,6 +15,8 @@ public class SwooshDisplay : MonoBehaviour
     private Queue<TextMeshProUGUI> textInstances;
     private TextMeshProUGUI freshText;
 
+    public string FreshText => freshText != null ? freshText.text : null; 
+
     private void Awake()
     {
         textInstances = new Queue<TextMeshProUGUI>();

@@ -252,7 +252,6 @@ public class LevelLoader : MonoBehaviour
         int countdownStartStep = (int)metronome.CurrentBar.durationInBeats;
         while (countdownStartStep < startCountdownValue) countdownStartStep *= 2;
         // Wait for player to grab the trombone, then start countdown
-        GUI.ShowGrabTromboneMessage();
         bool countDownEnd = false;
         bool grabbedTrombone = false;
         while (countDownEnd == false || grabbedTrombone == false)
@@ -273,9 +272,9 @@ public class LevelLoader : MonoBehaviour
                 if (grabbedTrombone == true)
                 {
                     grabbedTrombone = false;
-                    GUI.ShowGrabTromboneMessage();
                     countdown.Stop();
                 }
+                GUI.ShowGrabTromboneMessage();
             }
             // Check end of countdown
             countDownEnd = countdown.step <= 0f;
