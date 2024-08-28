@@ -15,7 +15,7 @@ public class PlayNotesForPoints : MonoBehaviour
     public int noteCount = 10;
     public bool fullNotesOnly = true;
     public int basePointsPerNote = 10;
-    public float multiplierPerNote = 1f;
+    public float multiplierPerNote = 0f;
 
     public UnityEvent<int,int,int> onNoteCount;
 
@@ -61,7 +61,7 @@ public class PlayNotesForPoints : MonoBehaviour
     {
         GUI?.SetNoteStateAt(CurrentNoteIndex, NoteState.Played);
         playedNoteCounter++;
-        int points = (int)(playedNoteCounter * multiplierPerNote * basePointsPerNote);
+        int points = (int)(playedNoteCounter * multiplierPerNote + basePointsPerNote);
         judge?.AddScore(points);
         GUI?.SetPoints(points);
         onNoteCount.Invoke(playedNoteCounter, missedNoteCounter, noteCount);
