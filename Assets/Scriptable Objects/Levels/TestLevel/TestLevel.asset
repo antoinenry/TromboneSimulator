@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
   m_Name: TestLevel
   m_EditorClassIdentifier: 
-  levelName: 
+  levelName: Test
   music: {fileID: 11400000, guid: 5638372add3a54947917eb3c17781454, type: 2}
   unlockTier: 0
   notePlacements: []
@@ -23,12 +23,13 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 1
+    - 100
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 10
+    - 1000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 100
+    - 10000
+  events: []

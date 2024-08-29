@@ -11,6 +11,7 @@ public class ObjectiveCheckPanel : MonoBehaviour
     [Header("Animations")]
     public AnimationClip newlyCheckedAnimation;
     public AnimationClip alreadyCheckedAnimation;
+    public AnimationClip lateCheckAnimation;
     public AnimationClip uncheckedAnimation;
     public AnimationClip disappearAnimation;
 
@@ -27,9 +28,12 @@ public class ObjectiveCheckPanel : MonoBehaviour
         if (textGlow) textGlow.text = value;
     }
 
+    public string GetText() => textField != null ? textField.text : string.Empty;
+
     public void PlayNewlyCheckedAnimation() => PlayAnimation(newlyCheckedAnimation);
     public void PlayAlreadyCheckedAnimation() => PlayAnimation(alreadyCheckedAnimation);
     public void PlayUncheckedAnimation() => PlayAnimation(uncheckedAnimation);
+    public void PlayLateCheckAnimation() => PlayAnimation(lateCheckAnimation);
 
     public void PlayDisappearAnimation(bool destroyOnAnimationEnd)
     {

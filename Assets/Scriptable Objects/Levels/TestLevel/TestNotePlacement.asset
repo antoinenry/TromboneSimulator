@@ -24,4 +24,21 @@ MonoBehaviour:
     columns: 8
     tonePerColumn: 1
   noteCoordinates:
-  - {x: 5, y: 4}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}
+  - {x: 1, y: 3}
+  - {x: 1, y: 3}
+  - {x: 1, y: 3}
+  - {x: 1, y: 3}
+  - {x: 1, y: 3}
+  - {x: 1, y: 3}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}
+  - {x: 0, y: 3}

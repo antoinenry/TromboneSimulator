@@ -133,6 +133,7 @@ Animation:
   - {fileID: 7400000, guid: 5a1681e127496a54b9d5d58db668c093, type: 2}
   - {fileID: 7400000, guid: 6fae60684bd4ba446abc46825cc2e010, type: 2}
   - {fileID: 7400000, guid: d6b9adfbb05a19f4ea673fd4b9ac2a15, type: 2}
+  - {fileID: 7400000, guid: 56677d3f721c5f44daa575d9fac4c82a, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -153,6 +154,7 @@ MonoBehaviour:
   textGlow: {fileID: 1743423755520227144}
   newlyCheckedAnimation: {fileID: 7400000, guid: 6fae60684bd4ba446abc46825cc2e010, type: 2}
   alreadyCheckedAnimation: {fileID: 7400000, guid: 5a1681e127496a54b9d5d58db668c093, type: 2}
+  lateCheckAnimation: {fileID: 7400000, guid: 56677d3f721c5f44daa575d9fac4c82a, type: 2}
   uncheckedAnimation: {fileID: 7400000, guid: 4e5e26b112fc8fe41b6837787792b2fe, type: 2}
   disappearAnimation: {fileID: 7400000, guid: d6b9adfbb05a19f4ea673fd4b9ac2a15, type: 2}
 --- !u!1 &1743423755520227150

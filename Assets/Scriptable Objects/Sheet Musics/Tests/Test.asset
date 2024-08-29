@@ -17,35 +17,85 @@ MonoBehaviour:
   composer: 
   tempo:
   - time: 0
-    secondsPerQuarterNote: 0.428571
-  - time: 143.14221
-    secondsPerQuarterNote: 0.394737
-  - time: 144.72115
     secondsPerQuarterNote: 0.375
-  - time: 147.34616
-    secondsPerQuarterNote: 0.348837
   measure:
   - bar: 0
-    timeSignatureNumerator: 4
-    timeSignatureDenominator: 4
-    quarterNotesPerBeat: 1
-  - bar: 52
-    timeSignatureNumerator: 2
-    timeSignatureDenominator: 4
-    quarterNotesPerBeat: 1
-  - bar: 53
-    timeSignatureNumerator: 4
-    timeSignatureDenominator: 4
-    quarterNotesPerBeat: 1
-  - bar: 84
     timeSignatureNumerator: 4
     timeSignatureDenominator: 4
     quarterNotesPerBeat: 1
   parts:
   - name: Trombone
     notes:
-    - tone: 50
-      velocity: 1
-      startTime: 1
-      duration: 0.5
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 0
+      duration: 0.09296875
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 0.1875
+      duration: 0.09296876
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 0.5625
+      duration: 0.09296876
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 0.75
+      duration: 0.09296876
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 0.9375
+      duration: 0.0929687
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 1.3125
+      duration: 0.0929687
+    - tone: 61
+      velocity: 0.3828125
+      startTime: 1.5
+      duration: 0.0929687
+    - tone: 61
+      velocity: 0.3828125
+      startTime: 1.6875
+      duration: 0.0929687
+    - tone: 61
+      velocity: 0.3828125
+      startTime: 2.0625
+      duration: 0.0929687
+    - tone: 61
+      velocity: 0.3828125
+      startTime: 2.25
+      duration: 0.0929687
+    - tone: 61
+      velocity: 0.3828125
+      startTime: 2.4375
+      duration: 0.0929687
+    - tone: 61
+      velocity: 0.3828125
+      startTime: 2.8125
+      duration: 0.0929687
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 3
+      duration: 0.0929687
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 3.1875
+      duration: 0.0929687
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 3.5625
+      duration: 0.0929687
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 3.75
+      duration: 0.0929687
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 3.9375
+      duration: 0.09296894
+    - tone: 62
+      velocity: 0.3828125
+      startTime: 4.3125
+      duration: 0.09296894
   completeLastBar: 1

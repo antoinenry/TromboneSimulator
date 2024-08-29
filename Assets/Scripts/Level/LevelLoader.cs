@@ -454,12 +454,19 @@ public class LevelLoader : MonoBehaviour
         LevelCompleteScreen UILevelComplete = MenuUI.Get<LevelCompleteScreen>();
         if (UILevelComplete)
         {
-            UILevelComplete.levelProgress = oldLevelProgress;
+            UILevelComplete.levelObjectiveProgress = oldLevelProgress;
             UILevelComplete.levelScore = levelScore;
             UILevelComplete.checklist = newLevelProgress.checklist;
             if (oldPlayerXp != -1) UILevelComplete.playerXp = oldPlayerXp;
             UILevelComplete.ShowUI();
             yield return new WaitWhile(() => UILevelComplete.DisplayCoroutine);
+        }
+        // Re-evaluate objectives with score total (including bonuses), then update general progress again
+        if (objectiveJudge)
+        {
+            objectiveJudge.CheckAllScoreObjectives(levelScore.Total);
+            completedObjectives = objectiveJudge.GetCompletedObjectives();
+            progress?.CompleteObjectives(LoadedLevel, completedObjectives);
         }
         // Show unlock screen on top of score screen
         ModifierUnlockScreen UIModUnlock = MenuUI.Get<ModifierUnlockScreen>();

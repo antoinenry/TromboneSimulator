@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System;
 using System.Collections;
 
 [ExecuteAlways]
@@ -22,20 +23,23 @@ public class LevelCompleteScreen : MenuUI
     [Header("Prefabs")]
     public ObjectiveCheckPanel objectiveItemPrefab;
     [Header("Timing")]
+    [Min(0f)] public float startDisplayDelay = 1f;
     [Min(0f)] public float lineDisplayDelay = .5f;
     [Min(0f)] public float objectiveDisplayDelay = .5f;
     [Min(0f)] public float endDisplayDelay = 3f;
     [Header("Values")]
     public LevelScoreInfo levelScore;
-    public LevelProgress levelProgress;
+    public LevelProgress levelObjectiveProgress;
     public bool[] checklist;
     public int playerXp;
     [Header("Events")]
     public UnityEvent onPressReplay;
     public UnityEvent onPressNext;
+    public UnityEvent<int> onTotalScore;
 
     private Coroutine displayLinesCoroutine;
     private Coroutine displayObjectivesCoroutine;
+    private ObjectiveCheckPanel[] objectivePanels;
 
     public bool DisplayCoroutine => displayLinesCoroutine != null || displayObjectivesCoroutine != null;
 
@@ -105,7 +109,7 @@ public class LevelCompleteScreen : MenuUI
     {
         ShowLine(header);
         ShowLine(title);
-        SetLineTexts(title, levelProgress.levelAsset?.levelName);
+        SetLineTexts(title, levelObjectiveProgress.levelAsset?.levelName);
         ShowLine(baseScoreDisplay);
         SetLineValuesImmediate(baseScoreDisplay, levelScore.baseScore);
         ShowLine(accuracyDisplay);
@@ -131,6 +135,7 @@ public class LevelCompleteScreen : MenuUI
 
     private IEnumerator DisplayLinesCoroutine()
     {
+        yield return new WaitForSeconds(startDisplayDelay);
         // Display lines one at a time
         float displayTimer = 0f;
         yield return new WaitForSeconds(lineDisplayDelay);
@@ -138,14 +143,15 @@ public class LevelCompleteScreen : MenuUI
         ShowLine(header);
         yield return new WaitForSeconds(lineDisplayDelay);
         // Level title
-        SetLineTexts(title, levelProgress.levelAsset?.levelName);
+        SetLineTexts(title, levelObjectiveProgress.levelAsset?.levelName);
         ShowLine(title);
         yield return new WaitForSeconds(lineDisplayDelay);
         // Base score
         SetLineValues(baseScoreDisplay, levelScore.baseScore);
         ShowLine(baseScoreDisplay);
-        // Total score (delayed)
-        LevelScoreInfo delayedScore = LevelScoreInfo.Zero;
+        // Total score (delayed, start at zero points)
+        LevelScoreInfo delayedScore = levelScore;
+        delayedScore.ClearPerformance();
         SetLineValues(totalDisplay, 0);
         ShowLine(totalDisplay);
         displayTimer = lineDisplayDelay;
@@ -156,7 +162,8 @@ public class LevelCompleteScreen : MenuUI
             yield return null;
             displayTimer -= Time.deltaTime;
         }
-        while (displayTimer > 0f || baseScoreDisplay.IsMoving || totalDisplay.IsMoving);    
+        while (displayTimer > 0f || baseScoreDisplay.IsMoving || totalDisplay.IsMoving);
+        onTotalScore.Invoke(delayedScore.Total);
         // Accuracy
         SetLineValues(accuracyDisplay, levelScore.accuracyAverage, levelScore.AccuracyBonus);
         ShowLine(accuracyDisplay);
@@ -169,6 +176,7 @@ public class LevelCompleteScreen : MenuUI
             displayTimer -= Time.deltaTime;
         }
         while (displayTimer > 0f || accuracyDisplay.IsMoving || totalDisplay.IsMoving);
+        onTotalScore.Invoke(delayedScore.Total);
         // Combo
         SetLineValues(comboDisplay, levelScore.bestCombo, levelScore.ComboBonus);
         ShowLine(comboDisplay);
@@ -181,6 +189,7 @@ public class LevelCompleteScreen : MenuUI
             displayTimer -= Time.deltaTime;
         }
         while (displayTimer > 0f || comboDisplay.IsMoving || totalDisplay.IsMoving);
+        onTotalScore.Invoke(delayedScore.Total);
         // Note count
         SetLineValues(noteCountDisplay, levelScore.correctNoteCount, levelScore.totalNoteCount, levelScore.PlayedNoteBonus);
         ShowLine(noteCountDisplay);
@@ -194,6 +203,8 @@ public class LevelCompleteScreen : MenuUI
             displayTimer -= Time.deltaTime;
         }
         while (displayTimer > 0f || noteCountDisplay.IsMoving || totalDisplay.IsMoving);
+        onTotalScore.Invoke(delayedScore.Total);
+        yield return new WaitForSeconds(endDisplayDelay);
         displayLinesCoroutine = null;
     }
 
@@ -233,12 +244,16 @@ public class LevelCompleteScreen : MenuUI
     #endregion
 
     #region Objectives
-    public ObjectiveCheckPanel[] InstantiateObjectivePanels()
+    public void InstantiateObjectivePanels()
     {
-        if (objectiveChecklist == null) return null;
-        int objectiveCount = levelProgress.ObjectiveCount;
+        if (objectiveChecklist == null)
+        {
+            objectivePanels = null;
+            return;
+        }
+        int objectiveCount = levelObjectiveProgress.ObjectiveCount;
         // Correct number of panels
-        ObjectiveCheckPanel[] objectivePanels = objectiveChecklist.GetComponentsInChildren<ObjectiveCheckPanel>(true);
+        objectivePanels = objectiveChecklist.GetComponentsInChildren<ObjectiveCheckPanel>(true);
         int panelCount = objectivePanels != null ? objectivePanels.Length : 0;
         if (panelCount != objectiveCount)
         {
@@ -248,14 +263,12 @@ public class LevelCompleteScreen : MenuUI
             panelCount = objectiveCount;
         }
         // Set panel looks
-        string[] objectiveNames = levelProgress.ObjectiveNames;
+        string[] objectiveNames = levelObjectiveProgress.ObjectiveNames;
         for (int i = 0; i < objectiveCount; i++)
         {
             ObjectiveCheckPanel o = objectivePanels[i];
             o.SetText(objectiveNames[i]);
         }
-        // Return instances
-        return objectivePanels;
     }
 
     public void DestroyObjectivePanels()
@@ -267,14 +280,15 @@ public class LevelCompleteScreen : MenuUI
 
     private IEnumerator DisplayObjectivesCoroutine()
     {
-        // Inatantiate and hide objectives
-        ObjectiveCheckPanel[] objectivePanels = InstantiateObjectivePanels();
+        yield return new WaitForSeconds(startDisplayDelay);
+        // Instantiate and hide objectives
+        InstantiateObjectivePanels();
         if (objectivePanels == null) yield break;
         foreach (ObjectiveCheckPanel panel in objectivePanels) panel.gameObject.SetActive(false);
         // Animate objectives
-        int objectiveCount = levelProgress.ObjectiveCount;
-        bool[] levelChecklist = levelProgress.checklist;
-        int levelCheckCount = levelChecklist != null ? levelChecklist.Length : 0;
+        int objectiveCount = levelObjectiveProgress.ObjectiveCount;
+        bool[] oldChecklist = levelObjectiveProgress.checklist;
+        int levelCheckCount = oldChecklist != null ? oldChecklist.Length : 0;
         int checkCount = checklist != null ? checklist.Length : 0;
         for (int i = 0; i < objectiveCount; i++)
         {
@@ -282,7 +296,7 @@ public class LevelCompleteScreen : MenuUI
             ObjectiveCheckPanel o = objectivePanels[i];
             if (o == null) continue;
             o.gameObject.SetActive(true);
-            if (i < levelCheckCount && levelChecklist[i] == true)
+            if (i < levelCheckCount && oldChecklist[i] == true)
                 o.PlayAlreadyCheckedAnimation();
             else if (i < checkCount && checklist[i])
             {
@@ -292,7 +306,22 @@ public class LevelCompleteScreen : MenuUI
             else
                 o.PlayUncheckedAnimation();
         }
+        yield return new WaitForSeconds(endDisplayDelay);
         displayObjectivesCoroutine = null;
+    }
+
+    public bool TryCheckObjective(ObjectiveInfo objective)
+    {
+        int checkCount = checklist != null ? checklist.Length : 0;
+        int objectiveIndex = levelObjectiveProgress.GetObjectiveIndex(objective);
+        if (objectiveIndex < 0 || objectiveIndex > checkCount) return false;
+        // Update checklist
+        checklist[objectiveIndex] = true;
+        // Play animation if needed
+        ObjectiveCheckPanel matchingPanel = objectivePanels != null ? Array.Find(objectivePanels, p => p.GetText() == objective.name) : null;
+        if (matchingPanel != null && matchingPanel.gameObject.activeInHierarchy) matchingPanel.PlayLateCheckAnimation();
+        // Success
+        return true;
     }
     #endregion
 
@@ -337,6 +366,7 @@ public class LevelCompleteScreen : MenuUI
             displayLinesCoroutine = null;
         }
         ShowAllLines();
+        onTotalScore.Invoke(levelScore.Total);
     }
 
     private void OnPressNext()

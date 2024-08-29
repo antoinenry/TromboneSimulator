@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 
 [Serializable]
 public struct LevelProgress
@@ -40,6 +41,12 @@ public struct LevelProgress
         }
     }
 
+    public int GetObjectiveIndex(ObjectiveInfo o)
+    {
+        if (levelAsset == null) return -1;
+        return Array.IndexOf(levelAsset.objectives, o);
+    }
+
     public bool TryCheckObjective(int index, bool value = true)
     {
         if (index < 0 || index >= CorrectChecklistLength()) return false;
@@ -50,7 +57,8 @@ public struct LevelProgress
     public bool TryCheckObjective(ObjectiveInfo objective, bool value = true)
     {
         if (levelAsset == null) return false;
-        return TryCheckObjective(Array.IndexOf(levelAsset.objectives, objective), value);
+        int objectiveIndex = GetObjectiveIndex(objective);
+        return TryCheckObjective(objectiveIndex, value);
     }
 
     public bool TryCheckObjectives(ObjectiveInfo[] objective, bool value = true)

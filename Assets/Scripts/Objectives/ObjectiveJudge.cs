@@ -10,6 +10,7 @@ public class ObjectiveJudge : MonoBehaviour
     public MusicPlayer musicPlayer;
     public PerformanceJudge performanceJudge;
     public LevelEventSpawner levelEvents;
+    public LevelCompleteScreen levelCompleteGUI;
 
     public UnityEvent<ObjectiveInfo> onNewObjectiveComplete;
 
@@ -20,6 +21,7 @@ public class ObjectiveJudge : MonoBehaviour
         musicPlayer = FindObjectOfType<MusicPlayer>(true);
         performanceJudge = FindObjectOfType<PerformanceJudge>(true);
         levelEvents = FindObjectOfType<LevelEventSpawner>(true);
+        levelCompleteGUI = MenuUI.Get<LevelCompleteScreen>();
     }
 
     private void OnEnable()
@@ -81,33 +83,48 @@ public class ObjectiveJudge : MonoBehaviour
 
     private void AddListeners()
     {
-        if (objectives == null) return;
-        foreach (ObjectiveInstance o in objectives)
-        {
-            if (o == null) continue;
-            if (o.isComplete == false) o.onComplete.AddListener(OnCompleteNewObjective);
-            musicPlayer?.onMusicEnd?.AddListener(o.OnMusicEnd);
-            performanceJudge?.onScore?.AddListener(o.OnPerformanceJudgeScore);
-            levelEvents?.onEventCompletion?.AddListener(o.OnLevelEventCompletion);
-        }
+        if (objectives != null)
+            foreach (ObjectiveInstance o in objectives)
+            {
+                if (o == null) continue;
+                if (o.isComplete == false) o.onComplete.AddListener(OnCompleteNewObjective);
+                musicPlayer?.onMusicEnd?.AddListener(o.OnMusicEnd);
+                performanceJudge?.onScore?.AddListener(o.OnPerformanceJudgeScore);
+                levelEvents?.onEventCompletion?.AddListener(o.OnLevelEventCompletion);
+            }
+        if (levelCompleteGUI != null) levelCompleteGUI.onTotalScore.AddListener(CheckAllScoreObjectives);
     }
 
     private void RemoveListeners()
+    {
+        if (objectives != null)
+            foreach (ObjectiveInstance o in objectives)
+            {
+                if (o == null) continue;
+                o.onComplete.RemoveListener(OnCompleteNewObjective);
+                musicPlayer?.onMusicEnd?.RemoveListener(o.OnMusicEnd);
+                performanceJudge?.onScore?.RemoveListener(o.OnPerformanceJudgeScore);
+                levelEvents?.onEventCompletion?.RemoveListener(o.OnLevelEventCompletion);
+            }
+        if (levelCompleteGUI != null) levelCompleteGUI.onTotalScore.RemoveListener(CheckAllScoreObjectives);
+    }
+
+    public void CheckAllScoreObjectives(int score)
     {
         if (objectives == null) return;
         foreach (ObjectiveInstance o in objectives)
         {
             if (o == null) continue;
-            o.onComplete.RemoveListener(OnCompleteNewObjective);
-            musicPlayer?.onMusicEnd?.RemoveListener(o.OnMusicEnd);
-            performanceJudge?.onScore?.RemoveListener(o.OnPerformanceJudgeScore);
-            levelEvents?.onEventCompletion?.RemoveListener(o.OnLevelEventCompletion);
+            o.OnPerformanceJudgeScore(score);
         }
     }
 
     private void OnCompleteNewObjective(ObjectiveInfo objectiveInfo)
     {
         if (showDebug) Debug.Log("Completed objective: " + objectiveInfo.type);
+        // Completing objectives during level
         onNewObjectiveComplete.Invoke(objectiveInfo);
+        // Completing objective when evaluating total score
+        if (levelCompleteGUI != null && levelCompleteGUI.IsVisible) levelCompleteGUI.TryCheckObjective(objectiveInfo);
     }
 }
