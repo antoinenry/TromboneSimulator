@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modName: Dance du Bouclier
   icon: {fileID: 1918088025, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
-  uiColor: {r: 0.40000004, g: 0.81568635, b: 0.91372555, a: 1}
-  colorizeIcon: 0
+  uiColor: {r: 0.2559185, g: 0.66716003, b: 0.764151, a: 1}
+  colorizeIcon: 1
   unlockTier: 9
   scoreMultiplierBonus: 1
   description: "Danser permet de d'activer un bouclier qui prot\xE8ge des d\xE9g\xE2ts

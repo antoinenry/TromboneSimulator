@@ -5660,6 +5660,6 @@ MonoBehaviour:
   maxIncrementTime: 10000
   idleColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 0}
   animatedColor: {r: 0.227451, g: 0.227451, b: 0.227451, a: 1}
-  colorFadeInSpeed: 10
+  colorFadeInSpeed: 0
   colorFadeOutSpeed: 1
   value: 0

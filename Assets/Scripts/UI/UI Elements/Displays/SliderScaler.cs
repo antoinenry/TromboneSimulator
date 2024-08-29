@@ -48,7 +48,7 @@ public class SliderScaler : MonoBehaviour
         value = Mathf.Clamp(value, 0f, maxValue);
         slider.maxValue = maxValue * valueScale;
         slider.value = value * valueScale;
-    }
+    }    
 
     public void SetValueAndMax(float value, float maxValue)
     {
@@ -59,4 +59,7 @@ public class SliderScaler : MonoBehaviour
     }
 
     public void SetValueAndMax(int value, int maxValue) => SetValueAndMax((float)value, maxValue);
+
+    public void SetValue(float value) => SetValueAndMax(value, maxValue);
+    public void SetValue(int value) => SetValue((float)value);
 }

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Melanchall.DryWetMidi.Interaction;
+using System;
+using System.Runtime.CompilerServices;
+using UnityEngine.SocialPlatforms;
 
 [Serializable]
 public struct TempoInfo
@@ -24,4 +27,11 @@ public struct TempoInfo
     public static TempoInfo[] ScaleTime(TempoInfo[] tempos, float timeScale)
      => tempos != null ? Array.ConvertAll(tempos, t => t.ScaleTime(timeScale)) : null;
 
+    public static void MultiplyTempoBy(ref TempoInfo[] tempoInfos, float tempoModifier)
+    {
+        if (tempoModifier == 0f || tempoModifier == 1f) return;
+        float timeScale = 1f / tempoModifier;
+        for (int i = 0, iend  = tempoInfos.Length; i < iend; i++)
+            tempoInfos[i] = tempoInfos[i].ScaleTime(timeScale);
+    }
 }

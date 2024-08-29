@@ -198,7 +198,11 @@ public class LevelLoader : MonoBehaviour
             objectiveJudge.enabled = false;
         }
         // Stop note spawner
-        if (noteSpawner) noteSpawner.enabled = false;
+        if (noteSpawner)
+        {
+            noteSpawner.notePlacement = new Vector2[0];
+            noteSpawner.enabled = false;
+        }
         // Stop note catcher
         if (noteCatcher) noteCatcher.enabled = false;
         // Stop level events

@@ -241,6 +241,7 @@ MonoBehaviour:
   tromboneDisplay: {fileID: 1502692987}
   tromboneAudio: {fileID: 1012859072}
   tromboneAuto: {fileID: 1920212839}
+  trombonePower: {fileID: 0}
   tromboneBuild: {fileID: 0}
   grab: 0
   blow: 0
@@ -1252,8 +1253,8 @@ MonoBehaviour:
   audioSource: {fileID: 1888059636}
   audioSyncTolerance: 0.05
   playHeads:
-  - {fileID: 11400000, guid: 8d955882cbde3424081524adaa02c690, type: 2}
-  - {fileID: 11400000, guid: ef3d292b6c82a494bb1972c07ed4bb08, type: 2}
+  - {fileID: 11400000, guid: ef554c6cd3c64054a8e2ce72c8cef0f9, type: 2}
+  - {fileID: 11400000, guid: 98eebc5adfaa06e4089204faa93b27d3, type: 2}
   playheadPart:
     partName: trombone
     mainVoice: 1
@@ -13493,6 +13494,7 @@ MonoBehaviour:
   pauseButton: {fileID: 1091224427}
   timeBar: {fileID: 374532627}
   messageDisplay: {fileID: 407020356}
+  eventPanel: {fileID: 0}
   grabTromboneMessage: A VOS COULISSES
   startCountDownAt: 3
   onPauseRequest:
@@ -13770,6 +13772,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   danceAmplitude: {x: 0, y: 8}
   rythm: 1
+  flipX: 0
+  flipY: 0
   customCurve:
     serializedVersion: 2
     m_Curve: []
@@ -13909,7 +13913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e5026543f7ae6479a43fbde4b192f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playhead: {fileID: 11400000, guid: 8d955882cbde3424081524adaa02c690, type: 2}
+  playhead: {fileID: 11400000, guid: ef554c6cd3c64054a8e2ce72c8cef0f9, type: 2}
   spawner: {fileID: 1969521392}
   autoSettings:
     blowControl: 6
@@ -13972,7 +13976,7 @@ MonoBehaviour:
   showDebug: 0
   spawner: {fileID: 1969521392}
   trombone: {fileID: 64880549}
-  playhead: {fileID: 11400000, guid: 7bfcb8b14bd3f1445b1b1f170f3e9559, type: 2}
+  playhead: {fileID: 11400000, guid: 6c8a3be3cb0a3114a851c754e1967fb2, type: 2}
   catchNotes: 1
   catchTone: 66
   advanceTolerance: 0.2
@@ -14008,7 +14012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebug: 0
-  playHead: {fileID: 11400000, guid: ef3d292b6c82a494bb1972c07ed4bb08, type: 2}
+  playHead: {fileID: 11400000, guid: 98eebc5adfaa06e4089204faa93b27d3, type: 2}
   time: 0
   reverse: 0
   spawnDistance: 300
@@ -14089,8 +14093,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 519420031}
   spawner: {fileID: 1969521392}
-  horizontalCrashEffect: {fileID: 1124397474}
-  verticalCrashEffect: {fileID: 1425153441}
+  hCrashEffect: {fileID: 0}
+  vCrashEffect: {fileID: 0}
   boundaries:
     serializedVersion: 2
     x: 0.059020996
@@ -14228,6 +14232,7 @@ MonoBehaviour:
   amplitude: 1
   frequency: 25
   holdDuration: 0.25
+  roundPosition: 1
 --- !u!1 &2067895445
 GameObject:
   m_ObjectHideFlags: 0
@@ -14328,6 +14333,7 @@ MonoBehaviour:
   amplitude: 1
   frequency: 25
   holdDuration: 0.25
+  roundPosition: 1
 --- !u!1 &2135077539
 GameObject:
   m_ObjectHideFlags: 0
@@ -14373,10 +14379,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a34d72007321204a8cf17aeb1264767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelAsset: {fileID: 11400000, guid: d3f1b02abcb723440bab1be2d6dfd87f, type: 2}
+  levelAsset: {fileID: 11400000, guid: a6062b9873491bf419935d47531ba337, type: 2}
   partName: Trombone
-  NotePlacementAsset: {fileID: 11400000, guid: 544a9d9ee427d1248a68d87354f0bcfd, type: 2}
-  editorPlayhead: {fileID: 11400000, guid: 8d955882cbde3424081524adaa02c690, type: 2}
+  NotePlacementAsset: {fileID: 11400000, guid: 04785612527c41b428f1c0f44b6f448e, type: 2}
+  editorPlayhead: {fileID: 11400000, guid: ef554c6cd3c64054a8e2ce72c8cef0f9, type: 2}
   currentNoteIndex: 0
   currentNoteInfo:
     tone: 0

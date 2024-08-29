@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/LaunchScene.unity
+    guid: 93b2b25e81e462147813b6dcf2585416
+  - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: Assets/Scenes/TestScenes/Trombone.unity
-    guid: b9dd51c4013e10e4a9b4ba1ed6f5d2bc
   m_configObjects: {}

@@ -5199,7 +5199,7 @@ MonoBehaviour:
     - tone: 60
       velocity: 0.84375
       startTime: 25.090897
-      duration: 0.95454407
+      duration: 1.090908
     - tone: 59
       velocity: 0.84375
       startTime: 26.181805
@@ -5667,7 +5667,7 @@ MonoBehaviour:
     - tone: 60
       velocity: 0.71875
       startTime: 100.67521
-      duration: 0.75
+      duration: 0.8571396
     - tone: 59
       velocity: 0.71875
       startTime: 101.53235

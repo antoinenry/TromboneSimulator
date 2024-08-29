@@ -68,13 +68,6 @@ public class CounterDisplay : MonoBehaviour
         if (textRenderer) textRenderer.text = CurrentDisplayString;
     }
 
-    private void ColorAnimationUpdate()
-    {
-        if (textRenderer == null) return;
-        if (IsMoving) textRenderer.color = Color.Lerp(textRenderer.color, animatedColor, colorFadeInSpeed * Time.deltaTime);
-        else textRenderer.color = Color.Lerp(textRenderer.color, idleColor, colorFadeOutSpeed * Time.deltaTime);
-    }
-
     public void SetValue(int value) => SetValue((float)value);
 
     public void SetValue(float value)
@@ -119,5 +112,25 @@ public class CounterDisplay : MonoBehaviour
         valueString = valueString.Replace(',', pointFormat);
         // Return string
         return valueString;
+    }
+
+    private void ColorAnimationUpdate()
+    {
+        if (textRenderer == null) return;
+        if (IsMoving) LerpColor(animatedColor, colorFadeInSpeed);
+        else LerpColor(idleColor, colorFadeOutSpeed);
+    }
+
+    public void SetColor(Color c)
+    {
+        if (textRenderer == null) return;
+        textRenderer.color = c;
+    }
+
+    private void LerpColor(Color c, float speed)
+    {
+        if (textRenderer == null) return;
+        if (speed <= 0f) textRenderer.color = c;
+        else textRenderer.color = Color.Lerp(textRenderer.color, c, speed * Time.deltaTime);
     }
 }

@@ -3,17 +3,19 @@ using UnityEngine.Events;
 
 public class PowerDanceForCombo : PowerDance
 {
+    [Header("Combo")]
+    public int comboPerChargeLevel = 1;
     [Header("Events")]
-    public UnityEvent onComboIncrease;
+    public UnityEvent<int> onAddCombo;
 
     protected override void OnDanceCountUp(int value, int maxValue)
     {
         base.OnDanceCountUp(value, maxValue);
         if (perfJudge == null || perfJudge.DetectionEnabled == false) return;
         onCharge.Invoke(value, maxValue);
-        if (ChargeLevel < MaxChargeLevel) return;
-        perfJudge?.IncrementCombo();
-        onComboIncrease.Invoke();
+        int addCombo = comboPerChargeLevel * ChargeLevel;
+        perfJudge?.AddCombo(addCombo);
+        onAddCombo.Invoke(addCombo);
         OnPowerEffect();
     }
 }

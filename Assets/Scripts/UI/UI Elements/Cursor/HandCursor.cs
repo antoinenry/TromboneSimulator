@@ -9,6 +9,7 @@ public class HandCursor : BaseInput
 {
     [Flags]
     public enum CursorState { Visible = 1, PointAtUI = 2, Click = 4, SecondaryClick = 8, Trombone = 16, PointAtTrombone = 32 }
+    public enum CursorConfinement { Never, FreeOnEdges, Always }
 
     [Serializable]
     public struct HandSprites
@@ -59,8 +60,11 @@ public class HandCursor : BaseInput
     public string yAxisName = "Mouse Y";
     [Header("Movement")]
     public float sensibility = 1f;
-    public bool keepOnScreen = true;
+    public bool keepCursorOnScreen = true;
     public bool enableTromboneGrab = true;
+    public CursorConfinement confineCursor = CursorConfinement.FreeOnEdges;
+    public float edge = 1f;
+    public bool alwaysConfineInEditor = true;
     [Header("Look")]
     public bool roundDisplayPosition;
     public HandSprites sprites;
@@ -114,13 +118,11 @@ public class HandCursor : BaseInput
 
     private void Update()
     {
-        // Hide and confine actual cursor
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
+        ControlRealCursor();
         // Cursor movement
         Vector2 mouseMovement = new Vector2(Input.GetAxis(xAxisName), Input.GetAxis(yAxisName)) / cam.pixelHeight;
         cursorPosition += sensibility * mouseMovement;
-        if (keepOnScreen)
+        if (keepCursorOnScreen)
         {
             cursorPosition.x = Mathf.Clamp(cursorPosition.x, 0f, 2f * cam.orthographicSize * cam.aspect);
             cursorPosition.y = Mathf.Clamp(cursorPosition.y, 0f, 2f * cam.orthographicSize);
@@ -178,4 +180,29 @@ public class HandCursor : BaseInput
             }
         }
     }
+
+    private void ControlRealCursor()
+    {
+        // Hide and confine actual cursor
+        Cursor.visible = false;
+        if (alwaysConfineInEditor && Application.isEditor)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+        else
+        {
+            switch (confineCursor)
+            {
+                case CursorConfinement.Always: Cursor.lockState = CursorLockMode.Confined; break;
+                case CursorConfinement.Never: Cursor.lockState = CursorLockMode.None; break;
+                case CursorConfinement.FreeOnEdges: Cursor.lockState = IsOnEdge ? CursorLockMode.None : CursorLockMode.Confined; break;
+            }
+        }
+    }
+
+    private bool IsOnEdge =>
+        cursorPosition.x <= edge
+        || cursorPosition.y <= edge
+        || cursorPosition.x >= 2f * cam.orthographicSize * cam.aspect - edge
+        || cursorPosition.y >= 2f * cam.orthographicSize - edge;
 }

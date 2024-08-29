@@ -41,7 +41,7 @@ public class DanceMeter : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            GUI?.PlayEndAnimation(Points, danceBeatLevel == maxBeats);
+            if (GUI) GUI.PlayEndAnimation(Points, danceBeatLevel == maxBeats);
             lifeTimeBeats = 0;
             danceBeatLevel = 0;
             RemoveDanceListeners();

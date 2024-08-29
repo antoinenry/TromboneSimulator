@@ -80,6 +80,13 @@ public struct NoteInfo : INoteInfo
     public static NoteInfo[] ScaleTime(NoteInfo[] notes, float scale)
         => notes != null ? Array.ConvertAll(notes, n => n.ScaleTime(scale)) : null;
 
+    public static void MultiplyTempoBy(ref NoteInfo[] notes, float tempoModifier)
+    {
+        if (tempoModifier == 0f || tempoModifier == 1f) return;
+        float timeScale = 1f / tempoModifier;
+        notes = ScaleTime(notes, timeScale);
+    }
+
     public NoteInfo Transpose(float byTones)
     {
         NoteInfo newNote = new NoteInfo();
@@ -92,6 +99,9 @@ public struct NoteInfo : INoteInfo
 
     public static NoteInfo[] Transpose(NoteInfo[] notes, float byTones)
         => notes != null ? Array.ConvertAll(notes, n => n.Transpose(byTones)) : null;
+
+    public static void Transpose(ref NoteInfo[] notes, float byTones)
+        => notes = Transpose(notes, byTones);
 
     static public float GetTotalDuration(NoteInfo[] notes)
     {

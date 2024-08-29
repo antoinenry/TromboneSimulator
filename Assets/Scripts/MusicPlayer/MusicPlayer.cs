@@ -108,9 +108,13 @@ public class MusicPlayer : MonoBehaviour
         LoadedMusic.MultiplyTempoBy(tempoModifier);
         LoadedMusic.TransposeBy(keyModifier);
         // Load notes read by playheads
-        NoteInfo[] loadedNoteInfos = LoadedMusic.GetPartNotes(playheadPart);
+        NoteInfo[] loadedNoteInfos = music != null ? music.GetPartNotes(playheadPart) : new NoteInfo[0];
+        // Alter loaded notes
         playheadStyle?.ProcessNotes(ref loadedNoteInfos);
+        NoteInfo.MultiplyTempoBy(ref loadedNoteInfos, tempoModifier);
+        NoteInfo.Transpose(ref loadedNoteInfos, keyModifier);
         LoadedNotes = Array.ConvertAll(loadedNoteInfos, n => new NoteInstance(n));
+        if (showDebug) Debug.Log("Loaded " + LoadedNotes.Length + " notes");
         // Generate audio
         if (audioGenerator)
         {
