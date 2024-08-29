@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96c0ddbcd5033548a90e55609fad4a8, type: 3}
   m_Name: PowerDance_Heal
   m_EditorClassIdentifier: 
-  modName: "Dance de Sant\xE9"
+  modName: "Danse de Sant\xE9"
   icon: {fileID: -905471385, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.7607844, g: 0.42352945, b: 0.42352945, a: 1}
   colorizeIcon: 1
   unlockTier: 3
   scoreMultiplierBonus: 1
-  description: Dancer remplit la barre de vie. Pour les morceaux difficiles!
+  description: Danser remplit la barre de vie. Pour les morceaux difficiles!
   powerPrefab: {fileID: 7480909633972803314, guid: 283a07f2f96d9dc4d997335447f617c4, type: 3}

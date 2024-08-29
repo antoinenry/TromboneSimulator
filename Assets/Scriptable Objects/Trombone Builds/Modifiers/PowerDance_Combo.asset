@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96c0ddbcd5033548a90e55609fad4a8, type: 3}
   m_Name: PowerDance_Combo
   m_EditorClassIdentifier: 
-  modName: Dance du Combo
+  modName: Danse du Combo
   icon: {fileID: 581994222, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.8962264, g: 0.71462524, b: 0.012682426, a: 1}
   colorizeIcon: 1
-  unlockTier: 12
+  unlockTier: 13
   scoreMultiplierBonus: 1
-  description: Dancer augmente le compteur de combo. Pour faire des gros scores!
+  description: Danser augmente le compteur de combo. Pour faire des gros scores!
   powerPrefab: {fileID: 5541996300062623443, guid: 543a9def2c6129640b46bfa8a0eda27b, type: 3}

@@ -135,10 +135,10 @@ TextureImporter:
         x: 0
         y: 32
         width: 31
-        height: 32
+        height: 29
       alignment: 6
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 2, z: 0, w: 22}
+      border: {x: 0, y: 2, z: 0, w: 19}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -156,10 +156,10 @@ TextureImporter:
         x: 32
         y: 32
         width: 31
-        height: 32
+        height: 30
       alignment: 6
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 2, z: 0, w: 22}
+      border: {x: 0, y: 2, z: 0, w: 20}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -177,10 +177,10 @@ TextureImporter:
         x: 64
         y: 32
         width: 31
-        height: 32
+        height: 30
       alignment: 6
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 2, z: 0, w: 22}
+      border: {x: 0, y: 2, z: 0, w: 20}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -219,10 +219,10 @@ TextureImporter:
         x: 0
         y: 0
         width: 31
-        height: 32
+        height: 29
       alignment: 6
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 2, z: 0, w: 22}
+      border: {x: 0, y: 2, z: 0, w: 19}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -240,10 +240,10 @@ TextureImporter:
         x: 32
         y: 0
         width: 31
-        height: 32
+        height: 29
       alignment: 6
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 2, z: 0, w: 24}
+      border: {x: 0, y: 2, z: 0, w: 21}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -261,10 +261,10 @@ TextureImporter:
         x: 64
         y: 0
         width: 31
-        height: 32
+        height: 29
       alignment: 6
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 2, z: 0, w: 28}
+      border: {x: 0, y: 2, z: 0, w: 25}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -285,7 +285,7 @@ TextureImporter:
         height: 28
       alignment: 6
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 27, z: 0, w: 0}
+      border: {x: 0, y: 12, z: 0, w: 15}
       outline: []
       physicsShape: []
       tessellationDetail: 0

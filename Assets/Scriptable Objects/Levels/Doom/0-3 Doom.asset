@@ -29,12 +29,12 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 150000
-  - name: Headbanger (1/2)
+  - name: Headbang (1/2)
     type: Dance
     parameters:
     - 1
     - 1
-  - name: Headbanger (2/2)
+  - name: Headbang (2/2)
     type: Dance
     parameters:
     - 1

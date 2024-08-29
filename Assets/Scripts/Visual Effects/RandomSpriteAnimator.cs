@@ -6,6 +6,9 @@ public class RandomSpriteAnimator : MonoBehaviour
     public Sprite[] sprites;
     public float frameDuration = .1f;
     public bool avoidRepetition = true;
+    public bool randomSize = false;
+    public Vector2 minSize;
+    public Vector2 maxSize;
 
     private SpriteRenderer spriteRenderer;
 
@@ -23,6 +26,7 @@ public class RandomSpriteAnimator : MonoBehaviour
         int spriteCount = 0;
         while (enabled && spriteRenderer != null)
         {
+            // Swap sprite
             spriteCount = sprites != null ? sprites.Length : 0;
             if (avoidRepetition && spriteCount > 1)
             {
@@ -35,6 +39,15 @@ public class RandomSpriteAnimator : MonoBehaviour
                 spriteIndex = Random.Range(0, spriteCount);
             }
             spriteRenderer.sprite = sprites[spriteIndex];
+            // Change size
+            if (randomSize)
+            {
+                spriteRenderer.size = new Vector2()
+                {
+                    x = Random.Range(minSize.x, minSize.y),
+                    y = Random.Range(maxSize.x, maxSize.y)
+                };
+            }
             yield return new WaitForSeconds(frameDuration);
         }   
     }

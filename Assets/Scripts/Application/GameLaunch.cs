@@ -11,25 +11,22 @@ public class GameLaunch : MonoBehaviour
 
     private AsyncOperation currentOperation;
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(LoadSceneAsync());
     }
 
-    IEnumerator LoadSceneAsync()
+    private IEnumerator LoadSceneAsync()
     {
+        yield return new WaitForEndOfFrame();
         // Load scene
-        currentOperation = SceneManager.LoadSceneAsync(sceneToLoad);
+        currentOperation = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
         while (!currentOperation.isDone)
         {
             onLoadProgress.Invoke(currentOperation.progress);
             yield return null;
         }
         // Unload other scene
-        currentOperation = SceneManager.LoadSceneAsync(sceneToUnload);
-        while (!currentOperation.isDone)
-        {
-            yield return null;
-        }
+        currentOperation = SceneManager.UnloadSceneAsync(sceneToUnload);
     }
 }

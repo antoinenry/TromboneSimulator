@@ -25,11 +25,6 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 50000
-  - name: Joli Solo
-    type: PlaySolo
-    parameters:
-    - 0,75
-    - 1
   - name: Solo Parfait
     type: PlaySolo
     parameters:

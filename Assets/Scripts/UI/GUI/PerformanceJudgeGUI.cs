@@ -8,7 +8,7 @@ public class PerformanceJudgeGUI : GameUI
     public CounterDisplay scoreDisplay;
     public MultiplierDisplay comboDisplay;
     public MultiplierDisplay accuracyDisplay;
-    public Slider healthBar;
+    public SliderScaler healthBar;
     public TintFlash frame;
     public SwooshDisplay smallMessageDisplay;
     public TransformShaker smallMessageShake;
@@ -16,7 +16,7 @@ public class PerformanceJudgeGUI : GameUI
     [Header("Content")]
     public string[] wrongNoteMessages;
     public Color wrongNoteMessageColor = Color.red;
-    public float healthBarScale = 64f;
+    //public float healthBarScale = 64f;
     public Color damageFrameTint = Color.red;
 
     private PerformanceJudge performance;
@@ -77,10 +77,12 @@ public class PerformanceJudgeGUI : GameUI
     {
         if (healthBar)
         {
-            if (float.IsNaN(maxHealth) == false) healthBar.maxValue = maxHealth * healthBarScale;
-            RectTransform rect = healthBar.GetComponent<RectTransform>();
-            rect.sizeDelta = new(healthBar.maxValue, rect.sizeDelta.y);
-            healthBar.value = healthValue * healthBarScale;
+            if (float.IsNaN(maxHealth)) healthBar.SetValue(healthValue);
+            else healthBar.SetValueAndMax(healthValue, maxHealth);
+            //if (float.IsNaN(maxHealth) == false) healthBar.maxValue = maxHealth * healthBarScale;
+            ////RectTransform rect = healthBar.GetComponent<RectTransform>();
+            ////rect.sizeDelta = new(healthBar.maxValue, rect.sizeDelta.y);
+            //healthBar.value = healthValue * healthBarScale;
         }
         if (frame)
         {
