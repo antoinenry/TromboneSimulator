@@ -5285,7 +5285,7 @@ MonoBehaviour:
   integrity: 0
   maxIntegrity: 1
   damageRate: 1
-  rechargeRate: 0.5
+  rechargeRate: 0.1
   rechargeDelay: 1
   activatingChargeRate: 2
   onActivate:

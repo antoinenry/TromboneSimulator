@@ -14,7 +14,7 @@ public abstract class Playhead<T> : Playhead where T : ITimingInfo
 
     protected List<T> currentReads;
 
-    public T CurrentRead => currentReads.Count > 0 ? currentReads[0] : (T)ITimingInfo.None;
+    public T CurrentRead => currentReads != null && currentReads.Count > 0 ? currentReads[0] : (T)ITimingInfo.None;
 
     protected void Awake()
     {

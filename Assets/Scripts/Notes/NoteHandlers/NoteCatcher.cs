@@ -14,9 +14,6 @@ public class NoteCatcher : MonoBehaviour
     public float advanceTolerance;
     public float delayTolerance;
     public float toneTolerance;
-    [Header("Look")]
-    public Color catchColor = Color.yellow;
-    public Color missColor = Color.red;
     [Header("Events")]
     public UnityEvent<NoteSpawn> onCorrectNote;
     public UnityEvent<NoteSpawn> onFullCorrectNote;

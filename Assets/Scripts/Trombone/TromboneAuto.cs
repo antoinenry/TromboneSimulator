@@ -218,6 +218,8 @@ public class TromboneAuto : MonoBehaviour,
 
     private void OnAutoPlayNoteStay(int noteIndex, INoteInfo note)
     {
+        // If note currently playing, start now
+        if (autoBlow == false) StartNote(note, noteIndex);
         // Keep blowing as long as playhead is moving
         HoldNote(note != null && note.Tone == autoTone && playhead.DeltaTime != 0f);
     }
