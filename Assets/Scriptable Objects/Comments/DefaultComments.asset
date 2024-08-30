@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e019b319586e44787f7a6178e7778b, type: 3}
+  m_Name: DefaultComments
+  m_EditorClassIdentifier: 
+  comments:
+  - name: Health .5
+    commentType: 1
+    value: 0.5
+    delta: -1e-10
+    comments:
+    - Ouch!
+    - Ouille!
+    - Courage!
+    - Attention!
+  - name: Health .25
+    commentType: 1
+    value: 0.25
+    delta: -1e-10
+    comments:
+    - Danger
+    - Oh la la
+    - Boooooouh
+    - C'est pas la forme
+  - name: Miss Note 15
+    commentType: 2
+    value: 15
+    delta: 1
+    comments:
+    - Gaffe!
+  - name: Miss Note 30
+    commentType: 2
+    value: 30
+    delta: 1
+    comments:
+    - Oups!
+  - name: Miss Note 30
+    commentType: 2
+    value: 50
+    delta: 1
+    comments:
+    - Les notes!
+  - name: Score 100000
+    commentType: 4
+    value: 100000
+    delta: 1
+    comments:
+    - 100 000 !
+  - name: Score 500000
+    commentType: 4
+    value: 500000
+    delta: 1
+    comments:
+    - 500 000 !!
+  - name: Score 1000000
+    commentType: 4
+    value: 1000000
+    delta: 1
+    comments:
+    - 1 000 000 !!!
+  - name: Combo 25
+    commentType: 3
+    value: 25
+    delta: 1
+    comments:
+    - Combo x25
+  - name: Combo 50
+    commentType: 3
+    value: 50
+    delta: 1
+    comments:
+    - Combo x50
+  - name: Combo 100
+    commentType: 3
+    value: 100
+    delta: 1
+    comments:
+    - Combo x100
+  - name: Combo 200
+    commentType: 3
+    value: 200
+    delta: 1
+    comments:
+    - Combo x200
+  - name: Correct Note 25
+    commentType: 0
+    value: 25
+    delta: 1
+    comments:
+    - Nice
+    - Wou
+  - name: Correct Note 50
+    commentType: 0
+    value: 50
+    delta: 1
+    comments:
+    - Joli
+    - Yeah
+  - name: Correct Note 100
+    commentType: 0
+    value: 100
+    delta: 1
+    comments:
+    - Bravo!
+    - "Bien jou\xE9!"
+  - name: Correct Note 200
+    commentType: 0
+    value: 200
+    delta: 1
+    comments:
+    - Magnifique!
+    - Fantastique!
+  - name: Correct Note 300
+    commentType: 0
+    value: 300
+    delta: 1
+    comments:
+    - Excellent
+    - Incroyable
+  - name: Correct Note 400
+    commentType: 0
+    value: 400
+    delta: 1
+    comments:
+    - Epique!
+  - name: Correct Note 500
+    commentType: 0
+    value: 500
+    delta: 1
+    comments:
+    - Super baleze!

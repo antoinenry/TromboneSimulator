@@ -63,6 +63,7 @@ public class HandCursor : BaseInput
     public bool keepCursorOnScreen = true;
     public bool enableTromboneGrab = true;
     public CursorConfinement confineCursor = CursorConfinement.FreeOnEdges;
+    public bool hideOnEdge = true;
     public float edge = 1f;
     public bool alwaysConfineInEditor = true;
     [Header("Look")]
@@ -149,6 +150,7 @@ public class HandCursor : BaseInput
             CursorState newState = cursorState;
             GetCurrentState(ref newState);
             handRenderer.sprite = sprites.GetSprite(newState);
+            handRenderer.enabled = !hideOnEdge || !IsOnEdge;
             // Sorting layer changes when grabbing trombone
             handRenderer.sortingLayerName = newState.HasFlag(CursorState.Trombone) ? tromboneSortingLayer : defaultSortingLayer;
             State = newState;

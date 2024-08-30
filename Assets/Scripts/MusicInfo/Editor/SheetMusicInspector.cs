@@ -16,6 +16,7 @@ public class SheetMusicInspector : Editor
     private int[] voiceCount;
     private int transposeInstrumentIndex;
     private float transposeTones;
+    private float[] totalNoteTimes;
 
     private void OnEnable()
     {
@@ -104,6 +105,14 @@ public class SheetMusicInspector : Editor
         {
             sheetMusic.MergeParts(sameNamePartIndices);
         }
+        // Note time (useful for setting score objectives)
+        if (GUILayout.Button("Check total note time"))
+        {
+            displayCheckResult = true;
+            totalNoteTimes = new float[sheetMusic.PartCount];
+            for (int p = 0; p < sheetMusic.PartCount; p++)
+                totalNoteTimes[p] = sheetMusic.GetTotalNoteTime(p);
+        }
         EditorGUILayout.EndVertical();
         // Results from checks
         if (displayCheckResult)
@@ -144,6 +153,12 @@ public class SheetMusicInspector : Editor
                         EditorGUILayout.HelpBox(partNames[i] + ": " + count.ToString() + " voices.", MessageType.Info);
                     }
                 }
+            }
+            if (totalNoteTimes != null)
+            {
+                noResults = false;
+                for (int i = 0; i < sheetMusic.PartCount; i++)
+                    EditorGUILayout.HelpBox(partNames[i] + ": " + totalNoteTimes[i] + "s playing time.", MessageType.Info);
             }
             if (noResults)
                 EditorGUILayout.HelpBox("No results.", MessageType.Info);

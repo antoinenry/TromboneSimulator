@@ -40,6 +40,8 @@ MonoBehaviour:
       maxLegatoDistance: 0
       pressureControl: 0
       pressureLock: 0
+  trombonePower:
+    powerPrefab: {fileID: 5223775023869676659, guid: 2c513519e1353a7439706ce8c7961c26, type: 3}
   musicPlayer:
     tempoModifier: 1
     keyModifier: 0

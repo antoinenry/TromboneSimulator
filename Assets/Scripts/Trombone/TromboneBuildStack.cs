@@ -13,7 +13,12 @@ public class TromboneBuildStack : MonoBehaviour
     [SerializeField] private List<TromboneBuildModifier> mods;
     [SerializeField] private TromboneBuild modifiedBuild;
 
-    private void OnValidate()
+    //private void OnValidate()
+    //{
+    //    ApplyStack();
+    //}
+
+    private void Awake()
     {
         ApplyStack();
     }

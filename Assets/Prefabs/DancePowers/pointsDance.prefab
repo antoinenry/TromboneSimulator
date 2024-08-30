@@ -832,7 +832,7 @@ MonoBehaviour:
     minValue: 0
     maxValue: 10
     incrementBufferSize: 0
-    decrementBufferSize: 2
+    decrementBufferSize: 1
     passiveMovementDelay: 0
     passiveMovementSpeed: 0
     onValueChange:

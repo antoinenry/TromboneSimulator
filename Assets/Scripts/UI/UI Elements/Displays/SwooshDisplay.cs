@@ -27,6 +27,11 @@ public class SwooshDisplay : MonoBehaviour
         Clear();
     }
 
+    private void OnDisable()
+    {
+        Clear();
+    }
+
     private void Update()
     {
         float deltaTime = Time.deltaTime;

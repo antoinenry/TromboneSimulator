@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
+  m_Name: Kass_Level_Easy
+  m_EditorClassIdentifier: 
+  levelName: Kass
+  music: {fileID: 11400000, guid: aea71f694d9277148966f4199692dbf8, type: 2}
+  unlockTier: 5
+  notePlacements:
+  - {fileID: 11400000, guid: 693e6b50c574fd94681118a452788b94, type: 2}
+  objectives:
+  - name: Finir le morceau
+    type: EndMusic
+    parameters: []
+  - name: Super Score
+    type: Highscore
+    parameters:
+    - 100000
+  - name: Hyper Score
+    type: Highscore
+    parameters:
+    - 300000
+  - name: Ultra Score
+    type: Highscore
+    parameters:
+    - 600000
+  events: []

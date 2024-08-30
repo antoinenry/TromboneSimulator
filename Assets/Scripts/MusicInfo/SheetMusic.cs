@@ -255,6 +255,15 @@ public class SheetMusic : ScriptableObject
     }
 
     public int GetPartLength(string partName) => GetPartLength(GetPartIndex(partName));
+
+    public float GetTotalNoteTime(int partIndex)
+    {
+        NoteInfo[] notes = GetPartNotes(partIndex);
+        if (notes == null) return 0f;
+        float totalNoteTime = 0f;
+        foreach (NoteInfo n in notes) totalNoteTime += n.duration;
+        return totalNoteTime;
+    }
     #endregion
 
     #region Voices

@@ -12,8 +12,9 @@ public class LevelCompleteScreen : MenuUI
     public ScoreLineDisplay title;
     public ScoreLineDisplay baseScoreDisplay;
     public ScoreLineDisplay noteCountDisplay;
-    public ScoreLineDisplay accuracyDisplay;
     public ScoreLineDisplay comboDisplay;
+    public ScoreLineDisplay accuracyDisplay;
+    public ScoreLineDisplay healthDisplay;
     public ScoreLineDisplay totalDisplay;
     public Transform objectiveChecklist;
     public Button replayButton;
@@ -47,16 +48,6 @@ public class LevelCompleteScreen : MenuUI
     override protected void Reset()
     {
         base.Reset();
-        // Try to find components
-        ScoreLineDisplay[] getLines = GetComponentsInChildren<ScoreLineDisplay>(true);
-        int lCount = getLines.Length;
-        if (lCount > 0) header = getLines[0];
-        if (lCount > 1) title = getLines[1];
-        if (lCount > 2) baseScoreDisplay = getLines[2];
-        if (lCount > 3) noteCountDisplay = getLines[3];
-        if (lCount > 4) accuracyDisplay = getLines[4];
-        if (lCount > 5) comboDisplay = getLines[5];
-        if (lCount > 6) totalDisplay = getLines[6];
     }
 
     protected override void Update()
@@ -110,14 +101,22 @@ public class LevelCompleteScreen : MenuUI
         ShowLine(header);
         ShowLine(title);
         SetLineTexts(title, levelObjectiveProgress.levelAsset?.levelName);
+
         ShowLine(baseScoreDisplay);
         SetLineValuesImmediate(baseScoreDisplay, levelScore.baseScore);
-        ShowLine(accuracyDisplay);
-        SetLineValuesImmediate(accuracyDisplay, levelScore.accuracyAverage, levelScore.AccuracyBonus);
-        ShowLine(comboDisplay);
-        SetLineValuesImmediate(comboDisplay, levelScore.bestCombo, levelScore.ComboBonus);
+
         ShowLine(noteCountDisplay);
         SetLineValuesImmediate(noteCountDisplay, levelScore.correctNoteCount, levelScore.totalNoteCount, levelScore.PlayedNoteBonus);
+
+        ShowLine(comboDisplay);
+        SetLineValuesImmediate(comboDisplay, levelScore.bestCombo, levelScore.ComboBonus);
+
+        ShowLine(accuracyDisplay);
+        SetLineValuesImmediate(accuracyDisplay, levelScore.accuracyAverage, levelScore.AccuracyBonus);
+
+        ShowLine(healthDisplay);
+        SetLineValuesImmediate(healthDisplay, levelScore.remainingHealth, levelScore.HealthBonus);
+
         ShowLine(totalDisplay);
         SetLineValuesImmediate(totalDisplay, levelScore.Total);
     }
@@ -129,6 +128,7 @@ public class LevelCompleteScreen : MenuUI
         HideLine(baseScoreDisplay);
         HideLine(noteCountDisplay);
         HideLine(accuracyDisplay);
+        HideLine(healthDisplay);
         HideLine(comboDisplay);
         HideLine(totalDisplay);
     }
@@ -139,6 +139,7 @@ public class LevelCompleteScreen : MenuUI
         // Display lines one at a time
         float displayTimer = 0f;
         yield return new WaitForSeconds(lineDisplayDelay);
+
         // Header
         ShowLine(header);
         yield return new WaitForSeconds(lineDisplayDelay);
@@ -146,9 +147,11 @@ public class LevelCompleteScreen : MenuUI
         SetLineTexts(title, levelObjectiveProgress.levelAsset?.levelName);
         ShowLine(title);
         yield return new WaitForSeconds(lineDisplayDelay);
+
         // Base score
         SetLineValues(baseScoreDisplay, levelScore.baseScore);
         ShowLine(baseScoreDisplay);
+
         // Total score (delayed, start at zero points)
         LevelScoreInfo delayedScore = levelScore;
         delayedScore.ClearPerformance();
@@ -162,34 +165,9 @@ public class LevelCompleteScreen : MenuUI
             yield return null;
             displayTimer -= Time.deltaTime;
         }
-        while (displayTimer > 0f || baseScoreDisplay.IsMoving || totalDisplay.IsMoving);
+        while (displayTimer > 0f || baseScoreDisplay.IsMoving);
         onTotalScore.Invoke(delayedScore.Total);
-        // Accuracy
-        SetLineValues(accuracyDisplay, levelScore.accuracyAverage, levelScore.AccuracyBonus);
-        ShowLine(accuracyDisplay);
-        displayTimer = lineDisplayDelay;
-        do
-        {
-            delayedScore.accuracyAverage = accuracyDisplay.valueDisplays[0].CurrentDisplayValue;
-            SetLineValues(totalDisplay, delayedScore.Total);
-            yield return null;
-            displayTimer -= Time.deltaTime;
-        }
-        while (displayTimer > 0f || accuracyDisplay.IsMoving || totalDisplay.IsMoving);
-        onTotalScore.Invoke(delayedScore.Total);
-        // Combo
-        SetLineValues(comboDisplay, levelScore.bestCombo, levelScore.ComboBonus);
-        ShowLine(comboDisplay);
-        displayTimer = lineDisplayDelay;
-        do
-        {
-            delayedScore.bestCombo = (int)comboDisplay.valueDisplays[0].CurrentDisplayValue;
-            SetLineValues(totalDisplay, delayedScore.Total);
-            yield return null;
-            displayTimer -= Time.deltaTime;
-        }
-        while (displayTimer > 0f || comboDisplay.IsMoving || totalDisplay.IsMoving);
-        onTotalScore.Invoke(delayedScore.Total);
+
         // Note count
         SetLineValues(noteCountDisplay, levelScore.correctNoteCount, levelScore.totalNoteCount, levelScore.PlayedNoteBonus);
         ShowLine(noteCountDisplay);
@@ -202,8 +180,53 @@ public class LevelCompleteScreen : MenuUI
             yield return null;
             displayTimer -= Time.deltaTime;
         }
-        while (displayTimer > 0f || noteCountDisplay.IsMoving || totalDisplay.IsMoving);
+        while (displayTimer > 0f || noteCountDisplay.IsMoving);
         onTotalScore.Invoke(delayedScore.Total);
+
+        // Combo
+        SetLineValues(comboDisplay, levelScore.bestCombo, levelScore.ComboBonus);
+        ShowLine(comboDisplay);
+        displayTimer = lineDisplayDelay;
+        do
+        {
+            delayedScore.bestCombo = (int)comboDisplay.valueDisplays[0].CurrentDisplayValue;
+            SetLineValues(totalDisplay, delayedScore.Total);
+            yield return null;
+            displayTimer -= Time.deltaTime;
+        }
+        while (displayTimer > 0f || comboDisplay.IsMoving);
+        onTotalScore.Invoke(delayedScore.Total);
+
+        // Accuracy
+        SetLineValues(accuracyDisplay, levelScore.accuracyAverage, levelScore.AccuracyBonus);
+        ShowLine(accuracyDisplay);
+        displayTimer = lineDisplayDelay;
+        do
+        {
+            delayedScore.accuracyAverage = accuracyDisplay.valueDisplays[0].CurrentDisplayValue;
+            SetLineValues(totalDisplay, delayedScore.Total);
+            yield return null;
+            displayTimer -= Time.deltaTime;
+        }
+        while (displayTimer > 0f || accuracyDisplay.IsMoving);
+        onTotalScore.Invoke(delayedScore.Total);
+
+        // Health
+        SetLineValues(healthDisplay, levelScore.remainingHealth, levelScore.HealthBonus);
+        ShowLine(healthDisplay);
+        displayTimer = lineDisplayDelay;
+        do
+        {
+            delayedScore.remainingHealth = healthDisplay.valueDisplays[0].CurrentDisplayValue;
+            SetLineValues(totalDisplay, delayedScore.Total);
+            yield return null;
+            displayTimer -= Time.deltaTime;
+        }
+        while (displayTimer > 0f || healthDisplay.IsMoving);
+        onTotalScore.Invoke(delayedScore.Total);
+
+        // End
+        yield return new WaitWhile(() => totalDisplay.IsMoving);
         yield return new WaitForSeconds(endDisplayDelay);
         displayLinesCoroutine = null;
     }

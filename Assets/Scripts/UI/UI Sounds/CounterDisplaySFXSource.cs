@@ -9,6 +9,8 @@ public class CounterDisplaySFXSource : MonoBehaviour
 
     public Coroutine movingCoroutine;
 
+    private void OnDisable() => Stop();
+
     private void Update()
     {
         if (counter == null) return;
@@ -17,7 +19,11 @@ public class CounterDisplaySFXSource : MonoBehaviour
 
     private IEnumerator SFXCoroutine()
     {
-        if (audioSource == null || counter == null || sfx == null) yield break;
+        if (audioSource == null || counter == null || sfx == null)
+        {
+            movingCoroutine = null;
+            yield break;
+        }
         // Starting sequence
         if (sfx.starting != null)
         {
@@ -25,8 +31,8 @@ public class CounterDisplaySFXSource : MonoBehaviour
             audioSource.pitch = 1f;
             audioSource.clip = sfx.starting;
             audioSource.Play();
+            yield return new WaitWhile(() => audioSource.isPlaying);
         }
-        yield return new WaitWhile(() => audioSource.isPlaying);
         // Moving sequence
         if (sfx.moving != null)
         {
@@ -34,17 +40,19 @@ public class CounterDisplaySFXSource : MonoBehaviour
             audioSource.clip = sfx.moving;
             audioSource.pitch = sfx.startPitch;
             audioSource.Play();
-            if (sfx.rate <= 0f) yield break;
-            float spacing = 1f / sfx.rate;
-            while (audioSource != null && counter != null)
+            if (sfx.rate > 0f)
             {
-                yield return new WaitForSeconds(spacing);
-                audioSource.Stop();
-                audioSource.pitch += sfx.pitchRiseSpeed * spacing;
-                audioSource.Play();
-                if (counter.IsMoving == false) stopTimer += spacing;
-                else stopTimer = 0f;
-                if (stopTimer >= sfx.stopDelay) break;
+                float spacing = 1f / sfx.rate;
+                while (audioSource != null && counter != null)
+                {
+                    yield return new WaitForSeconds(spacing);
+                    audioSource.Stop();
+                    audioSource.pitch += sfx.pitchRiseSpeed * spacing;
+                    audioSource.Play();
+                    if (counter.IsMoving == false) stopTimer += spacing;
+                    else stopTimer = 0f;
+                    if (stopTimer >= sfx.stopDelay) break;
+                }
             }
         }
         // Stopping sequence
@@ -54,8 +62,14 @@ public class CounterDisplaySFXSource : MonoBehaviour
             audioSource.clip = sfx.stopping;
             audioSource.pitch = 1f;
             audioSource.Play();
-            // End
-            movingCoroutine = null;
         }
+        // End
+        movingCoroutine = null;
+    }
+
+    public void Stop()
+    {
+        StopAllCoroutines();
+        movingCoroutine = null;
     }
 }

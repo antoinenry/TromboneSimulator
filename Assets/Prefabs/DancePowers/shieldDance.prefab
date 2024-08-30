@@ -5284,8 +5284,8 @@ MonoBehaviour:
   shieldUp: 0
   integrity: 0
   maxIntegrity: 1
-  damageRate: 0.5
-  rechargeRate: 0.1
+  damageRate: 1
+  rechargeRate: 0.5
   rechargeDelay: 1
   activatingChargeRate: 2
   onActivate:
@@ -10332,9 +10332,9 @@ MonoBehaviour:
   counter:
     counterValue: 0
     minValue: 0
-    maxValue: 10
+    maxValue: 5
     incrementBufferSize: 0
-    decrementBufferSize: 4
+    decrementBufferSize: 1
     passiveMovementDelay: 0
     passiveMovementSpeed: 0
     onValueChange:

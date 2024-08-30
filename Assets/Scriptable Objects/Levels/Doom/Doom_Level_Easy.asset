@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
+  m_Name: Doom_Level_Easy
+  m_EditorClassIdentifier: 
+  levelName: Doom's Gate
+  music: {fileID: 11400000, guid: d528ec35e1347b64baef4d33ee0196bd, type: 2}
+  unlockTier: 2
+  notePlacements:
+  - {fileID: 11400000, guid: 6017bb2a3009073479c8df74e48eda65, type: 2}
+  objectives:
+  - name: Finir le morceau
+    type: EndMusic
+    parameters: []
+  - name: Super Score
+    type: Highscore
+    parameters:
+    - 75000
+  - name: Hyper Score
+    type: Highscore
+    parameters:
+    - 200000
+  - name: Headbang (1/2)
+    type: Dance
+    parameters:
+    - 1
+    - 1
+  - name: Headbang (2/2)
+    type: Dance
+    parameters:
+    - 1
+    - 2
+  events:
+  - {fileID: 11400000, guid: c009b57bb157e7f478065c1d6afa2c52, type: 2}

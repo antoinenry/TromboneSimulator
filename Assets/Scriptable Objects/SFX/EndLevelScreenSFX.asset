@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: EndLevelScreenSFX
   m_EditorClassIdentifier: 
   showUI: {fileID: 8300000, guid: 2fb60a210b5b46e46997a004cd804bf7, type: 3}
-  visibleLoop: {fileID: 0}
+  visibleLoop: {fileID: 8300000, guid: cc6ad1ad01481a442936bdacb685afba, type: 3}
   loopDelay: 1
   hideUI: {fileID: 0}

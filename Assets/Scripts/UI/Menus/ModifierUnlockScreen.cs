@@ -48,13 +48,9 @@ public class ModifierUnlockScreen : MenuUI
 
     public override void ShowUI()
     {
-        base.ShowUI();
         PickModifiers();
-        if (Application.isPlaying && (modifiers == null || modifiers.Length == 0))
-        {
-            HideUI();
-            return;
-        }
+        if (Application.isPlaying && (modifiers == null || modifiers.Length == 0)) return;
+        base.ShowUI();
         UpdateButtonInstances(out ModifierUnlockButton[] buttons);
         AddModifierButtonsListeners(buttons);
         //SelectModifier(buttons, 0);

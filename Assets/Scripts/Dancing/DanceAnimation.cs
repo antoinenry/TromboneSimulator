@@ -21,6 +21,12 @@ public class DanceAnimation : MonoBehaviour
         idleScale = transform.localScale;
     }
 
+    private void OnDisable()
+    {
+        transform.localPosition = idlePosition;
+        transform.localScale = idleScale;
+    }
+
     private void Update()
     {
         switch (rythm)

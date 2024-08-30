@@ -21,9 +21,10 @@ public class PerformanceJudge : MonoBehaviour
     public int combo;
     public float health;
     [Header("Bonuses")]
-    public float accuracyBonusMultiplier = 10000f;
     public float playedNotesBonusMultiplier = 100f;
     public float bestComboBonusMultiplier = 100f;
+    public float accuracyBonusMultiplier = 10000f;
+    public float healthBonusMultiplier = 10000f;
     [Header("Events")]
     public UnityEvent<float> onScore;
     public UnityEvent<float,float,float> onHealth;
@@ -181,6 +182,7 @@ public class PerformanceJudge : MonoBehaviour
         {
             baseScore = RoundedScore,
             accuracyBonusMultiplier = accuracyBonusMultiplier,
+            healthBonusMultiplier = healthBonusMultiplier,
             bestComboBonusMultiplier = bestComboBonusMultiplier,
             playedNotesBonusMultiplier = playedNotesBonusMultiplier
         };
@@ -210,12 +212,10 @@ public class PerformanceJudge : MonoBehaviour
             }
             else
                 comboCounter = 0;
-            
+
         }
-        if (totalNoteTime > 0f)
-            scoreInfo.accuracyAverage = accuracyTime / totalNoteTime;
-        else
-            scoreInfo.accuracyAverage = 1f;
+        scoreInfo.accuracyAverage = totalNoteTime > 0f ? accuracyTime / totalNoteTime : 0f;
+        scoreInfo.remainingHealth = maxHealth != 0f ? health / maxHealth : 0f;
         return scoreInfo;
     }
 

@@ -34,6 +34,7 @@ public class PowerDanceForShield : PowerDance
         {
             shield.onActivate.AddListener(OnShieldUp);
             shield.onShieldDown.AddListener(OnShieldDown);
+            shield.onDamaged.AddListener(OnShieldDamage);
         }
     }
 
@@ -44,6 +45,7 @@ public class PowerDanceForShield : PowerDance
         {
             shield.onActivate.RemoveListener(OnShieldUp);
             shield.onShieldDown.RemoveListener(OnShieldDown);
+            shield.onDamaged.RemoveListener(OnShieldDamage);
         }
     }
 
@@ -81,4 +83,6 @@ public class PowerDanceForShield : PowerDance
         danceCounter.DanceCount = 0;
         GUI?.SetActive(true);
     }
+
+    private void OnShieldDamage() => PlayTromboneTintEffect();
 }
