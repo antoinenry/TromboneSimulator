@@ -16,17 +16,17 @@ MonoBehaviour:
   - startTime: 3
     duration: 3
     text: "(intro inqui\xE9tante)"
-    danceAnimation: 1
+    danceAnimation: 0
   - startTime: 9
-    duration: 0.5
+    duration: 1
     text: BOUH !
     danceAnimation: 0
   - startTime: 31
-    duration: 0.5
+    duration: 1
     text: BLAH !
     danceAnimation: 0
   - startTime: 35
-    duration: 1
+    duration: 2
     text: (silence de mort)
     danceAnimation: 0
   - startTime: 80
@@ -34,6 +34,6 @@ MonoBehaviour:
     text: Remix!
     danceAnimation: 0
   - startTime: 128
-    duration: 1
+    duration: 3
     text: (outro terrifiante)
     danceAnimation: 0

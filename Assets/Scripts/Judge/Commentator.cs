@@ -8,6 +8,7 @@ public class Commentator : MonoBehaviour
     public float commentDuration = .5f;
     public bool highPriority;
 
+    private LevelLoader levelLoader;
     private PerformanceJudge perfJudge;
     private LevelGUI gui;
     private int correctNoteCounter;
@@ -16,6 +17,7 @@ public class Commentator : MonoBehaviour
 
     private void Awake()
     {
+        levelLoader = FindObjectOfType<LevelLoader>(true);
         perfJudge = GetComponent<PerformanceJudge>();
         gui = FindObjectOfType<LevelGUI>(true);
     }
@@ -23,29 +25,39 @@ public class Commentator : MonoBehaviour
     private void OnEnable()
     {
         AddListeners();
-        correctNoteCounter = 0;
-        missedNoteCounter = 0;
-        scoreCounter = 0f;
+        ResetCounters();
     }
 
     private void OnDisable() => RemoveListeners();
 
     private void AddListeners()
     {
-        if (perfJudge == null) return;
-        perfJudge.onNotePerformanceEnd.AddListener(OnNoteEnd);
-        perfJudge.onHealth.AddListener(OnHealth);
-        perfJudge.onNoteCombo.AddListener(OnCombo);
-        perfJudge.onScore.AddListener(OnScore);
+        if (levelLoader)
+        {
+            levelLoader.onStartLoadLevel.AddListener(OnLoadLevel);
+        }
+        if (perfJudge)
+        {
+            perfJudge.onNotePerformanceEnd.AddListener(OnNoteEnd);
+            perfJudge.onHealth.AddListener(OnHealth);
+            perfJudge.onNoteCombo.AddListener(OnCombo);
+            perfJudge.onScore.AddListener(OnScore);
+        }
     }
 
     private void RemoveListeners()
     {
-        if (perfJudge == null) return;
-        perfJudge.onNotePerformanceEnd.RemoveListener(OnNoteEnd);
-        perfJudge.onHealth.RemoveListener(OnHealth);
-        perfJudge.onNoteCombo.RemoveListener(OnCombo);
-        perfJudge.onScore.RemoveListener(OnScore);
+        if (levelLoader)
+        {
+            levelLoader.onStartLoadLevel.RemoveListener(OnLoadLevel);
+        }
+        if (perfJudge)
+        {
+            perfJudge.onNotePerformanceEnd.RemoveListener(OnNoteEnd);
+            perfJudge.onHealth.RemoveListener(OnHealth);
+            perfJudge.onNoteCombo.RemoveListener(OnCombo);
+            perfJudge.onScore.RemoveListener(OnScore);
+        }
     }
 
     public void DisplayComment(string comment)
@@ -53,6 +65,18 @@ public class Commentator : MonoBehaviour
         if (gui == null || comment == null || comment == string.Empty) return;
         if (highPriority || gui.CurrentMessage == null || gui.CurrentMessage == string.Empty)
             gui.ShowMessage(comment, commentDuration);
+    }
+
+    public void ResetCounters()
+    {
+        correctNoteCounter = 0;
+        missedNoteCounter = 0;
+        scoreCounter = 0f;
+    }
+
+    private void OnLoadLevel(Level l)
+    {
+        ResetCounters();
     }
 
     private void OnNoteEnd(NoteSpawn note, float points)

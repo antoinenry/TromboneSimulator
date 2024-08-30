@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soloInfos:
   - startTime: 81.9
-    duration: 95.5
+    duration: 13.6
     soloName: Solo 1
   - startTime: 112.5
-    duration: 95.5
+    duration: 13.6
     soloName: Solo 2

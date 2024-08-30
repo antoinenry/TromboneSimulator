@@ -24,13 +24,13 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 75000
+    - 200000
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 150000
+    - 400000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 300000
+    - 600000
   events: []

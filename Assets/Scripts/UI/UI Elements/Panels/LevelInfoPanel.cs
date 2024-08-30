@@ -62,7 +62,7 @@ public class LevelInfoPanel : InfoPanel
             text += objectiveLabel + "\n\n";
             overlayText += "\n\n";
             string[] objectives = levelInfo.ObjectiveLongNames;
-            bool[] completed = levelInfo.checklist;
+            bool[] completed = levelInfo.Checklist;
             for (int i = 0; i < objectiveCount; i++)
             {
                 string line = "- " + objectives[i] + "\n";

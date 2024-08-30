@@ -310,7 +310,7 @@ public class LevelCompleteScreen : MenuUI
         foreach (ObjectiveCheckPanel panel in objectivePanels) panel.gameObject.SetActive(false);
         // Animate objectives
         int objectiveCount = levelObjectiveProgress.ObjectiveCount;
-        bool[] oldChecklist = levelObjectiveProgress.checklist;
+        bool[] oldChecklist = levelObjectiveProgress.Checklist;
         int levelCheckCount = oldChecklist != null ? oldChecklist.Length : 0;
         int checkCount = checklist != null ? checklist.Length : 0;
         for (int i = 0; i < objectiveCount; i++)

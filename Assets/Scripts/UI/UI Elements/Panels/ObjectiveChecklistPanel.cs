@@ -35,7 +35,7 @@ public class ObjectiveChecklistPanel : InfoPanel
         if (objectiveCount > 0)
         {
             string[] objectives = levelInfo.ObjectiveNames;
-            bool[] completed = levelInfo.checklist;
+            bool[] completed = levelInfo.Checklist;
             int checkListLength = completed != null ? completed.Length : 0;
             for (int i = 0; i < objectiveCount; i++)
             {

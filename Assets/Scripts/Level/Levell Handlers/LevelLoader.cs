@@ -150,7 +150,7 @@ public class LevelLoader : MonoBehaviour
         {
             objectiveJudge.enabled = true;
             objectiveJudge.LoadObjectives(LoadedLevel.objectives);
-            objectiveJudge.LoadProgress(GameProgress.Current?.FindLevelProgress(LoadedLevel).checklist);
+            objectiveJudge.LoadProgress(GameProgress.Current?.FindLevelProgress(LoadedLevel).Checklist);
         }
         // GUI Setup
         if (GUI)
@@ -456,7 +456,7 @@ public class LevelLoader : MonoBehaviour
         {
             UILevelComplete.levelObjectiveProgress = oldLevelProgress;
             UILevelComplete.levelScore = levelScore;
-            UILevelComplete.checklist = newLevelProgress.checklist;
+            UILevelComplete.checklist = newLevelProgress.Checklist;
             if (oldPlayerXp != -1) UILevelComplete.playerXp = oldPlayerXp;
             UILevelComplete.ShowUI();
             yield return new WaitWhile(() => UILevelComplete.DisplayCoroutine);

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modName: "Danse de Sant\xE9"
   icon: {fileID: -905471385, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
-  uiColor: {r: 0.7607844, g: 0.42352945, b: 0.42352945, a: 1}
+  uiColor: {r: 0.40986294, g: 0.8679245, b: 0.38892844, a: 1}
   colorizeIcon: 1
   unlockTier: 3
   scoreMultiplierBonus: 1

@@ -1,11 +1,11 @@
 using System;
-using UnityEditor;
+using UnityEngine;
 
 [Serializable]
 public struct LevelProgress
 {
     public Level levelAsset;
-    public bool[] checklist;
+    [SerializeField] private bool[] checklist;
 
     public LevelProgress(Level level, bool[] checklist)
     {
@@ -23,6 +23,22 @@ public struct LevelProgress
         int objectiveCount = level?.objectives != null ? level.objectives.Length : 0;
         checklist = new bool[objectiveCount];
         if (completedObjectives != null) foreach (ObjectiveInfo o in completedObjectives) TryCheckObjective(o);
+    }
+
+    public bool[] Checklist
+    {
+        get
+        {
+            int length = checklist != null ? checklist.Length : 0;
+            bool[] clone = new bool[length];
+            Array.Copy(checklist, clone, length);
+            return clone;
+        }
+        set
+        {
+            int length = value != null ? value.Length : 0;
+            Array.Copy(value, checklist, length);
+        }
     }
 
     public LevelProgress Clone() => new(levelAsset, checklist);

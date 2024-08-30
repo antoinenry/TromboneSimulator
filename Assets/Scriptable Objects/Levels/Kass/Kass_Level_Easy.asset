@@ -33,6 +33,11 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 1000000
+  - name: Solos parfaits
+    type: PlaySolo
+    parameters:
+    - 1
+    - 2
   events:
   - {fileID: 11400000, guid: 19be4d5d7b4e11e4abaec7af3b4ef1da, type: 2}
   - {fileID: 11400000, guid: fa15086d7dea78942a39c5dabd9c5999, type: 2}
