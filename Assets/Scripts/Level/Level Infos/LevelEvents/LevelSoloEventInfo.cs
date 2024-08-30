@@ -6,6 +6,7 @@ public struct LevelSoloEventInfo : ITimingInfo
 {
     public float startTime;
     public float duration;
+    public string soloName;
 
     #region Interface Infos
     public float StartTime { get => startTime; set => startTime = value; }

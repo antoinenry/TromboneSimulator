@@ -3848,7 +3848,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 697205634}
+  - {fileID: 2059870130}
   m_Father: {fileID: 64880550}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3864,7 +3864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b2b5b89d3b31c46b20f58b84a49ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerObject: {fileID: 697205633}
+  powerObject: {fileID: 2059870129}
 --- !u!1 &149758070
 GameObject:
   m_ObjectHideFlags: 0
@@ -21249,88 +21249,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 691821389}
   m_CullTransparentMesh: 1
---- !u!1 &697205633
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 697205634}
-  - component: {fileID: 697205636}
-  - component: {fileID: 697205635}
-  m_Layer: 0
-  m_Name: emptyDance(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &697205634
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697205633}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 14, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 148899687}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &697205635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697205633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b91d96bc87543e4f9fe1f061009cdef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  counter:
-    counterValue: 0
-    minValue: 0
-    maxValue: 1
-    incrementBufferSize: 0
-    decrementBufferSize: 0
-    passiveMovementDelay: 0
-    passiveMovementSpeed: 0
-    onValueChange:
-      m_PersistentCalls:
-        m_Calls: []
-  onIncrease:
-    m_PersistentCalls:
-      m_Calls: []
-  onDecrease:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &697205636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697205633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33f2eaa6e7961cd41a37548953d20e5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GUI: {fileID: 0}
-  particleEffect: {fileID: 0}
-  danceCounter: {fileID: 697205635}
-  frameTintColor: {r: 0.22745098, g: 0.22745098, b: 0.22745098, a: 1}
-  tromboneTintColor: {r: 0.8000001, g: 0.7960785, b: 0.79215693, a: 0}
-  onCharge:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &698040620
 GameObject:
   m_ObjectHideFlags: 0
@@ -32411,6 +32329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1234557229}
   - component: {fileID: 1234557230}
+  - component: {fileID: 1234557231}
   m_Layer: 5
   m_Name: Message Display
   m_TagString: Untagged
@@ -32459,6 +32378,46 @@ MonoBehaviour:
   swooshSpeed: 1000
   fadeSpeed: 2
   color: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 0.47058824}
+--- !u!114 &1234557231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234557228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70211a1d503fde41af5f61dbb5e4876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  danceAmplitude: {x: 0, y: 10}
+  rythm: 1
+  flipX: 0
+  flipY: 0
+  customCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.136638
+      outSlope: 1.136638
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.051194537
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -6.156748
+      outSlope: -6.156748
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.013651967
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1236630974
 GameObject:
   m_ObjectHideFlags: 0
@@ -49451,8 +49410,6 @@ MonoBehaviour:
   advanceTolerance: 0.2
   delayTolerance: 0.1
   toneTolerance: 1
-  catchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  missColor: {r: 1, g: 0, b: 0, a: 1}
   onCorrectNote:
     m_PersistentCalls:
       m_Calls: []
@@ -51844,6 +51801,88 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057489665}
   m_CullTransparentMesh: 1
+--- !u!1 &2059870129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2059870130}
+  - component: {fileID: 2059870132}
+  - component: {fileID: 2059870131}
+  m_Layer: 0
+  m_Name: emptyDance(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2059870130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059870129}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4, y: 14, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 148899687}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2059870131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059870129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b91d96bc87543e4f9fe1f061009cdef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  counter:
+    counterValue: 0
+    minValue: 0
+    maxValue: 1
+    incrementBufferSize: 0
+    decrementBufferSize: 1
+    passiveMovementDelay: 0
+    passiveMovementSpeed: 0
+    onValueChange:
+      m_PersistentCalls:
+        m_Calls: []
+  onIncrease:
+    m_PersistentCalls:
+      m_Calls: []
+  onDecrease:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2059870132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059870129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f2eaa6e7961cd41a37548953d20e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GUI: {fileID: 0}
+  particleEffect: {fileID: 0}
+  danceCounter: {fileID: 2059870131}
+  frameTintColor: {r: 0.22745098, g: 0.22745098, b: 0.22745098, a: 1}
+  tromboneTintColor: {r: 0.8000001, g: 0.7960785, b: 0.79215693, a: 0}
+  onCharge:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2061771685
 GameObject:
   m_ObjectHideFlags: 0

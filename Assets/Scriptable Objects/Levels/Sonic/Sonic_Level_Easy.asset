@@ -24,13 +24,20 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 100000
+    - 200000
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 300000
+    - 500000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 500000
-  events: []
+    - 1000000
+  - name: Robotnik!
+    type: PlaySolo
+    parameters:
+    - 1
+    - 1
+  events:
+  - {fileID: 11400000, guid: ee79bf374ee034649ba17ac0e76ec44a, type: 2}
+  - {fileID: 11400000, guid: db2193370fd8fcc499e272070c429291, type: 2}

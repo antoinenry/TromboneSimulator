@@ -10,18 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de05754822315fc44a6747eb7efcf27b, type: 3}
-  m_Name: Mii_Text
+  m_Name: Luigi_Text
   m_EditorClassIdentifier: 
   textInfos:
-  - startTime: 29
-    duration: 2
-    text: Solo!
+  - startTime: 3
+    duration: 3
+    text: "(intro inqui\xE9tante)"
+    danceAnimation: 1
+  - startTime: 9
+    duration: 0.5
+    text: BOUH !
     danceAnimation: 0
-  - startTime: 50
-    duration: 2
-    text: Round 2
+  - startTime: 31
+    duration: 0.5
+    text: BLAH !
+    danceAnimation: 0
+  - startTime: 35
+    duration: 1
+    text: (silence de mort)
     danceAnimation: 0
   - startTime: 80
     duration: 2
-    text: Re-Solo!
+    text: Remix!
+    danceAnimation: 0
+  - startTime: 128
+    duration: 1
+    text: (outro terrifiante)
     danceAnimation: 0

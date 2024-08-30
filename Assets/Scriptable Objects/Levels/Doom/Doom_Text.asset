@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de05754822315fc44a6747eb7efcf27b, type: 3}
   m_Name: Doom_Text
   m_EditorClassIdentifier: 
-  textInfos: []
+  textInfos:
+  - startTime: 0
+    duration: 8
+    text: Headbang!
+    danceAnimation: 1
+  - startTime: 57
+    duration: 8
+    text: Headbang!
+    danceAnimation: 1

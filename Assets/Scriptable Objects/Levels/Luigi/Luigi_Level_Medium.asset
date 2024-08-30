@@ -29,8 +29,11 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 200000
-  - name: Ultra Score
-    type: Highscore
+  - name: Solo parfait
+    type: PlaySolo
     parameters:
-    - 300000
-  events: []
+    - 1
+    - 1
+  events:
+  - {fileID: 11400000, guid: b9b59d5603714ed4094e9c40d4addfc2, type: 2}
+  - {fileID: 11400000, guid: da8f9a698bd2aa44481edd62dab0b707, type: 2}

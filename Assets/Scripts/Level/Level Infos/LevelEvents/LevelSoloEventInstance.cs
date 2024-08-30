@@ -1,8 +1,11 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class LevelSoloEventInstance : LevelEventInstance<LevelSoloEventInfo>
 {
+    [Header("Other components")]
+    public TMP_Text nameField;
     [Header("Configuration")]
     [SerializeField] private LevelSoloEventInfo eventInfo;
 
@@ -39,6 +42,10 @@ public class LevelSoloEventInstance : LevelEventInstance<LevelSoloEventInfo>
         {
             notesForPoints.noteCount = GetSoloLength();
             notesForPoints.onNoteCount.AddListener(OnNoteCount);
+        }
+        if (nameField != null && eventInfo.soloName != null && eventInfo.soloName != string.Empty)
+        {
+            nameField.text = eventInfo.soloName;
         }
     }
 

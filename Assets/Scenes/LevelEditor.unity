@@ -8351,8 +8351,12 @@ MonoBehaviour:
   xAxisName: Mouse X
   yAxisName: Mouse Y
   sensibility: 0.3
-  keepOnScreen: 1
+  keepCursorOnScreen: 1
   enableTromboneGrab: 1
+  confineCursor: 1
+  hideOnEdge: 1
+  edge: 1
+  alwaysConfineInEditor: 1
   roundDisplayPosition: 1
   sprites:
     idle: {fileID: 804804779, guid: 6b8d39ea31a5f854ea9f3ceefaac1e56, type: 3}
@@ -13982,8 +13986,6 @@ MonoBehaviour:
   advanceTolerance: 0.2
   delayTolerance: 0.1
   toneTolerance: 1
-  catchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  missColor: {r: 1, g: 0, b: 0, a: 1}
   onCorrectNote:
     m_PersistentCalls:
       m_Calls: []
@@ -14379,9 +14381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a34d72007321204a8cf17aeb1264767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelAsset: {fileID: 11400000, guid: a6062b9873491bf419935d47531ba337, type: 2}
+  levelAsset: {fileID: 11400000, guid: e7f9aa36b2e371d46880960b9c4b58bc, type: 2}
   partName: Trombone
-  NotePlacementAsset: {fileID: 11400000, guid: 04785612527c41b428f1c0f44b6f448e, type: 2}
+  NotePlacementAsset: {fileID: 11400000, guid: 693e6b50c574fd94681118a452788b94, type: 2}
   editorPlayhead: {fileID: 11400000, guid: ef554c6cd3c64054a8e2ce72c8cef0f9, type: 2}
   currentNoteIndex: 0
   currentNoteInfo:

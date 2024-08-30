@@ -24,13 +24,15 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 100000
+    - 300000
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 300000
+    - 600000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 600000
-  events: []
+    - 1000000
+  events:
+  - {fileID: 11400000, guid: 19be4d5d7b4e11e4abaec7af3b4ef1da, type: 2}
+  - {fileID: 11400000, guid: fa15086d7dea78942a39c5dabd9c5999, type: 2}
