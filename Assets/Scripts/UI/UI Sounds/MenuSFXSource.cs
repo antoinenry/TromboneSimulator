@@ -10,6 +10,11 @@ public class MenuSFXSource : SFXSource
         menu = GetComponent<MenuUI>();
     }
 
+    private void Start()
+    {
+        if (AudioSourceComponent == null) AudioSourceComponent = MenuUI.SFXSource.AudioSourceComponent;
+    }
+
     private void OnEnable()
     {
         menu?.onShowUI?.AddListener(OnShowUI);

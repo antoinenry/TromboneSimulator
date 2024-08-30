@@ -4,11 +4,11 @@ using System.Collections;
 
 public class SFXSource : MonoBehaviour
 {
-    protected AudioSource source;
+    public AudioSource AudioSourceComponent { get; protected set; }
 
     protected virtual void Awake()
     {
-        source = GetComponent<AudioSource>();
+        AudioSourceComponent = GetComponent<AudioSource>();
     }
 
     public void PlayLoop(AudioClip clip, float delay = 0f)
@@ -18,11 +18,11 @@ public class SFXSource : MonoBehaviour
             StartCoroutine(DelayedActionCoroutine(() => PlayLoop(clip), delay));
             return;
         }
-        if (source == null || clip == null) return;
-        if (source.clip == clip && source.loop == true && source.isPlaying == true) return;
-        source.clip = clip;
-        source.loop = true;
-        source.Play();
+        if (AudioSourceComponent == null || clip == null) return;
+        if (AudioSourceComponent.clip == clip && AudioSourceComponent.loop == true && AudioSourceComponent.isPlaying == true) return;
+        AudioSourceComponent.clip = clip;
+        AudioSourceComponent.loop = true;
+        AudioSourceComponent.Play();
     }
 
     public void StopLoop(AudioClip clip, float delay = 0f)
@@ -32,7 +32,7 @@ public class SFXSource : MonoBehaviour
             StartCoroutine(DelayedActionCoroutine(() => StopLoop(clip), delay));
             return;
         }
-        if (clip != null && source != null && source.isPlaying && source.clip == clip) source.Stop();
+        if (clip != null && AudioSourceComponent != null && AudioSourceComponent.isPlaying && AudioSourceComponent.clip == clip) AudioSourceComponent.Stop();
     }
 
     public void PlayOneShot(AudioClip clip, float delay = 0f)
@@ -42,7 +42,7 @@ public class SFXSource : MonoBehaviour
             StartCoroutine(DelayedActionCoroutine(() => PlayOneShot(clip), delay));
             return;
         }
-        if (source != null && clip != null) source.PlayOneShot(clip);
+        if (AudioSourceComponent != null && clip != null) AudioSourceComponent.PlayOneShot(clip);
     }
 
     public int PlayRandomOneShot(AudioClip[] clips, float delay = 0f)

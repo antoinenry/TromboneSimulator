@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starting: {fileID: 0}
   stopping: {fileID: 0}
-  moving: {fileID: 0}
-  rate: 10
-  startPitch: 1
-  pitchRiseSpeed: 0.1
-  maxPitch: 1.5
+  moving: {fileID: 8300000, guid: ed248bcb91ccd864ea246706782aa97c, type: 3}
+  rate: 15
+  startPitch: 0.75
+  pitchRiseSpeed: 0.05
+  maxPitch: 1
+  stopDelay: 0.2
