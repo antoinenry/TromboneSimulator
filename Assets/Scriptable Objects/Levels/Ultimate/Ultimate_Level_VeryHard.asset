@@ -15,6 +15,7 @@ MonoBehaviour:
   levelName: Ultimate
   music: {fileID: 11400000, guid: 23cf0d2497f68f24b9ed83ab161f9a27, type: 2}
   unlockTier: 20
+  timeScale: 130
   notePlacements:
   - {fileID: 11400000, guid: 544a9d9ee427d1248a68d87354f0bcfd, type: 2}
   objectives:

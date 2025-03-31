@@ -449,17 +449,17 @@ MonoBehaviour:
   length: 30
   isNext: 0
   roundValues: 1
-  linkMaxDistance: {x: 50, y: 0.5}
+  linkMaxDistance: {x: 50, y: 0.75}
   topLink: 0
   topLinkLength: 10
   bottomLink: 0
   bottomLinkLength: 10
   baseColor: {r: 0.8509804, g: 0.79442775, b: 0.30980396, a: 1}
-  farTint: {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0.74509805}
-  incomingTint: {r: 1, g: 1, b: 1, a: 0.5882353}
+  farTint: {r: 0, g: 0, b: 0, a: 1}
+  incomingTint: {r: 1, g: 1, b: 1, a: 1}
   playedTint: {r: 1, g: 0.8787273, b: 0.2971698, a: 1}
   missedTint: {r: 0.5188679, g: 0.10034709, b: 0.10034709, a: 1}
-  farDistance: 200
+  farDistance: 400
   incomingDistance: 100
 --- !u!114 &5068534347288138984
 MonoBehaviour:

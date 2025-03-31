@@ -15,6 +15,7 @@ MonoBehaviour:
   levelName: Green Hill Zone
   music: {fileID: 11400000, guid: 883f4a66c9aece54ba84fb34b7ce77c7, type: 2}
   unlockTier: 1
+  timeScale: 100
   notePlacements:
   - {fileID: 11400000, guid: 282d1db29a08ba54b9b588fea8007c0f, type: 2}
   objectives:

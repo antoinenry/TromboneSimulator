@@ -7,6 +7,7 @@ public class Level : ScriptableObject, IUnlockableContent
     public string levelName;
     public SheetMusic music;
     public int unlockTier;
+    public float timeScale = 90f;
     public NotePlacement[] notePlacements;
     public ObjectiveInfo[] objectives;
     public LevelEventSheet[] events;

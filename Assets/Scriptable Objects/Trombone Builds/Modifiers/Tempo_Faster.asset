@@ -17,7 +17,7 @@ MonoBehaviour:
   uiColor: {r: 1, g: 1, b: 1, a: 1}
   colorizeIcon: 0
   unlockTier: 15
-  scoreMultiplierBonus: 2
+  scoreMultiplierBonus: 4
   description: Augmente le tempo!
   tempoMultiplier: 1.75
   multiplyScoreByTempo: 1

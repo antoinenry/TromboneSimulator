@@ -15,6 +15,7 @@ MonoBehaviour:
   levelName: Corneria
   music: {fileID: 11400000, guid: d53085cada8cf8542bcd30f8e8f529f0, type: 2}
   unlockTier: 16
+  timeScale: 120
   notePlacements:
   - {fileID: 11400000, guid: fb7df52a96f1c7e4c8eb7ff6b14c65f3, type: 2}
   objectives:
@@ -33,3 +34,4 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 300000
+  events: []

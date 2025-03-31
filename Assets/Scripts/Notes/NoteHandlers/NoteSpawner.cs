@@ -31,7 +31,12 @@ public class NoteSpawner : MonoBehaviour
     private List<NoteSpawn> noteSpawns;
     private float previousTime;
 
-    public float TimeScale => grid != null ? grid.timeScale : 0f;
+    public float TimeScale
+    {
+        get => grid != null ? grid.timeScale : 0f;
+        set { if (grid != null && value > 0f) grid.timeScale = value; }
+    }
+
     public float SpawnDelay
     {
         get

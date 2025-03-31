@@ -124,6 +124,7 @@ public class LevelLoader : MonoBehaviour
         {
             noteSpawner.enabled = true;
             noteSpawner.notePlacement = LoadedLevel.GetNoteCoordinates(noteSpawner.GridDimensions);
+            noteSpawner.TimeScale = LoadedLevel.timeScale;
         }
         // Note catcher setup
         if (noteCatcher)

@@ -131,10 +131,10 @@ public class NoteBullet : MonoBehaviour
         else if (distance < farDistance)
         {
             // Same with different value.
-            float farRatio = 1f - (distance - incomingDistance) / (farDistance - incomingDistance);
+            float farRatio = (distance - incomingDistance) / (farDistance - incomingDistance);
             if (isLinkedToPreviousNote == false)
             {
-                currentColor = TintColor(baseColor, farTint, farRatio);
+                currentColor = TintColor(baseColor, farTint, farRatio, true);
                 SetColor(currentColor, 0f, float.PositiveInfinity);
             }
             target?.SetSprite(NoteTarget.DistanceState.Far);
@@ -266,12 +266,13 @@ public class NoteBullet : MonoBehaviour
 
     public void SetColor(Color c) => SetColor(c, float.NegativeInfinity, float.PositiveInfinity);
 
-    private Color TintColor(Color c, Color tint, float blend = 1f)
+    private Color TintColor(Color c, Color tint, float blend = 1f, bool blendAlphas = false)
     {
         float alpha = c.a;
-        float ratio = blend * tint.a;
-        Color tintColor = (1f - ratio) * c + ratio * tint;
-        tintColor.a = alpha;
+        float ratio = blend;
+        if (blendAlphas == false) ratio *= alpha;
+        Color tintColor = Color.Lerp(c, tint, ratio);
+        if (blendAlphas == false) tintColor.a = alpha;
         return tintColor;
     }
 
