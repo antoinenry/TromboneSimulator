@@ -308,16 +308,16 @@ public class SpriteCutter : MonoBehaviour
         backColor = sliceRenderers[sliceCount - 1].color;
     }
 
-    public void GetTipCuts(out bool frontIsCut, out  bool backIsCut)
-    {
-        int sliceCount = sliceRenderers != null ? sliceRenderers.Count : 0;
-        if (sliceCount == 0)
-        {
-            frontIsCut = true;
-            backIsCut = true;
-            return;
-        }
-        frontIsCut = sliceRenderers[0].transform.localPosition.x > 0;
-        backIsCut = sliceRenderers[sliceCount - 1].transform.localPosition.x + sliceRenderers[sliceCount - 1].size.x < TotalLength;
-    }
+    //public void GetTipCuts(out bool frontIsCut, out  bool backIsCut)
+    //{
+    //    int sliceCount = sliceRenderers != null ? sliceRenderers.Count : 0;
+    //    if (sliceCount == 0)
+    //    {
+    //        frontIsCut = true;
+    //        backIsCut = true;
+    //        return;
+    //    }
+    //    frontIsCut = sliceRenderers[0].transform.localPosition.x > 0;
+    //    backIsCut = sliceRenderers[sliceCount - 1].transform.localPosition.x + sliceRenderers[sliceCount - 1].size.x < TotalLength;
+    //}
 }

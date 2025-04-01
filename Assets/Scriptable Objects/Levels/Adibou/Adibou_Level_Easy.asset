@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
   m_Name: Adibou_Level_Easy
   m_EditorClassIdentifier: 
-  levelName: Adibou
+  levelName: Trois p'tits chats
   music: {fileID: 11400000, guid: e7a66b1c6a8ef6b498d0c3702d6f8538, type: 2}
   unlockTier: -49
   timeScale: 60
@@ -34,16 +34,11 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 200000
-  - name: Solo 1/2
+  - name: "Jolie m\xE9lodie"
     type: PlaySolo
     parameters:
     - 1
     - 1
-  - name: Solo 2/2
-    type: PlaySolo
-    parameters:
-    - 1
-    - 2
   events:
   - {fileID: 11400000, guid: 122ea105ae420f84bbab8d325ca33d1d, type: 2}
   - {fileID: 11400000, guid: df2fbaee31a9bb04197f5bc3f7c4d32e, type: 2}

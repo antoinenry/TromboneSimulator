@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Mii Channel
   music: {fileID: 11400000, guid: 74e8a4f689ebe774384177acf6ce8bbe, type: 2}
-  unlockTier: 0
+  unlockTier: -48
   timeScale: 68
   notePlacements:
   - {fileID: 11400000, guid: ae82a993813003149aea8a5ec29f7ead, type: 2}
@@ -30,11 +30,16 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 100000
-  - name: Solo Parfait
+  - name: Solo Parfait 1/2
     type: PlaySolo
     parameters:
     - 1
     - 1
+  - name: Solo Parfait 2/2
+    type: PlaySolo
+    parameters:
+    - 1
+    - 2
   events:
   - {fileID: 11400000, guid: 142b97113f7a3dd438648f6ee2772797, type: 2}
   - {fileID: 11400000, guid: 00cb29db1a1155e46b7c0e1963edeb28, type: 2}

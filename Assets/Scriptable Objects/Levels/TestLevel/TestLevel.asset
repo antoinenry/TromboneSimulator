@@ -15,7 +15,9 @@ MonoBehaviour:
   levelName: Test
   music: {fileID: 11400000, guid: 5638372add3a54947917eb3c17781454, type: 2}
   unlockTier: 0
-  notePlacements: []
+  timeScale: 90
+  notePlacements:
+  - {fileID: 11400000, guid: dd3c36c9908360b449c18a4c70853690, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic

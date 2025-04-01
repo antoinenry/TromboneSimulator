@@ -104,6 +104,7 @@ public class NoteBullet : MonoBehaviour
             // Bullet color depends on play/miss. We only set the target here.
             target?.SetSprite(NoteTarget.DistanceState.Passed);
             target.SetDistanceRatio(0f);
+            isNext = false;
         }
         // Passing note
         else if (distance < 0f)
@@ -223,7 +224,9 @@ public class NoteBullet : MonoBehaviour
         if (vertical && vRenderer != null)
         {
             vRenderer.Cut(fromPosition, toPosition);
-            vRenderer.GetTipCuts(out topCut, out bottomCut);
+            //vRenderer.GetTipCuts(out topCut, out bottomCut);
+            if (fromPosition <= 0f && toPosition > 0f) bottomCut = true;
+            if (fromPosition < vRenderer.TotalLength && toPosition >= vRenderer.TotalLength) topCut = true;
         }
     }
 
