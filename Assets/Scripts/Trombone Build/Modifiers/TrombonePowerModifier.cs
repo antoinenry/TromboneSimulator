@@ -13,4 +13,6 @@ public class TrombonePowerModifier : TromboneBuildModifier
             build.trombonePower.powerPrefab = powerPrefab;
         }
     }
+
+    public override string StatDescription => "Danser: bouger le trombone de haut en bas en suivant le tempo!";
 }

@@ -31,8 +31,10 @@ public class NoteToleranceModifier : TromboneBuildModifier
         }
     }
 
+    public override bool ReplaceOnly => true;
+
     public override bool CanStackWith(TromboneBuildModifier other)
     {
-        return true;
+        return other is NoteToleranceModifier == false;
     }
 }

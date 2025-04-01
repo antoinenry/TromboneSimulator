@@ -15,4 +15,6 @@ public class TromboneColorModifier : TromboneBuildModifier
             build.tromboneDisplay.color = color;
         }
     }
+
+    public override string StatDescription => "Change la couleur du trombone";
 }

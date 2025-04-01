@@ -21,7 +21,7 @@ MonoBehaviour:
     duration: 1
     text: Attention!
     danceAnimation: 0
-  - startTime: 28
+  - startTime: 32
     duration: 16
     text: Teukeuteu!
     danceAnimation: 1

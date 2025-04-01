@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: FallGuys_Level_Hard
+  m_Name: FallGuys_Level_Medium
   m_EditorClassIdentifier: 
   levelName: Fall Guys
   music: {fileID: 11400000, guid: a6318325c8c32a1428ae7d54a70e9060, type: 2}
-  unlockTier: 0
+  unlockTier: 7
   timeScale: 90
   notePlacements:
   - {fileID: 11400000, guid: 916419c1937bf79449d0ec5698f2526e, type: 2}
@@ -22,10 +22,6 @@ MonoBehaviour:
   - name: Finir le morceau
     type: EndMusic
     parameters: []
-  - name: Super Score
-    type: Highscore
-    parameters:
-    - 500000
   - name: Super Dance
     type: Dance
     parameters:
@@ -46,7 +42,7 @@ MonoBehaviour:
     parameters:
     - 1
     - 4
-  - name: "La derni\xE8re note"
+  - name: La note
     type: PlaySolo
     parameters:
     - 1
@@ -54,3 +50,4 @@ MonoBehaviour:
   events:
   - {fileID: 11400000, guid: 28cb9b1a51e0c734b94158a3440419df, type: 2}
   - {fileID: 11400000, guid: 9ee443dde54e61343a5d5c3494897e23, type: 2}
+  - {fileID: 11400000, guid: 0cd33e092a5dc5a4289eced2d81fc6df, type: 2}

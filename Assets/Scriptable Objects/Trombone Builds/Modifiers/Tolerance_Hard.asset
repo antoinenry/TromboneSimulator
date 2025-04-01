@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 304fd74812f2fa84cb1840088e54f05d, type: 3}
-  m_Name: Tolerance_EasyRythm
+  m_Name: Tolerance_Hard
   m_EditorClassIdentifier: 
-  modName: Public Amical
-  icon: {fileID: 755006580, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
-  uiColor: {r: 0, g: 0.7134721, b: 1, a: 1}
+  modName: Public Critique
+  icon: {fileID: -1300144798, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  uiColor: {r: 1, g: 1, b: 1, a: 1}
   colorizeIcon: 0
-  unlockTier: 0
-  scoreMultiplierBonus: 0.75
-  description: "Rend les notes plus faciles \xE0 attraper."
-  rythmToleranceMultiplier: 4
-  toneToleranceMultiplier: 1.5
+  unlockTier: -97
+  scoreMultiplierBonus: 5
+  description: "Z\xE9ro tol\xE9rance!"
+  rythmToleranceMultiplier: 0.5
+  toneToleranceMultiplier: 0.5

@@ -39,6 +39,10 @@ public class ModifierUnlockButton : SelectionButton<TromboneBuildModifier>
                 icon.sprite = modifier.icon;
                 icon.color = modifier.IconColor;
             }
+            if (descriptionField)
+            {
+                descriptionField.text = modifier.StatDescription;
+            }
         }
         else
         {

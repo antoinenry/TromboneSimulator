@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 1984006813, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.9019608, g: 0.38039216, b: 1, a: 1}
   colorizeIcon: 1
-  unlockTier: 8
+  unlockTier: 10
   scoreMultiplierBonus: 1
-  description: "Accompagnement r\xE9trogaming."
+  description: "Son r\xE9trogaming"
   orchestra: {fileID: 11400000, guid: 18199e8796528cd41a0927168fc8bdeb, type: 2}

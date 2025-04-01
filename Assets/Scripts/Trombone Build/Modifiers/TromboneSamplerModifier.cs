@@ -15,4 +15,6 @@ public class TromboneSamplerModifier : TromboneBuildModifier
             build.tromboneAudio.sampler = samplerInstrument;
         }
     }
+
+    public override string StatDescription => "Change le son du trombone";
 }

@@ -14381,9 +14381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a34d72007321204a8cf17aeb1264767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelAsset: {fileID: 11400000, guid: 581f124e17eda2c488b07ee8058b7230, type: 2}
+  levelAsset: {fileID: 11400000, guid: 2cf74ae4be9f093468e6b2a394ce354a, type: 2}
   partName: Trombone
-  NotePlacementAsset: {fileID: 11400000, guid: 916419c1937bf79449d0ec5698f2526e, type: 2}
+  NotePlacementAsset: {fileID: 11400000, guid: 49f0d522f803dea41b51b966b9c869fe, type: 2}
   editorPlayhead: {fileID: 11400000, guid: ef554c6cd3c64054a8e2ce72c8cef0f9, type: 2}
   currentNoteIndex: 0
   currentNoteInfo:

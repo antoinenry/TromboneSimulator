@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 1660633597, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.9013007, g: 0.3820755, b: 1, a: 1}
   colorizeIcon: 1
-  unlockTier: 3
+  unlockTier: 11
   scoreMultiplierBonus: 1
-  description: "Son de trombone r\xE9trogaming."
+  description: "Son r\xE9trogaming."
   samplerInstrument: {fileID: 11400000, guid: 33b726ba1c0c24f4d964af32631cd81a, type: 2}

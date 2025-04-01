@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58a5871e87f894c4a980641579163858, type: 3}
-  m_Name: Movement_PressureOnly
+  m_Name: Movement_All
   m_EditorClassIdentifier: 
-  modName: Pas de coulisse
-  icon: {fileID: 795744806, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  modName: Bouche & Coulisse
+  icon: {fileID: 251872133, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.8705883, g: 0.82745105, b: 0.54901963, a: 1}
   colorizeIcon: 0
-  unlockTier: -87
-  scoreMultiplierBonus: 0.5
-  description: "D\xE9sactive les notes verticales."
-  enabledMovements: 2
+  unlockTier: -89
+  scoreMultiplierBonus: 1
+  description: Notes horizontales et verticales, comme dans la vraie vie
+  enabledMovements: 0
   toneOffset: 0
   changeSlideLength: 0
   slideToneLength: 0

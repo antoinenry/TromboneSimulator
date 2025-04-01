@@ -12,4 +12,6 @@ public class OrchestraModifier : TromboneBuildModifier
         base.ApplyTo(build);
         if (build?.audioTrackGenerator != null) build.audioTrackGenerator.orchestra = orchestra;
     }
+
+    public override string StatDescription => "Change le son de l'accompagnement";
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Adibou
   music: {fileID: 11400000, guid: e7a66b1c6a8ef6b498d0c3702d6f8538, type: 2}
-  unlockTier: 0
+  unlockTier: -49
   timeScale: 60
   notePlacements:
   - {fileID: 11400000, guid: fc9961673f57f21448a307690aadceec, type: 2}
@@ -22,10 +22,18 @@ MonoBehaviour:
   - name: Finir le morceau
     type: EndMusic
     parameters: []
-  - name: Super Score
+  - name: Assez bien
+    type: Highscore
+    parameters:
+    - 50000
+  - name: "Tr\xE8s bien"
     type: Highscore
     parameters:
     - 100000
+  - name: Premier de la classe
+    type: Highscore
+    parameters:
+    - 200000
   - name: Solo 1/2
     type: PlaySolo
     parameters:
