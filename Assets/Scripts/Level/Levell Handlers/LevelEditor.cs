@@ -151,7 +151,7 @@ public class LevelEditor : MonoBehaviour
         }
         Vector2 currentPlacement = spawnedNotesCoordinates[noteIndex];
         int placementIndex = Array.IndexOf(possiblePlacement, currentPlacement);
-        placementIndex = (placementIndex + (direction ? 1 : -1)) % possiblePlacement.Length;
+        placementIndex = (int)Mathf.Repeat(placementIndex + (direction ? 1 : -1), possiblePlacement.Length);
         Vector2 newPlacement = possiblePlacement[placementIndex];
         Debug.Log("Moving note " + currentNoteInfo + " from " + currentPlacement + " to " + newPlacement);
         spawnedNotesCoordinates[noteIndex] = newPlacement;
