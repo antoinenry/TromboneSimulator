@@ -11,7 +11,7 @@ public class Commentator : MonoBehaviour
     private LevelLoader levelLoader;
     private PerformanceJudge perfJudge;
     private LevelGUI gui;
-    private int correctNoteCounter;
+    private int fullNoteCounter;
     private int missedNoteCounter;
     private float scoreCounter;
 
@@ -69,7 +69,7 @@ public class Commentator : MonoBehaviour
 
     public void ResetCounters()
     {
-        correctNoteCounter = 0;
+        fullNoteCounter = 0;
         missedNoteCounter = 0;
         scoreCounter = 0f;
     }
@@ -82,8 +82,8 @@ public class Commentator : MonoBehaviour
     private void OnNoteEnd(NoteSpawn note, float points)
     {
         if (sheet == null || note == null) return;
-        if (note.catchState == CatchState.All) DisplayComment(sheet.GetComment(CommentType.CorrectNote, ++correctNoteCounter, 1));
-        else DisplayComment(sheet.GetComment(CommentType.MissNote, ++missedNoteCounter, 1));
+        if (note.catchState == CatchState.All) DisplayComment(sheet.GetComment(CommentType.CorrectNote, ++fullNoteCounter, 1));
+        else if (note.catchState == CatchState.Nothing) DisplayComment(sheet.GetComment(CommentType.MissNote, ++missedNoteCounter, 1));
     }
 
     private void OnHealth(float healthValue, float maxHealth, float healthDelta)

@@ -209,7 +209,7 @@ public class SheetMusic : ScriptableObject
 
     public string[] PartNames
     {
-        get => parts != null ? Array.ConvertAll(parts, p => p.name) : null;
+        get => parts != null ? Array.ConvertAll(parts, p => p.name) : new string[0];
     }
 
     public int GetPartIndex(string partName)
