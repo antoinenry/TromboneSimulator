@@ -25,13 +25,13 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 75000
-  - name: "Bon \xE9l\xE8ve"
+    - 100000
+  - name: Solo 1/2
     type: PlaySolo
     parameters:
     - 1
     - 1
-  - name: Premier de la classe
+  - name: Solo 2/2
     type: PlaySolo
     parameters:
     - 1

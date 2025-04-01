@@ -10,12 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0174d1635952284cbb69f1e36a0e4f6, type: 3}
-  m_Name: Adibou_Solos
+  m_Name: FallGuys_Solos
   m_EditorClassIdentifier: 
   soloInfos:
-  - startTime: 29.9
-    duration: 11.9
-    soloName: Solo 1/2
-  - startTime: 41.9
-    duration: 11.9
-    soloName: Solo 2/2
+  - startTime: 195
+    duration: 30
+    soloName: La note

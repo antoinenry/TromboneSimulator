@@ -449,7 +449,7 @@ MonoBehaviour:
   length: 30
   isNext: 0
   roundValues: 1
-  linkMaxDistance: {x: 50, y: 0.75}
+  linkMaxDistance: {x: 100, y: 1}
   topLink: 0
   topLinkLength: 10
   bottomLink: 0
