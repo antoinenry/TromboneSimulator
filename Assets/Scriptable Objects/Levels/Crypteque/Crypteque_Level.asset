@@ -26,6 +26,10 @@ MonoBehaviour:
     type: Highscore
     parameters:
     - 100000
+  - name: Hyper Score
+    type: Highscore
+    parameters:
+    - 150000
   - name: Danceur
     type: Dance
     parameters:

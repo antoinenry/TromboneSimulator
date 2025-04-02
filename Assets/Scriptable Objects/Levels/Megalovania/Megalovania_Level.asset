@@ -15,8 +15,9 @@ MonoBehaviour:
   levelName: Megalovania
   music: {fileID: 11400000, guid: 998b0fb1b90b73649960184d7f2d9b00, type: 2}
   unlockTier: 0
+  timeScale: 90
   notePlacements:
-  - {fileID: 11400000, guid: 544a9d9ee427d1248a68d87354f0bcfd, type: 2}
+  - {fileID: 11400000, guid: 4533dc50f4010f84cbf321fcbebfc3ab, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic
@@ -28,9 +29,26 @@ MonoBehaviour:
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 200000
+    - 150000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 300000
-  events: []
+    - 250000
+  - name: "M\xE9ga Score"
+    type: Highscore
+    parameters:
+    - 500000
+  - name: "Ultram\xE9ga Score"
+    type: Highscore
+    parameters:
+    - 650000
+  - name: "Hyperultram\xE9ga Score"
+    type: Highscore
+    parameters:
+    - 800000
+  - name: "Superyperultram\xE9ga Score"
+    type: Highscore
+    parameters:
+    - 1000000
+  events:
+  - {fileID: 11400000, guid: 8c65f01aa748c214eae96c318c8b670b, type: 2}

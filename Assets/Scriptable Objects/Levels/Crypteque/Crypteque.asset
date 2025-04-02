@@ -6236,10 +6236,6 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 16.212105
       duration: 0.050504684
-    - tone: 48
-      velocity: 0.859375
-      startTime: 16.363619
-      duration: 0.25252533
     - tone: 60
       velocity: 0.859375
       startTime: 16.666649
@@ -6280,10 +6276,6 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 19.545431
       duration: 0.30403936
-    - tone: 48
-      velocity: 0.859375
-      startTime: 19.999975
-      duration: 0.1483593
     - tone: 54
       velocity: 0.859375
       startTime: 20.151491
@@ -6336,10 +6328,6 @@ MonoBehaviour:
       velocity: 0.859375
       startTime: 23.484814
       duration: 0.050504684
-    - tone: 48
-      velocity: 0.859375
-      startTime: 23.636328
-      duration: 0.25252533
     - tone: 60
       velocity: 0.859375
       startTime: 23.939358

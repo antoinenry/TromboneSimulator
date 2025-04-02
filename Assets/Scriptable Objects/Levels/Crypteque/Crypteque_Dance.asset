@@ -17,14 +17,14 @@ MonoBehaviour:
     duration: 13
     danceLevel: 24
     basePointsPerBeat: 0
-    pointMultiplierPerBeat: 25
-  - startTime: 46
-    duration: 10
-    danceLevel: 5
+    pointMultiplierPerBeat: 100
+  - startTime: 44
+    duration: 20
+    danceLevel: 12
     basePointsPerBeat: 0
-    pointMultiplierPerBeat: 1000
+    pointMultiplierPerBeat: 100
   - startTime: 101
-    duration: 10
-    danceLevel: 5
+    duration: 20
+    danceLevel: 12
     basePointsPerBeat: 0
-    pointMultiplierPerBeat: 1000
+    pointMultiplierPerBeat: 100
