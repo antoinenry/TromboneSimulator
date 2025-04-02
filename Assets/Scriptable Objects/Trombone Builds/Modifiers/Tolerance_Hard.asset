@@ -17,7 +17,8 @@ MonoBehaviour:
   uiColor: {r: 1, g: 1, b: 1, a: 1}
   colorizeIcon: 0
   unlockTier: -97
-  scoreMultiplierBonus: 5
-  description: "Z\xE9ro tol\xE9rance!"
+  autoUnlock: 0
+  scoreMultiplierBonus: 10
+  description: 'Super dur! Pas fun du tout! Plein de points! '
   rythmToleranceMultiplier: 0.5
   toneToleranceMultiplier: 0.5

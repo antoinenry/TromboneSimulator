@@ -25,8 +25,8 @@ public class NoteToleranceModifier : TromboneBuildModifier
         base.ApplyTo(build);
         if (build?.noteCatcher != null)
         {
-            build.noteCatcher.advanceTolerance *= rythmToleranceMultiplier;
-            build.noteCatcher.delayTolerance *= rythmToleranceMultiplier;
+            build.noteCatcher.startDelayTolerance *= rythmToleranceMultiplier;
+            build.noteCatcher.endAdvanceTolerance *= rythmToleranceMultiplier;
             build.noteCatcher.toneTolerance *= toneToleranceMultiplier;
         }
     }

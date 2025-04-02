@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: Crypteque_Level_Hard
+  m_Script: {fileID: 11500000, guid: b0174d1635952284cbb69f1e36a0e4f6, type: 3}
+  m_Name: Crypteque_Solos
   m_EditorClassIdentifier: 
-  levelName: Crypteque
-  music: {fileID: 11400000, guid: 23df50e62daf910459216c98288b1654, type: 2}
-  unlockTier: 0
-  notePlacements: []
-  objectives: []
-  events: []
+  soloInfos:
+  - startTime: 13
+    duration: 15
+    soloName: Intro

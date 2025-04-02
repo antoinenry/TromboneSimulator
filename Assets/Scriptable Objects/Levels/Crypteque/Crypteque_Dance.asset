@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52fd4d7118f66074f8df6d2b255af727, type: 3}
+  m_Name: Crypteque_Dance
+  m_EditorClassIdentifier: 
+  danceInfos:
+  - startTime: 0
+    duration: 13
+    danceLevel: 24
+    basePointsPerBeat: 0
+    pointMultiplierPerBeat: 25
+  - startTime: 46
+    duration: 10
+    danceLevel: 5
+    basePointsPerBeat: 0
+    pointMultiplierPerBeat: 1000
+  - startTime: 101
+    duration: 10
+    danceLevel: 5
+    basePointsPerBeat: 0
+    pointMultiplierPerBeat: 1000

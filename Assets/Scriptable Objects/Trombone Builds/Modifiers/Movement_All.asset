@@ -17,6 +17,7 @@ MonoBehaviour:
   uiColor: {r: 0.8705883, g: 0.82745105, b: 0.54901963, a: 1}
   colorizeIcon: 0
   unlockTier: -89
+  autoUnlock: 1
   scoreMultiplierBonus: 1
   description: Notes horizontales et verticales, comme dans la vraie vie
   enabledMovements: 0

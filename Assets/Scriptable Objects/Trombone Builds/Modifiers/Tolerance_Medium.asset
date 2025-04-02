@@ -17,7 +17,9 @@ MonoBehaviour:
   uiColor: {r: 1, g: 1, b: 1, a: 1}
   colorizeIcon: 0
   unlockTier: -98
-  scoreMultiplierBonus: 1
-  description: "Difficult\xE9 moyenne"
+  autoUnlock: 1
+  scoreMultiplierBonus: 2
+  description: "Les notes sont moins faciles \xE0 attraper, mais rapportent plus
+    de points!"
   rythmToleranceMultiplier: 1
   toneToleranceMultiplier: 1

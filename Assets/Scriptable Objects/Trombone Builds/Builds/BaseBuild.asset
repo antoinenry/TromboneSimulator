@@ -49,9 +49,9 @@ MonoBehaviour:
   audioTrackGenerator:
     orchestra: {fileID: 0}
   performanceJudge:
-    scoringRate: 100
+    pointsPerSecond: 10
     maxHealth: 1
   noteCatcher:
-    advanceTolerance: 0.2
-    delayTolerance: 0.1
+    endAdvanceTolerance: 0.1
+    startDelayTolerance: 0.1
     toneTolerance: 1

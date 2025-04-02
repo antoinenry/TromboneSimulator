@@ -11,8 +11,8 @@ public class PerformanceJudge : MonoBehaviour
     public PerformanceJudgeGUI gui;
     [Header("Difficulty")]
     public float maxHealth = 1f;
-    public float scoringRate = 10f;
-    public float damageRate = .2f;
+    public float damagePerSecond = .1f;
+    public float pointsPerSecond = 10f;
     public float accuracyRounding = 10f;
     [Range(0f,1f)] public float fullPlayRounding = .01f;
     [Header("Performance")]
@@ -28,7 +28,7 @@ public class PerformanceJudge : MonoBehaviour
     [Header("Events")]
     public UnityEvent<float> onScore;
     public UnityEvent<float,float,float> onHealth;
-    public UnityEvent<NoteSpawn, float, float, int> onCorrectNote;
+    public UnityEvent<NoteSpawn, float, float, float> onCorrectNote;
     public UnityEvent<NoteSpawn> onWrongNote;
     public UnityEvent<NoteSpawn> onMissNote;
     public UnityEvent<NoteSpawn, float> onNotePerformanceEnd;
@@ -128,7 +128,7 @@ public class PerformanceJudge : MonoBehaviour
         // Add note performance
         performanceDetail.Add(instance.performance);
         // Add points to score
-        float noteScore = GetNoteScore(instance.performance) * (combo + 1);
+        float noteScore = GetNotePoints(instance.performance) * (combo + 1);
         SetScore(score + noteScore);
         // Increase combo if note was fully played
         bool fullPlay = instance.Duration == 0f || instance.performance.CorrectTime / instance.Duration >= 1f - fullPlayRounding;
@@ -169,9 +169,9 @@ public class PerformanceJudge : MonoBehaviour
         return accuracy;
     }
 
-    public float GetNoteScore(NotePerformance notePerformance, bool allowNegativePoints = false)
+    public float GetNotePoints(NotePerformance notePerformance, bool allowNegativePoints = false)
     {
-        float points = GetNoteAccuracy(notePerformance) * notePerformance.CorrectTime * scoringRate;
+        float points = GetNoteAccuracy(notePerformance) * notePerformance.CorrectTime * pointsPerSecond;
         return allowNegativePoints ? points : Mathf.Abs(points);
     }
 
@@ -221,12 +221,12 @@ public class PerformanceJudge : MonoBehaviour
 
     private void OnPlayCorrectNote(NoteSpawn note)
     {
-        if (note != null) onCorrectNote.Invoke(note, GetNoteAccuracy(note.performance), GetNoteScore(note.performance), combo + 1);
+        if (note != null && note.catchState != NoteSpawn.CatchState.Nothing) onCorrectNote.Invoke(note, GetNoteAccuracy(note.performance), GetNotePoints(note.performance), (combo + 1));
     }
 
     private void OnPlayWrongNote(NoteSpawn note)
     {
-        if (note != null) onWrongNote.Invoke(note);
+        if (note != null && note.catchState != NoteSpawn.CatchState.Nothing) onWrongNote.Invoke(note);
     }
 
     private void OnMissNote(NoteSpawn note)
@@ -241,6 +241,6 @@ public class PerformanceJudge : MonoBehaviour
 
     private void OnNoteCrash(float deltaTime)
     {
-        TakeDamage(deltaTime * damageRate);
+        TakeDamage(deltaTime * damagePerSecond);
     }
 }

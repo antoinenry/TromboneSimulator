@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: Doom_Level_Easy
+  m_Name: Corneria_Level
   m_EditorClassIdentifier: 
-  levelName: Doom's Gate
-  music: {fileID: 11400000, guid: d528ec35e1347b64baef4d33ee0196bd, type: 2}
-  unlockTier: 2
+  levelName: Corneria
+  music: {fileID: 11400000, guid: d53085cada8cf8542bcd30f8e8f529f0, type: 2}
+  unlockTier: 16
   timeScale: 120
   notePlacements:
-  - {fileID: 11400000, guid: 6017bb2a3009073479c8df74e48eda65, type: 2}
+  - {fileID: 11400000, guid: fb7df52a96f1c7e4c8eb7ff6b14c65f3, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic
@@ -25,21 +25,13 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 75000
+    - 100000
   - name: Hyper Score
     type: Highscore
     parameters:
     - 200000
-  - name: Headbang (1/2)
-    type: Dance
+  - name: Ultra Score
+    type: Highscore
     parameters:
-    - 1
-    - 1
-  - name: Headbang (2/2)
-    type: Dance
-    parameters:
-    - 1
-    - 2
-  events:
-  - {fileID: 11400000, guid: c009b57bb157e7f478065c1d6afa2c52, type: 2}
-  - {fileID: 11400000, guid: 4ffaf168f578a0e48921d9e6f5114323, type: 2}
+    - 300000
+  events: []

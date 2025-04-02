@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Adibou_Solos
   m_EditorClassIdentifier: 
   soloInfos:
-  - startTime: 29.9
-    duration: 24
+  - startTime: 32.9
+    duration: 12
+    soloName: "M\xE9lodie"
+  - startTime: 44.9
+    duration: 12
     soloName: "M\xE9lodie"

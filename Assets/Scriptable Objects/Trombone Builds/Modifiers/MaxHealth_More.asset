@@ -16,7 +16,8 @@ MonoBehaviour:
   icon: {fileID: -2124543531, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.93725497, g: 0.8117648, b: 0.2901961, a: 1}
   colorizeIcon: 0
-  unlockTier: 4
+  unlockTier: 2
+  autoUnlock: 0
   scoreMultiplierBonus: 0.8
   description: Augmente la barre de vie.
-  additionalMaxHealth: 0.25
+  additionalMaxHealth: 0.5

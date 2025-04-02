@@ -7,11 +7,12 @@ public abstract class TromboneBuildModifier : ScriptableObject, IUnlockableConte
     public Color uiColor = Color.white;
     public bool colorizeIcon;
     public int unlockTier;
+    public bool autoUnlock = false;
     public float scoreMultiplierBonus = 1f;
     public string description;
 
     public ScriptableObject ContentAsset => this; 
-    public bool AutoUnlock => false;
+    public bool AutoUnlock => autoUnlock;
     public int UnlockTier
     {
         get => unlockTier;
@@ -20,14 +21,14 @@ public abstract class TromboneBuildModifier : ScriptableObject, IUnlockableConte
     public virtual bool ReplaceOnly => false;
     public virtual float ScoreMultiplier => scoreMultiplierBonus;
     public virtual Color IconColor => colorizeIcon ? uiColor : Color.white;
-    public virtual string StatDescription => ScoreMultiplier != 1f ? "Score x" + ScoreMultiplier : null;
+    public virtual string StatDescription => ScoreMultiplier != 1f ? "Points x" + ScoreMultiplier : null;
 
     public virtual bool CanStackWith(TromboneBuildModifier other)
         => other == null || other.GetType() != GetType();
 
     public virtual void ApplyTo(TromboneBuild build)
     {
-        if (build?.performanceJudge != null) build.performanceJudge.scoringRate *= ScoreMultiplier;
+        if (build?.performanceJudge != null) build.performanceJudge.pointsPerSecond *= ScoreMultiplier;
     }
 }
 

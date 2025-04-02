@@ -95,7 +95,7 @@ public class PerformanceJudgeGUI : GameUI
         if (scoreDisplay) scoreDisplay.value = Mathf.FloorToInt(score);
     }
 
-    public void DisplayCorrectlyPlayedNote(NoteSpawn note, float accuracy, float points, int comboMultiplier)
+    public void DisplayCorrectlyPlayedNote(NoteSpawn note, float accuracy, float points, float comboMultiplier)
     {
         DisplayNoteAccuracy(accuracy);
         if (note) DisplayNotePoints(Mathf.RoundToInt(points) * comboMultiplier, note.DisplayColor);
@@ -126,7 +126,7 @@ public class PerformanceJudgeGUI : GameUI
 
     public void DisplayNotePoints(float points, Color pointsColor)
     {
-        if (smallMessageDisplay)
+        if (smallMessageDisplay && points > 0f)
         {
             string pointsString = Mathf.FloorToInt(points).ToString();
             smallMessageDisplay.SetTextContent(pointsString);

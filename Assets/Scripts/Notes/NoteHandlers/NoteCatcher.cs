@@ -11,8 +11,8 @@ public class NoteCatcher : MonoBehaviour
     [Header("Activation")]
     public bool catchNotes;
     public float catchTone;
-    public float advanceTolerance;
-    public float delayTolerance;
+    public float startDelayTolerance;
+    public float endAdvanceTolerance;
     public float toneTolerance;
     [Header("Events")]
     public UnityEvent<NoteSpawn> onCorrectNote;
@@ -32,8 +32,8 @@ public class NoteCatcher : MonoBehaviour
             float scale = spawner.TimeScale;
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(
-                pos + scale * advanceTolerance * Vector3.right,
-                pos + scale * delayTolerance * Vector3.left);
+                pos + scale * endAdvanceTolerance * Vector3.right,
+                pos + scale * startDelayTolerance * Vector3.left);
         }
     }
 
@@ -44,7 +44,7 @@ public class NoteCatcher : MonoBehaviour
             spawner.onMoveNotes.AddListener(OnNotesMoved);
         if (playhead != null)
         {
-            playhead.onRead.AddListener(OnNoteIsInCatchTimeRange);
+            playhead.onRead.AddListener(OnNoteIsInPlayheadRange);
             playhead.onExitRead.AddListener(OnNoteExitsCatchRange);
             playhead.onEndExitRead.AddListener(OnNoteEndExitsCatchRange);
         }
@@ -57,7 +57,7 @@ public class NoteCatcher : MonoBehaviour
             spawner.onMoveNotes.RemoveListener(OnNotesMoved);
         if (playhead != null)
         {
-            playhead.onRead.RemoveListener(OnNoteIsInCatchTimeRange);
+            playhead.onRead.RemoveListener(OnNoteIsInPlayheadRange);
             playhead.onExitRead.RemoveListener(OnNoteExitsCatchRange);
             playhead.onEndExitRead.RemoveListener(OnNoteEndExitsCatchRange);
         }
@@ -74,8 +74,8 @@ public class NoteCatcher : MonoBehaviour
         }
         // Set catch range : time tolerance should be at least greater than frame time
         float frameDeltaTime = Time.deltaTime;
-        CatchStartTime = -Mathf.Max(delayTolerance, frameDeltaTime);
-        CatchEndTime = Mathf.Max(advanceTolerance, frameDeltaTime);
+        CatchStartTime = -Mathf.Max(startDelayTolerance, frameDeltaTime);
+        CatchEndTime = Mathf.Max(endAdvanceTolerance, frameDeltaTime);
         // Set playhead width according to catch range
         playhead.MinimumTime = CatchStartTime;
         playhead.MaximumTime = CatchEndTime;
@@ -83,7 +83,7 @@ public class NoteCatcher : MonoBehaviour
         playhead.Move(notes, fromTime, toTime);
     }
 
-    private void OnNoteIsInCatchTimeRange(int noteIndex, INoteInfo note)
+    private void OnNoteIsInPlayheadRange(int noteIndex, INoteInfo note)
     {
         if (note != null && note is NoteSpawn)
         {
@@ -103,13 +103,13 @@ public class NoteCatcher : MonoBehaviour
             // Catch note
             else if (catchNotes)
             {
-                float accuracy = toneTolerance > 0f ? 1f - Mathf.Abs(catchTone - info.tone) / toneTolerance : 0f;
+                float toneError = Mathf.Abs(catchTone - info.tone), accuracy = Mathf.Max(0f, 1f - toneError);
                 // Correct tone
-                if (accuracy > 0f)
+                if (toneError <= toneTolerance)
                 {
                     if (showDebug) Debug.Log("-> Catching");
                     instance.PlayCorrectly(playhead.PreviousTime + CatchStartTime, playhead.CurrentTime + CatchEndTime, accuracy);
-                    onCorrectNote.Invoke(instance);
+                    if (playhead.PreviousTime > info.startTime) onCorrectNote.Invoke(instance);
                 }
                 // Wrong tone
                 else

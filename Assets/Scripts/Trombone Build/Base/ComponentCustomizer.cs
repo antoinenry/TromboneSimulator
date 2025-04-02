@@ -94,7 +94,7 @@ public class AudioTrackGeneratorCustomizer : ComponentCustomizer
 [Serializable]
 public class PerformanceJudgeCustomizer : ComponentCustomizer
 {
-    public float scoringRate = 10f;
+    public float pointsPerSecond = 10f;
     public float maxHealth = 1f;
 
     public Type GetComponentType() => typeof(PerformanceJudge);
@@ -103,8 +103,8 @@ public class PerformanceJudgeCustomizer : ComponentCustomizer
 [Serializable]
 public class NoteCatcherCustomizer : ComponentCustomizer
 {
-    public float advanceTolerance = .1f;
-    public float delayTolerance= .1f;
+    public float endAdvanceTolerance = .1f;
+    public float startDelayTolerance= .1f;
     public float toneTolerance = .1f;
 
     public Type GetComponentType() => typeof(NoteCatcher);

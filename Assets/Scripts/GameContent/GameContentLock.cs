@@ -25,8 +25,12 @@ public struct GameContentLock
     public GameContentLock(ScriptableObject content)
     {
         contentAsset = content;
-        if (GetUnlockTier(content) <= 0) locked = false;
-        else locked = true;
+        if (contentAsset is IUnlockableContent)
+        {
+            if ((content as IUnlockableContent).AutoUnlock == true && GetUnlockTier(content) <= 0) locked = false;
+            else locked = true;
+        }
+        else locked = false;
     }
 
     public void SetLocked(bool value) => locked = value;

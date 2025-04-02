@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Circuit Yoshi
   music: {fileID: 11400000, guid: 4350f6a846bb8f54eb090cff80eb77a5, type: 2}
-  unlockTier: 3
+  unlockTier: 0
   timeScale: 120
   notePlacements:
   - {fileID: 11400000, guid: 49f0d522f803dea41b51b966b9c869fe, type: 2}

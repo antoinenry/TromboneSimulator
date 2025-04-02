@@ -11,7 +11,7 @@ public class TempoModifier : TromboneBuildModifier
     {
         base.ApplyTo(build);
         if (build?.musicPlayer != null) build.musicPlayer.tempoModifier *= tempoMultiplier;
-        if (multiplyScoreByTempo && build?.performanceJudge != null) build.performanceJudge.scoringRate *= tempoMultiplier;
+        if (multiplyScoreByTempo && build?.performanceJudge != null) build.performanceJudge.pointsPerSecond *= tempoMultiplier;
     }
 
     public override bool CanStackWith(TromboneBuildModifier other)

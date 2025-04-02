@@ -10,28 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: Corneria_Level_VeryHard
+  m_Name: Adibou_Level
   m_EditorClassIdentifier: 
-  levelName: Corneria
-  music: {fileID: 11400000, guid: d53085cada8cf8542bcd30f8e8f529f0, type: 2}
-  unlockTier: 16
-  timeScale: 120
+  levelName: Trois p'tits chats
+  music: {fileID: 11400000, guid: e7a66b1c6a8ef6b498d0c3702d6f8538, type: 2}
+  unlockTier: -49
+  timeScale: 60
   notePlacements:
-  - {fileID: 11400000, guid: fb7df52a96f1c7e4c8eb7ff6b14c65f3, type: 2}
+  - {fileID: 11400000, guid: fc9961673f57f21448a307690aadceec, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic
     parameters: []
-  - name: Super Score
+  - name: Assez bien
     type: Highscore
     parameters:
-    - 100000
-  - name: Hyper Score
+    - 30000
+  - name: "Tr\xE8s bien"
     type: Highscore
     parameters:
-    - 200000
-  - name: Ultra Score
-    type: Highscore
+    - 50000
+  - name: "Jolie m\xE9lodie"
+    type: PlaySolo
     parameters:
-    - 300000
-  events: []
+    - 1
+    - 1
+  events:
+  - {fileID: 11400000, guid: 122ea105ae420f84bbab8d325ca33d1d, type: 2}
+  - {fileID: 11400000, guid: df2fbaee31a9bb04197f5bc3f7c4d32e, type: 2}

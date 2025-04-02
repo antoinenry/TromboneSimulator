@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: Kass_Level_Easy
+  m_Name: Megalovania_Level
   m_EditorClassIdentifier: 
-  levelName: Kass
-  music: {fileID: 11400000, guid: aea71f694d9277148966f4199692dbf8, type: 2}
-  unlockTier: 5
-  timeScale: 70
+  levelName: Megalovania
+  music: {fileID: 11400000, guid: 998b0fb1b90b73649960184d7f2d9b00, type: 2}
+  unlockTier: 0
   notePlacements:
-  - {fileID: 11400000, guid: 693e6b50c574fd94681118a452788b94, type: 2}
+  - {fileID: 11400000, guid: 544a9d9ee427d1248a68d87354f0bcfd, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic
@@ -25,20 +24,13 @@ MonoBehaviour:
   - name: Super Score
     type: Highscore
     parameters:
-    - 300000
+    - 100000
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 600000
+    - 200000
   - name: Ultra Score
     type: Highscore
     parameters:
-    - 1000000
-  - name: Solos parfaits
-    type: PlaySolo
-    parameters:
-    - 1
-    - 2
-  events:
-  - {fileID: 11400000, guid: 19be4d5d7b4e11e4abaec7af3b4ef1da, type: 2}
-  - {fileID: 11400000, guid: fa15086d7dea78942a39c5dabd9c5999, type: 2}
+    - 300000
+  events: []

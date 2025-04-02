@@ -17,6 +17,7 @@ MonoBehaviour:
   uiColor: {r: 0.6117647, g: 0.54509807, b: 0.22352941, a: 1}
   colorizeIcon: 1
   unlockTier: -68
+  autoUnlock: 1
   scoreMultiplierBonus: 1
   description: Son nostalgique
   orchestra: {fileID: 11400000, guid: aeb9253f104ba394ab50b692796888a1, type: 2}
