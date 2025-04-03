@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304fd74812f2fa84cb1840088e54f05d, type: 3}
   m_Name: Tolerance_Hard
   m_EditorClassIdentifier: 
-  modName: Public Critique
-  icon: {fileID: -1300144798, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  modName: Public Sanguinaire
+  icon: {fileID: 398217959, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 1, g: 1, b: 1, a: 1}
   colorizeIcon: 0
-  unlockTier: -97
+  unlockTier: 100
   autoUnlock: 0
   scoreMultiplierBonus: 10
   description: 'Super dur! Pas fun du tout! Plein de points! '

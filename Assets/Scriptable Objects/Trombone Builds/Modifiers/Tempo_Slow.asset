@@ -16,7 +16,8 @@ MonoBehaviour:
   icon: {fileID: -1647332239, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.70980394, g: 0.9686275, b: 0.48235297, a: 1}
   colorizeIcon: 0
-  unlockTier: 0
+  unlockTier: 100
+  autoUnlock: 0
   scoreMultiplierBonus: 0.75
   description: Diminue le tempo.
   tempoMultiplier: 0.8

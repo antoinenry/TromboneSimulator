@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5ab5266eb14df044900d6b58ceb8ff8, type: 3}
-  m_Name: Color_Blue
+  m_Name: Color_Pink
   m_EditorClassIdentifier: 
-  modName: "Bleu H\xE9risson"
+  modName: Rose bonbon
   icon: {fileID: -358682796, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
-  uiColor: {r: 0.3137255, g: 0.49411768, b: 0.8588236, a: 1}
+  uiColor: {r: 1, g: 0.514151, b: 0.9506951, a: 1}
   colorizeIcon: 1
-  unlockTier: 1
+  unlockTier: 14
   autoUnlock: 0
   scoreMultiplierBonus: 1
-  description: Parfait pour jouer vite!
-  color: {r: 0.31372547, g: 0.49371254, b: 0.85882354, a: 1}
+  description: Ne pas avaler l'embouchure.
+  color: {r: 1, g: 0.5137255, b: 0.9490197, a: 1}

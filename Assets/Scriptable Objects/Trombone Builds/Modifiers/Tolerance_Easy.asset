@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tolerance_Easy
   m_EditorClassIdentifier: 
   modName: Public Gentil
-  icon: {fileID: -2051733342, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  icon: {fileID: 755006580, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 1, g: 1, b: 1, a: 1}
   colorizeIcon: 0
   unlockTier: -99

@@ -72,25 +72,19 @@ MonoBehaviour:
     value: 25
     delta: 1
     comments:
-    - Combo x25
+    - Combo x25 !
   - name: Combo 50
     commentType: 3
     value: 50
     delta: 1
     comments:
-    - Combo x50
+    - Combo x50 !!
   - name: Combo 100
     commentType: 3
     value: 100
     delta: 1
     comments:
-    - Combo x100
-  - name: Combo 200
-    commentType: 3
-    value: 200
-    delta: 1
-    comments:
-    - Combo x200
+    - Combo x100 !!!
   - name: Correct Note 25
     commentType: 0
     value: 25

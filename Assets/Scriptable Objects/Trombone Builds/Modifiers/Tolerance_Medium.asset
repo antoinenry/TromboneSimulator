@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 304fd74812f2fa84cb1840088e54f05d, type: 3}
   m_Name: Tolerance_Medium
   m_EditorClassIdentifier: 
-  modName: Public Neutre
-  icon: {fileID: -1227699368, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
+  modName: Public Difficile
+  icon: {fileID: 572167600, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 1, g: 1, b: 1, a: 1}
   colorizeIcon: 0
   unlockTier: -98

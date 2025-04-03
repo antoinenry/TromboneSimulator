@@ -16,7 +16,8 @@ MonoBehaviour:
   icon: {fileID: -1770521021, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 1, g: 0.882353, b: 0.34509805, a: 1}
   colorizeIcon: 1
-  unlockTier: 6
+  unlockTier: 100
+  autoUnlock: 0
   scoreMultiplierBonus: 1
   description: "Danser rapporte des points suppl\xE9mentaires. Pour rentabiliser
     les silences!"

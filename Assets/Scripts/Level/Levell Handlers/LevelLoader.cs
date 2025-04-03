@@ -240,6 +240,8 @@ public class LevelLoader : MonoBehaviour
         musicPlayer.playTime = 0f;
         // Reactivate pause button
         GUI?.SetPauseButtonActive(true);
+        // Show title
+        GUI?.ShowMusicTitle(LoadedLevel.music);
         // Disable points etc
         performanceJudge?.DisableDetection();
         // Initialize note spawn: display first notes

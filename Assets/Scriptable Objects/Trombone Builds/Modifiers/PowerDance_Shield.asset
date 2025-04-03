@@ -16,7 +16,8 @@ MonoBehaviour:
   icon: {fileID: 1918088025, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.2559185, g: 0.66716003, b: 0.764151, a: 1}
   colorizeIcon: 1
-  unlockTier: 9
+  unlockTier: 100
+  autoUnlock: 0
   scoreMultiplierBonus: 1
   description: Danser activer un bouclier. Le bouclier casse? Suffit de redanser!
   powerPrefab: {fileID: 5541936730323625610, guid: ba22b3ab29ea9be49be05c8fbb0415f6, type: 3}

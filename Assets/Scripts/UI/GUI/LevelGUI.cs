@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System.Collections;
+using TMPro;
+using static System.Net.Mime.MediaTypeNames;
 
 [ExecuteAlways]
 public class LevelGUI : GameUI
@@ -11,19 +13,19 @@ public class LevelGUI : GameUI
     public Slider timeBar;
     public SwooshDisplay messageDisplay;
     public RectTransform eventPanel;
+    public TMP_Text titleDisplay;
     [Header("Content")]
     public string grabTromboneMessage = "a vos coulisses";
     public int startCountDownAt = 3;
     [Header("Events")]
     public UnityEvent onPauseRequest;
 
-    private LevelLoader levelLoader;
     private DanceAnimation messageDance;
 
     public string CurrentMessage => messageDisplay != null ? messageDisplay.FreshText : null;
 
     public override Component[] UIComponents => new Component[] 
-        { pauseButton, timeBar, messageDisplay };
+        { pauseButton, timeBar, messageDisplay, titleDisplay };
 
     private void Awake()
     {
@@ -99,5 +101,27 @@ public class LevelGUI : GameUI
     public void ClearMessage()
     {
         if (messageDisplay) messageDisplay.FreeText();
+    }
+
+    public void ShowMusicTitle(SheetMusic music, bool show = true)
+    {
+        string text = "";
+        if (music != null)
+        {
+            text += music.title + "\n";
+            if (music.subtitle != "") text += music.subtitle + "\n";
+            if (music.composer != "") text += music.composer;
+        }
+        if (titleDisplay != null)
+        {
+            titleDisplay.text = text;
+            titleDisplay.gameObject.SetActive(show);
+        }
+
+    }
+
+    public void ShowMusicTitle(bool show)
+    {
+        if (titleDisplay != null) titleDisplay.gameObject.SetActive(show);
     }
 }

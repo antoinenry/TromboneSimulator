@@ -16,7 +16,8 @@ MonoBehaviour:
   icon: {fileID: -905471385, guid: f57d12c40f4bf614982d4bc8acce03a8, type: 3}
   uiColor: {r: 0.40986294, g: 0.8679245, b: 0.38892844, a: 1}
   colorizeIcon: 1
-  unlockTier: 3
+  unlockTier: 100
+  autoUnlock: 0
   scoreMultiplierBonus: 1
   description: Danser remplit la barre de vie. Pour les morceaux difficiles!
   powerPrefab: {fileID: 7480909633972803314, guid: 283a07f2f96d9dc4d997335447f617c4, type: 3}

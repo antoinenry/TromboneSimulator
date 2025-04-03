@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e52c07b1bd7ff98439ce6e26a9f405a8, type: 3}
-  m_Name: Luigi_Level
+  m_Name: extreme_level_Corneria
   m_EditorClassIdentifier: 
-  levelName: Luigi's Mansion
-  music: {fileID: 11400000, guid: d5c6c7d00a594cf46a63269b57870a34, type: 2}
-  unlockTier: 3
-  timeScale: 60
+  levelName: Corneria
+  music: {fileID: 11400000, guid: d53085cada8cf8542bcd30f8e8f529f0, type: 2}
+  unlockTier: 22
+  timeScale: 120
   notePlacements:
-  - {fileID: 11400000, guid: 04785612527c41b428f1c0f44b6f448e, type: 2}
+  - {fileID: 11400000, guid: fb7df52a96f1c7e4c8eb7ff6b14c65f3, type: 2}
   objectives:
   - name: Finir le morceau
     type: EndMusic
@@ -29,12 +29,9 @@ MonoBehaviour:
   - name: Hyper Score
     type: Highscore
     parameters:
-    - 200000
-  - name: Solo parfait
-    type: PlaySolo
+    - 150000
+  - name: Ultra Score
+    type: Highscore
     parameters:
-    - 1
-    - 1
-  events:
-  - {fileID: 11400000, guid: b9b59d5603714ed4094e9c40d4addfc2, type: 2}
-  - {fileID: 11400000, guid: da8f9a698bd2aa44481edd62dab0b707, type: 2}
+    - 200000
+  events: []
